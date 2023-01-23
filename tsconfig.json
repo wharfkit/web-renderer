@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "downlevelIteration": true,
+        "esModuleInterop": true,
+        "experimentalDecorators": true,
+        "importHelpers": true,
+        "lib": ["esnext", "dom"],
+        "module": "esnext",
+        "moduleResolution": "node",
+        "noImplicitAny": false,
+        "sourceMap": true,
+        "strict": true,
+        "target": "es2020",
+        "useUnknownInCatchVariables": false
+    },
+    "include": ["src/*"]
+}
