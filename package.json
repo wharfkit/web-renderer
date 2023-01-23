@@ -35,7 +35,7 @@
         "crypto": false
     },
     "dependencies": {
-        "@wharfkit/session": "^0.3.0-ui-1"
+        "@wharfkit/session": "^0.3.0-ui-3"
     },
     "devDependencies": {
         "@babel/core": "^7.20.12",
