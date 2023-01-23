@@ -4,25 +4,46 @@
     <title>WharfKit/Web - UI Test</title>
     <script src="./bundle.js"></script>
     <script>
-        const {SessionKit, WalletPluginPrivateKey} = WharfKitWeb
-        const sessionKit = new SessionKit({
-            appName: 'demo-app',
-            chains: [{
-                id: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
-                url: 'https://jungle4.greymass.com'
-            }],
-            ui: new WharfKitWeb(),
-            walletPlugins: [new WalletPluginPrivateKey({
-                privateKey: '5Jtoxgny5tT7NiNFp1MLogviuPJ9NniWjnU4wKzaX4t7pL4kJ8s'
-            })]
+        const {Session, SessionKit, WalletPluginPrivateKey} = WharfKitWeb
+
+        const chain = {
+            id: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
+            url: 'https://jungle4.greymass.com',
+        }
+
+        const permissionLevel = 'wharfkittest@test'
+
+        const walletPlugin = new WalletPluginPrivateKey({
+            privateKey: '5Jtoxgny5tT7NiNFp1MLogviuPJ9NniWjnU4wKzaX4t7pL4kJ8s'
         })
 
-        // the session instance, either restored using link.restoreSession() or created with link.login()
+        const ui = new WharfKitWeb()
+
+        const sessionKit = new SessionKit({
+            appName: 'demo-app',
+            chains: [chain],
+            ui,
+            walletPlugins: [walletPlugin]
+        })
+
         let session
+
+        // Uncomment to automatically create a logged in session for testing
+        // session = new Session({
+        //     chain,
+        //     permissionLevel,
+        //     ui,
+        //     walletPlugin,
+        // })
 
         // tries to restore session, called when document is loaded
         function restoreSession() {
             console.log('restoreSession (NYI)')
+            // If the session was defined, set the UI to logged in
+            if (session) {
+                didLogin()
+                transfer()
+            }
             // link.restoreSession(identifier).then((result) => {
             //     session = result
             //     if (session) {
@@ -34,7 +55,7 @@
         // login and store session if sucessful
         function login() {
             console.log('login')
-            sessionKit.login({permissionLevel: 'wharfkittest@test'}).then((result) => {
+            sessionKit.login({permissionLevel}).then((result) => {
                 console.log('successful', result)
                 session = result
                 didLogin()
@@ -88,12 +109,14 @@
     </style>
 </head>
 <body onload="restoreSession()">
+    <h2>WharfKit Web Test</h2>
     <div id="app-ui">
-        <p>Welcome <b id="account-name">foo</b>!</p>
+        <p>Actor: <b id="account-name">foo</b>!</p>
         <ul>
             <li><button onclick="transfer()">Test transfer</button></li>
             <li><button onclick="logout()">Log out</button></li>
         </ul>
+        <h4>Log</h4>
         <pre id="log"></pre>
     </div>
     <div id="login-ui">

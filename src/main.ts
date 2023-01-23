@@ -1,47 +1,27 @@
 import type {UserInterface} from '@wharfkit/session'
-import Dimmer from './Dimmer.svelte'
-import {showModal, status} from './Modal'
-import Modal from './Modal.svelte'
+import Modal, {showModal, status} from './Modal.svelte'
 
 export class WharfKitWeb implements UserInterface {
     static version = '__ver' // replaced by build script
 
     public modal?: Modal
-    public dimmer?: Dimmer
 
-    constructor() {
-        // eslint-disable-next-line no-console
-        console.log('WharfKitWeb constructor')
-        // tslint:disable-next-line:no-this-alias
-        window.addEventListener('load', () => {
-            // eslint-disable-next-line no-console
-            console.log('window load event')
-            this.createElements()
-        })
-    }
-
-    createElements() {
-        // eslint-disable-next-line no-console
-        console.log('createElements')
-        // Set up dimmer
-        const el = document.createElement('div')
-        el.id = 'wharfkit-dimmer'
-        document.body.append(el)
-        this.dimmer = new Dimmer({
-            target: el,
-        })
-        // Set up modal
-        const el2 = document.createElement('div')
-        el2.id = 'wharfkit-modal'
-        document.body.append(el2)
-        this.modal = new Modal({
-            target: el2,
-        })
+    createDialog() {
+        const existing = document.getElementById('wharfkit-modal')
+        if (!existing) {
+            const el = document.createElement('div')
+            el.id = 'wharfkit-modal'
+            document.body.append(el)
+            this.modal = new Modal({
+                target: el,
+            })
+        }
     }
 
     onTransact(context) {
         // eslint-disable-next-line no-console
         console.log('WharfKitWeb.onTransact', context)
+        this.createDialog()
         showModal()
     }
 

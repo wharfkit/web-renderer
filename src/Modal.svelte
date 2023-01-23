@@ -1,34 +1,26 @@
-<script lang="ts">
-    import {active, message, hideModal} from './Modal'
+<svelte:options tag="wharfkit-modal" />
+
+<script lang="ts" context="module">
+    import {writable} from 'svelte/store'
+
+    export const active = writable(false)
+    export const message = writable('...')
+
+    export function status(value) {
+        message.set(value)
+    }
+
+    let dialog
+    export function showModal(): void {
+        dialog.showModal()
+    }
+
+    export function hideModal(e) {
+        dialog.close()
+    }
 </script>
 
-<svelte:window on:keydown={$active ? hideModal : () => {}} />
-
-<div class="modal" class:active={$active}>
+<dialog bind:this={dialog} open={$active}>
     <div class="modal-content">{$message}</div>
-    <button on:keydown|preventDefault={hideModal} on:click={hideModal}>Close</button>
-</div>
-
-<style>
-    .modal {
-        display: none;
-
-        background: white;
-        padding: 20px;
-
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-
-        width: 300px;
-        max-width: 300px;
-
-        overflow: hidden;
-
-        z-index: 2000;
-    }
-    .modal.active {
-        display: block;
-    }
-</style>
+    <button on:click={hideModal}>Close</button>
+</dialog>

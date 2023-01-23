@@ -73,6 +73,7 @@ export default {
         svelte({
             preprocess: sveltePreprocess({sourceMap: true}),
             compilerOptions: {
+                customElement: true,
                 dev: true,
             },
             emitCss: false,
