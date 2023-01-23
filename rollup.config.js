@@ -60,6 +60,7 @@ export default [
             svelte({
                 preprocess: sveltePreprocess(sveltePreprocessOptions),
                 compilerOptions: {
+                    customElement: true,
                     dev: true,
                 },
                 emitCss: false,
@@ -94,6 +95,7 @@ export default [
             svelte({
                 preprocess: sveltePreprocess(sveltePreprocessOptions),
                 compilerOptions: {
+                    customElement: true,
                     dev: true,
                 },
                 emitCss: false,
