@@ -1,126 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <title>WharfKit/Web - UI Test</title>
-    <script src="./bundle.js"></script>
-    <script>
-        const {Session, SessionKit, WalletPluginPrivateKey} = WharfKitWeb
+    <head>
+        <title>WharfKit/Web - UI Test</title>
+        <script src="./bundle.js"></script>
+        <script>
+            const {Session, SessionKit, WalletPluginPrivateKey} = WharfKitWeb
 
-        const chain = {
-            id: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
-            url: 'https://jungle4.greymass.com',
-        }
-
-        const permissionLevel = 'wharfkittest@test'
-
-        const walletPlugin = new WalletPluginPrivateKey({
-            privateKey: '5Jtoxgny5tT7NiNFp1MLogviuPJ9NniWjnU4wKzaX4t7pL4kJ8s'
-        })
-
-        const ui = new WharfKitWeb()
-
-        const sessionKit = new SessionKit({
-            appName: 'demo-app',
-            chains: [chain],
-            ui,
-            walletPlugins: [walletPlugin]
-        })
-
-        let session
-
-        // Uncomment to automatically create a logged in session for testing
-        // session = new Session({
-        //     chain,
-        //     permissionLevel,
-        //     ui,
-        //     walletPlugin,
-        // })
-
-        // tries to restore session, called when document is loaded
-        function restoreSession() {
-            console.log('restoreSession (NYI)')
-            // If the session was defined, set the UI to logged in
-            if (session) {
-                didLogin()
-                transfer()
+            const chain = {
+                id: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
+                url: 'https://jungle4.greymass.com',
             }
-            // link.restoreSession(identifier).then((result) => {
-            //     session = result
-            //     if (session) {
-            //         didLogin()
-            //     }
+
+            const permissionLevel = 'wharfkittest@test'
+
+            const walletPlugin = new WalletPluginPrivateKey({
+                privateKey: '5Jtoxgny5tT7NiNFp1MLogviuPJ9NniWjnU4wKzaX4t7pL4kJ8s',
+            })
+
+            const ui = new WharfKitWeb()
+
+            const sessionKit = new SessionKit({
+                appName: 'demo-app',
+                chains: [chain],
+                ui,
+                walletPlugins: [walletPlugin],
+            })
+
+            let session
+
+            // Uncomment to automatically create a logged in session for testing
+            // session = new Session({
+            //     chain,
+            //     permissionLevel,
+            //     ui,
+            //     walletPlugin,
             // })
-        }
 
-        // login and store session if sucessful
-        function login() {
-            console.log('login')
-            sessionKit.login({permissionLevel}).then((result) => {
-                console.log('successful', result)
-                session = result
-                didLogin()
-            })
-        }
-
-        // logout and remove session from storage
-        function logout() {
-            console.log('logout')
-            document.body.classList.remove('logged-in')
-            session = undefined
-        }
-
-        // called when session was restored or created
-        function didLogin() {
-            console.log('didLogin')
-            document.getElementById('account-name').textContent = session.actor
-            document.body.classList.add('logged-in')
-        }
-
-        // transfer tokens using a session
-        function transfer() {
-            console.log('transfer')
-            const action = {
-                account: 'eosio.token',
-                name: 'transfer',
-                authorization: [session.permissionLevel],
-                data: {
-                    from: session.actor,
-                    to: 'teamgreymass',
-                    quantity: '0.0001 EOS',
-                    memo: 'Yay WharfKit! Thank you <3'
+            // tries to restore session, called when document is loaded
+            function restoreSession() {
+                console.log('restoreSession (NYI)')
+                // If the session was defined, set the UI to logged in
+                if (session) {
+                    didLogin()
+                    transfer()
                 }
+                // link.restoreSession(identifier).then((result) => {
+                //     session = result
+                //     if (session) {
+                //         didLogin()
+                //     }
+                // })
             }
-            session.transact({action}, {broadcast: false}).then((result) => {
-                console.log(result)
-                document.getElementById('log').innerHTML += `Transaction broadcast! ${ result.resolved.transaction.id }\n`
-            })
-        }
-    </script>
-    <style>
-        .logged-in #login-ui {
-            display: none;
-        }
-        #app-ui {
-            display: none;
-        }
-        .logged-in #app-ui {
-            display: block;
-        }
-    </style>
-</head>
-<body onload="restoreSession()">
-    <h2>WharfKit Web Test</h2>
-    <div id="app-ui">
-        <p>Actor: <b id="account-name">foo</b>!</p>
-        <ul>
-            <li><button onclick="transfer()">Test transfer</button></li>
-            <li><button onclick="logout()">Log out</button></li>
-        </ul>
-        <h4>Log</h4>
-        <pre id="log"></pre>
-    </div>
-    <div id="login-ui">
-        <button onclick="login()">Login</button>
-    </div>
-</body>
+
+            // login and store session if sucessful
+            function login() {
+                console.log('login')
+                sessionKit.login({permissionLevel}).then((result) => {
+                    console.log('successful', result)
+                    session = result
+                    didLogin()
+                })
+            }
+
+            // logout and remove session from storage
+            function logout() {
+                console.log('logout')
+                document.body.classList.remove('logged-in')
+                session = undefined
+            }
+
+            // called when session was restored or created
+            function didLogin() {
+                console.log('didLogin')
+                document.getElementById('account-name').textContent = session.actor
+                document.body.classList.add('logged-in')
+            }
+
+            // transfer tokens using a session
+            function transfer() {
+                console.log('transfer')
+                const action = {
+                    account: 'eosio.token',
+                    name: 'transfer',
+                    authorization: [session.permissionLevel],
+                    data: {
+                        from: session.actor,
+                        to: 'teamgreymass',
+                        quantity: '0.0001 EOS',
+                        memo: 'Yay WharfKit! Thank you <3',
+                    },
+                }
+                session.transact({action}, {broadcast: false}).then((result) => {
+                    console.log(result)
+                    document.getElementById(
+                        'log'
+                    ).innerHTML += `Transaction broadcast! ${result.resolved.transaction.id}\n`
+                })
+            }
+        </script>
+        <style>
+            .logged-in #login-ui {
+                display: none;
+            }
+            #app-ui {
+                display: none;
+            }
+            .logged-in #app-ui {
+                display: block;
+            }
+        </style>
+    </head>
+    <body onload="restoreSession()">
+        <h2>WharfKit Web Test</h2>
+        <div id="app-ui">
+            <p>Actor: <b id="account-name">foo</b>!</p>
+            <ul>
+                <li><button onclick="transfer()">Test transfer</button></li>
+                <li><button onclick="logout()">Log out</button></li>
+            </ul>
+            <h4>Log</h4>
+            <pre id="log"></pre>
+        </div>
+        <div id="login-ui">
+            <button onclick="login()">Login</button>
+        </div>
+    </body>
 </html>

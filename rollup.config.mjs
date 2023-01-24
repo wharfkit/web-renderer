@@ -9,7 +9,7 @@ import {terser} from 'rollup-plugin-terser'
 import json from '@rollup/plugin-json'
 import replace from '@rollup/plugin-replace'
 
-import pkg from './package.json'
+import pkg from './package.json' assert {type: 'json'}
 
 const license = fs.readFileSync('LICENSE').toString('utf-8').trim()
 const banner = `

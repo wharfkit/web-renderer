@@ -1,13 +1,15 @@
 import fs from 'fs'
 import svelte from 'rollup-plugin-svelte'
 import sveltePreprocess from 'svelte-preprocess'
+import * as child from 'child_process'
+
 import commonjs from '@rollup/plugin-commonjs'
 import resolve from '@rollup/plugin-node-resolve'
 import livereload from 'rollup-plugin-livereload'
 import typescript from '@rollup/plugin-typescript'
 import replace from '@rollup/plugin-replace'
 import json from '@rollup/plugin-json'
-import pkg from '../package.json'
+import pkg from '../package.json' assert {type: 'json'}
 
 function serve() {
     let server
@@ -19,7 +21,7 @@ function serve() {
     return {
         writeBundle() {
             if (server) return
-            server = require('child_process').spawn('npm', ['run', 'serve', '--', '--dev'], {
+            server = child.spawn('npm', ['run', 'serve', '--', '--dev'], {
                 stdio: ['ignore', 'inherit', 'inherit'],
                 shell: true,
             })

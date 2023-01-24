@@ -2,14 +2,15 @@
     "name": "@wharfkit/web",
     "version": "0.0.1",
     "description": "",
+    "type": "module",
     "license": "BSD-3-Clause",
     "main": "lib/wharfkit-web.js",
     "module": "lib/wharfkit-web.m.js",
     "types": "lib/wharfkit-web.d.ts",
     "unpkg": "lib/wharfkit-web.bundle.js",
     "scripts": {
-        "build": "rollup -c --bundleConfigAsCjs",
-        "dev": "rollup -c test/rollup.config.js --bundleConfigAsCjs -w",
+        "build": "rollup -c",
+        "dev": "rollup -c test/rollup.config.mjs -w",
         "serve": "sirv test/public --no-clear"
     },
     "directories": {
