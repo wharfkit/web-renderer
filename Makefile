@@ -14,6 +14,10 @@ test: node_modules
 coverage: node_modules
 	@TS_NODE_PROJECT='./test/tsconfig.json' ./node_modules/.bin/nyc --reporter=html ./node_modules/.bin/mocha -u tdd -r ts-node/register --extension ts test/*.ts -R nyan && open coverage/index.html
 
+.PHONY: format
+format: node_modules
+	@./node_modules/.bin/prettier -w .
+
 .PHONY: lint
 lint: node_modules
 	@./node_modules/.bin/eslint src --ext .ts --fix
