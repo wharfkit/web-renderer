@@ -1,4 +1,3 @@
-import fs from 'fs'
 import svelte from 'rollup-plugin-svelte'
 import sveltePreprocess from 'svelte-preprocess'
 import commonjs from '@rollup/plugin-commonjs'
@@ -41,26 +40,14 @@ const exportFix = `
 })()
 `
 
-const license = fs.readFileSync('LICENSE').toString('utf-8').trim()
-const banner = `
-/**
- * @wharfkit/web v${pkg.version}
- * ${pkg.homepage}
- *
- * @license
- * ${license.replace(/\n/g, '\n * ')}
- */
-`.trim()
-
 const replaceVersion = replace({
     preventAssignment: true,
     __ver: `${pkg.version}`,
 })
 
 export default {
-    input: 'src/index.ts',
+    input: 'test/index.ts',
     output: {
-        banner,
         name: 'WharfKitWeb',
         file: 'test/public/bundle.js',
         footer: exportFix,
@@ -92,5 +79,4 @@ export default {
         serve('test/public'),
         livereload('test/public'),
     ],
-    external: Object.keys({...pkg.peerDependencies}),
 }
