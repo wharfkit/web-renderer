@@ -20,7 +20,7 @@ const sveltePreprocessOptions = {
 
 export default [
     {
-        input: 'src/index-bundle.ts',
+        input: 'src/index.ts',
         output: {
             file: pkg.main,
             format: 'cjs',

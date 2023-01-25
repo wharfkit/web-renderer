@@ -1,8 +1,8 @@
 // export library
-export * from '../src/index-module'
+export * from '../src/index'
 
-// default export is Link class for convenience
-import {WebUIRenderer} from '../src/index-module'
+// default export is WebUIRenderer class for convenience
+import WebUIRenderer from '../src/index'
 export default WebUIRenderer
 
 // expose dependencies
