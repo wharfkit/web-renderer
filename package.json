@@ -34,7 +34,7 @@
         "buffer": false,
         "crypto": false
     },
-    "dependencies": {
+    "peerDependencies": {
         "@wharfkit/session": "^0.3.0-ui-3"
     },
     "devDependencies": {
