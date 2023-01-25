@@ -1,7 +1,7 @@
 import * as pkg from './index'
-const WharfKitWeb = pkg.default
+const WebUIRenderer = pkg.default
 for (const key of Object.keys(pkg)) {
     if (key === 'default') continue
-    WharfKitWeb[key] = pkg[key]
+    WebUIRenderer[key] = pkg[key]
 }
-export default WharfKitWeb
+export default WebUIRenderer

@@ -31,11 +31,11 @@ function serve() {
 
 const exportFix = `
 (function () {
-    var pkg = WharfKitWeb;
-    WharfKitWeb = pkg.default;
+    var pkg = WebUIRenderer;
+    WebUIRenderer = pkg.default;
     for (var key in pkg) {
         if (key === 'default') continue;
-        WharfKitWeb[key] = pkg[key];
+        WebUIRenderer[key] = pkg[key];
     }
 })()
 `
@@ -48,7 +48,7 @@ const replaceVersion = replace({
 export default {
     input: 'test/index.ts',
     output: {
-        name: 'WharfKitWeb',
+        name: 'WebUIRenderer',
         file: 'test/public/bundle.js',
         footer: exportFix,
         format: 'iife',

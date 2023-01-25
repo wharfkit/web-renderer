@@ -34,7 +34,7 @@ docs: $(SRC_FILES) node_modules
 	./node_modules/.bin/typedoc \
 		--excludeInternal \
 		--excludePrivate --excludeProtected \
-		--name "@wharfkit/web" --includeVersion --readme none \
+		--name "@wharfkit/web-ui-renderer" --includeVersion --readme none \
 		--out docs \
 		src/index-module.ts
 

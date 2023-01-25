@@ -5,7 +5,7 @@
 
         <script src="./bundle.js"></script>
         <script>
-            const {WalletPluginPrivateKey, SessionKit, Session} = WharfKitWeb
+            const {WalletPluginPrivateKey, SessionKit, Session} = WebUIRenderer
 
             const chain = {
                 id: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
@@ -18,7 +18,7 @@
                 privateKey: '5Jtoxgny5tT7NiNFp1MLogviuPJ9NniWjnU4wKzaX4t7pL4kJ8s',
             })
 
-            const ui = new WharfKitWeb()
+            const ui = new WebUIRenderer()
 
             const sessionKit = new SessionKit({
                 appName: 'demo-app',

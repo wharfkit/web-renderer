@@ -1,7 +1,7 @@
 import type {UserInterface} from '@wharfkit/session'
 import Modal, {showModal, status} from './Modal.svelte'
 
-export class WharfKitWeb implements UserInterface {
+export class WebUIRenderer implements UserInterface {
     static version = '__ver' // replaced by build script
 
     public modal?: Modal
@@ -20,20 +20,20 @@ export class WharfKitWeb implements UserInterface {
 
     onTransact(context) {
         // eslint-disable-next-line no-console
-        console.log('WharfKitWeb.onTransact', context)
+        console.log('WebUIRenderer.onTransact', context)
         this.createDialog()
         showModal()
     }
 
     onTransactResult(result) {
         // eslint-disable-next-line no-console
-        console.log('WharfKitWeb.onTransactResult', result)
+        console.log('WebUIRenderer.onTransactResult', result)
         status('Transaction complete! ' + result.resolved.transaction.id)
     }
 
     status(message: string) {
         // eslint-disable-next-line no-console
-        console.log('WharfKitWeb.status', message)
+        console.log('WebUIRenderer.status', message)
         status(message)
     }
 }
