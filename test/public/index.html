@@ -7,24 +7,34 @@
         <script>
             const {WalletPluginPrivateKey, SessionKit, Session} = WebUIRenderer
 
-            const chain = {
-                id: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
-                url: 'https://jungle4.greymass.com',
-            }
+            const chains = [
+                {
+                    id: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
+                    url: 'https://jungle4.greymass.com',
+                },
+                {
+                    id: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
+                    url: 'https://eos.greymass.com',
+                },
+            ]
 
             const permissionLevel = 'wharfkittest@test'
 
-            const walletPlugin = new WalletPluginPrivateKey({
+            const walletPlugin1 = new WalletPluginPrivateKey({
                 privateKey: '5Jtoxgny5tT7NiNFp1MLogviuPJ9NniWjnU4wKzaX4t7pL4kJ8s',
+            })
+
+            const walletPlugin2 = new WalletPluginPrivateKey({
+                privateKey: '5JAsUbwp2orxHRHRf59CR2GWuVVPioXWoiK9PnRTvNX8vCE5QBH',
             })
 
             const ui = new WebUIRenderer()
 
             const sessionKit = new SessionKit({
                 appName: 'demo-app',
-                chains: [chain],
+                chains,
                 ui,
-                walletPlugins: [walletPlugin],
+                walletPlugins: [walletPlugin1, walletPlugin2],
             })
 
             let session
@@ -53,12 +63,12 @@
                 // })
             }
 
-            // login and store session if sucessful
+            // login and store session if successful
             function login() {
                 console.log('login')
-                sessionKit.login({permissionLevel}).then((result) => {
+                sessionKit.login().then((result) => {
                     console.log('successful', result)
-                    session = result
+                    session = result.session
                     didLogin()
                 })
             }
@@ -74,7 +84,10 @@
             function didLogin() {
                 console.log('didLogin')
                 document.getElementById('account-name').textContent = session.actor
+                document.getElementById('account-permission').textContent = session.permission
+                document.getElementById('chain-id').textContent = session.chain.name
                 document.body.classList.add('logged-in')
+                // document.getElementById('session-dump').textContent = JSON.stringify(session)
             }
 
             // transfer tokens using a session
@@ -114,7 +127,10 @@
     <body onload="restoreSession()">
         <h2>WharfKit Web UI Renderer Test</h2>
         <div id="app-ui">
-            <p>Actor: <b id="account-name">foo</b>!</p>
+            <code><pre id="session-dump"></pre></code>
+            <p>Actor: <b id="account-name">undefined</b></p>
+            <p>Permission: <b id="account-permission">undefined</b></p>
+            <p>Chain: <b id="chain-id">undefined</b></p>
             <ul>
                 <li><button onclick="transfer()">Test transfer</button></li>
                 <li><button onclick="logout()">Log out</button></li>
