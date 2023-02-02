@@ -1,12 +1,5 @@
 import {Checksum256} from '@wharfkit/session'
-import {
-    ChainDefinition,
-    LoginContext,
-    LoginOptions,
-    PermissionLevel,
-    UserInterface,
-    WalletPlugin,
-} from '@wharfkit/session'
+import {LoginContext, LoginOptions, PermissionLevel, UserInterface} from '@wharfkit/session'
 import Blockchain from './Blockchain.svelte'
 import Modal, {hideModal, loadPrompt, resetPrompt, showModal, status} from './Modal.svelte'
 import Wallet from './Wallet.svelte'
@@ -28,14 +21,14 @@ export default class WebUIRenderer implements UserInterface {
         }
     }
 
-    onLogin(options?: LoginOptions) {
+    async onLogin(options?: LoginOptions) {
         console.log('onLogin')
         if (options) {
             console.log('onLogin options', JSON.parse(JSON.stringify(options)))
         }
     }
 
-    onLoginResult() {
+    async onLoginResult() {
         console.log('onLoginResult')
     }
 
@@ -100,14 +93,14 @@ export default class WebUIRenderer implements UserInterface {
         return walletSelected
     }
 
-    onTransact(context) {
+    async onTransact(context) {
         // eslint-disable-next-line no-console
         console.log('WebUIRenderer.onTransact', context)
         this.createDialog()
         showModal()
     }
 
-    onTransactResult(result) {
+    async onTransactResult(result) {
         // eslint-disable-next-line no-console
         console.log('WebUIRenderer.onTransactResult', result)
         status('Transaction complete! ' + result.resolved.transaction.id)

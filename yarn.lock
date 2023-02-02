@@ -1245,14 +1245,21 @@
     "@typescript-eslint/types" "5.49.0"
     eslint-visitor-keys "^3.3.0"
 
-"@wharfkit/session@^0.3.0-ui-3":
-  version "0.3.0-ui-3"
-  resolved "https://registry.yarnpkg.com/@wharfkit/session/-/session-0.3.0-ui-3.tgz#ba08df320f1bbb11f56ddcf003a891614cd3867f"
-  integrity sha512-Cnp9MaBoX6t6AofLjbnknJsclpRDlt5alrcJbPJfE5Xy2b9UNbqfmS/ZOVzCcEYq9aI/B7BsVS/mlOtmoK7jUg==
+"@wharfkit/session@^0.3.0-ui-5":
+  version "0.3.0-ui-5"
+  resolved "https://registry.yarnpkg.com/@wharfkit/session/-/session-0.3.0-ui-5.tgz#2a05b0fa7a31fdbfbc2e348ab2510bff18ae7698"
+  integrity sha512-QyH6VYvT07Vq4A/GY6y33sE8bVH3mgy24zENR2HCbP47sGQM12WznFylWIjQ3TOjF4aOL8yZrFUr62S7YMEj5g==
   dependencies:
     "@greymass/eosio" "^0.6.4"
     eosio-signing-request "^2.5.2"
     pako "^2.0.4"
+    tslib "^2.1.0"
+
+"@wharfkit/wallet-plugin-privatekey@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@wharfkit/wallet-plugin-privatekey/-/wallet-plugin-privatekey-0.1.0.tgz#acb5b2e118e3e97d2c63f888abca71c18c2d3b3a"
+  integrity sha512-62AZxB6hd3MbM3AJQbI3WF/cGloKGFrvMYQ8+4CVUHx9GqDY5BDSqstg7ROdW//gX636ftKHzuPNxcUNbpspyg==
+  dependencies:
     tslib "^2.1.0"
 
 acorn-jsx@^5.3.2:

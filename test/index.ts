@@ -7,3 +7,4 @@ export default WebUIRenderer
 
 // expose dependencies
 export * from '@wharfkit/session'
+export * from '@wharfkit/wallet-plugin-privatekey'
