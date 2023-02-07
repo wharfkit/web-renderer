@@ -5,4 +5,5 @@ declare module '*.svelte' {
     export const version: string
     export const showModal
     export const status
+    export const dialog
 }

@@ -23,7 +23,4 @@
 </div>
 
 <style>
-    div {
-        padding: 10px;
-    }
 </style>

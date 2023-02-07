@@ -13,19 +13,17 @@
 </script>
 
 <div>
-    <h3>Pick yo wallllllet!</h3>
+    <h3>Select a wallet</h3>
     {#if wallets}
         {#each wallets as wallet, index}
-            <button on:click={() => dispatch('complete', index)}
-                >{wallet.name} ({wallet.description})</button
-            >
+            <div class="option">
+                <button on:click={() => dispatch('complete', index)}>{wallet.name}</button>
+                <p>{wallet.description}</p>
+            </div>
         {/each}
     {/if}
     <button on:click={() => dispatch('cancel')}>cancel</button>
 </div>
 
 <style>
-    div {
-        padding: 10px;
-    }
 </style>

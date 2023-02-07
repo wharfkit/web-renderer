@@ -1,20 +1,40 @@
 import {Checksum256} from '@wharfkit/session'
 import {LoginContext, LoginOptions, PermissionLevel, UserInterface} from '@wharfkit/session'
+
+import {active, hideModal, loadPrompt, resetPrompt, showModal, status} from './Modal'
+
 import Blockchain from './Blockchain.svelte'
-import Modal, {hideModal, loadPrompt, resetPrompt, showModal, status} from './Modal.svelte'
+import Button from './Button.svelte'
+import CustomPrompt from './CustomPrompt.svelte'
+import Modal from './Modal.svelte'
+import Qr from './Qr.svelte'
 import Wallet from './Wallet.svelte'
+import {ComponentType, SvelteComponentTyped} from 'svelte'
+
+const elementId = 'wharfkit-dialog'
 
 export default class WebUIRenderer implements UserInterface {
     static version = '__ver' // replaced by build script
 
     public modal?: Modal
+    public displayed = false
 
-    createDialog() {
-        const existing = document.getElementById('wharfkit-modal')
+    constructor() {
+        document.addEventListener('DOMContentLoaded', this.createDialogElement)
+        active.subscribe((status) => {
+            console.log('active updated', status)
+            this.displayed = status
+        })
+    }
+
+    createDialogElement() {
+        const existing = document.getElementById(elementId)
         if (!existing) {
+            // Create the dialog element
             const el = document.createElement('div')
-            el.id = 'wharfkit-modal'
+            el.id = elementId
             document.body.append(el)
+            // Establish the Svelte application in the dialog
             this.modal = new Modal({
                 target: el,
             })
@@ -30,11 +50,14 @@ export default class WebUIRenderer implements UserInterface {
 
     async onLoginResult() {
         console.log('onLoginResult')
+        if (this.displayed) {
+            hideModal()
+        }
+        resetPrompt()
     }
 
     async onSelectChain(context: LoginContext): Promise<Checksum256> {
         console.log('onSelectChain', context.chains)
-        this.createDialog()
         showModal()
         const chainSelected = new Promise<Checksum256>((resolve, reject) => {
             loadPrompt({
@@ -67,8 +90,9 @@ export default class WebUIRenderer implements UserInterface {
     }
 
     async onSelectWallet(context: LoginContext): Promise<number> {
+        console.log('context', context)
         console.log('onSelectWallet', context.walletPlugins)
-        this.createDialog()
+        console.log(this.modal)
         showModal()
         const walletSelected = new Promise<number>((resolve, reject) => {
             loadPrompt({
@@ -96,7 +120,6 @@ export default class WebUIRenderer implements UserInterface {
     async onTransact(context) {
         // eslint-disable-next-line no-console
         console.log('WebUIRenderer.onTransact', context)
-        this.createDialog()
         showModal()
     }
 
@@ -106,8 +129,59 @@ export default class WebUIRenderer implements UserInterface {
         status('Transaction complete! ' + result.resolved.transaction.id)
     }
 
+    prompt(args) {
+        console.log('prompting... ', args)
+        const components: {
+            component: ComponentType<SvelteComponentTyped>
+            props: Record<string, unknown>
+        }[] = []
+        args.elements.forEach((element) => {
+            switch (element.type) {
+                case 'button': {
+                    components.push({
+                        component: Button,
+                        props: {
+                            data: element.data,
+                            label: element.label,
+                        },
+                    })
+                    break
+                }
+                case 'qr': {
+                    components.push({
+                        component: Qr,
+                        props: {
+                            data: element.data,
+                        },
+                    })
+                    break
+                }
+                default: {
+                    throw new Error(`Unknown element type: ${element.type}`)
+                }
+            }
+        })
+        console.log(components)
+        new Promise<number>((resolve, reject) => {
+            loadPrompt({
+                component: CustomPrompt,
+                props: {
+                    title: args.title,
+                    body: args.body,
+                    components,
+                },
+                cancel: async () => reject(),
+                complete: async (data) => resolve(data),
+            })
+        })
+    }
+
     status(message: string) {
         // eslint-disable-next-line no-console
+        if (!this.displayed) {
+            console.log('modal not displayed, showing to update status')
+            showModal()
+        }
         console.log('WebUIRenderer.status', message)
         status(message)
     }

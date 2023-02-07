@@ -5,7 +5,7 @@
 
         <script src="./bundle.js"></script>
         <script>
-            const {WalletPluginPrivateKey, SessionKit, Session} = WebUIRenderer
+            const {WalletPluginAnchor, WalletPluginPrivateKey, SessionKit, Session} = WebUIRenderer
 
             const chains = [
                 {
@@ -18,7 +18,9 @@
                 },
             ]
 
-            const permissionLevel = 'wharfkittest@test'
+            const permissionLevel = 'wharfkit1111@test'
+
+            const anchorPlugin = new WalletPluginAnchor()
 
             const walletPlugin1 = new WalletPluginPrivateKey({
                 privateKey: '5Jtoxgny5tT7NiNFp1MLogviuPJ9NniWjnU4wKzaX4t7pL4kJ8s',
@@ -34,7 +36,8 @@
                 appName: 'demo-app',
                 chains,
                 ui,
-                walletPlugins: [walletPlugin1, walletPlugin2],
+                // walletPlugins: [anchorPlugin],
+                walletPlugins: [anchorPlugin, walletPlugin1, walletPlugin2],
             })
 
             let session
@@ -50,6 +53,7 @@
             // tries to restore session, called when document is loaded
             function restoreSession() {
                 console.log('restoreSession (NYI)')
+                // login()
                 // If the session was defined, set the UI to logged in
                 if (session) {
                     didLogin()
@@ -65,12 +69,15 @@
 
             // login and store session if successful
             function login() {
-                console.log('login')
-                sessionKit.login().then((result) => {
-                    console.log('successful', result)
-                    session = result.session
-                    didLogin()
-                })
+                sessionKit
+                    .login({
+                        // permissionLevel,
+                    })
+                    .then((result) => {
+                        console.log('successful', result)
+                        session = result.session
+                        didLogin()
+                    })
             }
 
             // logout and remove session from storage
@@ -87,7 +94,6 @@
                 document.getElementById('account-permission').textContent = session.permission
                 document.getElementById('chain-id').textContent = session.chain.name
                 document.body.classList.add('logged-in')
-                // document.getElementById('session-dump').textContent = JSON.stringify(session)
             }
 
             // transfer tokens using a session

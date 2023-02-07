@@ -13,5 +13,5 @@
         "target": "es2020",
         "useUnknownInCatchVariables": false
     },
-    "include": ["src/*"]
+    "include": ["src/*", "src/qrcode/*"]
 }

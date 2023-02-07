@@ -1,40 +1,9 @@
 <svelte:options tag="wharfkit-modal" />
 
 <script lang="ts" context="module">
-    import {writable} from 'svelte/store'
+    import {active, prompt, message, hideModal} from './Modal'
 
-    export const active = writable(false)
-    export const message = writable('...')
-
-    export function status(value) {
-        message.set(value)
-    }
-
-    let dialog
-
-    interface Prompt {
-        component: ConstructorOfATypedSvelteComponent
-        props: any
-        complete: (e: any) => any
-        cancel: (e: any) => any
-    }
-    const prompt = writable<Prompt | undefined>()
-
-    export function showModal(): void {
-        dialog.showModal()
-    }
-
-    export function hideModal() {
-        dialog.close()
-    }
-
-    export function loadPrompt(promptOptions: Prompt) {
-        prompt.set(promptOptions)
-    }
-
-    export function resetPrompt() {
-        prompt.set(undefined)
-    }
+    export let dialog
 </script>
 
 <dialog bind:this={dialog} open={$active}>
