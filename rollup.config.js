@@ -3,6 +3,7 @@ import svelte from 'rollup-plugin-svelte'
 import sveltePreprocess from 'svelte-preprocess'
 import typescript from '@rollup/plugin-typescript'
 import replace from '@rollup/plugin-replace'
+import dts from 'rollup-plugin-dts'
 
 import pkg from './package.json'
 
@@ -69,5 +70,26 @@ export default [
             typescript({target: 'es2020'}),
         ],
         external: Object.keys({...pkg.dependencies, ...pkg.peerDependencies}),
+    },
+    {
+        input: 'src/index.ts',
+        output: {file: pkg.types, format: 'esm'},
+        plugins: [
+            replaceVersion,
+            svelte({
+                preprocess: sveltePreprocess(sveltePreprocessOptions),
+                compilerOptions: {
+                    customElement: true,
+                    dev: true,
+                },
+                emitCss: false,
+            }),
+            resolve({
+                browser: true,
+                dedupe: ['svelte'],
+            }),
+            typescript({target: 'es6'}),
+            dts(),
+        ],
     },
 ]
