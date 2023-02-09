@@ -1262,6 +1262,13 @@
   dependencies:
     tslib "^2.1.0"
 
+"@wharfkit/wallet-plugin-wax@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@wharfkit/wallet-plugin-wax/-/wallet-plugin-wax-0.1.0.tgz#558af9c099129effbbd851d803d40dfd453e772e"
+  integrity sha512-R3dsZABeLmvJ1YQbW1bDoaCW+q7dSmznqCktWXyaBgqSMgH915B/KC/ZZKbQ31f9S5ufmrGw/r6oReFXuFrzLw==
+  dependencies:
+    tslib "^2.1.0"
+
 acorn-jsx@^5.3.2:
   version "5.3.2"
   resolved "https://registry.yarnpkg.com/acorn-jsx/-/acorn-jsx-5.3.2.tgz#7ed5bb55908b3b2f1bc55c6af1653bada7f07937"

@@ -52,6 +52,7 @@
         "@typescript-eslint/parser": "^5.49.0",
         "@wharfkit/session": "^0.3.0-ui-6",
         "@wharfkit/wallet-plugin-privatekey": "^0.1.0",
+        "@wharfkit/wallet-plugin-wax": "^0.1.0",
         "core-js": "^3.27.2",
         "eslint": "^8.32.0",
         "eslint-config-prettier": "^8.6.0",
