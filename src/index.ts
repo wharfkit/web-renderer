@@ -8,6 +8,7 @@ import Button from './Button.svelte'
 import CustomPrompt from './CustomPrompt.svelte'
 import Modal from './Modal.svelte'
 import Qr from './Qr.svelte'
+import Countdown from './Countdown.svelte'
 import Wallet from './Wallet.svelte'
 import {ComponentType, SvelteComponentTyped} from 'svelte'
 
@@ -39,6 +40,10 @@ export default class WebUIRenderer implements UserInterface {
                 target: el,
             })
         }
+    }
+
+    async onError(error: Error) {
+        console.log(error)
     }
 
     async onLogin(options?: LoginOptions) {
@@ -150,6 +155,15 @@ export default class WebUIRenderer implements UserInterface {
                 case 'qr': {
                     components.push({
                         component: Qr,
+                        props: {
+                            data: element.data,
+                        },
+                    })
+                    break
+                }
+                case 'countdown': {
+                    components.push({
+                        component: Countdown,
                         props: {
                             data: element.data,
                         },
