@@ -1245,27 +1245,27 @@
     "@typescript-eslint/types" "5.49.0"
     eslint-visitor-keys "^3.3.0"
 
-"@wharfkit/session@^0.3.0-ui-6":
-  version "0.3.0-ui-6"
-  resolved "https://registry.yarnpkg.com/@wharfkit/session/-/session-0.3.0-ui-6.tgz#511fa3bf01ba30ede9101a7b9d1fa70d790ff503"
-  integrity sha512-xuVmO/jTW0Riu8E4cX98B8kv0R/hHmC+9d45C+grlGk2kR2iaEQKHgsJQ7XbV5BX3aXoaYW7ix+mnEYk0aE/qw==
+"@wharfkit/session@^0.3.0-ui-8":
+  version "0.3.0-ui-8"
+  resolved "https://registry.yarnpkg.com/@wharfkit/session/-/session-0.3.0-ui-8.tgz#f0d78bd4c4313b1c0ff3d1315a8cde7b2c309f2f"
+  integrity sha512-PkoKuMcTPUaj0ifPUG/Au4U3I3Q7lI/gNqZ3Gd88Qx8RuVjzc1NaiKeUeMCMbdOAOBKRJ+H52a9+WfWffY7kaA==
   dependencies:
     "@greymass/eosio" "^0.6.8"
     eosio-signing-request "^2.5.2"
     pako "^2.0.4"
     tslib "^2.1.0"
 
-"@wharfkit/wallet-plugin-privatekey@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@wharfkit/wallet-plugin-privatekey/-/wallet-plugin-privatekey-0.1.0.tgz#acb5b2e118e3e97d2c63f888abca71c18c2d3b3a"
-  integrity sha512-62AZxB6hd3MbM3AJQbI3WF/cGloKGFrvMYQ8+4CVUHx9GqDY5BDSqstg7ROdW//gX636ftKHzuPNxcUNbpspyg==
+"@wharfkit/wallet-plugin-privatekey@^0.3.0-ui-8":
+  version "0.3.0-ui-8"
+  resolved "https://registry.yarnpkg.com/@wharfkit/wallet-plugin-privatekey/-/wallet-plugin-privatekey-0.3.0-ui-8.tgz#372e15f7253c7e6e4e91a1b38f429acc70b28ce5"
+  integrity sha512-hIiAESI8qxF3EpjFPiXXNyqFCFt0JFvF8qyzrW/An8cm2ZStoB7D2Nm7ujrvP5pLxvnApvsWv4ODhh4T9vZT8w==
   dependencies:
     tslib "^2.1.0"
 
-"@wharfkit/wallet-plugin-wax@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@wharfkit/wallet-plugin-wax/-/wallet-plugin-wax-0.1.0.tgz#558af9c099129effbbd851d803d40dfd453e772e"
-  integrity sha512-R3dsZABeLmvJ1YQbW1bDoaCW+q7dSmznqCktWXyaBgqSMgH915B/KC/ZZKbQ31f9S5ufmrGw/r6oReFXuFrzLw==
+"@wharfkit/wallet-plugin-wax@^0.3.0-ui-8":
+  version "0.3.0-ui-8"
+  resolved "https://registry.yarnpkg.com/@wharfkit/wallet-plugin-wax/-/wallet-plugin-wax-0.3.0-ui-8.tgz#294569d2b4acc00eb8aa34dcb940534d60833256"
+  integrity sha512-xH/Mvi6Eup7G9eolx9xoOHRJG2lqY6/pu2w30wOML+gW6qAyX0wSeF5Yf9oyP63OMpb8ikHT4BOPWxXyu0KYNA==
   dependencies:
     tslib "^2.1.0"
 

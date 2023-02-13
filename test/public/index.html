@@ -6,6 +6,7 @@
         <script src="./bundle.js"></script>
         <script>
             const {
+                Asset,
                 WalletPluginAnchor,
                 WalletPluginPrivateKey,
                 WalletPluginWAX,
@@ -140,7 +141,7 @@
                         memo: 'Yay WharfKit! Thank you <3',
                     },
                 }
-                session.transact({action}, {broadcast: false}).then((result) => {
+                session.transact({action}, {broadcast: true}).then((result) => {
                     console.log('transact result', result)
                     document.getElementById(
                         'log'
@@ -171,6 +172,7 @@
             <p>Core Balance: <b id="account-balance">undefined</b></p>
             <ul>
                 <li><button onclick="transfer()">Test transfer</button></li>
+                <li><button onclick="refreshAccount()">Refresh account</button></li>
                 <li><button onclick="logout()">Log out</button></li>
             </ul>
             <h4>Log</h4>
