@@ -123,7 +123,8 @@
                     data: {
                         from: session.actor,
                         to: 'teamgreymass',
-                        quantity: '0.0001 EOS',
+                        // Use minimum value for test transfers
+                        quantity: Asset.fromUnits(1, account.core_liquid_balance.symbol),
                         memo: 'Yay WharfKit! Thank you <3',
                     },
                 }
