@@ -58,6 +58,7 @@
             })
 
             let session
+            let account
 
             // Uncomment to automatically create a logged in session for testing
             // session = new Session({
@@ -94,7 +95,17 @@
                         console.log('successful', result)
                         session = result.session
                         didLogin()
+                        refreshAccount()
                     })
+            }
+
+            function refreshAccount() {
+                session.client.v1.chain.get_account(session.actor).then((result) => {
+                    console.log('account loaded', result)
+                    account = result
+                    document.getElementById('account-balance').textContent =
+                        account.core_liquid_balance
+                })
             }
 
             // logout and remove session from storage
@@ -102,6 +113,7 @@
                 console.log('logout')
                 document.body.classList.remove('logged-in')
                 session = undefined
+                account = undefined
             }
 
             // called when session was restored or created
@@ -129,10 +141,11 @@
                     },
                 }
                 session.transact({action}, {broadcast: false}).then((result) => {
-                    console.log(result)
+                    console.log('transact result', result)
                     document.getElementById(
                         'log'
                     ).innerHTML += `Transaction broadcast! ${result.resolved.transaction.id}\n`
+                    refreshAccount() // refresh after transacting
                 })
             }
         </script>
@@ -155,6 +168,7 @@
             <p>Actor: <b id="account-name">undefined</b></p>
             <p>Permission: <b id="account-permission">undefined</b></p>
             <p>Chain: <b id="chain-id">undefined</b></p>
+            <p>Core Balance: <b id="account-balance">undefined</b></p>
             <ul>
                 <li><button onclick="transfer()">Test transfer</button></li>
                 <li><button onclick="logout()">Log out</button></li>
