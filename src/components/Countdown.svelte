@@ -1,5 +1,3 @@
-<svelte:options tag="wharfkit-modal-timer" />
-
 <script>
     import {onMount, onDestroy} from 'svelte'
 
@@ -38,6 +36,3 @@
         {countdownFormat(deadline)}
     {/key}
 {/if}
-
-<style>
-</style>

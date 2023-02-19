@@ -4,7 +4,7 @@ lib: ${SRC_FILES} package.json tsconfig.json node_modules rollup.config.js
 	@./node_modules/.bin/rollup -c && touch lib
 
 dev: ${SRC_FILES} package.json tsconfig.json node_modules rollup.config.js
-	@./node_modules/.bin/rollup -c test/rollup.config.js -w
+	@./node_modules/.bin/rollup -c test/rollup.config.js -w --host
 
 .PHONY: test
 test: node_modules

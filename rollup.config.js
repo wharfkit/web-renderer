@@ -32,10 +32,6 @@ export default [
             replaceVersion,
             svelte({
                 preprocess: sveltePreprocess(sveltePreprocessOptions),
-                compilerOptions: {
-                    customElement: true,
-                    dev: true,
-                },
                 emitCss: false,
             }),
             resolve({
@@ -57,10 +53,6 @@ export default [
             replaceVersion,
             svelte({
                 preprocess: sveltePreprocess(sveltePreprocessOptions),
-                compilerOptions: {
-                    customElement: true,
-                    dev: true,
-                },
                 emitCss: false,
             }),
             resolve({
@@ -78,10 +70,6 @@ export default [
             replaceVersion,
             svelte({
                 preprocess: sveltePreprocess(sveltePreprocessOptions),
-                compilerOptions: {
-                    customElement: true,
-                    dev: true,
-                },
                 emitCss: false,
             }),
             resolve({

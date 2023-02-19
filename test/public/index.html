@@ -38,12 +38,8 @@
             const anchorPlugin = new WalletPluginAnchor()
             const waxPlugin = new WalletPluginWAX()
 
-            const walletPlugin1 = new WalletPluginPrivateKey({
+            const privateKeyPlugin = new WalletPluginPrivateKey({
                 privateKey: '5Jtoxgny5tT7NiNFp1MLogviuPJ9NniWjnU4wKzaX4t7pL4kJ8s',
-            })
-
-            const walletPlugin2 = new WalletPluginPrivateKey({
-                privateKey: '5JAsUbwp2orxHRHRf59CR2GWuVVPioXWoiK9PnRTvNX8vCE5QBH',
             })
 
             const ui = new WebUIRenderer()
@@ -52,10 +48,11 @@
                 appName: 'demo-app',
                 chains,
                 ui,
+                allowModify: false,
                 // walletPlugins: [anchorPlugin],
                 // walletPlugins: [waxPlugin],
-                walletPlugins: [anchorPlugin, waxPlugin, walletPlugin1],
-                // walletPlugin2],
+                walletPlugins: [anchorPlugin, waxPlugin, privateKeyPlugin],
+                // walletPlugins: [privateKeyPlugin],
             })
 
             let session
@@ -71,12 +68,10 @@
 
             // tries to restore session, called when document is loaded
             function restoreSession() {
-                console.log('restoreSession (NYI)')
-                // login()
+                login()
                 // If the session was defined, set the UI to logged in
                 if (session) {
                     didLogin()
-                    transfer()
                 }
                 // link.restoreSession(identifier).then((result) => {
                 //     session = result
@@ -93,16 +88,17 @@
                         // permissionLevel,
                     })
                     .then((result) => {
-                        console.log('successful', result)
                         session = result.session
                         didLogin()
                         refreshAccount()
+                        // setTimeout(() => {
+                        //     transfer()
+                        // }, 500)
                     })
             }
 
             function refreshAccount() {
                 session.client.v1.chain.get_account(session.actor).then((result) => {
-                    console.log('account loaded', result)
                     account = result
                     document.getElementById('account-balance').textContent =
                         account.core_liquid_balance
@@ -111,7 +107,6 @@
 
             // logout and remove session from storage
             function logout() {
-                console.log('logout')
                 document.body.classList.remove('logged-in')
                 session = undefined
                 account = undefined
@@ -119,7 +114,6 @@
 
             // called when session was restored or created
             function didLogin() {
-                console.log('didLogin')
                 document.getElementById('account-name').textContent = session.actor
                 document.getElementById('account-permission').textContent = session.permission
                 document.getElementById('chain-id').textContent = session.chain.name
@@ -128,7 +122,6 @@
 
             // transfer tokens using a session
             function transfer() {
-                console.log('transfer')
                 const action = {
                     account: 'eosio.token',
                     name: 'transfer',
@@ -138,17 +131,30 @@
                         to: 'teamgreymass',
                         // Use minimum value for test transfers
                         quantity: Asset.fromUnits(1, account.core_liquid_balance.symbol),
+                        // quantity: Asset.from('1.00000000 WAX'),
                         memo: 'Yay WharfKit! Thank you <3',
                     },
                 }
-                session.transact({action}, {broadcast: true}).then((result) => {
-                    console.log('transact result', result)
-                    document.getElementById(
-                        'log'
-                    ).innerHTML += `Transaction broadcast! ${result.resolved.transaction.id}\n`
-                    refreshAccount() // refresh after transacting
-                })
+                session
+                    .transact(
+                        {action},
+                        {
+                            broadcast: false,
+                            // broadcast: true,
+                        }
+                    )
+                    .then((result) => {
+                        document.getElementById(
+                            'log'
+                        ).innerHTML += `Transaction broadcast! ${result.resolved.transaction.id}\n`
+                    })
             }
+
+            setInterval(() => {
+                if (session) {
+                    refreshAccount()
+                }
+            }, 1000)
         </script>
         <style>
             .logged-in #login-ui {

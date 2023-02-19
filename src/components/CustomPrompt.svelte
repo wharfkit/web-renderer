@@ -1,5 +1,3 @@
-<svelte:options tag="wharfkit-modal-customprompt" />
-
 <script lang="ts">
     import {ComponentType, createEventDispatcher, SvelteComponentTyped} from 'svelte'
 
@@ -30,6 +28,3 @@
         {/each}
     {/if}
 </div>
-
-<style>
-</style>
