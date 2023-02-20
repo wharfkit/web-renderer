@@ -35,7 +35,7 @@
         "crypto": false
     },
     "peerDependencies": {
-        "@wharfkit/session": "^0.3.0-ui-5"
+        "@wharfkit/session": "^0.3.0-ui-12"
     },
     "devDependencies": {
         "@babel/core": "^7.20.12",
@@ -50,7 +50,8 @@
         "@tsconfig/svelte": "^3.0.0",
         "@typescript-eslint/eslint-plugin": "^5.49.0",
         "@typescript-eslint/parser": "^5.49.0",
-        "@wharfkit/session": "^0.3.0-ui-11",
+        "@wharfkit/session": "^0.3.0-ui-12",
+        "@wharfkit/wallet-plugin-mock": "^0.1.0",
         "@wharfkit/wallet-plugin-privatekey": "^0.3.0-ui-11",
         "@wharfkit/wallet-plugin-wax": "^0.3.0-ui-11",
         "core-js": "^3.27.2",
@@ -72,6 +73,5 @@
         "svelte-preprocess": "^5.0.1",
         "tslib": "^2.4.1",
         "typescript": "^4.9.4"
-    },
-    "dependencies": {}
+    }
 }

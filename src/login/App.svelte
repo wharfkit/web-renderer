@@ -165,7 +165,7 @@
             walletPlugin={$walletPlugin}
         />
     {:else}
-        <p>Done!?!?@!</p>
+        <p>Login Complete!</p>
     {/if}
 {:else}
     <p>Loading...</p>

@@ -6,12 +6,19 @@
         <script src="./bundle.js"></script>
         <script>
             const {
+                abiEncode,
                 Asset,
+                Bytes,
                 WalletPluginAnchor,
+                WalletPluginMock,
                 WalletPluginPrivateKey,
                 WalletPluginWAX,
+                PackedTransaction,
+                Serializer,
                 SessionKit,
                 Session,
+                SignedTransaction,
+                Transaction,
             } = WebUIRenderer
 
             const chains = [
@@ -36,6 +43,7 @@
             const permissionLevel = 'wharfkit1111@test'
 
             const anchorPlugin = new WalletPluginAnchor()
+            const mockPlugin = new WalletPluginMock()
             const waxPlugin = new WalletPluginWAX()
 
             const privateKeyPlugin = new WalletPluginPrivateKey({
@@ -48,10 +56,11 @@
                 appName: 'demo-app',
                 chains,
                 ui,
-                allowModify: false,
+                // allowModify: false,
                 // walletPlugins: [anchorPlugin],
+                // walletPlugins: [mockPlugin],
                 // walletPlugins: [waxPlugin],
-                walletPlugins: [anchorPlugin, waxPlugin, privateKeyPlugin],
+                walletPlugins: [anchorPlugin, mockPlugin, waxPlugin, privateKeyPlugin],
                 // walletPlugins: [privateKeyPlugin],
             })
 
@@ -67,8 +76,15 @@
             // })
 
             // tries to restore session, called when document is loaded
-            function restoreSession() {
-                login()
+            async function restoreSession() {
+                // export interface RestoreArgs {
+                //     chain: Checksum256Type
+                //     actor: NameType
+                //     permission: NameType
+                //     walletPlugin: Record<string, any>
+                // }
+                session = await sessionKit.restore()
+                updateSessions()
                 // If the session was defined, set the UI to logged in
                 if (session) {
                     didLogin()
@@ -79,6 +95,26 @@
                 //         didLogin()
                 //     }
                 // })
+            }
+
+            async function updateSessions() {
+                const sessions = await sessionKit.getSessions()
+                const container = document.getElementById('sessions')
+                container.innerHTML = ''
+                sessions.forEach((s) => {
+                    const child = document.createElement('li')
+                    const button = document.createElement('button')
+                    button.textContent = `${s.actor} (${s.permission}) on ${s.chain}`
+                    child.appendChild(button)
+                    button.onclick = () => {
+                        sessionKit.restore(s).then((result) => {
+                            session = result
+                            didLogin()
+                            refreshAccount()
+                        })
+                    }
+                    container.appendChild(child)
+                })
             }
 
             // login and store session if successful
@@ -101,12 +137,36 @@
                 session.client.v1.chain.get_account(session.actor).then((result) => {
                     account = result
                     document.getElementById('account-balance').textContent =
-                        account.core_liquid_balance
+                        account.core_liquid_balance ? account.core_liquid_balance : '0.0000'
                 })
             }
 
             // logout and remove session from storage
-            function logout() {
+            async function logout() {
+                // Logout the current session
+                await sessionKit.logout(session)
+                const sessions = await sessionKit.getSessions()
+                if (sessions) {
+                    if (!sessions.length) {
+                        document.body.classList.remove('logged-in')
+                        session = undefined
+                        account = undefined
+                    } else {
+                        session = await sessionKit.restore(sessions[0])
+                        account = undefined
+                        didLogin()
+                        refreshAccount()
+                    }
+                } else {
+                    document.body.classList.remove('logged-in')
+                    session = undefined
+                    account = undefined
+                }
+            }
+
+            async function logoutAll() {
+                // Logout all sessions
+                await sessionKit.logout()
                 document.body.classList.remove('logged-in')
                 session = undefined
                 account = undefined
@@ -114,6 +174,7 @@
 
             // called when session was restored or created
             function didLogin() {
+                updateSessions()
                 document.getElementById('account-name').textContent = session.actor
                 document.getElementById('account-permission').textContent = session.permission
                 document.getElementById('chain-id').textContent = session.chain.name
@@ -130,7 +191,9 @@
                         from: session.actor,
                         to: 'teamgreymass',
                         // Use minimum value for test transfers
-                        quantity: Asset.fromUnits(1, account.core_liquid_balance.symbol),
+                        quantity: account.core_liquid_balance
+                            ? Asset.fromUnits(1, account.core_liquid_balance.symbol)
+                            : '0.0001 EOS',
                         // quantity: Asset.from('1.00000000 WAX'),
                         memo: 'Yay WharfKit! Thank you <3',
                     },
@@ -139,8 +202,8 @@
                     .transact(
                         {action},
                         {
-                            broadcast: false,
-                            // broadcast: true,
+                            // broadcast: false,
+                            broadcast: true,
                         }
                     )
                     .then((result) => {
@@ -176,11 +239,16 @@
             <p>Permission: <b id="account-permission">undefined</b></p>
             <p>Chain: <b id="chain-id">undefined</b></p>
             <p>Core Balance: <b id="account-balance">undefined</b></p>
+            <h3>Actions</h3>
             <ul>
                 <li><button onclick="transfer()">Test transfer</button></li>
+                <li><button onclick="login()">Login new account</button></li>
                 <li><button onclick="refreshAccount()">Refresh account</button></li>
                 <li><button onclick="logout()">Log out</button></li>
+                <li><button onclick="logoutAll()">Log out all sessions</button></li>
             </ul>
+            <h3>Accounts</h3>
+            <ul id="sessions"></ul>
             <h4>Log</h4>
             <pre id="log"></pre>
         </div>
