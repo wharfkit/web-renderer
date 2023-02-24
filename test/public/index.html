@@ -9,7 +9,8 @@
                 abiEncode,
                 Asset,
                 Bytes,
-                WalletPluginAnchor,
+                TransactPluginAutoCorrect,
+                // WalletPluginAnchor,
                 WalletPluginMock,
                 WalletPluginPrivateKey,
                 WalletPluginWAX,
@@ -26,29 +27,29 @@
                     id: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
                     url: 'https://jungle4.greymass.com',
                 },
-                {
-                    id: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
-                    url: 'https://eos.greymass.com',
-                },
+                // {
+                //     id: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
+                //     url: 'https://eos.greymass.com',
+                // },
                 {
                     id: '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4',
                     url: 'https://wax.greymass.com',
                 },
-                {
-                    id: 'f16b1833c747c43682f4386fca9cbb327929334a762755ebec17f6f23c9b8a12',
-                    url: 'https://waxtestnet.greymass.com',
-                },
+                // {
+                //     id: 'f16b1833c747c43682f4386fca9cbb327929334a762755ebec17f6f23c9b8a12',
+                //     url: 'https://waxtestnet.greymass.com',
+                // },
             ]
 
             const permissionLevel = 'wharfkit1111@test'
 
-            const anchorPlugin = new WalletPluginAnchor()
+            // const anchorPlugin = new WalletPluginAnchor()
             const mockPlugin = new WalletPluginMock()
             const waxPlugin = new WalletPluginWAX()
 
-            const privateKeyPlugin = new WalletPluginPrivateKey({
-                privateKey: '5Jtoxgny5tT7NiNFp1MLogviuPJ9NniWjnU4wKzaX4t7pL4kJ8s',
-            })
+            const privateKeyPlugin = new WalletPluginPrivateKey(
+                '5Jtoxgny5tT7NiNFp1MLogviuPJ9NniWjnU4wKzaX4t7pL4kJ8s'
+            )
 
             const ui = new WebUIRenderer()
 
@@ -56,11 +57,12 @@
                 appName: 'demo-app',
                 chains,
                 ui,
+                transactPlugins: [new TransactPluginAutoCorrect()],
                 // allowModify: false,
                 // walletPlugins: [anchorPlugin],
                 // walletPlugins: [mockPlugin],
                 // walletPlugins: [waxPlugin],
-                walletPlugins: [anchorPlugin, mockPlugin, waxPlugin, privateKeyPlugin],
+                walletPlugins: [mockPlugin, waxPlugin, privateKeyPlugin],
                 // walletPlugins: [privateKeyPlugin],
             })
 
@@ -88,6 +90,7 @@
                 // If the session was defined, set the UI to logged in
                 if (session) {
                     didLogin()
+                    refreshAccount()
                 }
                 // link.restoreSession(identifier).then((result) => {
                 //     session = result
@@ -215,7 +218,7 @@
 
             setInterval(() => {
                 if (session) {
-                    refreshAccount()
+                    // refreshAccount()
                 }
             }, 1000)
         </script>

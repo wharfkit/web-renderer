@@ -12,7 +12,7 @@
     export let components: subcomponent[]
 
     const dispatch = createEventDispatcher<{
-        complete: number
+        complete: void
         cancel: void
     }>()
 </script>
@@ -23,7 +23,12 @@
     {#if components}
         {#each components as component}
             <div>
-                <svelte:component this={component.component} {...component.props} />
+                <svelte:component
+                    this={component.component}
+                    on:complete={() => dispatch('complete')}
+                    on:cancel={() => dispatch('cancel')}
+                    {...component.props}
+                />
             </div>
         {/each}
     {/if}

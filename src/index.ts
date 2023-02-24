@@ -1,9 +1,17 @@
 import {ComponentType, SvelteComponentTyped} from 'svelte'
-import {UserInterfaceLoginResponse} from '@wharfkit/session'
+import {
+    cancelable,
+    Cancelable,
+    PromptArgs,
+    PromptResponse,
+    UserInterfaceLoginResponse,
+} from '@wharfkit/session'
 import {LoginContext, LoginOptions, UserInterface} from '@wharfkit/session'
 
 import {status} from './components/Modal'
 
+import Accept from './components/Accept.svelte'
+import Asset from './components/Asset.svelte'
 import Button from './components/Button.svelte'
 import CustomPrompt from './components/CustomPrompt.svelte'
 import Countdown from './components/Countdown.svelte'
@@ -20,6 +28,7 @@ export default class WebUIRenderer implements UserInterface {
 
     public element: Element
     public shadow: ShadowRoot
+
     public modal?: Modal
     public displayed = false
 
@@ -97,7 +106,7 @@ export default class WebUIRenderer implements UserInterface {
         status('Transaction complete!')
     }
 
-    prompt(args) {
+    prompt(args: PromptArgs): Cancelable<PromptResponse> {
         this.shadow.innerHTML = ''
         const components: {
             component: ComponentType<SvelteComponentTyped>
@@ -105,6 +114,24 @@ export default class WebUIRenderer implements UserInterface {
         }[] = []
         args.elements.forEach((element) => {
             switch (element.type) {
+                case 'accept': {
+                    components.push({
+                        component: Accept,
+                        props: {
+                            data: element.data,
+                        },
+                    })
+                    break
+                }
+                case 'asset': {
+                    components.push({
+                        component: Asset,
+                        props: {
+                            data: element.data,
+                        },
+                    })
+                    break
+                }
                 case 'button': {
                     components.push({
                         component: Button,
@@ -138,23 +165,43 @@ export default class WebUIRenderer implements UserInterface {
                 }
             }
         })
-        new Promise<number>((resolve, reject) => {
+        const complete = () => {
+            // close itself?
+            this.shadow.innerHTML = ''
             new Modal({
                 target: this.shadow,
-                props: {
-                    prompt: {
-                        component: CustomPrompt,
-                        props: {
-                            title: args.title,
-                            body: args.body,
-                            components,
-                        },
-                        cancel: async () => reject(),
-                        complete: async (data) => resolve(data),
-                    },
-                },
+                props: {},
             })
-        })
+        }
+        return cancelable(
+            new Promise((resolve, reject) => {
+                new Modal({
+                    target: this.shadow,
+                    props: {
+                        prompt: {
+                            component: CustomPrompt,
+                            props: {
+                                title: args.title,
+                                body: args.body,
+                                components,
+                            },
+                            cancel: async (reason) => {
+                                complete()
+                                reject()
+                            },
+                            complete: async (data) => {
+                                complete()
+                                resolve(data)
+                            },
+                        },
+                    },
+                })
+            }),
+            (canceled) => {
+                complete()
+                throw canceled
+            }
+        )
     }
 
     status(message: string) {
