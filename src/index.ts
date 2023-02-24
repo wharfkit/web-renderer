@@ -32,6 +32,8 @@ export default class WebUIRenderer implements UserInterface {
     public modal?: Modal
     public displayed = false
 
+    public cancelablePromises: ((reason: string) => void)[] = []
+
     constructor() {
         // Create the dialog element and its shadow root
         this.element = document.createElement('div')
@@ -48,25 +50,41 @@ export default class WebUIRenderer implements UserInterface {
         }
     }
 
-    async login(context: LoginContext): Promise<UserInterfaceLoginResponse> {
-        const loginResponse = await new Promise<UserInterfaceLoginResponse>((resolve, reject) => {
-            new Modal({
-                target: this.shadow,
-                props: {
-                    prompt: {
-                        component: Login,
-                        props: {
-                            context,
-                        },
-                        cancel: async () => reject(),
-                        complete: async (event: CustomEvent<UserInterfaceLoginResponse>) => {
-                            resolve(event.detail)
+    // An array to store references to all active "cancel" callbacks for Cancelable promises
+    registerCancelCallback(callback: any): void {
+        this.cancelablePromises.push(callback)
+    }
+
+    // Execute all registered "cancel" callbacks and clear the array
+    cancelCallbacks(reason: string) {
+        console.log('calling cancelCallbacks')
+        this.cancelablePromises.map((f) => f(reason))
+        this.cancelablePromises = []
+    }
+
+    login(context: LoginContext): Cancelable<UserInterfaceLoginResponse> {
+        const promise = cancelable(
+            new Promise<UserInterfaceLoginResponse>((resolve, reject) => {
+                new Modal({
+                    target: this.shadow,
+                    props: {
+                        prompt: {
+                            component: Login,
+                            props: {
+                                context,
+                            },
+                            abort: () => this.cancelCallbacks('aborting from modal close'),
+                            cancel: async () => reject(),
+                            complete: async (event: CustomEvent<UserInterfaceLoginResponse>) => {
+                                resolve(event.detail)
+                            },
                         },
                     },
-                },
+                })
             })
-        })
-        return loginResponse
+        )
+        this.registerCancelCallback(promise.cancel)
+        return promise
     }
 
     async onError(error: Error) {
@@ -173,7 +191,7 @@ export default class WebUIRenderer implements UserInterface {
                 props: {},
             })
         }
-        return cancelable(
+        const promise: Cancelable<PromptResponse> = cancelable(
             new Promise((resolve, reject) => {
                 new Modal({
                     target: this.shadow,
@@ -185,9 +203,10 @@ export default class WebUIRenderer implements UserInterface {
                                 body: args.body,
                                 components,
                             },
+                            abort: () => this.cancelCallbacks('aborting from modal close'),
                             cancel: async (reason) => {
                                 complete()
-                                reject()
+                                reject(reason)
                             },
                             complete: async (data) => {
                                 complete()
@@ -202,6 +221,8 @@ export default class WebUIRenderer implements UserInterface {
                 throw canceled
             }
         )
+        this.registerCancelCallback(promise.cancel)
+        return promise
     }
 
     status(message: string) {

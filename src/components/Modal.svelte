@@ -10,8 +10,9 @@
     interface Prompt {
         component: ComponentType<SvelteComponentTyped>
         props: any
+        abort: (reason: string) => any
         complete: (e: any) => any
-        cancel: (e: any) => any
+        cancel: (reason: string) => any
     }
 
     export let prompt: Prompt
@@ -29,12 +30,22 @@
             event.clientX <= rect.left + rect.width
         if (!isInDialog) {
             dialog.close()
+            console.log('modal closed via background click')
+            if (prompt.abort) {
+                prompt.abort('prompt aborted via background click')
+                console.log('prompt aborted via background click')
+            }
         }
     }
 
     function escapeClose(event) {
         if (event.key === 'Escape') {
             dialog.close()
+            console.log('modal closed via keypress')
+            if (prompt.abort) {
+                prompt.abort('prompt aborted via keypress')
+                console.log('prompt aborted via keypress')
+            }
         }
     }
 </script>
