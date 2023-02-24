@@ -1,6 +1,6 @@
 {
     "name": "@wharfkit/web-ui-renderer",
-    "version": "0.0.6",
+    "version": "0.3.0-ui-13",
     "description": "",
     "license": "BSD-3-Clause",
     "main": "lib/web-ui-renderer.js",
@@ -51,6 +51,7 @@
         "@typescript-eslint/eslint-plugin": "^5.49.0",
         "@typescript-eslint/parser": "^5.49.0",
         "@wharfkit/session": "^0.3.0-ui-13",
+        "@wharfkit/transact-plugin-autocorrect": "^0.3.0-ui-13",
         "@wharfkit/wallet-plugin-mock": "^0.3.0-ui-13",
         "@wharfkit/wallet-plugin-privatekey": "^0.3.0-ui-13.1",
         "@wharfkit/wallet-plugin-wax": "^0.3.0-ui-13",
