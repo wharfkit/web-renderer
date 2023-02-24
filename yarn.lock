@@ -949,10 +949,21 @@
   resolved "https://registry.yarnpkg.com/@gar/promisify/-/promisify-1.1.3.tgz#555193ab2e3bb3b6adc3d551c9c030d9e860daf6"
   integrity sha512-k2Ty1JcVojjJFwrg/ThKi2ujJ7XNLYaFGNB/bWT9wGR+oSMJHMa5w+CUq6p/pVrKeNNgA7pCqEcjSnHVoqJQFw==
 
-"@greymass/eosio@^0.6.0", "@greymass/eosio@^0.6.8":
+"@greymass/eosio@^0.6.0":
   version "0.6.8"
   resolved "https://registry.yarnpkg.com/@greymass/eosio/-/eosio-0.6.8.tgz#6f24071eaec6e0df33e3c35ca0704a53146c00d2"
   integrity sha512-niWrUjCzQR9bJsl5IhrJIoi9fWCL4gEAOOaBdTmJuUFpOISQYe4zir5TjNlvlfpCC9ajy7o0pUNpDZuVrNaijQ==
+  dependencies:
+    bn.js "^4.11.9"
+    brorand "^1.1.0"
+    elliptic "^6.5.4"
+    hash.js "^1.0.0"
+    tslib "^2.0.3"
+
+"@greymass/eosio@^0.6.9":
+  version "0.6.9"
+  resolved "https://registry.yarnpkg.com/@greymass/eosio/-/eosio-0.6.9.tgz#e5475dfb6f1507da6ec2f9f0065e19684e8d4b70"
+  integrity sha512-Xd6X3sesStFQiw3+6+8tD1IauW3WX25GQnHa/zhUqIE1cB23bjzLqn89JDTcyQYKJ4R24L1rERqko/u6p7RizA==
   dependencies:
     bn.js "^4.11.9"
     brorand "^1.1.0"
@@ -1302,34 +1313,34 @@
     "@typescript-eslint/types" "5.49.0"
     eslint-visitor-keys "^3.3.0"
 
-"@wharfkit/session@^0.3.0-ui-12":
-  version "0.3.0-ui-12"
-  resolved "https://registry.yarnpkg.com/@wharfkit/session/-/session-0.3.0-ui-12.tgz#1d2b56604cd128407e74b51d42e7be8e60c3f9b4"
-  integrity sha512-ibAim5X05WaL1Ms4Qm3gLNwNyPJhelbebqk5IWbP+YWxodciiUliUPDx2UKijNh7T2DqQCerstkJrgq8DoNmmQ==
+"@wharfkit/session@^0.3.0-ui-13":
+  version "0.3.0-ui-13"
+  resolved "https://registry.yarnpkg.com/@wharfkit/session/-/session-0.3.0-ui-13.tgz#42da63eaad14c5cfd56b0fe0dfa42576caecef98"
+  integrity sha512-x9lzzNeb7+EZ4Q+Cw0seJSEDJcsuDpsqFkMfQKwkpgrf4mJ9oYSUHo7lrynZgJay9Psp4d3EqGcoNGRcV2SMtg==
   dependencies:
-    "@greymass/eosio" "^0.6.8"
+    "@greymass/eosio" "^0.6.9"
     eosio-signing-request "^2.5.2"
     pako "^2.0.4"
     tslib "^2.1.0"
 
-"@wharfkit/wallet-plugin-mock@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@wharfkit/wallet-plugin-mock/-/wallet-plugin-mock-0.1.0.tgz#7f6d9916af4aec3a8c7a4095619703a09a80814c"
-  integrity sha512-EieK6A3JHn7ujud6/gmEQkutp95jcyUJsGRrlyHNLbGqFlHm6Dh/DDKlhfb/2GuEvRrSKgybMW9qTWdmr3Ui5A==
+"@wharfkit/wallet-plugin-mock@^0.3.0-ui-13":
+  version "0.3.0-ui-13"
+  resolved "https://registry.yarnpkg.com/@wharfkit/wallet-plugin-mock/-/wallet-plugin-mock-0.3.0-ui-13.tgz#10a41fa43d4d37ff1d1bfa14fe8a46d1e3ad1f74"
+  integrity sha512-+cvBb0XLv0EKk+p+WOd+BtOLXyV0I4nd1Vc0evjY7OdJYni4EYFHMoxBpkZOStbnee695NqGYqkjEvKO7T3XxQ==
   dependencies:
     tslib "^2.1.0"
 
-"@wharfkit/wallet-plugin-privatekey@^0.3.0-ui-11":
-  version "0.3.0-ui-11"
-  resolved "https://registry.yarnpkg.com/@wharfkit/wallet-plugin-privatekey/-/wallet-plugin-privatekey-0.3.0-ui-11.tgz#1e66289f54b25139e7f752e163825e12ec699300"
-  integrity sha512-uvt7Saq/Xz/9FDHsSmG7sHzoMaV5QQ60U9KUXi7Wf4Xu2rV//VdKcE/4MrEghNkLdWSM62/gp2FhjJXmuB2dLA==
+"@wharfkit/wallet-plugin-privatekey@^0.3.0-ui-13.1":
+  version "0.3.0-ui-13.1"
+  resolved "https://registry.yarnpkg.com/@wharfkit/wallet-plugin-privatekey/-/wallet-plugin-privatekey-0.3.0-ui-13.1.tgz#ce2d7b662b1d301d902a35f9e7a1042337502fd5"
+  integrity sha512-F8GiPbjBPxVE/jSpnGOa39jQAbCHvhTHxfxA+nvaGgwax2sXcZKbaKUY4b0lZ2A8Nh+goBY4gcBIG2GYfwwoNg==
   dependencies:
     tslib "^2.1.0"
 
-"@wharfkit/wallet-plugin-wax@^0.3.0-ui-11":
-  version "0.3.0-ui-11"
-  resolved "https://registry.yarnpkg.com/@wharfkit/wallet-plugin-wax/-/wallet-plugin-wax-0.3.0-ui-11.tgz#34dc1576bb6b03280895480f14a2437c0748a98f"
-  integrity sha512-Q+eBifQbnVIkGL5iwrkGt0m5G8vJzM/nhomNIQj7kuoukoI7VJYzn4tJbW36ofe1CXrQggx/tC9vqGg4Sh092w==
+"@wharfkit/wallet-plugin-wax@^0.3.0-ui-13":
+  version "0.3.0-ui-13"
+  resolved "https://registry.yarnpkg.com/@wharfkit/wallet-plugin-wax/-/wallet-plugin-wax-0.3.0-ui-13.tgz#908c481d54b31cb881e688b20abbd42c54e0fa0e"
+  integrity sha512-TnbKiaGAQin6T0kA68Pv/c7qkHBACdR0/+3P577q1jV3HKmaE0yLFQlSAYrfk5irxFHU9DLE5Y8KfR0lrjNhbg==
   dependencies:
     tslib "^2.1.0"
 
