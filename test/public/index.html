@@ -10,7 +10,7 @@
                 Bytes,
                 TransactPluginAutoCorrect,
                 TransactPluginResourceProvider,
-                WalletPluginAnchor,
+                // WalletPluginAnchor,
                 WalletPluginMock,
                 WalletPluginPrivateKey,
                 WalletPluginWAX,
@@ -43,7 +43,7 @@
 
             const permissionLevel = 'wharfkit1111@test'
 
-            const anchorPlugin = new WalletPluginAnchor()
+            // const anchorPlugin = new WalletPluginAnchor()
             const mockPlugin = new WalletPluginMock()
             const waxPlugin = new WalletPluginWAX()
 
@@ -57,35 +57,23 @@
                 appName: 'demo-app',
                 chains,
                 ui,
+                // Various transaction plugins, uncomment one to test
                 // transactPlugins: [new TransactPluginAutoCorrect()],
-                // transactPlugins: [new TransactPluginResourceProvider()],
-                // allowModify: false,
+                transactPlugins: [new TransactPluginResourceProvider()],
+                // Various wallet configurations, uncomment one to test
                 // walletPlugins: [anchorPlugin],
                 // walletPlugins: [mockPlugin],
-                // walletPlugins: [waxPlugin],
-                walletPlugins: [anchorPlugin, mockPlugin, waxPlugin, privateKeyPlugin],
                 // walletPlugins: [privateKeyPlugin],
+                // walletPlugins: [waxPlugin],
+                walletPlugins: [mockPlugin, waxPlugin, privateKeyPlugin],
+                // walletPlugins: [anchorPlugin, mockPlugin, waxPlugin, privateKeyPlugin],
             })
 
             let session
             let account
 
-            // Uncomment to automatically create a logged in session for testing
-            // session = new Session({
-            //     chain,
-            //     permissionLevel,
-            //     ui,
-            //     walletPlugin,
-            // })
-
             // tries to restore session, called when document is loaded
             async function restoreSession() {
-                // export interface RestoreArgs {
-                //     chain: Checksum256Type
-                //     actor: NameType
-                //     permission: NameType
-                //     walletPlugin: Record<string, any>
-                // }
                 session = await sessionKit.restore()
                 updateSessions()
                 // If the session was defined, set the UI to logged in
@@ -94,17 +82,11 @@
                     refreshAccount()
                 }
 
+                // Uncomment to test login automatically on load
                 // session = await sessionKit.login()
                 // setTimeout(() => {
                 //     transfer()
                 // }, 500)
-
-                // link.restoreSession(identifier).then((result) => {
-                //     session = result
-                //     if (session) {
-                //         didLogin()
-                //     }
-                // })
             }
 
             async function updateSessions() {

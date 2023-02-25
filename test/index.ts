@@ -9,7 +9,7 @@ export default WebUIRenderer
 export * from '@wharfkit/session'
 export * from '@wharfkit/transact-plugin-autocorrect'
 export * from '@wharfkit/transact-plugin-resource-provider'
-export * from '@wharfkit/wallet-plugin-anchor'
+// export * from '@wharfkit/wallet-plugin-anchor'
 export * from '@wharfkit/wallet-plugin-mock'
 export * from '@wharfkit/wallet-plugin-privatekey'
 export * from '@wharfkit/wallet-plugin-wax'
