@@ -74,7 +74,10 @@ export default class WebUIRenderer implements UserInterface {
                                 context,
                             },
                             abort: () => this.cancelCallbacks('aborting from modal close'),
-                            cancel: async () => reject(),
+                            cancel: async () => {
+                                this.shadow.innerHTML = ''
+                                reject('closed')
+                            },
                             complete: async (event: CustomEvent<UserInterfaceLoginResponse>) => {
                                 resolve(event.detail)
                             },

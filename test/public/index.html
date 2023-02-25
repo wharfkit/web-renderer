@@ -2,7 +2,6 @@
 <html lang="en">
     <head>
         <title>@wharfkit/web-ui-renderer</title>
-
         <script src="./bundle.js"></script>
         <script>
             const {
@@ -10,7 +9,8 @@
                 Asset,
                 Bytes,
                 TransactPluginAutoCorrect,
-                // WalletPluginAnchor,
+                TransactPluginResourceProvider,
+                WalletPluginAnchor,
                 WalletPluginMock,
                 WalletPluginPrivateKey,
                 WalletPluginWAX,
@@ -27,10 +27,10 @@
                     id: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
                     url: 'https://jungle4.greymass.com',
                 },
-                // {
-                //     id: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
-                //     url: 'https://eos.greymass.com',
-                // },
+                {
+                    id: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
+                    url: 'https://eos.greymass.com',
+                },
                 {
                     id: '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4',
                     url: 'https://wax.greymass.com',
@@ -43,7 +43,7 @@
 
             const permissionLevel = 'wharfkit1111@test'
 
-            // const anchorPlugin = new WalletPluginAnchor()
+            const anchorPlugin = new WalletPluginAnchor()
             const mockPlugin = new WalletPluginMock()
             const waxPlugin = new WalletPluginWAX()
 
@@ -57,12 +57,13 @@
                 appName: 'demo-app',
                 chains,
                 ui,
-                transactPlugins: [new TransactPluginAutoCorrect()],
+                // transactPlugins: [new TransactPluginAutoCorrect()],
+                // transactPlugins: [new TransactPluginResourceProvider()],
                 // allowModify: false,
                 // walletPlugins: [anchorPlugin],
                 // walletPlugins: [mockPlugin],
                 // walletPlugins: [waxPlugin],
-                walletPlugins: [mockPlugin, waxPlugin, privateKeyPlugin],
+                walletPlugins: [anchorPlugin, mockPlugin, waxPlugin, privateKeyPlugin],
                 // walletPlugins: [privateKeyPlugin],
             })
 
@@ -92,6 +93,12 @@
                     didLogin()
                     refreshAccount()
                 }
+
+                // session = await sessionKit.login()
+                // setTimeout(() => {
+                //     transfer()
+                // }, 500)
+
                 // link.restoreSession(identifier).then((result) => {
                 //     session = result
                 //     if (session) {

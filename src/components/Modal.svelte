@@ -55,58 +55,58 @@
     on:click|capture|nonpassive={backgroundClose}
     on:keyup|preventDefault|capture|nonpassive={escapeClose}
 >
-    {#if prompt}
-        <svelte:component
-            this={prompt.component}
-            on:complete={prompt.complete}
-            on:cancel={prompt.cancel}
-            {...prompt.props}
-        />
-    {:else}
-        <div class="modal-content">{$message}</div>
-    {/if}
+    <div class="modal-header">header stuff!</div>
+    <div class="modal-content">
+        {#if prompt}
+            <svelte:component
+                this={prompt.component}
+                on:complete={prompt.complete}
+                on:cancel={prompt.cancel}
+                {...prompt.props}
+            />
+        {:else}
+            <div class="modal-content">{$message}</div>
+        {/if}
+    </div>
 </dialog>
 
 <style lang="scss">
     :host {
-        --ratio: 3.74;
-        --cta-color: rgb(0, 102, 254);
-        --light-color-bg: rgb(238, 241, 247);
-        --dark-color-bg: rgb(55, 65, 81);
-        --grey-color: rgb(107, 114, 128);
-        --leading: 0.025em;
+        // Shapes
+        --border-radius: 24px;
+
+        // Colors
+        --foreground-color: #000;
+        --background-color: #f2f8f2;
+
+        --button-text-color: #fff;
+        --button-primary-color: #1cb095;
+        --button-secondary-color: #3d435a;
+        --button-tertiary-color: #494e62;
+
+        // Text
+        --base-font: 14px;
     }
     dialog {
         border: none !important;
-        border-radius: calc(5px * var(--ratio));
-        box-shadow: 0 0 #0000, 0 0 #0000, 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-        padding: 1.6rem;
-        max-width: 400px;
+        border-radius: var(--border-radius);
+        padding: 0;
+        max-width: 418px;
+        box-shadow: 0px 4px 154px rgba(0, 0, 0, 0.35);
     }
-    button {
-        display: block;
-        margin-top: 2rem;
-        width: calc(44px * var(--ratio));
-        height: 44px;
-        border-radius: calc(3px * var(--ratio));
-        border: none;
-        letter-spacing: calc(3 * var(--leading, 0.025em));
-        font-family: inherit;
-        color: var(--grey-color);
-        background-color: var(--light-color-bg);
-        font-size: large;
+    dialog::backdrop {
+        background: rgba(0, 0, 0, 0.65);
+    }
+    .modal-header {
+        min-height: 80px;
+        line-height: 80px;
         font-weight: 700;
-        :focus {
-            outline: none;
-            border: 0.0625rem solid transparent;
-            box-shadow: 0 0 0 0.125rem #fff, 0 0 0 0.2rem var(--dark-color-bg);
-        }
-        .cta {
-            background-color: var(--cta-color);
-            color: white;
-            :focus {
-                box-shadow: 0 0 0 0.125rem #fff, 0 0 0 0.2rem var(--cta-color);
-            }
-        }
+        font-size: 20px;
+        text-align: center;
+        color: var(--button-text-color);
+        background: var(--button-tertiary-color);
+    }
+    .modal-content {
+        padding: 50px 59px;
     }
 </style>

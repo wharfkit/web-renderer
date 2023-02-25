@@ -150,11 +150,15 @@
             dispatch('complete', $response)
         }
     }
+
+    const cancel = () => {
+        dispatch('cancel')
+    }
 </script>
 
 {#if context}
     {#if $step === Steps.selectWallet}
-        <Wallet on:select={selectWallet} wallets={context.walletPlugins} />
+        <Wallet on:select={selectWallet} on:cancel={cancel} wallets={context.walletPlugins} />
     {:else if $step === Steps.selectChain && $chains}
         <Blockchain on:select={selectChain} on:cancel={unselectWallet} chains={$chains} />
     {:else if $step === Steps.selectPermission && $client && $walletPlugin}

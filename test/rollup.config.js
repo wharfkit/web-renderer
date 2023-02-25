@@ -1,5 +1,6 @@
 import svelte from 'rollup-plugin-svelte'
 import sveltePreprocess from 'svelte-preprocess'
+import css from 'rollup-plugin-css-only'
 import commonjs from '@rollup/plugin-commonjs'
 import resolve from '@rollup/plugin-node-resolve'
 import livereload from 'rollup-plugin-livereload'
@@ -60,7 +61,17 @@ export default {
         svelte({
             preprocess: sveltePreprocess({sourceMap: true}),
             emitCss: false,
+            onwarn: (warning, handler) => {
+                const {code, frame} = warning
+
+                if (code === 'anchor-is-valid' || code === 'a11y-autofocus') return
+
+                if (code === 'css-unused-selector' && frame.includes('shape')) return
+
+                handler(warning)
+            },
         }),
+        // css(),
         resolve({
             browser: true,
             dedupe: ['svelte'],
