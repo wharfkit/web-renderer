@@ -18,6 +18,3 @@
     {/if}
     <button on:click={() => dispatch('cancel')}>cancel</button>
 </div>
-
-<style>
-</style>

@@ -2,6 +2,7 @@ import {ComponentType, SvelteComponentTyped} from 'svelte'
 import {
     cancelable,
     Cancelable,
+    Canceled,
     PromptArgs,
     PromptResponse,
     UserInterfaceLoginResponse,
@@ -21,32 +22,30 @@ import Qr from './components/Qr.svelte'
 
 import Login from './login/App.svelte'
 
-const elementId = 'wharfkit-web-ui'
-
 export default class WebUIRenderer implements UserInterface {
     static version = '__ver' // replaced by build script
 
+    public elementId = 'wharfkit-web-ui'
     public element: Element
     public shadow: ShadowRoot
 
-    public modal?: Modal
-    public displayed = false
-
     public cancelablePromises: ((reason: string) => void)[] = []
 
-    constructor() {
+    constructor(elementId = 'wharfkit-web-ui') {
         // Create the dialog element and its shadow root
         this.element = document.createElement('div')
-        this.element.id = elementId
+        this.elementId = elementId
+        this.element.id = this.elementId
         this.shadow = this.element.attachShadow({mode: 'closed'})
         // Add listener to append to body
         document.addEventListener('DOMContentLoaded', () => this.appendDialogElement())
     }
 
     appendDialogElement() {
-        const existing = document.getElementById(elementId)
+        const existing = document.getElementById(this.elementId)
         if (!existing) {
             document.body.append(this.element)
+            document.removeEventListener('DOMContentLoaded', () => this.appendDialogElement())
         }
     }
 
@@ -56,34 +55,36 @@ export default class WebUIRenderer implements UserInterface {
     }
 
     // Execute all registered "cancel" callbacks and clear the array
-    cancelCallbacks(reason: string) {
-        console.log('calling cancelCallbacks')
-        this.cancelablePromises.map((f) => f(reason))
+    cancelCallbacks(reason: string, silent = false) {
+        this.cancelablePromises.map((f) => f(reason, silent))
         this.cancelablePromises = []
+    }
+
+    createModal(component, props, resolve, reject) {
+        new Modal({
+            target: this.shadow,
+            props: {
+                prompt: {
+                    component,
+                    props,
+                    abort: () => this.cancelCallbacks('Aborting, modal closed.', true),
+                    cancel: async () => reject('closed'),
+                    complete: async (event: CustomEvent<UserInterfaceLoginResponse>) => {
+                        resolve(event.detail)
+                    },
+                },
+            },
+        })
+    }
+
+    destroyModal() {
+        this.shadow.innerHTML = ''
     }
 
     login(context: LoginContext): Cancelable<UserInterfaceLoginResponse> {
         const promise = cancelable(
             new Promise<UserInterfaceLoginResponse>((resolve, reject) => {
-                new Modal({
-                    target: this.shadow,
-                    props: {
-                        prompt: {
-                            component: Login,
-                            props: {
-                                context,
-                            },
-                            abort: () => this.cancelCallbacks('aborting from modal close'),
-                            cancel: async () => {
-                                this.shadow.innerHTML = ''
-                                reject('closed')
-                            },
-                            complete: async (event: CustomEvent<UserInterfaceLoginResponse>) => {
-                                resolve(event.detail)
-                            },
-                        },
-                    },
-                })
+                this.createModal(Login, {context}, resolve, reject)
             })
         )
         this.registerCancelCallback(promise.cancel)
@@ -91,7 +92,16 @@ export default class WebUIRenderer implements UserInterface {
     }
 
     async onError(error: Error) {
-        this.shadow.innerHTML = ''
+        // Reset the shadow element
+        this.destroyModal()
+        // Determine if this was a silent/cancelable error
+        const isCancelable = error instanceof Canceled
+        const isSilent = isCancelable && error.silent === true
+        // If it was, don't display the error
+        if (isSilent) {
+            return
+        }
+        // Display the error
         new Modal({
             target: this.shadow,
             props: {
@@ -187,38 +197,25 @@ export default class WebUIRenderer implements UserInterface {
             }
         })
         const complete = () => {
-            // close itself?
-            this.shadow.innerHTML = ''
+            this.destroyModal()
             new Modal({
                 target: this.shadow,
                 props: {},
             })
         }
         const promise: Cancelable<PromptResponse> = cancelable(
-            new Promise((resolve, reject) => {
-                new Modal({
-                    target: this.shadow,
-                    props: {
-                        prompt: {
-                            component: CustomPrompt,
-                            props: {
-                                title: args.title,
-                                body: args.body,
-                                components,
-                            },
-                            abort: () => this.cancelCallbacks('aborting from modal close'),
-                            cancel: async (reason) => {
-                                complete()
-                                reject(reason)
-                            },
-                            complete: async (data) => {
-                                complete()
-                                resolve(data)
-                            },
-                        },
+            new Promise((resolve, reject) =>
+                this.createModal(
+                    CustomPrompt,
+                    {
+                        title: args.title,
+                        body: args.body,
+                        components,
                     },
-                })
-            }),
+                    resolve,
+                    reject
+                )
+            ),
             (canceled) => {
                 complete()
                 throw canceled
@@ -229,6 +226,7 @@ export default class WebUIRenderer implements UserInterface {
     }
 
     status(message: string) {
+        console.log('status message', message)
         status(message)
     }
 }

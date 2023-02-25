@@ -63,15 +63,11 @@ export default {
             emitCss: false,
             onwarn: (warning, handler) => {
                 const {code, frame} = warning
-
                 if (code === 'anchor-is-valid' || code === 'a11y-autofocus') return
-
                 if (code === 'css-unused-selector' && frame.includes('shape')) return
-
                 handler(warning)
             },
         }),
-        // css(),
         resolve({
             browser: true,
             dedupe: ['svelte'],
