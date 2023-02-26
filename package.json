@@ -1,6 +1,6 @@
 {
     "name": "@wharfkit/web-ui-renderer",
-    "version": "0.3.0-ui-14",
+    "version": "0.3.0-ui-14.1",
     "description": "",
     "license": "BSD-3-Clause",
     "main": "lib/web-ui-renderer.js",
