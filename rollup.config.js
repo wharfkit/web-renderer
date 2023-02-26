@@ -4,6 +4,8 @@ import sveltePreprocess from 'svelte-preprocess'
 import typescript from '@rollup/plugin-typescript'
 import replace from '@rollup/plugin-replace'
 import dts from 'rollup-plugin-dts'
+import {terser} from 'rollup-plugin-terser'
+import gzipPlugin from 'rollup-plugin-gzip'
 
 import pkg from './package.json'
 
@@ -39,6 +41,8 @@ export default [
                 dedupe: ['svelte'],
             }),
             typescript({target: 'es6'}),
+            // terser(),
+            // gzipPlugin(),
         ],
         external: Object.keys({...pkg.dependencies, ...pkg.peerDependencies}),
     },
@@ -60,6 +64,8 @@ export default [
                 dedupe: ['svelte'],
             }),
             typescript({target: 'es2020'}),
+            // terser(),
+            // gzipPlugin(),
         ],
         external: Object.keys({...pkg.dependencies, ...pkg.peerDependencies}),
     },
