@@ -1,5 +1,5 @@
-<script>
-    import generateQr from '../qrcode'
+<script lang="ts">
+    import generateQr from '../../lib/qrcode'
     export let data = ''
 </script>
 

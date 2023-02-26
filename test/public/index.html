@@ -53,8 +53,26 @@
                     //         timeout: 3000,
                     //     },
                     // }),
+                    // new WebUIRenderer.TransactPluginMock({
+                    //     prompt: true,
+                    //     promptOptions: {
+                    //         continueOnAccept: true,
+                    //         continueOnCancel: false,
+                    //         continueOnDecline: true,
+                    //         timeout: 4000,
+                    //     },
+                    // }),
+                    // new WebUIRenderer.TransactPluginMock({
+                    //     prompt: true,
+                    //     promptOptions: {
+                    //         continueOnAccept: true,
+                    //         continueOnCancel: false,
+                    //         continueOnDecline: true,
+                    //         timeout: 5000,
+                    //     },
+                    // }),
                     // new WebUIRenderer.TransactPluginAutoCorrect(),
-                    // new WebUIRenderer.TransactPluginResourceProvider(),
+                    new WebUIRenderer.TransactPluginResourceProvider(),
                 ],
                 // Various wallet configurations, uncomment one or more to test
                 walletPlugins: [
@@ -72,7 +90,9 @@
 
             // tries to restore session, called when document is loaded
             async function restoreSession() {
-                session = await sessionKit.restore()
+                session = await sessionKit.restore().catch((e) => {
+                    console.log('error caught in demo app', e)
+                })
                 updateSessions()
                 // If the session was defined, set the UI to logged in
                 if (session) {
@@ -81,10 +101,15 @@
                 }
 
                 // Uncomment to test login automatically on load
-                // session = await sessionKit.login()
+                // setTimeout(() => {
+                //     console.log('triggering login automatically...')
+                //     login()
+                // }, 100)
+
+                // Uncomment to test transfer automatically on load
                 // setTimeout(() => {
                 //     transfer()
-                // }, 500)
+                // }, 100)
             }
 
             async function updateSessions() {

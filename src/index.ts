@@ -1,28 +1,26 @@
-import {ComponentType, SvelteComponentTyped} from 'svelte'
 import {
-    cancelable,
     Cancelable,
+    cancelable,
     Canceled,
+    LoginContext,
     PromptArgs,
     PromptResponse,
+    UserInterface,
     UserInterfaceLoginResponse,
 } from '@wharfkit/session'
-import {LoginContext, LoginOptions, UserInterface} from '@wharfkit/session'
 
-import {status} from './components/Modal'
+import App, {state} from './ui/App.svelte'
+import {UserInterfaceState} from './interfaces'
 
-import Accept from './components/Accept.svelte'
-import Asset from './components/Asset.svelte'
-import Button from './components/Button.svelte'
-import CustomPrompt from './components/CustomPrompt.svelte'
-import Countdown from './components/Countdown.svelte'
-import ErrorMessage from './components/Error.svelte'
-import Modal from './components/Modal.svelte'
-import Qr from './components/Qr.svelte'
+export interface WebUIRendererOptions {
+    id?: string
+}
 
-import Login from './login/App.svelte'
+export const defaultWebUIRendererOptions = {
+    id: 'wharfkit-web-ui',
+}
 
-export default class WebUIRenderer implements UserInterface {
+export class WebUIRenderer implements UserInterface {
     static version = '__ver' // replaced by build script
 
     public elementId = 'wharfkit-web-ui'
@@ -31,10 +29,10 @@ export default class WebUIRenderer implements UserInterface {
 
     public cancelablePromises: ((reason: string) => void)[] = []
 
-    constructor(elementId = 'wharfkit-web-ui') {
+    constructor(options: WebUIRendererOptions = defaultWebUIRendererOptions) {
         // Create the dialog element and its shadow root
         this.element = document.createElement('div')
-        this.elementId = elementId
+        this.elementId = options.id || defaultWebUIRendererOptions.id
         this.element.id = this.elementId
         this.shadow = this.element.attachShadow({mode: 'closed'})
         // Add listener to append to body
@@ -46,187 +44,141 @@ export default class WebUIRenderer implements UserInterface {
         if (!existing) {
             document.body.append(this.element)
             document.removeEventListener('DOMContentLoaded', () => this.appendDialogElement())
-        }
-    }
-
-    // An array to store references to all active "cancel" callbacks for Cancelable promises
-    registerCancelCallback(callback: any): void {
-        this.cancelablePromises.push(callback)
-    }
-
-    // Execute all registered "cancel" callbacks and clear the array
-    cancelCallbacks(reason: string, silent = false) {
-        this.cancelablePromises.map((f) => f(reason, silent))
-        this.cancelablePromises = []
-    }
-
-    createModal(component, props, resolve, reject) {
-        new Modal({
-            target: this.shadow,
-            props: {
-                prompt: {
-                    component,
-                    props,
-                    abort: () => this.cancelCallbacks('Aborting, modal closed.', true),
-                    cancel: async () => reject('closed'),
-                    complete: async (event: CustomEvent<UserInterfaceLoginResponse>) => {
-                        resolve(event.detail)
-                    },
-                },
-            },
-        })
-    }
-
-    destroyModal() {
-        this.shadow.innerHTML = ''
-    }
-
-    login(context: LoginContext): Cancelable<UserInterfaceLoginResponse> {
-        const promise = cancelable(
-            new Promise<UserInterfaceLoginResponse>((resolve, reject) => {
-                this.createModal(Login, {context}, resolve, reject)
-            })
-        )
-        this.registerCancelCallback(promise.cancel)
-        return promise
-    }
-
-    async onError(error: Error) {
-        // Reset the shadow element
-        this.destroyModal()
-        // Determine if this was a silent/cancelable error
-        const isCancelable = error instanceof Canceled
-        const isSilent = isCancelable && error.silent === true
-        // If it was, don't display the error
-        if (isSilent) {
-            return
-        }
-        // Display the error
-        new Modal({
-            target: this.shadow,
-            props: {
-                prompt: {
-                    component: ErrorMessage,
-                    props: {
-                        error,
-                    },
-                    cancel: () => {},
-                    complete: () => {},
-                },
-            },
-        })
-    }
-
-    async onLogin() {
-        this.shadow.innerHTML = ''
-    }
-
-    async onLoginResult() {
-        this.shadow.innerHTML = ''
-    }
-
-    async onTransact() {
-        this.shadow.innerHTML = ''
-        new Modal({
-            target: this.shadow,
-            props: {},
-        })
-    }
-
-    async onTransactResult() {
-        status('Transaction complete!')
-    }
-
-    prompt(args: PromptArgs): Cancelable<PromptResponse> {
-        this.shadow.innerHTML = ''
-        const components: {
-            component: ComponentType<SvelteComponentTyped>
-            props: Record<string, unknown>
-        }[] = []
-        args.elements.forEach((element) => {
-            switch (element.type) {
-                case 'accept': {
-                    components.push({
-                        component: Accept,
-                        props: {
-                            data: element.data,
-                        },
-                    })
-                    break
-                }
-                case 'asset': {
-                    components.push({
-                        component: Asset,
-                        props: {
-                            data: element.data,
-                        },
-                    })
-                    break
-                }
-                case 'button': {
-                    components.push({
-                        component: Button,
-                        props: {
-                            data: element.data,
-                            label: element.label,
-                        },
-                    })
-                    break
-                }
-                case 'qr': {
-                    components.push({
-                        component: Qr,
-                        props: {
-                            data: element.data,
-                        },
-                    })
-                    break
-                }
-                case 'countdown': {
-                    components.push({
-                        component: Countdown,
-                        props: {
-                            data: element.data,
-                        },
-                    })
-                    break
-                }
-                default: {
-                    throw new Error(`Unknown element type: ${element.type}`)
-                }
-            }
-        })
-        const complete = () => {
-            this.destroyModal()
-            new Modal({
+            new App({
                 target: this.shadow,
                 props: {},
             })
         }
-        const promise: Cancelable<PromptResponse> = cancelable(
-            new Promise((resolve, reject) =>
-                this.createModal(
-                    CustomPrompt,
-                    {
-                        title: args.title,
-                        body: args.body,
-                        components,
+    }
+
+    // Add every cancelable promise to the list of cancelable promises
+    addCancelablePromise = (promise) =>
+        state.update((current: UserInterfaceState) => ({
+            ...current,
+            cancelablePromises: [...current.cancelablePromises, promise],
+        }))
+
+    log(...args: any[]) {
+        // eslint-disable-next-line no-console
+        console.log('WebUIRenderer:', ...args)
+    }
+
+    login(context: LoginContext): Cancelable<UserInterfaceLoginResponse> {
+        this.log('login', context)
+        const promise = cancelable(
+            new Promise<UserInterfaceLoginResponse>((resolve, reject) => {
+                state.update((current) => ({
+                    ...current,
+                    active: true,
+                    path: 'login',
+                    previousPaths: [...current.previousPaths, current.path],
+                    props: {
+                        id: 'login',
+                        context,
+                        reject,
+                        resolve,
                     },
-                    resolve,
-                    reject
-                )
-            ),
+                }))
+            })
+        )
+        this.addCancelablePromise(promise.cancel)
+        return promise
+    }
+
+    async onError(error: Error) {
+        // Determine if this was a silent/cancelable error
+        const isCancelable = error instanceof Canceled
+        const isSilent = isCancelable && error.silent === true
+        this.log('onError', {
+            isCancelable,
+            isSilent,
+            error,
+        })
+        // If it was, don't display the error
+        if (isSilent) {
+            return
+        }
+        state.update((current) => ({
+            ...current,
+            active: true,
+            path: 'error',
+            previousPaths: [...current.previousPaths, current.path],
+            props: {
+                id: 'error',
+                error,
+            },
+            title: 'An error occurred',
+        }))
+    }
+
+    async onLogin() {
+        this.log('onLogin')
+        state.update((current) => ({
+            ...current,
+            active: true,
+            previousPaths: [], // Reset paths
+        }))
+    }
+
+    async onLoginResult() {
+        this.log('onLoginResult')
+        state.update((current) => ({
+            ...current,
+            active: false,
+        }))
+    }
+
+    async onTransact() {
+        this.log('onTransact')
+        state.update((current) => ({
+            ...current,
+            active: true,
+            path: 'transact',
+            previousPaths: [], // Reset paths
+        }))
+    }
+
+    async onTransactResult() {
+        this.log('onTransactResult')
+        state.update((current) => ({
+            ...current,
+            active: false,
+        }))
+    }
+
+    prompt(args: PromptArgs): Cancelable<PromptResponse> {
+        this.log('prompt', args)
+        const promise = cancelable(
+            new Promise<UserInterfaceLoginResponse>((resolve, reject) => {
+                state.update((current) => ({
+                    ...current,
+                    active: true,
+                    path: 'prompt',
+                    previousPaths: [...current.previousPaths, current.path],
+                    props: {
+                        id: 'prompt',
+                        prompt: args,
+                        resolve,
+                        reject,
+                    },
+                }))
+            }),
             (canceled) => {
-                complete()
                 throw canceled
             }
         )
-        this.registerCancelCallback(promise.cancel)
+        this.addCancelablePromise(promise.cancel)
         return promise
     }
 
     status(message: string) {
-        console.log('status message', message)
-        status(message)
+        this.log('status message', message)
+        state.update((current) => ({
+            ...current,
+            active: true,
+            title: message,
+        }))
     }
 }
+
+export default WebUIRenderer

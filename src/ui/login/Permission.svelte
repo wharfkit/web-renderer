@@ -9,6 +9,7 @@
     } from '@wharfkit/session'
     import {createEventDispatcher, onMount} from 'svelte'
     import {writable} from 'svelte/store'
+    import {GetAccountsByAuthorizers} from '../../interfaces'
 
     export let client: APIClient
     export let walletPlugin: UserInterfaceWalletPlugin
@@ -21,7 +22,7 @@
     let busy = writable(true)
     let permissions: PermissionLevel[] | undefined
     onMount(async () => {
-        const response = await client.call({
+        const response = await client.call<GetAccountsByAuthorizers>({
             path: '/v1/chain/get_accounts_by_authorizers',
             params: {
                 keys: [walletPlugin.metadata.publicKey],

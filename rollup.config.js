@@ -26,7 +26,7 @@ export default [
             file: pkg.main,
             format: 'cjs',
             sourcemap: true,
-            exports: 'default',
+            exports: 'named',
         },
         plugins: [
             replaceVersion,
