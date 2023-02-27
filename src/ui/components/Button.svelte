@@ -3,4 +3,4 @@
     export let label = 'Click me'
 </script>
 
-<a href={data}>{label}</a>
+<a href={data} target="_blank" rel="noreferrer">{label}</a>
