@@ -36,12 +36,14 @@
 </script>
 
 <div>
-    <h3>Select a permission to use</h3>
     {#if $busy}
         <p>loading...</p>
     {:else if permissions && permissions.length > 0}
         {#each permissions as permission}
-            <button on:click={() => dispatch('select', permission)}>{String(permission)}</button>
+            <div class="option">
+                <button on:click={() => dispatch('select', permission)}>{String(permission)}</button
+                >
+            </div>
         {/each}
     {:else}
         <p>No accounts found matching {walletPlugin.metadata.publicKey}</p>
@@ -49,5 +51,25 @@
     <button on:click={() => dispatch('cancel')}>cancel</button>
 </div>
 
-<style>
+<style lang="scss">
+    .option {
+        padding-top: 27px;
+        button {
+            cursor: pointer;
+            display: block;
+            width: 300px;
+            height: 65px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--button-text-color);
+            background-color: var(--button-primary-color);
+            border: none;
+            box-shadow: none;
+            margin: 0 auto;
+            &.secondary {
+                background-color: var(--button-secondary-color);
+            }
+        }
+    }
 </style>

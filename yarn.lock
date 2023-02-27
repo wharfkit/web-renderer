@@ -1311,10 +1311,10 @@
     "@typescript-eslint/types" "5.49.0"
     eslint-visitor-keys "^3.3.0"
 
-"@wharfkit/session@^0.3.0-ui-14.4":
-  version "0.3.0-ui-14.4"
-  resolved "https://registry.yarnpkg.com/@wharfkit/session/-/session-0.3.0-ui-14.4.tgz#c6c84adbb8f9fc62ea6fff941e73d26cfab77170"
-  integrity sha512-V4axAZI/6ubGNZWYgcnOAdZCxKx74LxhTFaB2SmK5gWU8tq5YMfY6sTJYE5Skx7FgEjowSxDYXcBRJv9z7HCgw==
+"@wharfkit/session@^0.3.0-ui-15":
+  version "0.3.0-ui-15"
+  resolved "https://registry.yarnpkg.com/@wharfkit/session/-/session-0.3.0-ui-15.tgz#b346b3644630ce95fe767551478cf21450e86b63"
+  integrity sha512-ZKEN5I9cvvvpBjLeb1LfBi4Jv4YY+xErAGN2rvUBe9PAxSzvVWwlF7yi/ALJIgI8SkplxcuZ27Ew08yenC1x7g==
   dependencies:
     "@greymass/eosio" "^0.6.9"
     eosio-signing-request "^2.5.2"
@@ -1350,6 +1350,13 @@
   dependencies:
     tslib "^2.1.0"
 
+"@wharfkit/wallet-plugin-cloudwallet@^0.3.0-ui-14":
+  version "0.3.0-ui-14"
+  resolved "https://registry.yarnpkg.com/@wharfkit/wallet-plugin-cloudwallet/-/wallet-plugin-cloudwallet-0.3.0-ui-14.tgz#b34fd128f745cd5af545034ad2832f6f48c2bf5d"
+  integrity sha512-Py+37gIYq9PUlgxjuwD2VoHmZiq9dXsjr94rhSVLW/v4hHvSSGJYUhMYY8/fao2l5N7RWRWrpvxxiYnR1KbiQg==
+  dependencies:
+    tslib "^2.1.0"
+
 "@wharfkit/wallet-plugin-mock@^0.3.0-ui-13":
   version "0.3.0-ui-13"
   resolved "https://registry.yarnpkg.com/@wharfkit/wallet-plugin-mock/-/wallet-plugin-mock-0.3.0-ui-13.tgz#10a41fa43d4d37ff1d1bfa14fe8a46d1e3ad1f74"
@@ -1361,13 +1368,6 @@
   version "0.3.0-ui-13.1"
   resolved "https://registry.yarnpkg.com/@wharfkit/wallet-plugin-privatekey/-/wallet-plugin-privatekey-0.3.0-ui-13.1.tgz#ce2d7b662b1d301d902a35f9e7a1042337502fd5"
   integrity sha512-F8GiPbjBPxVE/jSpnGOa39jQAbCHvhTHxfxA+nvaGgwax2sXcZKbaKUY4b0lZ2A8Nh+goBY4gcBIG2GYfwwoNg==
-  dependencies:
-    tslib "^2.1.0"
-
-"@wharfkit/wallet-plugin-wax@^0.3.0-ui-13":
-  version "0.3.0-ui-13"
-  resolved "https://registry.yarnpkg.com/@wharfkit/wallet-plugin-wax/-/wallet-plugin-wax-0.3.0-ui-13.tgz#908c481d54b31cb881e688b20abbd42c54e0fa0e"
-  integrity sha512-TnbKiaGAQin6T0kA68Pv/c7qkHBACdR0/+3P577q1jV3HKmaE0yLFQlSAYrfk5irxFHU9DLE5Y8KfR0lrjNhbg==
   dependencies:
     tslib "^2.1.0"
 

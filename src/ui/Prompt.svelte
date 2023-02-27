@@ -4,6 +4,7 @@
 
     import Accept from './components/Accept.svelte'
     import Asset from './components/Asset.svelte'
+    import Close from './components/Close.svelte'
     import Link from './components/Link.svelte'
     import Countdown from './components/Countdown.svelte'
     import Qr from './components/Qr.svelte'
@@ -38,7 +39,16 @@
                         })
                         break
                     }
-                    case 'button': {
+                    case 'close': {
+                        components.push({
+                            component: Close,
+                            props: {
+                                label: element.label,
+                            },
+                        })
+                        break
+                    }
+                    case 'link': {
                         components.push({
                             component: Link,
                             props: {

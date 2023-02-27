@@ -66,7 +66,7 @@ export class WebUIRenderer implements UserInterface {
 
     log(...args: any[]) {
         // eslint-disable-next-line no-console
-        console.log('WebUIRenderer:', ...args)
+        console.log('WebUIRenderer, LOG:', ...args)
     }
 
     login(context: LoginContext): Cancelable<UserInterfaceLoginResponse> {
@@ -131,6 +131,8 @@ export class WebUIRenderer implements UserInterface {
         this.log('onLoginResult')
         // Close the dialog once the login completes
         active.set(false)
+        // Reset all data in the state
+        resetState()
     }
 
     async onTransact() {

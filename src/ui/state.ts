@@ -13,8 +13,8 @@ import {Writable, writable} from 'svelte/store'
 export function resetState() {
     active.set(false)
 
-    props.set(defaultUserInterfaceProps)
-    router.set(defaultUserInterfaceRouter)
+    props.set({...defaultUserInterfaceProps})
+    router.set({...defaultUserInterfaceRouter})
     prompt.reset()
 
     cancelablePromises.set([])
@@ -22,7 +22,7 @@ export function resetState() {
 
     loginContext.set(undefined)
     loginPromise.set(undefined)
-    loginResponse.set(defaultLoginResponse)
+    loginResponse.set({...defaultLoginResponse})
 
     errorDetails.set(undefined)
 }
@@ -133,6 +133,6 @@ export const defaultLoginResponse = {
 
 export const loginContext = writable<LoginContext | undefined>(undefined)
 export const loginPromise = writable<LoginPromise | undefined>(undefined)
-export const loginResponse = writable<UserInterfaceLoginData>(defaultLoginResponse)
+export const loginResponse = writable<UserInterfaceLoginData>({...defaultLoginResponse})
 
 export const errorDetails = writable<string | undefined>(undefined)

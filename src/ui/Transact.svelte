@@ -15,4 +15,4 @@
     }
 </script>
 
-<p>Doing transact stuffs</p>
+<p>Doing transact stuffs - cool animation!</p>

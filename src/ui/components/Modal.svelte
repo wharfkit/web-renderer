@@ -6,7 +6,6 @@
 
     // Control the dialog element display based on state.active
     active.subscribe((current) => {
-        console.log('active changed', current)
         if (dialog) {
             if (current && !dialog.open) {
                 dialog.showModal()
@@ -20,7 +19,6 @@
     // Perform work required to cancel request
     function cancelRequest() {
         // Cancel any pending promises
-        console.log($cancelablePromises)
         $cancelablePromises.map((f) => f('Modal closed', true))
         // Update state to close the modal
         active.set(false)
@@ -60,6 +58,7 @@
 
 <style lang="scss">
     :host {
+        all: initial;
         // Shapes
         --border-radius: 24px;
 

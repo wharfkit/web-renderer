@@ -24,6 +24,7 @@
     .option {
         padding-top: 27px;
         button {
+            cursor: pointer;
             display: block;
             width: 300px;
             height: 65px;

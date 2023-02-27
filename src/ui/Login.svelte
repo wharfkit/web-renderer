@@ -6,6 +6,7 @@
         PermissionLevel,
         UserInterfaceLoginResponse,
         UserInterfaceWalletPlugin,
+        WalletPluginLoginResponse,
     } from '@wharfkit/session'
     import {createEventDispatcher} from 'svelte'
     import {derived, Readable} from 'svelte/store'
@@ -14,12 +15,18 @@
     import Blockchain from './login/Blockchain.svelte'
     import Permission from './login/Permission.svelte'
     import Wallet from './login/Wallet.svelte'
-    import {loginContext, loginResponse, props} from './state'
+    import {
+        defaultLoginResponse,
+        loginContext,
+        loginResponse,
+        props,
+        UserInterfaceLoginData,
+    } from './state'
 
     let completed = false
 
     const dispatch = createEventDispatcher<{
-        complete: UserInterfaceLoginResponse
+        complete: UserInterfaceLoginData
         cancel: void
     }>()
 
@@ -108,7 +115,6 @@
     const step = derived(
         [loginResponse, walletPlugin],
         ([$currentResponse, $currentWalletPlugin]) => {
-            console.log('update step')
             if (!$currentWalletPlugin) {
                 $props.title = 'Select a Wallet'
                 return Steps.selectWallet
@@ -119,8 +125,7 @@
 
             if (!$currentResponse.chainId && supportedChains && supportedChains.length === 1) {
                 $loginResponse.chainId = supportedChains[0]
-                $props.title = 'Select a Blockchain'
-                return Steps.selectChain
+                return Steps.selectPermission
             } else if (!$currentResponse.chainId && requiresChainSelect) {
                 $props.title = 'Select a Blockchain'
                 return Steps.selectChain
@@ -146,11 +151,7 @@
     const complete = () => {
         if (!completed) {
             completed = true
-            dispatch('complete', {
-                chainId: Checksum256.from(String($loginResponse.chainId)),
-                permissionLevel: PermissionLevel.from(String($loginResponse.permissionLevel)),
-                walletPluginIndex: Number($loginResponse.walletPluginIndex),
-            })
+            dispatch('complete', $loginResponse)
         }
     }
 
@@ -172,7 +173,7 @@
             walletPlugin={$walletPlugin}
         />
     {:else}
-        <p>Login Complete!</p>
+        <p>Please complete the login request using your wallet.</p>
     {/if}
 {:else}
     <p>Loading...</p>

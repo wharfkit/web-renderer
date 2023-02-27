@@ -3,12 +3,10 @@
 
     const dispatch = createEventDispatcher<{
         complete: void
-        cancel: void
     }>()
 </script>
 
-<button on:click={() => dispatch('complete')}>Accept</button>
-<button class="secondary" on:click={() => dispatch('cancel')}>Decline</button>
+<button on:click={() => dispatch('complete')}>Close</button>
 
 <style lang="scss">
     button {
@@ -20,12 +18,9 @@
         font-size: 16px;
         font-weight: 600;
         color: var(--button-text-color);
-        background-color: var(--button-primary-color);
+        background-color: var(--button-tertiary-color);
         border: none;
         box-shadow: none;
         margin: 27px auto 0;
-        &.secondary {
-            background-color: var(--button-secondary-color);
-        }
     }
 </style>

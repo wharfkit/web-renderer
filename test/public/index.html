@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html data-color-mode="dark" data-dark-theme="dark_dimmed" lang="en">
     <head>
         <title>@wharfkit/web-ui-renderer</title>
         <script src="./bundle.js"></script>
@@ -16,7 +16,9 @@
                 Transaction,
             } = WebUIRenderer
 
-            const permissionLevel = 'wharfkit1111@test'
+            const explorerLink = new WebUIRenderer.TransactPluginExplorerLink()
+            const autoCorrect = new WebUIRenderer.TransactPluginAutoCorrect()
+            const resourceProvider = new WebUIRenderer.TransactPluginResourceProvider()
 
             const ui = new WebUIRenderer()
 
@@ -48,15 +50,13 @@
                             suffix: '',
                         },
                     },
-                    // {
-                    //     id: 'f16b1833c747c43682f4386fca9cbb327929334a762755ebec17f6f23c9b8a12',
-                    //     url: 'https://waxtestnet.greymass.com',
-                    // },
                 ],
                 ui,
                 // Various transaction plugins, uncomment one or more to test
                 transactPlugins: [
-                    new WebUIRenderer.TransactPluginExplorerLink(),
+                    // new WebUIRenderer.TransactPluginExplorerLink(),
+                    // new WebUIRenderer.TransactPluginAutoCorrect(),
+                    // new WebUIRenderer.TransactPluginResourceProvider(),
                     // new WebUIRenderer.TransactPluginMock({
                     //     prompt: true,
                     //     promptOptions: {
@@ -84,17 +84,15 @@
                     //         timeout: 5000,
                     //     },
                     // }),
-                    // new WebUIRenderer.TransactPluginAutoCorrect(),
-                    new WebUIRenderer.TransactPluginResourceProvider(),
                 ],
                 // Various wallet configurations, uncomment one or more to test
                 walletPlugins: [
                     // new WebUIRenderer.WalletPluginAnchor(),
+                    new WebUIRenderer.WalletPluginCloudWallet(),
                     new WebUIRenderer.WalletPluginMock(),
                     new WebUIRenderer.WalletPluginPrivateKey(
                         '5Jtoxgny5tT7NiNFp1MLogviuPJ9NniWjnU4wKzaX4t7pL4kJ8s'
                     ),
-                    new WebUIRenderer.WalletPluginWAX(),
                 ],
             })
 
@@ -127,30 +125,36 @@
 
             async function updateSessions() {
                 const sessions = await sessionKit.getSessions()
-                const container = document.getElementById('sessions')
-                container.innerHTML = ''
+                sessions.sort((a, b) => (a.actor > b.actor ? 1 : -1))
+                const nav = document.getElementById('sessions')
+                nav.innerHTML = ''
                 sessions.forEach((s) => {
-                    const child = document.createElement('li')
-                    const button = document.createElement('button')
-                    button.textContent = `${s.actor} (${s.permission}) on ${s.chain}`
-                    child.appendChild(button)
-                    button.onclick = () => {
+                    const navItem = document.createElement('a')
+                    navItem.classList = 'SideNav-subItem'
+                    navItem.href = `#${s.actor}-${s.permission}-${s.chain}`
+                    navItem.textContent = `${s.actor} (${s.permission})`
+                    if (
+                        session.actor.equals(s.actor) &&
+                        session.permission.equals(s.permission) &&
+                        session.chain.id.equals(s.chain)
+                    ) {
+                        navItem.ariaCurrent = 'page'
+                    }
+                    navItem.onclick = () => {
                         sessionKit.restore(s).then((result) => {
                             session = result
                             didLogin()
                             refreshAccount()
                         })
                     }
-                    container.appendChild(child)
+                    nav.appendChild(navItem)
                 })
             }
 
             // login and store session if successful
             function login() {
                 sessionKit
-                    .login({
-                        // permissionLevel: 'wharfkit1111@test',
-                    })
+                    .login()
                     .then((result) => {
                         session = result.session
                         didLogin()
@@ -163,6 +167,18 @@
                     account = result
                     document.getElementById('account-balance').textContent =
                         account.core_liquid_balance ? account.core_liquid_balance : '0.0000'
+                    document.getElementById(
+                        'cpu'
+                    ).textContent = `${account.cpu_limit.available} / ${account.cpu_limit.max}`
+                    document.getElementById(
+                        'net'
+                    ).textContent = `${account.net_limit.available} / ${account.net_limit.max}`
+                    document.getElementById(
+                        'ram'
+                    ).textContent = `${account.ram_quota - account.ram_usage} / ${account.ram_quota}`
+                    document.getElementById(
+                        'explorer'
+                    ).href = `https://jungle4.eosq.eosnation.io/account/${session.actor}`
                 })
             }
 
@@ -203,11 +219,14 @@
                 document.getElementById('account-name').textContent = session.actor
                 document.getElementById('account-permission').textContent = session.permission
                 document.getElementById('chain-id').textContent = session.chain.name
+                document.getElementById(
+                    'account-name-logout'
+                ).textContent = `Logout ${session.actor}`
                 document.body.classList.add('logged-in')
             }
 
             // transfer tokens using a session
-            function transfer() {
+            function transfer(options = {broadcast: false}) {
                 const action = {
                     account: 'eosio.token',
                     name: 'transfer',
@@ -223,62 +242,153 @@
                         memo: 'Yay WharfKit! Thank you <3',
                     },
                 }
-                session
-                    .transact(
-                        {action},
-                        {
-                            // broadcast: false,
-                            broadcast: true,
-                        }
-                    )
-                    .then((result) => {
-                        document.getElementById(
-                            'log'
-                        ).innerHTML += `Transaction broadcast! ${result.resolved.transaction.id}\n`
-                    })
+                session.transact({action}, options).then((result) => {
+                    const item = document.createElement('div')
+                    item.classList = 'TimelineItem TimelineItem--condensed'
+                    item.innerHTML = `
+                <div class="TimelineItem-badge">
+                    <svg class="octicon octicon-git-commit" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M10.86 7c-.45-1.72-2-3-3.86-3-1.86 0-3.41 1.28-3.86 3H0v2h3.14c.45 1.72 2 3 3.86 3 1.86 0 3.41-1.28 3.86-3H14V7h-3.14zM7 10.2c-1.22 0-2.2-.98-2.2-2.2 0-1.22.98-2.2 2.2-2.2 1.22 0 2.2.98 2.2 2.2 0 1.22-.98 2.2-2.2 2.2z"></path>
+                    </svg>
+                </div>
+                <div class="TimelineItem-body">
+                    ${new Date().toISOString()} ${
+                        session.actor
+                    } - ${(result.response) ? `<a href="https://jungle4.eosq.eosnation.io/tx/${
+                        result.resolved.transaction.id
+                    }" target="_blank">View on Explorer</a>` : `Not broadcast`}
+                </div>`
+                    document.getElementById('log').prepend(item)
+                })
             }
 
             setInterval(() => {
                 if (session) {
-                    // refreshAccount()
+                    refreshAccount()
                 }
-            }, 1000)
+            }, 3000)
         </script>
+        <link href="https://unpkg.com/@primer/css@^20.2.4/dist/primer.css" rel="stylesheet" />
         <style>
-            .logged-in #login-ui {
+            body {
+                max-width: 1200px;
+                margin: 10px auto 0;
+                padding: 0 10px;
+            }
+            body .Layout {
                 display: none;
             }
-            #app-ui {
-                display: none;
+            body.logged-in .Layout {
+                display: grid;
             }
-            .logged-in #app-ui {
-                display: block;
+            .Box, .btn {
+                margin-bottom: 0.25em;
             }
         </style>
     </head>
     <body onload="restoreSession()">
-        <h2>WharfKit Web UI Renderer Test</h2>
-        <div id="app-ui">
-            <code><pre id="session-dump"></pre></code>
-            <p>Actor: <b id="account-name">undefined</b></p>
-            <p>Permission: <b id="account-permission">undefined</b></p>
-            <p>Chain: <b id="chain-id">undefined</b></p>
-            <p>Core Balance: <b id="account-balance">undefined</b></p>
-            <h3>Actions</h3>
-            <ul>
-                <li><button onclick="transfer()">Test transfer</button></li>
-                <li><button onclick="login()">Login new account</button></li>
-                <li><button onclick="refreshAccount()">Refresh account</button></li>
-                <li><button onclick="logout()">Log out</button></li>
-                <li><button onclick="logoutAll()">Log out all sessions</button></li>
-            </ul>
-            <h3>Accounts</h3>
-            <ul id="sessions"></ul>
-            <h4>Log</h4>
-            <pre id="log"></pre>
-        </div>
-        <div id="login-ui">
-            <button onclick="login()">Login</button>
+        <div class="Subhead">
+            <h2 class="Subhead-heading">Web Renderer Test</h2>
+            <div class="Subhead-description">
+                A suite of testing tools for the
+                <a href="https://github.com/@wharfkit/web-ui-renderer" target="_blank">
+                    @wharfkit/web-ui-renderer
+                </a>.
+            </div>
+          </div>
+        </h2>
+        <nav class="subnav" aria-label="Repository">
+            <a class="subnav-item" aria-current="page" href="#login" onclick="login()">
+                <span>Login new account</span>
+            </a>
+        </nav>
+        <div class="Layout" id="">
+            <div class="Layout-main">
+                <div class="Box">
+                    <div class="Box-header">
+                      Account Data
+                    </div>
+                    <div class="Box-body">
+                        <div class="d-flex">
+                            <div class="p-3 flex-1">
+                                <code><pre id="session-dump"></pre></code>
+                                <p>Actor: <b id="account-name">undefined</b></p>
+                                <p>Permission: <b id="account-permission">undefined</b></p>
+                                <p>Chain: <b id="chain-id">undefined</b></p>
+                                <p>Balance: <b id="account-balance">undefined</b></p>
+                            </div>
+                            <div class="p-3 flex-1">
+                                <p><a id="explorer" target="_blank" href="">Explorer</a></p>
+                                <p>CPU: <b id="cpu">undefined</b></p>
+                                <p>NET: <b id="net">undefined</b></p>
+                                <p>RAM: <b id="ram">undefined</b></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="Box-footer">
+                        <button class="btn btn-block btn-primary" type="button" onclick="refreshAccount()">
+                            Refresh account
+                        </button>
+                    </div>
+                </div>
+                <div class="Box">
+                    <div class="Box-header">
+                        <h4>Test by sending 0.0001 EOS to teamgreymass</h4>
+                    </div>
+                    <div class="Box-body">
+                        <button class="btn btn-block" type="button" onclick="transfer({broadcast: false})">
+                            no broadcast
+                        </button>
+                        <button class="btn btn-block" type="button" onclick="transfer({broadcast: true})">
+                            broadcast
+                        </button>
+                        <button
+                            class="btn btn-block"
+                            type="button"
+                            onclick="transfer({transactPlugins: [explorerLink]})"
+                        >
+                            broadcast + explorer link
+                        </button>
+                        <button
+                            class="btn btn-block"
+                            type="button"
+                            onclick="transfer({transactPlugins: [resourceProvider]})"
+                        >
+                            broadcast + resource provider
+                        </button>
+                        <button
+                            class="btn btn-block"
+                            type="button"
+                            onclick="transfer({transactPlugins: [autoCorrect]})"
+                        >
+                            broadcast + autocorrect
+                        </button>
+                    </div>
+                </div>
+                <div class="Box">
+                    <div class="Box-header">
+                        <h3 class="Box-title">Transaction Log</h3>
+                    </div>
+                    <div class="Box-body" id="log"></div>
+                </div>
+            </div>
+            <div class="Layout-sidebar">
+                <nav class="SideNav border" style="max-width: 360px">
+                    <nav
+                        class="SideNav color-bg-default border-top py-3"
+                        style="padding-left: 24px"
+                    >
+                        <h5 class="color-fg-muted mb-2 border-bottom">Accounts</h5>
+                        <div id="sessions"></div>
+                    </nav>
+                    <a class="SideNav-item" href="#url" onclick="logout()">
+                        <span id="account-name-logout">Logout</span>
+                    </a>
+                    <a class="SideNav-item" href="#url" onclick="logoutAll()">
+                        <span>Logout all</span>
+                    </a>
+                </nav>
+            </div>
         </div>
     </body>
 </html>
