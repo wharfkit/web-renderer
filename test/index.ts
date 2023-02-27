@@ -8,6 +8,7 @@ export default WebUIRenderer
 // expose dependencies
 export * from '@wharfkit/session'
 export * from '@wharfkit/transact-plugin-autocorrect'
+export * from '@wharfkit/transact-plugin-explorerlink'
 export * from '@wharfkit/transact-plugin-mock'
 export * from '@wharfkit/transact-plugin-resource-provider'
 // export * from '@wharfkit/wallet-plugin-anchor'
