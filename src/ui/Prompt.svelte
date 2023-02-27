@@ -4,7 +4,7 @@
 
     import Accept from './components/Accept.svelte'
     import Asset from './components/Asset.svelte'
-    import Button from './components/Button.svelte'
+    import Link from './components/Link.svelte'
     import Countdown from './components/Countdown.svelte'
     import Qr from './components/Qr.svelte'
 
@@ -40,7 +40,7 @@
                     }
                     case 'button': {
                         components.push({
-                            component: Button,
+                            component: Link,
                             props: {
                                 data: element.data,
                             },
