@@ -1329,10 +1329,10 @@
     "@greymass/eosio-resources" "^0.9.0"
     tslib "^2.1.0"
 
-"@wharfkit/transact-plugin-explorerlink@^0.3.0-ui-14":
-  version "0.3.0-ui-14"
-  resolved "https://registry.yarnpkg.com/@wharfkit/transact-plugin-explorerlink/-/transact-plugin-explorerlink-0.3.0-ui-14.tgz#7d85630977a9cf7787c0631c7b64242919cf3784"
-  integrity sha512-SICXSI1l3JYlytZj0BJ0jnKCw9LBrlpTpUK8VIw74wuUXy+x2/W5wVjBNGtWriHDd9fT/t5iK4o55yn3ZlRozw==
+"@wharfkit/transact-plugin-explorerlink@^0.3.0-ui-15":
+  version "0.3.0-ui-15"
+  resolved "https://registry.yarnpkg.com/@wharfkit/transact-plugin-explorerlink/-/transact-plugin-explorerlink-0.3.0-ui-15.tgz#ccb5ea7c4ff0e2ccb034b445f2a961995bbd691e"
+  integrity sha512-8gwsTf6Owrd30NZKW9RYOEilAzrDMrYkjHeYFoLBpmt10AFrcgVzVOxf+1howSqdOP5moSGZYYEWcm4CRmOAAA==
   dependencies:
     tslib "^2.1.0"
 
