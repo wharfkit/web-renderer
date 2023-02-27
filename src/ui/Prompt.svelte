@@ -1,6 +1,6 @@
 <script lang="ts">
     import {ComponentType, createEventDispatcher, SvelteComponentTyped} from 'svelte'
-    import {derived, Readable, Writable} from 'svelte/store'
+    import {derived} from 'svelte/store'
 
     import Accept from './components/Accept.svelte'
     import Asset from './components/Asset.svelte'
@@ -8,17 +8,7 @@
     import Countdown from './components/Countdown.svelte'
     import Qr from './components/Qr.svelte'
 
-    import {UserInterfaceState} from '../interfaces'
-    import {PromptArgs} from '@wharfkit/session'
-
-    export let state: Writable<UserInterfaceState>
-
-    // Get the prompt from the state
-    const prompt: Readable<PromptArgs | undefined> = derived(state, ($currentState) => {
-        return $currentState.props && $currentState.props.id === 'prompt'
-            ? $currentState.props.prompt
-            : undefined
-    })
+    import {prompt} from './state'
 
     interface UIComponent {
         component: ComponentType<SvelteComponentTyped>
@@ -28,7 +18,7 @@
     const elements = derived(prompt, ($prompt) => {
         const components: UIComponent[] = []
         if ($prompt) {
-            $prompt.elements.forEach((element) => {
+            $prompt.args.elements.forEach((element) => {
                 switch (element.type) {
                     case 'accept': {
                         components.push({
@@ -91,8 +81,8 @@
 </script>
 
 <div>
-    <h3>{$prompt?.title}</h3>
-    <p>{$prompt?.body}</p>
+    <h3>{$prompt?.args.title}</h3>
+    <p>{$prompt?.args.body}</p>
     {#each $elements as component}
         <div>
             <svelte:component

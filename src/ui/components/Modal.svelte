@@ -1,36 +1,29 @@
 <script lang="ts">
     import Header from './Header.svelte'
-    import {get, Writable} from 'svelte/store'
-    import {UserInterfaceState} from '../../interfaces'
+    import {active, cancelablePromises, resetState} from '../state'
 
-    export let state: Writable<UserInterfaceState>
     let dialog: HTMLDialogElement
-    let status: string = 'test'
 
     // Control the dialog element display based on state.active
-    state.subscribe((current) => {
-        const {active} = current
+    active.subscribe((current) => {
+        console.log('active changed', current)
         if (dialog) {
-            if (active && !dialog.open) {
+            if (current && !dialog.open) {
                 dialog.showModal()
-            } else if (!active && dialog.open) {
+            } else if (!current && dialog.open) {
                 dialog.close()
+                resetState()
             }
         }
-        // TODO: Remove the debugging code below and replace with real content
-        status = current.title || 'Starting'
     })
 
     // Perform work required to cancel request
     function cancelRequest() {
         // Cancel any pending promises
-        const promises = get(state).cancelablePromises
-        promises.map((f) => f('Modal closed', true))
+        console.log($cancelablePromises)
+        $cancelablePromises.map((f) => f('Modal closed', true))
         // Update state to close the modal
-        state.update((current) => ({
-            ...current,
-            active: false,
-        }))
+        active.set(false)
     }
 
     // When background is clicked outside of modal, close
@@ -59,7 +52,7 @@
     on:click|capture|nonpassive={backgroundClose}
     on:keyup|preventDefault|capture|nonpassive={escapeClose}
 >
-    <Header {status} />
+    <Header on:cancel={cancelRequest} />
     <div class="modal-content">
         <slot />
     </div>
@@ -84,6 +77,7 @@
 
         font-family: system-ui, ui-sans-serif;
     }
+
     dialog {
         border: none !important;
         border-radius: var(--border-radius);
@@ -93,7 +87,7 @@
         box-shadow: 0px 4px 154px rgba(0, 0, 0, 0.35);
     }
     dialog::backdrop {
-        background: rgba(0, 0, 0, 0.65);
+        background: rgba(0, 0, 0, 0.75);
     }
     .modal-content {
         padding: 50px 59px;

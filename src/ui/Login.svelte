@@ -1,39 +1,27 @@
 <script lang="ts">
     import {
-        Checksum256Type,
-        PermissionLevelType,
-        UserInterfaceWalletPlugin,
-        ChainDefinition,
         APIClient,
+        ChainDefinition,
+        Checksum256,
+        PermissionLevel,
+        UserInterfaceLoginResponse,
+        UserInterfaceWalletPlugin,
     } from '@wharfkit/session'
     import {createEventDispatcher} from 'svelte'
-    import {derived, Readable, Writable, writable} from 'svelte/store'
+    import {derived, Readable} from 'svelte/store'
     import {onMount} from 'svelte'
 
     import Blockchain from './login/Blockchain.svelte'
     import Permission from './login/Permission.svelte'
     import Wallet from './login/Wallet.svelte'
-    import {UserInterfaceState} from '../interfaces'
+    import {loginContext, loginResponse, props} from './state'
 
-    export let state: Writable<UserInterfaceState>
     let completed = false
 
     const dispatch = createEventDispatcher<{
         complete: UserInterfaceLoginResponse
         cancel: void
     }>()
-
-    interface UserInterfaceLoginResponse {
-        chainId?: Checksum256Type
-        permissionLevel?: PermissionLevelType
-        walletPluginIndex?: number
-    }
-
-    const response = writable<UserInterfaceLoginResponse>({
-        chainId: undefined,
-        permissionLevel: undefined,
-        walletPluginIndex: undefined,
-    })
 
     enum Steps {
         done = 'done',
@@ -43,139 +31,126 @@
     }
 
     const chain: Readable<ChainDefinition | undefined> = derived(
-        [response, state],
-        ([$currentResponse, $currentState]) => {
-            if (
-                $currentResponse &&
-                $currentState &&
-                $currentState.props &&
-                $currentState.props.id === 'login'
-            ) {
-                const {context} = $currentState.props
-                if ($currentResponse.chainId === undefined) {
-                    return undefined
-                }
-                return context.chains.find((c) => c.id === $currentResponse.chainId)
+        [loginContext, loginResponse],
+        ([$currentContext, $currentResponse]) => {
+            if (!$currentContext || $currentResponse.chainId === undefined) {
+                return undefined
             }
+            return $currentContext.chains.find((c) => c.id === $currentResponse.chainId)
         }
     )
 
     const client: Readable<APIClient | undefined> = derived(
-        [chain, state],
-        ([$currentChain, $currentState]) => {
-            if (
-                $currentChain &&
-                $currentState &&
-                $currentState.props &&
-                $currentState.props.id === 'login'
-            ) {
-                const {context} = $currentState.props
-                if ($currentChain === undefined) {
-                    return undefined
-                }
-                return context.getClient($currentChain)
+        [chain, loginContext],
+        ([$currentChain, $currentContext]) => {
+            if (!$currentContext || $currentChain === undefined) {
+                return undefined
             }
+            return $currentContext.getClient($currentChain)
         }
     )
 
     const walletPlugin: Readable<UserInterfaceWalletPlugin | undefined> = derived(
-        [response, state],
-        ([$response, $currentState]) => {
-            if (
-                $response &&
-                $currentState &&
-                $currentState.props &&
-                $currentState.props.id === 'login'
-            ) {
-                const {context} = $currentState.props
-                if ($response.walletPluginIndex === undefined) {
-                    return undefined
-                }
-                return context.walletPlugins[$response.walletPluginIndex]
+        [loginContext, loginResponse],
+        ([$currentContext, $currentResponse]) => {
+            if (!$currentContext || $currentResponse.walletPluginIndex === undefined) {
+                return undefined
             }
+            return $currentContext.walletPlugins[$currentResponse.walletPluginIndex]
         }
     )
 
-    let chains: Readable<ChainDefinition[] | undefined> = derived(
-        [state, walletPlugin],
-        ([$currentState, $currentWalletPlugin]) => {
-            // Otherwise return all chains provided by the app
-            if (!$currentState || !$currentState.props || $currentState.props.id !== 'login') {
+    let chains: Readable<ChainDefinition[]> = derived(
+        [loginContext, walletPlugin],
+        ([$currentContext, $currentWalletPlugin]) => {
+            if (!$currentContext || !$currentWalletPlugin) {
                 return []
             }
-            const {context} = $currentState.props
             // If the selected WalletPlugin has an array of supported chains, filter the list of chains
-            if ($currentWalletPlugin && $currentWalletPlugin.config.supportedChains) {
-                return context.chains.filter((chain) => {
+            if ($currentWalletPlugin.config.supportedChains) {
+                return $currentContext.chains.filter((chain) => {
                     return (
                         !$currentWalletPlugin.config.supportedChains ||
                         $currentWalletPlugin.config.supportedChains.includes(String(chain.id))
                     )
                 })
             }
-            return context.chains
+            return $currentContext.chains
         }
     )
     onMount(() => {
-        if ($state.props && $state.props.id === 'login') {
-            const {context} = $state.props
-            if (context.chain) {
-                response.update((r) => {
-                    if (context.chain) {
-                        return {
-                            ...r,
-                            chainId: context.chain.id,
-                        }
-                    }
-                    return r
-                })
+        // Update the title of the Modal to match that of the appName
+        let modalTitle = 'Login'
+        if ($loginContext && $loginContext.appName) {
+            modalTitle += ` to ${$loginContext.appName}`
+        }
+        $props.title = modalTitle
+        if ($loginContext) {
+            // If a chain is specified, set it on the response
+            if ($loginContext.chain) {
+                $loginResponse.chainId = $loginContext.chain.id
             }
-            if (context.chains.length === 1) {
-                response.update((r) => ({...r, chainId: context.chains[0].id}))
+            // If only one chain is provided, default to it
+            if ($loginContext.chains.length === 1) {
+                $loginResponse.chainId = $loginContext.chains[0].id
             }
-            if (context.permissionLevel) {
-                response.update((r) => ({...r, permissionLevel: context.permissionLevel}))
+            // If a permissionLevel is defined, set it on the response
+            if ($loginContext.permissionLevel) {
+                $loginResponse.permissionLevel = $loginContext.permissionLevel
             }
-            if (context.walletPlugins.length === 1) {
-                response.update((r) => ({...r, walletPluginIndex: 0}))
+            // If only one wallet is provided, default to it
+            if ($loginContext.walletPlugins.length === 1) {
+                $loginResponse.walletPluginIndex = 0
             }
         }
     })
 
-    const step = derived([response, walletPlugin], ([$currentResponse, $currentWalletPlugin]) => {
-        if (!$currentWalletPlugin) {
-            return Steps.selectWallet
+    const step = derived(
+        [loginResponse, walletPlugin],
+        ([$currentResponse, $currentWalletPlugin]) => {
+            console.log('update step')
+            if (!$currentWalletPlugin) {
+                $props.title = 'Select a Wallet'
+                return Steps.selectWallet
+            }
+
+            const {requiresChainSelect, requiresPermissionSelect, supportedChains} =
+                $currentWalletPlugin.config
+
+            if (!$currentResponse.chainId && supportedChains && supportedChains.length === 1) {
+                $loginResponse.chainId = supportedChains[0]
+                $props.title = 'Select a Blockchain'
+                return Steps.selectChain
+            } else if (!$currentResponse.chainId && requiresChainSelect) {
+                $props.title = 'Select a Blockchain'
+                return Steps.selectChain
+            } else if (!$currentResponse.permissionLevel && requiresPermissionSelect) {
+                $props.title = 'Select an Account'
+                return Steps.selectPermission
+            }
+
+            // We have completed, return response to kit for the WalletPlugin to trigger
+            complete()
         }
+    )
 
-        const {requiresChainSelect, requiresPermissionSelect, supportedChains} =
-            $currentWalletPlugin.config
+    const selectChain = (e) => ($loginResponse.chainId = e.detail)
+    const unselectChain = () => ($loginResponse.chainId = undefined)
 
-        if (!$currentResponse.chainId && supportedChains && supportedChains.length === 1) {
-            response.update((r) => ({...r, chainId: supportedChains[0]}))
-            return Steps.selectChain
-        } else if (!$currentResponse.chainId && requiresChainSelect) {
-            return Steps.selectChain
-        } else if (!$currentResponse.permissionLevel && requiresPermissionSelect) {
-            return Steps.selectPermission
-        }
+    const selectPermission = (e) => ($loginResponse.permissionLevel = e.detail)
+    const unselectPermission = () => ($loginResponse.permissionLevel = undefined)
 
-        // We have completed, return response to kit for the WalletPlugin to trigger
-        complete()
-    })
-
-    const selectChain = (e) => response.update((r) => ({...r, chainId: e.detail}))
-    const unselectChain = () => response.update((r) => ({...r, chainId: undefined}))
-
-    const selectPermission = (e) => response.update((r) => ({...r, permissionLevel: e.detail}))
-    const unselectPermission = () => response.update((r) => ({...r, permissionLevel: undefined}))
-
-    const selectWallet = (e) => response.update((r) => ({...r, walletPluginIndex: e.detail}))
-    const unselectWallet = () => response.update((r) => ({...r, walletPluginIndex: undefined}))
+    const selectWallet = (e) => ($loginResponse.walletPluginIndex = e.detail)
+    const unselectWallet = () => ($loginResponse.walletPluginIndex = undefined)
 
     const complete = () => {
         if (!completed) {
             completed = true
-            dispatch('complete', $response)
+            dispatch('complete', {
+                chainId: Checksum256.from(String($loginResponse.chainId)),
+                permissionLevel: PermissionLevel.from(String($loginResponse.permissionLevel)),
+                walletPluginIndex: Number($loginResponse.walletPluginIndex),
+            })
         }
     }
 
@@ -184,13 +159,9 @@
     }
 </script>
 
-{#if $state.props && $state.props.id === 'login'}
+{#if $props && $loginContext}
     {#if $step === Steps.selectWallet}
-        <Wallet
-            on:select={selectWallet}
-            on:cancel={cancel}
-            wallets={$state.props?.context.walletPlugins}
-        />
+        <Wallet on:select={selectWallet} on:cancel={cancel} wallets={$loginContext.walletPlugins} />
     {:else if $step === Steps.selectChain && $chains}
         <Blockchain on:select={selectChain} on:cancel={unselectWallet} chains={$chains} />
     {:else if $step === Steps.selectPermission && $client && $walletPlugin}

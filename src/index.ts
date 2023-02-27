@@ -9,8 +9,19 @@ import {
     UserInterfaceLoginResponse,
 } from '@wharfkit/session'
 
-import App, {state} from './ui/App.svelte'
-import {UserInterfaceState} from './interfaces'
+import App from './ui/App.svelte'
+
+import {
+    active,
+    cancelablePromises,
+    errorDetails,
+    loginContext,
+    loginPromise,
+    prompt,
+    props,
+    resetState,
+    router,
+} from './ui/state'
 
 export interface WebUIRendererOptions {
     id?: string
@@ -26,8 +37,6 @@ export class WebUIRenderer implements UserInterface {
     public elementId = 'wharfkit-web-ui'
     public element: Element
     public shadow: ShadowRoot
-
-    public cancelablePromises: ((reason: string) => void)[] = []
 
     constructor(options: WebUIRendererOptions = defaultWebUIRendererOptions) {
         // Create the dialog element and its shadow root
@@ -53,10 +62,7 @@ export class WebUIRenderer implements UserInterface {
 
     // Add every cancelable promise to the list of cancelable promises
     addCancelablePromise = (promise) =>
-        state.update((current: UserInterfaceState) => ({
-            ...current,
-            cancelablePromises: [...current.cancelablePromises, promise],
-        }))
+        cancelablePromises.update((current) => [...current, promise])
 
     log(...args: any[]) {
         // eslint-disable-next-line no-console
@@ -65,21 +71,16 @@ export class WebUIRenderer implements UserInterface {
 
     login(context: LoginContext): Cancelable<UserInterfaceLoginResponse> {
         this.log('login', context)
+        active.set(true)
+        router.push('login')
+        loginContext.set(context)
         const promise = cancelable(
-            new Promise<UserInterfaceLoginResponse>((resolve, reject) => {
-                state.update((current) => ({
-                    ...current,
-                    active: true,
-                    path: 'login',
-                    previousPaths: [...current.previousPaths, current.path],
-                    props: {
-                        id: 'login',
-                        context,
-                        reject,
-                        resolve,
-                    },
-                }))
-            })
+            new Promise<UserInterfaceLoginResponse>((resolve, reject) =>
+                loginPromise.set({
+                    reject,
+                    resolve,
+                })
+            )
         )
         this.addCancelablePromise(promise.cancel)
         return promise
@@ -98,85 +99,94 @@ export class WebUIRenderer implements UserInterface {
         if (isSilent) {
             return
         }
-        state.update((current) => ({
+        // Make sure the dialog is active
+        active.set(true)
+        // Set the error state
+        errorDetails.set(String(error))
+        // Set the title/subtitle to match the error state
+        props.update((current) => ({
             ...current,
-            active: true,
-            path: 'error',
-            previousPaths: [...current.previousPaths, current.path],
-            props: {
-                id: 'error',
-                error,
-            },
-            title: 'An error occurred',
+            title: 'Error',
+            subtitle: 'An error has occurred.',
         }))
+        // Push the new path to the router
+        router.push('error')
     }
 
     async onLogin() {
         this.log('onLogin')
-        state.update((current) => ({
+        // Make sure the dialog is active
+        active.set(true)
+        // Set the title/subtitle to match the login state
+        props.update((current) => ({
             ...current,
-            active: true,
-            previousPaths: [], // Reset paths
+            title: 'Login',
+            subtitle: 'Please login to continue.',
         }))
+        // Push the new path to the router
+        router.push('login')
     }
 
     async onLoginResult() {
         this.log('onLoginResult')
-        state.update((current) => ({
-            ...current,
-            active: false,
-        }))
+        // Close the dialog once the login completes
+        active.set(false)
     }
 
     async onTransact() {
         this.log('onTransact')
-        state.update((current) => ({
-            ...current,
-            active: true,
-            path: 'transact',
-            previousPaths: [], // Reset paths
+        // Make sure the dialog is active
+        active.set(true)
+        // Set the title/subtitle to match the transact state
+        props.update((c) => ({
+            ...c,
+            title: 'Transact',
+            subtitle: '',
         }))
+        // Push the new path to the router
+        router.push('transact')
     }
 
     async onTransactResult() {
         this.log('onTransactResult')
-        state.update((current) => ({
-            ...current,
-            active: false,
-        }))
+        // Reset all data in the state
+        resetState()
+        // Close the dialog once the transact completes
+        active.set(false)
     }
 
     prompt(args: PromptArgs): Cancelable<PromptResponse> {
         this.log('prompt', args)
+        // Make sure the dialog is active
+        active.set(true)
+        // Push the new path to the router
+        router.push('prompt')
+        // Setup the promise to return to the session kit
         const promise = cancelable(
             new Promise<UserInterfaceLoginResponse>((resolve, reject) => {
-                state.update((current) => ({
-                    ...current,
-                    active: true,
-                    path: 'prompt',
-                    previousPaths: [...current.previousPaths, current.path],
-                    props: {
-                        id: 'prompt',
-                        prompt: args,
-                        resolve,
-                        reject,
-                    },
-                }))
+                prompt.set({
+                    args,
+                    resolve,
+                    reject,
+                })
             }),
             (canceled) => {
                 throw canceled
             }
         )
+        // Save a copy of the promise to reference if canceled
         this.addCancelablePromise(promise.cancel)
+        // Return the promise to the session kit
         return promise
     }
 
     status(message: string) {
-        this.log('status message', message)
-        state.update((current) => ({
+        // Make sure the dialog is active
+        active.set(true)
+        // Update the subtitle to match the message
+        props.update((current) => ({
             ...current,
-            active: true,
-            title: message,
+            subtitle: message,
         }))
     }
 }

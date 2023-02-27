@@ -1,44 +1,4 @@
-import {
-    Cancelable,
-    LoginContext,
-    Name,
-    PromptArgs,
-    PublicKey,
-    Struct,
-    UInt32,
-    UserInterfaceLoginResponse,
-    Weight,
-} from '@wharfkit/session'
-
-export type ErrorProps = {
-    id: 'error'
-    error: Error
-}
-
-export type LoginProps = {
-    id: 'login'
-    context: LoginContext
-    reject: (error: Error) => void
-    resolve: (response: UserInterfaceLoginResponse) => void
-}
-
-export type PromptProps = {
-    id: 'prompt'
-    prompt: PromptArgs
-    reject: (error: Error) => void
-    resolve: (response: UserInterfaceLoginResponse) => void
-}
-
-export type UserInterfaceStateProps = ErrorProps | LoginProps | PromptProps
-
-export interface UserInterfaceState {
-    active: boolean
-    cancelablePromises: Cancelable<UserInterfaceLoginResponse>[]
-    path: string
-    previousPaths: string[]
-    title?: string
-    props?: UserInterfaceStateProps
-}
+import {Name, PublicKey, Struct, UInt32, Weight} from '@wharfkit/session'
 
 @Struct.type('get_accounts_by_authorizers')
 export class GetAccountsByAuthorizersRow extends Struct {

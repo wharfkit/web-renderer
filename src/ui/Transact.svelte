@@ -1,10 +1,5 @@
 <script lang="ts">
     import {createEventDispatcher} from 'svelte'
-    import {Writable} from 'svelte/store'
-
-    import {UserInterfaceState} from '../interfaces'
-
-    export let state: Writable<UserInterfaceState>
 
     const dispatch = createEventDispatcher<{
         complete: void
@@ -21,4 +16,3 @@
 </script>
 
 <p>Doing transact stuffs</p>
-{JSON.stringify($state)}

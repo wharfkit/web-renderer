@@ -1,15 +1,4 @@
 <script lang="ts" context="module">
-    import {writable} from 'svelte/store'
-    import {UserInterfaceState} from '../interfaces'
-
-    const defaultState = {
-        active: false,
-        cancelablePromises: [],
-        path: 'login',
-        previousPaths: [],
-    }
-
-    export let state = writable<UserInterfaceState>(defaultState)
 </script>
 
 <script lang="ts">
@@ -19,58 +8,43 @@
     import Modal from './components/Modal.svelte'
     import Transact from './Transact.svelte'
 
+    import {active, errorDetails, prompt, router, loginPromise} from './state'
+
     function cancel({detail}) {
         // Reject any promises that are waiting for a response
-        if ($state.props) {
-            switch ($state.props.id) {
-                // The types of props that carry a promise
-                case 'login':
-                case 'prompt':
-                    $state.props.reject(detail)
-                    break
-                default:
-                    break
-            }
+        if ($loginPromise) {
+            $loginPromise.reject(detail)
         }
-        // Go back to previous path and remove it from the history
-        state.update((current) => ({
-            ...current,
-            path: current.previousPaths[current.previousPaths.length - 1],
-            previousPaths: current.previousPaths.slice(0, -1),
-        }))
+        if ($prompt) {
+            $prompt.reject(detail)
+            prompt.reset()
+        }
+        router.back()
     }
     function complete({detail}) {
         // Reject any promises that are waiting for a response
-        if ($state.props) {
-            switch ($state.props.id) {
-                // The types of props that carry a promise
-                case 'login':
-                case 'prompt':
-                    $state.props.resolve(detail)
-                    break
-                default:
-                    break
-            }
+        if ($loginPromise) {
+            $loginPromise.resolve(detail)
+        }
+        if ($prompt) {
+            $prompt.resolve(detail)
+            prompt.reset()
         }
         // Go back to previous path and remove it from the history
-        state.update((current) => ({
-            ...current,
-            path: current.previousPaths[current.previousPaths.length - 1],
-            previousPaths: current.previousPaths.slice(0, -1),
-        }))
+        router.back()
     }
 </script>
 
-<Modal {state}>
-    {#if $state.active}
-        {#if $state.path === 'error'}
-            <Error on:cancel={cancel} on:complete={complete} {state} />
-        {:else if $state.path === 'login'}
-            <Login on:cancel={cancel} on:complete={complete} {state} />
-        {:else if $state.path === 'transact'}
-            <Transact on:cancel={cancel} on:complete={complete} {state} />
-        {:else if $state.path === 'prompt'}
-            <Prompt on:cancel={cancel} on:complete={complete} {state} />
+<Modal>
+    {#if $active}
+        {#if $prompt}
+            <Prompt on:cancel={cancel} on:complete={complete} />
+        {:else if $errorDetails}
+            <Error on:cancel={cancel} on:complete={complete} />
+        {:else if $router.path === 'login'}
+            <Login on:cancel={cancel} on:complete={complete} />
+        {:else if $router.path === 'transact'}
+            <Transact on:cancel={cancel} on:complete={complete} />
         {/if}
     {:else}
         <p>Modal inactive</p>

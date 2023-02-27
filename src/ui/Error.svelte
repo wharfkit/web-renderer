@@ -1,19 +1,9 @@
 <script lang="ts">
-    import {derived, Readable, Writable} from 'svelte/store'
-    import {UserInterfaceState, UserInterfaceStateProps} from '../interfaces'
-
-    export let state: Writable<UserInterfaceState>
-
-    const props: Readable<UserInterfaceStateProps | undefined> = derived(state, ($state) => {
-        if ($state.props && $state.props) {
-            return $state.props
-        }
-        return undefined
-    })
+    import {errorDetails} from './state'
 </script>
 
 <div class="error">
-    {#if $props && $props.id === 'error'}
+    {#if $errorDetails}
         <svg
             width="100"
             height="100"
@@ -41,7 +31,7 @@
             />
         </svg>
         <h2>Error!</h2>
-        <p>{$props.error}</p>
+        <p>{$errorDetails}</p>
     {/if}
 </div>
 
