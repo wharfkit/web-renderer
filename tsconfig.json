@@ -11,7 +11,13 @@
         "sourceMap": true,
         "strict": true,
         "target": "es2020",
-        "useUnknownInCatchVariables": false
+        "useUnknownInCatchVariables": false,
+        "resolveJsonModule": true,
+        "baseUrl": ".",
+        "paths": {
+            "$lib": ["src/lib"],
+            "$ui": ["src/ui/*"]
+        }
     },
-    "include": ["src/*", "src/lib/qrcode/*"]
+    "include": ["src/*", "src/lib/*", "src/lib/**/*"]
 }

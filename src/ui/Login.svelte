@@ -1,27 +1,17 @@
 <script lang="ts">
-    import {
-        APIClient,
-        ChainDefinition,
-        Checksum256,
-        PermissionLevel,
-        UserInterfaceLoginResponse,
-        UserInterfaceWalletPlugin,
-        WalletPluginLoginResponse,
-    } from '@wharfkit/session'
-    import {createEventDispatcher} from 'svelte'
+    import {APIClient, ChainDefinition, UserInterfaceWalletPlugin} from '@wharfkit/session'
+    import {createEventDispatcher, getContext} from 'svelte'
     import {derived, Readable} from 'svelte/store'
     import {onMount} from 'svelte'
+
+    import {i18nType} from 'src/lib/translations'
+    import {loginContext, loginResponse, props, UserInterfaceLoginData} from './state'
 
     import Blockchain from './login/Blockchain.svelte'
     import Permission from './login/Permission.svelte'
     import Wallet from './login/Wallet.svelte'
-    import {
-        defaultLoginResponse,
-        loginContext,
-        loginResponse,
-        props,
-        UserInterfaceLoginData,
-    } from './state'
+
+    const {t} = getContext<i18nType>('i18n')
 
     let completed = false
 
@@ -87,11 +77,15 @@
     )
     onMount(() => {
         // Update the title of the Modal to match that of the appName
-        let modalTitle = 'Login'
         if ($loginContext && $loginContext.appName) {
-            modalTitle += ` to ${$loginContext.appName}`
+            $props.title = $t('login.title-app', {
+                appName: $loginContext.appName,
+                default: 'Login to {{appName}}',
+            })
+        } else {
+            $props.title = $t('login.title', {default: 'Login'})
         }
-        $props.title = modalTitle
+
         if ($loginContext) {
             // If a chain is specified, set it on the response
             if ($loginContext.chain) {
@@ -116,7 +110,7 @@
         [loginResponse, walletPlugin],
         ([$currentResponse, $currentWalletPlugin]) => {
             if (!$currentWalletPlugin) {
-                $props.title = 'Select a Wallet'
+                $props.title = $t('login.select.wallet', {default: 'Select a Wallet'})
                 return Steps.selectWallet
             }
 
@@ -127,10 +121,10 @@
                 $loginResponse.chainId = supportedChains[0]
                 return Steps.selectPermission
             } else if (!$currentResponse.chainId && requiresChainSelect) {
-                $props.title = 'Select a Blockchain'
+                $props.title = $t('login.select.blockchain', {default: 'Select a Blockchain'})
                 return Steps.selectChain
             } else if (!$currentResponse.permissionLevel && requiresPermissionSelect) {
-                $props.title = 'Select an Account'
+                $props.title = $t('login.select.account', {default: 'Select an Account'})
                 return Steps.selectPermission
             }
 
@@ -173,8 +167,8 @@
             walletPlugin={$walletPlugin}
         />
     {:else}
-        <p>Please complete the login request using your wallet.</p>
+        <p>{$t('login.complete', {default: 'Complete the login using your selected wallet.'})}</p>
     {/if}
 {:else}
-    <p>Loading...</p>
+    <p>{$t('loading', {default: 'Loading...'})}</p>
 {/if}

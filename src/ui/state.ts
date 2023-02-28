@@ -1,5 +1,4 @@
 import {
-    Cancelable,
     Checksum256Type,
     LoginContext,
     PermissionLevelType,
@@ -88,7 +87,8 @@ export const initRouter = (): Router => {
 export const router = initRouter()
 
 /** Cancelable promises that the router needs to track in order to cancel on quit */
-export const cancelablePromises = writable<Cancelable<UserInterfaceLoginResponse>[]>([])
+type CancelCallback = (reason: string, silent: boolean) => void
+export const cancelablePromises = writable<CancelCallback[]>([])
 
 export const transactContext = writable<TransactContext | undefined>(undefined)
 

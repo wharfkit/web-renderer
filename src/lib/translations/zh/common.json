@@ -1,0 +1,32 @@
+{
+    "accept": "接受",
+    "cancel": "取消",
+    "close": "關閉",
+    "decline": "下降",
+    "error": {
+        "title": "錯誤",
+        "subtitle": "發生錯誤。"
+    },
+    "loading": "裝載。。。",
+    "login": {
+        "complete": "使用您選擇的錢包完成登錄。",
+        "select": {
+            "account": "選擇一個帳戶",
+            "blockchain": "選擇一個區塊鏈",
+            "wallet": "選擇一個錢包",
+            "no_match": "未找到與 {{publicKey}} 匹配的帳戶。"
+        },
+        "title": "登錄",
+        "subtitle": "請登錄以繼續",
+        "title-app": "登錄到 {{appName}}"
+    },
+    "transact": {
+        "title": "辦理",
+        "subtitle": "",
+        "processing": "做交易的東西 - 很酷的動畫！",
+        "signing": "簽署交易",
+        "signed": "交易已簽署",
+        "broadcasting": "廣播交易",
+        "broadcasted": "交易廣播"
+    }
+}

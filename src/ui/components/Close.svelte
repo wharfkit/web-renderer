@@ -1,12 +1,17 @@
 <script lang="ts">
-    import {createEventDispatcher} from 'svelte'
+    import {createEventDispatcher, getContext} from 'svelte'
 
+    import {i18nType} from 'src/lib/translations'
+
+    const {t} = getContext<i18nType>('i18n')
     const dispatch = createEventDispatcher<{
         complete: void
     }>()
 </script>
 
-<button on:click={() => dispatch('complete')}>Close</button>
+<button on:click={() => dispatch('complete')}>
+    {$t('close', {default: 'Close'})}
+</button>
 
 <style lang="scss">
     button {

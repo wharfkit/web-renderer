@@ -1,0 +1,32 @@
+{
+    "accept": "받아들이다",
+    "cancel": "취소",
+    "close": "닫다",
+    "decline": "거절하다",
+    "error": {
+        "title": "오류",
+        "subtitle": "오류가 발생했습니다."
+    },
+    "loading": "로드...",
+    "login": {
+        "complete": "선택한 지갑을 사용하여 로그인을 완료합니다.",
+        "select": {
+            "account": "계정 선택",
+            "blockchain": "블록체인 선택",
+            "wallet": "지갑 선택",
+            "no_match": "{{publicKey}}와 일치하는 계정을 찾을 수 없습니다."
+        },
+        "title": "로그인",
+        "subtitle": "계속하려면 로그인하십시오",
+        "title_app": "{{appName}}에 로그인"
+    },
+    "transact": {
+        "title": "거래하다",
+        "subtitle": "",
+        "processing": "물건을 거래하는 것 - 멋진 애니메이션!",
+        "signing": "서명 트랜잭션",
+        "signed": "트랜잭션 서명",
+        "broadcasting": "방송 거래",
+        "broadcasted": "거래 방송"
+    }
+}

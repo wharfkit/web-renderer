@@ -1,15 +1,13 @@
 <script lang="ts">
-    import {
-        APIClient,
-        ChainDefinition,
-        LoginContext,
-        PermissionLevel,
-        PublicKey,
-        UserInterfaceWalletPlugin,
-    } from '@wharfkit/session'
-    import {createEventDispatcher, onMount} from 'svelte'
+    import {APIClient, PermissionLevel, UserInterfaceWalletPlugin} from '@wharfkit/session'
+    import {createEventDispatcher, getContext, onMount} from 'svelte'
     import {writable} from 'svelte/store'
+
+    import {i18nType} from 'src/lib/translations'
+
     import {GetAccountsByAuthorizers} from '../../interfaces'
+
+    const {t} = getContext<i18nType>('i18n')
 
     export let client: APIClient
     export let walletPlugin: UserInterfaceWalletPlugin
@@ -37,18 +35,26 @@
 
 <div>
     {#if $busy}
-        <p>loading...</p>
+        <p>{$t('loading', {default: 'Loading...'})}</p>
     {:else if permissions && permissions.length > 0}
         {#each permissions as permission}
             <div class="option">
-                <button on:click={() => dispatch('select', permission)}>{String(permission)}</button
-                >
+                <button on:click={() => dispatch('select', permission)}>
+                    {String(permission)}
+                </button>
             </div>
         {/each}
     {:else}
-        <p>No accounts found matching {walletPlugin.metadata.publicKey}</p>
+        <p>
+            {$t('login.select.no_match', {
+                default: 'No accounts found matching {{publicKey}}',
+                publicKey: walletPlugin.metadata.publicKey,
+            })}
+        </p>
     {/if}
-    <button on:click={() => dispatch('cancel')}>cancel</button>
+    <button on:click={() => dispatch('cancel')}>
+        {$t('cancel', {default: 'Cancel'})}
+    </button>
 </div>
 
 <style lang="scss">
@@ -67,9 +73,6 @@
             border: none;
             box-shadow: none;
             margin: 0 auto;
-            &.secondary {
-                background-color: var(--button-secondary-color);
-            }
         }
     }
 </style>

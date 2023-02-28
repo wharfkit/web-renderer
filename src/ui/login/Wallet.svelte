@@ -14,7 +14,9 @@
     {#if wallets}
         {#each wallets as wallet, index}
             <div class="option">
-                <button on:click={() => dispatch('select', index)}>{wallet.metadata.name}</button>
+                <button on:click={() => dispatch('select', index)}>
+                    {wallet.metadata.name}
+                </button>
             </div>
         {/each}
     {/if}
@@ -36,9 +38,6 @@
             border: none;
             box-shadow: none;
             margin: 0 auto;
-            &.secondary {
-                background-color: var(--button-secondary-color);
-            }
         }
     }
 </style>

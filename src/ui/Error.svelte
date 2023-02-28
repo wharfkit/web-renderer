@@ -1,5 +1,9 @@
 <script lang="ts">
+    import {i18nType} from 'src/lib/translations'
+    import {getContext} from 'svelte'
     import {errorDetails} from './state'
+
+    const {t} = getContext<i18nType>('i18n')
 </script>
 
 <div class="error">
@@ -30,7 +34,7 @@
                 fill="#FF5454"
             />
         </svg>
-        <h2>Error!</h2>
+        <h2>{$t('error.title', {default: 'Error'})}</h2>
         <p>{$errorDetails}</p>
     {/if}
 </div>

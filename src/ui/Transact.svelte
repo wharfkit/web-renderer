@@ -1,5 +1,9 @@
 <script lang="ts">
-    import {createEventDispatcher} from 'svelte'
+    import {createEventDispatcher, getContext} from 'svelte'
+
+    import {i18nType} from 'src/lib/translations'
+
+    const {t} = getContext<i18nType>('i18n')
 
     const dispatch = createEventDispatcher<{
         complete: void
@@ -15,4 +19,4 @@
     }
 </script>
 
-<p>Doing transact stuffs - cool animation!</p>
+<p>{$t('transact.processing', {default: 'Doing transact stuffs - cool animation!'})}</p>

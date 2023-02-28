@@ -76,6 +76,7 @@ export default {
         typescript({
             sourceMap: true,
             inlineSources: true,
+            resolveJsonModule: true,
             rootDir: './src',
         }),
         json(),

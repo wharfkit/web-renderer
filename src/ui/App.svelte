@@ -2,6 +2,8 @@
 </script>
 
 <script lang="ts">
+    import {setContext} from 'svelte'
+
     import Error from './Error.svelte'
     import Prompt from './Prompt.svelte'
     import Login from './Login.svelte'
@@ -9,6 +11,11 @@
     import Transact from './Transact.svelte'
 
     import {active, errorDetails, prompt, router, loginPromise} from './state'
+    import {i18nType} from 'src/lib/translations'
+
+    // Set the i18n context for all child components
+    export let i18n
+    setContext<i18nType>('i18n', i18n)
 
     function cancel({detail}) {
         // Reject any promises that are waiting for a response
@@ -21,6 +28,7 @@
         }
         router.back()
     }
+
     function complete({detail}) {
         // Reject any promises that are waiting for a response
         if ($loginPromise) {
@@ -37,10 +45,10 @@
 
 <Modal>
     {#if $active}
-        {#if $prompt}
-            <Prompt on:cancel={cancel} on:complete={complete} />
-        {:else if $errorDetails}
+        {#if $errorDetails}
             <Error on:cancel={cancel} on:complete={complete} />
+        {:else if $prompt}
+            <Prompt on:cancel={cancel} on:complete={complete} />
         {:else if $router.path === 'login'}
             <Login on:cancel={cancel} on:complete={complete} />
         {:else if $router.path === 'transact'}

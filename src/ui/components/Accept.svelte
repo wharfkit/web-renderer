@@ -1,5 +1,9 @@
 <script lang="ts">
-    import {createEventDispatcher} from 'svelte'
+    import {createEventDispatcher, getContext} from 'svelte'
+
+    import {i18nType} from 'src/lib/translations'
+
+    const {t} = getContext<i18nType>('i18n')
 
     const dispatch = createEventDispatcher<{
         complete: void
@@ -7,8 +11,12 @@
     }>()
 </script>
 
-<button on:click={() => dispatch('complete')}>Accept</button>
-<button class="secondary" on:click={() => dispatch('cancel')}>Decline</button>
+<button on:click={() => dispatch('complete')}>
+    {$t('accept', {default: 'Accept'})}
+</button>
+<button class="secondary" on:click={() => dispatch('cancel')}>
+    {$t('decline', {default: 'Decline'})}
+</button>
 
 <style lang="scss">
     button {

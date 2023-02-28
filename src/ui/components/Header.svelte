@@ -14,6 +14,7 @@
     <svg
         class="close"
         on:click={() => dispatch('cancel')}
+        on:keydown={() => dispatch('cancel')}
         width="46"
         height="46"
         viewBox="0 0 46 46"

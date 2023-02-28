@@ -75,6 +75,7 @@
         --base-font: 14px;
 
         font-family: system-ui, ui-sans-serif;
+        text-justify: auto;
     }
 
     dialog {
