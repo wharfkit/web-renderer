@@ -16,8 +16,23 @@
                 Transaction,
             } = WebUIRenderer
 
-            const explorerLink = new WebUIRenderer.TransactPluginExplorerLink()
             const autoCorrect = new WebUIRenderer.TransactPluginAutoCorrect()
+            const cosigner = new WebUIRenderer.TransactPluginCosigner({
+                actor: 'wharfkitnoop',
+                permission: 'cosign',
+                privateKey: '5JfFWg1CWsNTeXTWMyfChXXbyD31TCTknSVGwXDSpT6bPxKYLMM',
+            })
+            const explorerLink = new WebUIRenderer.TransactPluginExplorerLink()
+            const mockTransactPlugin = new WebUIRenderer.TransactPluginMock({
+                prompt: true,
+                promptOptions: {
+                    continueOnAccept: true,
+                    continueOnCancel: false,
+                    continueOnDecline: true,
+                    timeout: 5000,
+                },
+            })
+
             const resourceProvider = new WebUIRenderer.TransactPluginResourceProvider()
 
             const ui = new WebUIRenderer()
@@ -52,39 +67,7 @@
                     },
                 ],
                 ui,
-                // Various transaction plugins, uncomment one or more to test
-                transactPlugins: [
-                    // new WebUIRenderer.TransactPluginExplorerLink(),
-                    // new WebUIRenderer.TransactPluginAutoCorrect(),
-                    // new WebUIRenderer.TransactPluginResourceProvider(),
-                    // new WebUIRenderer.TransactPluginMock({
-                    //     prompt: true,
-                    //     promptOptions: {
-                    //         continueOnAccept: true,
-                    //         continueOnCancel: false,
-                    //         continueOnDecline: true,
-                    //         timeout: 3000,
-                    //     },
-                    // }),
-                    // new WebUIRenderer.TransactPluginMock({
-                    //     prompt: true,
-                    //     promptOptions: {
-                    //         continueOnAccept: true,
-                    //         continueOnCancel: false,
-                    //         continueOnDecline: true,
-                    //         timeout: 4000,
-                    //     },
-                    // }),
-                    // new WebUIRenderer.TransactPluginMock({
-                    //     prompt: true,
-                    //     promptOptions: {
-                    //         continueOnAccept: true,
-                    //         continueOnCancel: false,
-                    //         continueOnDecline: true,
-                    //         timeout: 5000,
-                    //     },
-                    // }),
-                ],
+                transactPlugins: [],
                 // Various wallet configurations, uncomment one or more to test
                 walletPlugins: [
                     // new WebUIRenderer.WalletPluginAnchor(),
@@ -102,7 +85,7 @@
             // tries to restore session, called when document is loaded
             async function restoreSession() {
                 session = await sessionKit.restore().catch((e) => {
-                    console.log('error caught in demo app', e)
+                    console.log('error caught in restore', e)
                 })
                 updateSessions()
                 // If the session was defined, set the UI to logged in
@@ -111,16 +94,24 @@
                     refreshAccount()
                 }
 
-                // Uncomment to test login automatically on load
-                // setTimeout(() => {
-                //     console.log('triggering login automatically...')
-                //     login()
-                // }, 100)
+                const queryString = window.location.search;
+                const urlParams = new URLSearchParams(queryString);
 
-                // Uncomment to test transfer automatically on load
-                // setTimeout(() => {
-                //     transfer()
-                // }, 100)
+                // Automatically trigger a login if ?login exists on the URL
+                if (urlParams.get('login') !== null) {
+                    setTimeout(() => {
+                        console.log('triggering login automatically...')
+                        login()
+                    }, 100)
+                }
+
+                // Automatically trigger a login if ?login exists on the URL
+                if (urlParams.get('transact') !== null) {
+                    setTimeout(() => {
+                        console.log('triggering transfer automatically...')
+                        transfer({ transactPlugins: [mockTransactPlugin]})
+                    }, 100)
+                }
             }
 
             async function updateSessions() {
@@ -159,6 +150,8 @@
                         session = result.session
                         didLogin()
                         refreshAccount()
+                    }).catch((e) => {
+                        console.log('error caught in login', e)
                     })
             }
 
@@ -242,7 +235,11 @@
                         memo: 'Yay WharfKit! Thank you <3',
                     },
                 }
-                session.transact({action}, options).then((result) => {
+                const broadcast = document.getElementById("broadcast").checked
+                session.transact({action}, {
+                    ...options,
+                    broadcast
+                }).then((result) => {
                     const item = document.createElement('div')
                     item.classList = 'TimelineItem TimelineItem--condensed'
                     item.innerHTML = `
@@ -259,6 +256,8 @@
                     }" target="_blank">View on Explorer</a>` : `Not broadcast`}
                 </div>`
                     document.getElementById('log').prepend(item)
+                }).catch((e) => {
+                    console.log('error caught in transact', e)
                 })
             }
 
@@ -324,9 +323,7 @@
                                 <p>RAM: <b id="ram">undefined</b></p>
                             </div>
                         </div>
-                    </div>
-                    <div class="Box-footer">
-                        <button class="btn btn-block btn-primary" type="button" onclick="refreshAccount()">
+                        <button class="btn btn-block btn-primary btn-sm" type="button" onclick="refreshAccount()">
                             Refresh account
                         </button>
                     </div>
@@ -336,33 +333,58 @@
                         <h4>Test by sending 0.0001 EOS to teamgreymass</h4>
                     </div>
                     <div class="Box-body">
-                        <button class="btn btn-block" type="button" onclick="transfer({broadcast: false})">
-                            no broadcast
-                        </button>
-                        <button class="btn btn-block" type="button" onclick="transfer({broadcast: true})">
-                            broadcast
-                        </button>
-                        <button
-                            class="btn btn-block"
-                            type="button"
-                            onclick="transfer({transactPlugins: [explorerLink]})"
-                        >
-                            broadcast + explorer link
-                        </button>
-                        <button
-                            class="btn btn-block"
-                            type="button"
-                            onclick="transfer({transactPlugins: [resourceProvider]})"
-                        >
-                            broadcast + resource provider
-                        </button>
-                        <button
-                            class="btn btn-block"
-                            type="button"
-                            onclick="transfer({transactPlugins: [autoCorrect]})"
-                        >
-                            broadcast + autocorrect
-                        </button>
+                        <form>
+                            <div class="form-group">
+                                <div class="form-group-body">
+                                    <div class="form-checkbox">
+                                        <label>
+                                            <input type="checkbox" id="broadcast"/>
+                                            <em class="highlight">Broadcast?</em>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-group-body">
+                                    <div class="form-checkbox">
+                                        <button class="btn btn-block" type="button" onclick="transfer()">
+                                            transact with no plugins
+                                        </button>
+                                        <button class="btn btn-block" type="button" onclick="transfer({transactPlugins: [mockTransactPlugin]})">
+                                            transact with TransactPluginMock
+                                        </button>
+                                        <button
+                                            class="btn btn-block"
+                                            type="button"
+                                            onclick="transfer({transactPlugins: [explorerLink]})"
+                                        >
+                                            transact with TransactPluginExplorerLink
+                                        </button>
+                                        <button
+                                            class="btn btn-block"
+                                            type="button"
+                                            onclick="transfer({transactPlugins: [cosigner]})"
+                                        >
+                                            transact with TransactPluginCosigner
+                                        </button>
+                                        <button
+                                            class="btn btn-block"
+                                            type="button"
+                                            onclick="transfer({transactPlugins: [resourceProvider]})"
+                                        >
+                                            transact with TransactPluginResourceProvider
+                                        </button>
+                                        <button
+                                            class="btn btn-block"
+                                            type="button"
+                                            onclick="transfer({transactPlugins: [autoCorrect]})"
+                                        >
+                                            transact with TransactPluginAutoCorrect
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
                 <div class="Box">
