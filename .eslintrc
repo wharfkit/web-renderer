@@ -1,6 +1,6 @@
 {
     "root": true,
-    "ignorePatterns": ["lib/*", "node_modules/**"],
+    "ignorePatterns": ["node_modules/**"],
     "extends": [
         "eslint:recommended",
         "plugin:@typescript-eslint/eslint-recommended",
