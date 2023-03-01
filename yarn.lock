@@ -1323,10 +1323,10 @@
     "@typescript-eslint/types" "5.49.0"
     eslint-visitor-keys "^3.3.0"
 
-"@wharfkit/session@^0.3.0-ui-16":
-  version "0.3.0-ui-16"
-  resolved "https://registry.yarnpkg.com/@wharfkit/session/-/session-0.3.0-ui-16.tgz#4859de0c6047dd98cd195ee8603b51f410269086"
-  integrity sha512-O5DxdEu82EEkVMhRlNmqdLMDqg4MK2kSUi1YA27VNqpBVnOQqOlDGYvruV0e6KD+/ZBhsQaElMW/pQIsRoqw2w==
+"@wharfkit/session@^0.3.0-ui-16.1":
+  version "0.3.0-ui-16.1"
+  resolved "https://registry.yarnpkg.com/@wharfkit/session/-/session-0.3.0-ui-16.1.tgz#3476bd3c0ddb43ba48bde1844ae7abed9c3af810"
+  integrity sha512-cl1gi0JwI8QPP8Jx+SnxKwMhUZShQq0s2flDa4AUtta1Fo5yAUiSd2ToSdOd5nl1w+5wGETxa66Hfm1KA72Qfg==
   dependencies:
     "@greymass/eosio" "^0.6.9"
     eosio-signing-request "^2.5.2"

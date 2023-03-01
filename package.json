@@ -37,7 +37,7 @@
     },
     "dependencies": {},
     "peerDependencies": {
-        "@wharfkit/session": "^0.3.0-ui-16"
+        "@wharfkit/session": "^0.3.0-ui-16.1"
     },
     "devDependencies": {
         "@babel/core": "^7.20.12",
@@ -52,7 +52,7 @@
         "@tsconfig/svelte": "^3.0.0",
         "@typescript-eslint/eslint-plugin": "^5.49.0",
         "@typescript-eslint/parser": "^5.49.0",
-        "@wharfkit/session": "^0.3.0-ui-16",
+        "@wharfkit/session": "^0.3.0-ui-16.1",
         "@wharfkit/transact-plugin-autocorrect": "^0.3.0-ui-16",
         "@wharfkit/transact-plugin-cosigner": "^0.3.0-ui-16",
         "@wharfkit/transact-plugin-explorerlink": "^0.3.0-ui-16",
