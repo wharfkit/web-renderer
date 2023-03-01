@@ -143,9 +143,9 @@
             }
 
             // login and store session if successful
-            function login() {
+            function login(options = {}) {
                 sessionKit
-                    .login()
+                    .login(options)
                     .then((result) => {
                         session = result.session
                         didLogin()
@@ -298,7 +298,28 @@
         </h2>
         <nav class="subnav" aria-label="Repository">
             <a class="subnav-item" aria-current="page" href="#login" onclick="login()">
-                <span>Login new account</span>
+                <span>Login</span>
+            </a>
+            <a class="subnav-item" href="#login-test" onclick="login({
+                chain: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
+                permissionLevel: 'wharfkit1111@test',
+                walletPlugin: 'wallet-plugin-privatekey'
+            })">
+                <span>Test Account (Resources)</span>
+            </a>
+            <a class="subnav-item" href="#login-test" onclick="login({
+                chain: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
+                permissionLevel: 'wharfkit1112@test',
+                walletPlugin: 'wallet-plugin-privatekey'
+            })">
+                <span>Test Account (No CPU)</span>
+            </a>
+            <a class="subnav-item" href="#login-test" onclick="login({
+                chain: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
+                permissionLevel: 'wharfkit1115@test',
+                walletPlugin: 'wallet-plugin-privatekey'
+            })">
+                <span>Test Account (No RAM)</span>
             </a>
         </nav>
         <div class="Layout" id="">
