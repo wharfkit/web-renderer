@@ -9,6 +9,7 @@
     "unpkg": "lib/web-ui-renderer.bundle.js",
     "scripts": {
         "build": "rollup -c --bundleConfigAsCjs",
+        "build-test": "rollup -c test/rollup.config.js --bundleConfigAsCjs",
         "dev": "rollup -c test/rollup.config.js --bundleConfigAsCjs -w",
         "serve": "sirv test/public --no-clear --host"
     },

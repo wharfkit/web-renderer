@@ -1,6 +1,5 @@
 import svelte from 'rollup-plugin-svelte'
 import sveltePreprocess from 'svelte-preprocess'
-import css from 'rollup-plugin-css-only'
 import commonjs from '@rollup/plugin-commonjs'
 import resolve from '@rollup/plugin-node-resolve'
 import livereload from 'rollup-plugin-livereload'
@@ -8,6 +7,8 @@ import typescript from '@rollup/plugin-typescript'
 import replace from '@rollup/plugin-replace'
 import json from '@rollup/plugin-json'
 import pkg from '../package.json'
+
+const production = !process.env.ROLLUP_WATCH
 
 function serve() {
     let server
@@ -80,7 +81,7 @@ export default {
             rootDir: './src',
         }),
         json(),
-        serve('test/public'),
-        livereload('test/public'),
+        !production && serve('test/public'),
+        !production && livereload('test/public'),
     ],
 }
