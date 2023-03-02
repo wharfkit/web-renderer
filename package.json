@@ -1,6 +1,7 @@
 {
     "name": "@wharfkit/web-ui-renderer",
     "version": "0.3.0-ui-16",
+    "type": "module",
     "description": "",
     "license": "BSD-3-Clause",
     "main": "lib/web-ui-renderer.js",
@@ -11,7 +12,9 @@
         "build": "rollup -c --bundleConfigAsCjs",
         "build-test": "rollup -c test/rollup.config.js --bundleConfigAsCjs",
         "dev": "rollup -c test/rollup.config.js --bundleConfigAsCjs -w",
-        "serve": "sirv test/public --no-clear --host"
+        "serve": "sirv test/public --no-clear --host",
+        "storybook": "storybook dev -p 6006",
+        "build-storybook": "storybook build"
     },
     "directories": {
         "lib": "lib"
@@ -35,7 +38,6 @@
         "buffer": false,
         "crypto": false
     },
-    "dependencies": {},
     "peerDependencies": {
         "@wharfkit/session": "^0.3.0-ui-16"
     },
@@ -49,6 +51,14 @@
         "@rollup/plugin-node-resolve": "^15.0.1",
         "@rollup/plugin-replace": "^5.0.2",
         "@rollup/plugin-typescript": "^10",
+        "@storybook/addon-essentials": "^7.0.0-beta.59",
+        "@storybook/addon-interactions": "^7.0.0-beta.59",
+        "@storybook/addon-links": "^7.0.0-beta.59",
+        "@storybook/addon-svelte-csf": "^3.0.0-next.3",
+        "@storybook/blocks": "^7.0.0-alpha.8",
+        "@storybook/svelte": "^7.0.0-beta.59",
+        "@storybook/svelte-vite": "^7.0.0-beta.59",
+        "@storybook/testing-library": "^0.0.14-next.1",
         "@tsconfig/svelte": "^3.0.0",
         "@typescript-eslint/eslint-plugin": "^5.49.0",
         "@typescript-eslint/parser": "^5.49.0",
@@ -67,6 +77,8 @@
         "eslint-plugin-prettier": "^4.2.1",
         "node-sass": "^8.0.0",
         "prettier": "^2.8.3",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
         "rollup": "^2.70.2",
         "rollup-plugin-analyzer": "^4.0.0",
         "rollup-plugin-css-only": "^3.1.0",
@@ -77,11 +89,13 @@
         "rollup-plugin-terser": "^7.0.0",
         "sass": "^1.58.3",
         "sirv-cli": "^2.0.0",
+        "storybook": "^7.0.0-beta.59",
         "svelte": "^3.55.1",
         "svelte-preprocess": "^5.0.1",
         "sveltekit-i18n": "^2.2.2",
         "tslib": "^2.4.1",
         "typescript": "^4.9.4",
+        "vite": "^4.1.4",
         "yarn-deduplicate": "^6.0.1"
     }
 }
