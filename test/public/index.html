@@ -58,10 +58,42 @@
                         },
                     },
                     {
+                        id: '4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11',
+                        url: 'https://telos.greymass.com',
+                        explorer: {
+                            prefix: 'https://explorer.telos.net/transaction/',
+                            suffix: '',
+                        },
+                    },
+                    {
+                        id: '1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f',
+                        url: 'https://telostestnet.greymass.com',
+                        explorer: {
+                            prefix: 'https://explorer.telos.net/transaction/',
+                            suffix: '',
+                        },
+                    },
+                    {
+                        id: '8fc6dce7942189f842170de953932b1f66693ad3788f766e777b6f9d22335c02',
+                        url: 'https://api.uxnetwork.io',
+                        explorer: {
+                            prefix: 'https://explorer.uxnetwork.io/tx/',
+                            suffix: '',
+                        },
+                    },
+                    {
                         id: '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4',
                         url: 'https://wax.greymass.com',
                         explorer: {
                             prefix: 'https://waxblock.io/transaction/',
+                            suffix: '',
+                        },
+                    },
+                    {
+                        id: 'f16b1833c747c43682f4386fca9cbb327929334a762755ebec17f6f23c9b8a12',
+                        url: 'https://waxtestnet.greymass.com',
+                        explorer: {
+                            prefix: 'https://wax-test.bloks.io/transaction/',
                             suffix: '',
                         },
                     },
@@ -143,9 +175,9 @@
             }
 
             // login and store session if successful
-            function login() {
+            function login(options = {}) {
                 sessionKit
-                    .login()
+                    .login(options)
                     .then((result) => {
                         session = result.session
                         didLogin()
@@ -298,7 +330,28 @@
         </h2>
         <nav class="subnav" aria-label="Repository">
             <a class="subnav-item" aria-current="page" href="#login" onclick="login()">
-                <span>Login new account</span>
+                <span>Login</span>
+            </a>
+            <a class="subnav-item" href="#login-test" onclick="login({
+                chain: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
+                permissionLevel: 'wharfkit1111@test',
+                walletPlugin: 'wallet-plugin-privatekey'
+            })">
+                <span>Test Account (Resources)</span>
+            </a>
+            <a class="subnav-item" href="#login-test" onclick="login({
+                chain: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
+                permissionLevel: 'wharfkit1112@test',
+                walletPlugin: 'wallet-plugin-privatekey'
+            })">
+                <span>Test Account (No CPU)</span>
+            </a>
+            <a class="subnav-item" href="#login-test" onclick="login({
+                chain: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
+                permissionLevel: 'wharfkit1115@test',
+                walletPlugin: 'wallet-plugin-privatekey'
+            })">
+                <span>Test Account (No RAM)</span>
             </a>
         </nav>
         <div class="Layout" id="">
