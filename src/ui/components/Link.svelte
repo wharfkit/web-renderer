@@ -22,6 +22,7 @@
         font-weight: 600;
         color: var(--button-text-color);
         background-color: var(--button-primary-color);
+        /* background-color: red; */
         border: none;
         box-shadow: none;
         margin: 27px auto 0;
