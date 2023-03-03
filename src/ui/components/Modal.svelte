@@ -57,7 +57,7 @@
 </dialog>
 
 <style lang="scss">
-    @use '../../styles/index.scss';
+    @use '../../styles/index.css';
     :host {
         all: initial;
         text-justify: auto;

@@ -1,4 +1,4 @@
-@forward 'reset';
+/* @forward 'reset'; */
 
 /* :host selector for web component, :root selector for storybook */
 :host,
