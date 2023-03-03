@@ -1,3 +1,6 @@
+/* :host selector for web component, :root selector for storybook */
+
+:host,
 :root {
     --border-radius: 24px;
 
@@ -6,6 +9,7 @@
 
     --button-text-color: #fff;
     --button-primary-color: #1cb095;
+    /* --button-primary-color: red; */
     --button-secondary-color: #3d435a;
     --button-tertiary-color: #494e62;
 

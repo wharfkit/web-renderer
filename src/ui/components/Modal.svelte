@@ -57,23 +57,9 @@
 </dialog>
 
 <style lang="scss">
+    @use '../../styles/index.css';
     :host {
         all: initial;
-        // Shapes
-        --border-radius: 24px;
-
-        // Colors
-        --foreground-color: #000;
-        --background-color: #f2f8f2;
-
-        --button-text-color: #fff;
-        --button-primary-color: #1cb095;
-        --button-secondary-color: #3d435a;
-        --button-tertiary-color: #494e62;
-
-        // Text
-        --base-font: 14px;
-
         font-family: system-ui, ui-sans-serif;
         text-justify: auto;
     }
