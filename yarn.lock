@@ -2969,68 +2969,68 @@
     "@typescript-eslint/types" "5.49.0"
     eslint-visitor-keys "^3.3.0"
 
-"@wharfkit/session@^0.3.0-ui-16.1":
-  version "0.3.0-ui-16.1"
-  resolved "https://registry.yarnpkg.com/@wharfkit/session/-/session-0.3.0-ui-16.1.tgz#3476bd3c0ddb43ba48bde1844ae7abed9c3af810"
-  integrity sha512-cl1gi0JwI8QPP8Jx+SnxKwMhUZShQq0s2flDa4AUtta1Fo5yAUiSd2ToSdOd5nl1w+5wGETxa66Hfm1KA72Qfg==
+"@wharfkit/session@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@wharfkit/session/-/session-0.3.0.tgz#e42312c7c14dd328d06941ab41cab4abd9926e6d"
+  integrity sha512-U/B6aRPCm6l0ipxT3/30WEsOSwu5WRuOV3W/DncnYGH2K8rpy7BwZKJURDGN1HPRruNkT9/r+4sT7t+s4EEChw==
   dependencies:
     "@greymass/eosio" "^0.6.9"
     eosio-signing-request "^2.5.2"
     pako "^2.0.4"
     tslib "^2.1.0"
 
-"@wharfkit/transact-plugin-autocorrect@^0.3.0-ui-16":
-  version "0.3.0-ui-16"
-  resolved "https://registry.yarnpkg.com/@wharfkit/transact-plugin-autocorrect/-/transact-plugin-autocorrect-0.3.0-ui-16.tgz#90b3bab33c0a4860e96fb01f0df538bb75d2995d"
-  integrity sha512-lVIPlf5F0TFbNgXs/uF0DmDA115DHB6jgVtZNO7N9jm/jlA/koady7uV4HF5jMMeetXibdDQUeFP2Z328uPhYQ==
+"@wharfkit/transact-plugin-autocorrect@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@wharfkit/transact-plugin-autocorrect/-/transact-plugin-autocorrect-0.3.0.tgz#9950e8ba7f21a744f30f1a144e2b2431e8f8162b"
+  integrity sha512-38IrkM+ACkwYjfMgVKqVXqvB5F4qWEUJzx+1zOSxpuN5jpUdUG3v597SALpw63qqCk5a24apLeg6+ej/B7yiRQ==
   dependencies:
     "@greymass/eosio-resources" "^0.9.0"
     tslib "^2.1.0"
 
-"@wharfkit/transact-plugin-cosigner@^0.3.0-ui-16":
-  version "0.3.0-ui-16"
-  resolved "https://registry.yarnpkg.com/@wharfkit/transact-plugin-cosigner/-/transact-plugin-cosigner-0.3.0-ui-16.tgz#707fd06e231f7dbf75ce14a58d16c4d81674e4a9"
-  integrity sha512-l4lvo/1dezPAL+K36zpujqfya9NDt3CgREr9H97Aqkxoe9p7ydHYN/yTus0WZDgALHRgZMJ15fwODSyU81zp2w==
+"@wharfkit/transact-plugin-cosigner@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@wharfkit/transact-plugin-cosigner/-/transact-plugin-cosigner-0.3.0.tgz#d4f852b2e996a46338feb8db16fd13fd3970af1d"
+  integrity sha512-PqMK1e7mRnmwVD8sBfqXsPLHnd9fLwq7ifzYGOcHmmNzCB7yPNgXplV4U56adFWrGSvnaH3G0Zhq0UjMPpG9fw==
 
-"@wharfkit/transact-plugin-explorerlink@^0.3.0-ui-16":
-  version "0.3.0-ui-16"
-  resolved "https://registry.yarnpkg.com/@wharfkit/transact-plugin-explorerlink/-/transact-plugin-explorerlink-0.3.0-ui-16.tgz#fe115f7564dbd929b5f153813dbabce332f628f7"
-  integrity sha512-4HUdsSnxw+xjq6wKLgyFLrsuMkptoI0sW5NT0/Ze72N1Oc3NxP9VczENkKLkBZS6GVIlukaLtLwqEfTLUTANtw==
+"@wharfkit/transact-plugin-explorerlink@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@wharfkit/transact-plugin-explorerlink/-/transact-plugin-explorerlink-0.3.0.tgz#5524e23a51e5e158c0ec49bbec77186065cadafa"
+  integrity sha512-aPWhK1E2ghK+irpH0ZaZPjC5AP1KVOGwfD3YB13Jqyg33PLtx80KHnxVkQsoC+EJKEGzppOgc6gHmbpSX2ObGQ==
   dependencies:
     tslib "^2.1.0"
 
-"@wharfkit/transact-plugin-mock@^0.3.0-ui-16":
-  version "0.3.0-ui-16"
-  resolved "https://registry.yarnpkg.com/@wharfkit/transact-plugin-mock/-/transact-plugin-mock-0.3.0-ui-16.tgz#dbba423353a791ba2cc0043bc0ad83316dda940c"
-  integrity sha512-79fAvzF1uElj8c6ixIdPNusPODGaTHwgYYHPBgMmWIHUMK9Vmwbp7gzWzegwbD0bmV2QLjCNvmCHLG+R3gCLAw==
+"@wharfkit/transact-plugin-mock@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@wharfkit/transact-plugin-mock/-/transact-plugin-mock-0.3.0.tgz#12af17d6cf056ea75cf54e7f27505b6a06578692"
+  integrity sha512-4BYVoOihW/nBjjpuynHviJPq+xiUqj3l9MnOcXGGxYScC6D0r8VSffzv2Uj+oNYHO5l+X5T4ovwj1fgvV91kOQ==
   dependencies:
     tslib "^2.1.0"
 
-"@wharfkit/transact-plugin-resource-provider@^0.3.0-ui-16":
-  version "0.3.0-ui-16"
-  resolved "https://registry.yarnpkg.com/@wharfkit/transact-plugin-resource-provider/-/transact-plugin-resource-provider-0.3.0-ui-16.tgz#0bbf06492d1b54638a7378912e40c4f3d61d7437"
-  integrity sha512-EShfjWDS8fqgf+dB4zBkyvldvc4l9auBpdD7PX3Pdf5/7+4BWrxF93BRuXE1sIDLoyjEE6Sho6rJqidqDkRmEg==
+"@wharfkit/transact-plugin-resource-provider@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@wharfkit/transact-plugin-resource-provider/-/transact-plugin-resource-provider-0.3.0.tgz#b8163db3d4feab9ad2c3c54d054f8ebf5e963e12"
+  integrity sha512-W5Zy9xrm5Kjeq1osznVA3aodxhfkG8Ft/fVg1IWXP6/zlQYkXvZagnOemlK4DlqE7P7hghj1MlZojtVjZOUZ/A==
   dependencies:
     tslib "^2.1.0"
 
-"@wharfkit/wallet-plugin-cloudwallet@^0.3.0-ui-16":
-  version "0.3.0-ui-16"
-  resolved "https://registry.yarnpkg.com/@wharfkit/wallet-plugin-cloudwallet/-/wallet-plugin-cloudwallet-0.3.0-ui-16.tgz#6a20a9bc46d1aeaeaa09061622aa25af72ea44ec"
-  integrity sha512-aa6YVwdv5F3BDljpoxCGwbyX0jv1uxM7FnHLsfmKdsYMm2ZAwI5Q93jGnuxskjYB6s5UZ5lR8MkwSOJnGK5XFg==
+"@wharfkit/wallet-plugin-cloudwallet@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@wharfkit/wallet-plugin-cloudwallet/-/wallet-plugin-cloudwallet-0.3.0.tgz#4953bd08448748dcb225a60d502709ee824651ce"
+  integrity sha512-eyMcqYFz+CL54MxW1SftTn13qy/S4nDmzXbGv+UWokovaO/p4qzGLNK2b5HnzJuBvDGhte/ZnxEnkQKklzfIVg==
   dependencies:
     tslib "^2.1.0"
 
-"@wharfkit/wallet-plugin-mock@^0.3.0-ui-16":
-  version "0.3.0-ui-16"
-  resolved "https://registry.yarnpkg.com/@wharfkit/wallet-plugin-mock/-/wallet-plugin-mock-0.3.0-ui-16.tgz#cc3975dbd53f867e6d4d08c8878ea80de4ac7077"
-  integrity sha512-d0k4R6J96dOVUAAvOTyRWqKGfixrvytL1/paxu5Xwe+8uH39OSFF8OGANEaFbXDVDsKgoTrRd2p6HRTTXVTPlA==
+"@wharfkit/wallet-plugin-mock@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@wharfkit/wallet-plugin-mock/-/wallet-plugin-mock-0.3.0.tgz#1d96ad466766cfc8eed3757eb910ecb56937df97"
+  integrity sha512-EmunrKyH9BVTUB+eXCepo0rBzh19dLRRveqfawSYg+FTIlInnaDIHS2S6J9jpJ0xqBEpnIpar/vEWJChUT97mg==
   dependencies:
     tslib "^2.1.0"
 
-"@wharfkit/wallet-plugin-privatekey@^0.3.0-ui-16":
-  version "0.3.0-ui-16"
-  resolved "https://registry.yarnpkg.com/@wharfkit/wallet-plugin-privatekey/-/wallet-plugin-privatekey-0.3.0-ui-16.tgz#f2254e1f5fa63225a82702c899ce113f89f93cee"
-  integrity sha512-j0yQC81WIKcTg1KZWxHG4r2ltNDzkyZXAdbsLiEp3C3zUvCziC7aPDsK9RQtvbOTGMO/3krzkabXO/uUApUANg==
+"@wharfkit/wallet-plugin-privatekey@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@wharfkit/wallet-plugin-privatekey/-/wallet-plugin-privatekey-0.3.0.tgz#a54b03c9b71cbdb132a33eceaf6afec5066be101"
+  integrity sha512-ysEqenJ5CrL4Aja0qVtr3ya4Ah2ADuA4e+16mPMtBGcdDpmFkK/rF8006icLuHNQRXYh5QQTRiVrkQN04V+mZQ==
   dependencies:
     tslib "^2.1.0"
 

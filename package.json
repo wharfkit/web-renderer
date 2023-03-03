@@ -1,6 +1,6 @@
 {
     "name": "@wharfkit/web-ui-renderer",
-    "version": "0.3.0-ui-16",
+    "version": "0.3.0",
     "type": "module",
     "description": "",
     "license": "BSD-3-Clause",
@@ -39,7 +39,7 @@
         "crypto": false
     },
     "peerDependencies": {
-        "@wharfkit/session": "^0.3.0-ui-16.1"
+        "@wharfkit/session": "^0.3.0"
     },
     "devDependencies": {
         "@babel/core": "^7.20.12",
@@ -63,15 +63,15 @@
         "@tsconfig/svelte": "^3.0.0",
         "@typescript-eslint/eslint-plugin": "^5.49.0",
         "@typescript-eslint/parser": "^5.49.0",
-        "@wharfkit/session": "^0.3.0-ui-16.1",
-        "@wharfkit/transact-plugin-autocorrect": "^0.3.0-ui-16",
-        "@wharfkit/transact-plugin-cosigner": "^0.3.0-ui-16",
-        "@wharfkit/transact-plugin-explorerlink": "^0.3.0-ui-16",
-        "@wharfkit/transact-plugin-mock": "^0.3.0-ui-16",
-        "@wharfkit/transact-plugin-resource-provider": "^0.3.0-ui-16",
-        "@wharfkit/wallet-plugin-cloudwallet": "^0.3.0-ui-16",
-        "@wharfkit/wallet-plugin-mock": "^0.3.0-ui-16",
-        "@wharfkit/wallet-plugin-privatekey": "^0.3.0-ui-16",
+        "@wharfkit/session": "^0.3.0",
+        "@wharfkit/transact-plugin-autocorrect": "^0.3.0",
+        "@wharfkit/transact-plugin-cosigner": "^0.3.0",
+        "@wharfkit/transact-plugin-explorerlink": "^0.3.0",
+        "@wharfkit/transact-plugin-mock": "^0.3.0",
+        "@wharfkit/transact-plugin-resource-provider": "^0.3.0",
+        "@wharfkit/wallet-plugin-cloudwallet": "^0.3.0",
+        "@wharfkit/wallet-plugin-mock": "^0.3.0",
+        "@wharfkit/wallet-plugin-privatekey": "^0.3.0",
         "core-js": "^3.27.2",
         "eslint": "^8.32.0",
         "eslint-config-prettier": "^8.6.0",
