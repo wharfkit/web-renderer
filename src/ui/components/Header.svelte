@@ -1,7 +1,8 @@
 <script lang="ts">
     import {createEventDispatcher} from 'svelte'
 
-    import {props} from '../state'
+    export let title: string
+    export let subtitle: string
 
     const dispatch = createEventDispatcher<{
         cancel: void
@@ -9,8 +10,8 @@
 </script>
 
 <div class="modal-header">
-    <h2>{$props.title}</h2>
-    <h4>{$props.subtitle}</h4>
+    <h2>{title}</h2>
+    <h4>{subtitle}</h4>
     <svg
         class="close"
         on:click={() => dispatch('cancel')}

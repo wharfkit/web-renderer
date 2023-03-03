@@ -1,6 +1,6 @@
 <script lang="ts">
     import Header from './Header.svelte'
-    import {active, cancelablePromises, resetState} from '../state'
+    import {active, cancelablePromises, resetState, props} from '../state'
 
     let dialog: HTMLDialogElement
 
@@ -50,32 +50,36 @@
     on:click|capture|nonpassive={backgroundClose}
     on:keyup|preventDefault|capture|nonpassive={escapeClose}
 >
-    <Header on:cancel={cancelRequest} />
+    <Header title={$props.title} subtitle={$props.subtitle} on:cancel={cancelRequest} />
     <div class="modal-content">
         <slot />
     </div>
 </dialog>
 
 <style lang="scss">
-    @use '../../styles/index.css';
+    @use '../../styles/index.scss';
     :host {
         all: initial;
-        font-family: system-ui, ui-sans-serif;
         text-justify: auto;
     }
 
     dialog {
+        margin-top: 30%;
+        margin-inline: auto;
         border: none !important;
         border-radius: var(--border-radius);
         padding: 0;
+        max-height: 418px;
         max-width: 418px;
         min-width: 418px;
         box-shadow: 0px 4px 154px rgba(0, 0, 0, 0.35);
+        background-color: var(--button-tertiary-color);
     }
     dialog::backdrop {
         background: rgba(0, 0, 0, 0.75);
     }
     .modal-content {
         padding: 50px 59px;
+        background-color: white;
     }
 </style>
