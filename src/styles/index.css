@@ -1,6 +1,11 @@
-/* @forward 'reset'; */
+/* Imports aren't working for some reason, reset included in Modal.svelte instead */
+/* @import 'reset.css'; */
 
-/* :host selector for web component, :root selector for storybook */
+/**  
+* :host selector for web component, 
+* :root selector for storybook 
+*/
+
 :host,
 :root {
     --border-radius: 24px;
