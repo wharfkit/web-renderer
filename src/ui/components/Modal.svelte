@@ -59,13 +59,9 @@
 <style lang="scss">
     @use '../../styles/reset.css';
     @use '../../styles/index.css';
-    :host {
-        all: initial;
-        text-justify: auto;
-    }
 
     dialog {
-        margin-top: 30%;
+        margin-top: 30vh;
         margin-inline: auto;
         border: none !important;
         border-radius: var(--border-radius);
@@ -73,14 +69,14 @@
         max-width: 418px;
         min-width: 418px;
         box-shadow: 0px 4px 154px rgba(0, 0, 0, 0.35);
-        background-color: var(--button-tertiary-color);
+        background-color: var(--background-color);
         overflow: hidden;
     }
     dialog::backdrop {
         background: rgba(0, 0, 0, 0.75);
     }
     .modal-content {
-        padding: 50px 59px;
+        // padding: 50px 59px;
         background-color: white;
         max-height: 418px;
         overflow-y: scroll;

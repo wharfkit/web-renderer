@@ -2,23 +2,143 @@
 /* @import 'reset.css'; */
 
 /**  
-* :host selector for web component, 
-* :root selector for storybook 
+
+Globals and custom properties
+
+:host selector for web component, 
+:root selector for storybook 
 */
 
-:host,
+:host dialog,
 :root {
-    --border-radius: 24px;
+    /****************** 
+          Theme 
+    ******************/
+    --surface-color: var(--color-primary-50);
+    --background-color: var(--color-primary-700);
 
-    --foreground-color: #000;
-    --background-color: #f2f8f2;
+    --on-surface-color: var(--color-primary-700);
+    --on-background-color: var(--color-primary-50);
+
+    --header-button-outline: var(--color-primary-900);
+    --header-text-color: var(--color-primary-50);
 
     --button-text-color: #fff;
     --button-primary-color: #1cb095;
     --button-secondary-color: #3d435a;
     --button-tertiary-color: #494e62;
 
-    --base-font: 14px;
+    /****************** 
+          Colors 
+    ******************/
 
+    /* Brand */
+    --wharf-blue: #494e62;
+    --reef-turquoise: #7be7ce;
+    --seafoam-mint: #b2f2e1;
+    --swell-mist: #f4faf4;
+
+    /* Primary */
+    --color-primary-50: #f6f7f9;
+    --color-primary-100: #ededf1;
+    --color-primary-200: #d6d8e1;
+    --color-primary-300: #b3b8c6;
+    --color-primary-400: #8991a7;
+    --color-primary-500: #6b738c;
+    --color-primary-600: #565c73;
+    --color-primary-700: var(--wharf-blue);
+    --color-primary-800: #3c4050;
+    --color-primary-900: #363944;
+
+    /* Secondary */
+    --color-secondary-50: #f1fcf9;
+    --color-secondary-100: #cef9ed;
+    --color-secondary-200: var(--seafoam-mint);
+    --color-secondary-300: var(--reef-turquoise);
+    --color-secondary-400: #35ccae;
+    --color-secondary-500: #1cb095;
+    --color-secondary-600: #148d79;
+    --color-secondary-700: #147163;
+    --color-secondary-800: #155a51;
+    --color-secondary-900: #164b43;
+
+    /* Accent */
+    --color-accent-50: var(--swell-mist);
+    --color-accent-100: #e4f4e5;
+    --color-accent-200: #cae8cc;
+    --color-accent-300: #a1d4a3;
+    --color-accent-400: #70b874;
+    --color-accent-500: #4c9b51;
+    --color-accent-600: #3a7f3e;
+    --color-accent-700: #306534;
+    --color-accent-800: #2a512d;
+    --color-accent-900: #244326;
+
+    /* Neutrals */
+    --color-neutral-100: #f7f7f7;
+    --color-neutral-200: #e3e3e3;
+    --color-neutral-300: #c8c8c8;
+    --color-neutral-400: #a4a4a4;
+    --color-neutral-500: #818181;
+    --color-neutral-600: #666666;
+    --color-neutral-700: #515151;
+    --color-neutral-800: #434343;
+    --color-neutral-900: #383838;
+
+    /****************** 
+        Typography 
+    ******************/
     font-family: system-ui, ui-sans-serif;
+    --base-font: 14px;
+    --text-color: var(--wharf-blue);
+
+    /* Sizing */
+    /* @link https://utopia.fyi/type/calculator?c=320,14,1.2,1440,16,1.25,8,0,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
+
+    --fs-0: clamp(0.88rem, calc(0.84rem + 0.18vw), 1rem);
+    --fs-1: clamp(1.05rem, calc(0.99rem + 0.29vw), 1.25rem);
+    --fs-2: clamp(1.26rem, calc(1.17rem + 0.43vw), 1.56rem);
+    --fs-3: clamp(1.51rem, calc(1.39rem + 0.63vw), 1.95rem);
+    --fs-4: clamp(1.81rem, calc(1.64rem + 0.9vw), 2.44rem);
+    --fs-5: clamp(2.18rem, calc(1.93rem + 1.25vw), 3.05rem);
+    --fs-6: clamp(2.61rem, calc(2.27rem + 1.72vw), 3.82rem);
+    --fs-7: clamp(3.14rem, calc(2.67rem + 2.33vw), 4.77rem);
+    --fs-8: clamp(3.76rem, calc(3.13rem + 3.14vw), 5.96rem);
+
+    /****************** 
+      Size and Spacing 
+    ******************/
+
+    /* generated modular scale */
+    /* @link https://utopia.fyi/space/calculator?c=320,16,1.2,1440,24,1.25,5,2,&s=0.75|0.5,1.5|2|3|4|5|6|7|10,s-l&g=s,l,xl,12 */
+
+    --space-2xs: clamp(0.5rem, calc(0.43rem + 0.36vw), 0.75rem);
+    --space-xs: clamp(0.75rem, calc(0.64rem + 0.54vw), 1.13rem);
+    --space-s: clamp(1rem, calc(0.86rem + 0.71vw), 1.5rem);
+    --space-m: clamp(1.5rem, calc(1.29rem + 1.07vw), 2.25rem);
+    --space-l: clamp(2rem, calc(1.71rem + 1.43vw), 3rem);
+    --space-xl: clamp(3rem, calc(2.57rem + 2.14vw), 4.5rem);
+    --space-2xl: clamp(4rem, calc(3.43rem + 2.86vw), 6rem);
+    --space-3xl: clamp(5rem, calc(4.29rem + 3.57vw), 7.5rem);
+    --space-4xl: clamp(6rem, calc(5.14rem + 4.29vw), 9rem);
+    --space-5xl: clamp(7rem, calc(6rem + 5vw), 10.5rem);
+    --space-6xl: clamp(10rem, calc(8.57rem + 7.14vw), 15rem);
+
+    /* One-up pairs */
+    --space-2xs-xs: clamp(0.5rem, calc(0.32rem + 0.89vw), 1.13rem);
+    --space-xs-s: clamp(0.75rem, calc(0.54rem + 1.07vw), 1.5rem);
+    --space-s-m: clamp(1rem, calc(0.64rem + 1.79vw), 2.25rem);
+    --space-m-l: clamp(1.5rem, calc(1.07rem + 2.14vw), 3rem);
+    --space-l-xl: clamp(2rem, calc(1.29rem + 3.57vw), 4.5rem);
+    --space-xl-2xl: clamp(3rem, calc(2.14rem + 4.29vw), 6rem);
+    --space-2xl-3xl: clamp(4rem, calc(3rem + 5vw), 7.5rem);
+    --space-3xl-4xl: clamp(5rem, calc(3.86rem + 5.71vw), 9rem);
+    --space-4xl-5xl: clamp(6rem, calc(4.71rem + 6.43vw), 10.5rem);
+    --space-5xl-6xl: clamp(7rem, calc(4.71rem + 11.43vw), 15rem);
+
+    /* Custom pairs */
+    --space-s-l: clamp(1rem, calc(0.43rem + 2.86vw), 3rem);
+
+    /* Other spacing */
+    --border-radius: var(--space-s);
 }
