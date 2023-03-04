@@ -57,7 +57,6 @@
 </dialog>
 
 <style lang="scss">
-    @use '../../styles/reset.css';
     @use '../../styles/index.css';
 
     dialog {
