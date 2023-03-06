@@ -17,9 +17,10 @@
         <ul>
             {#each wallets as wallet, index}
                 <li>
-                    <Button onClick={() => dispatch('select', index)}>
-                        {wallet.metadata.name}
-                    </Button>
+                    <Button
+                        label={wallet.metadata.name}
+                        onClick={() => dispatch('select', index)}
+                    />
                 </li>
             {/each}
         </ul>

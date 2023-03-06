@@ -1,19 +1,19 @@
 .button {
+    --button-height: var(--s3);
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: var(--s-2);
-    height: var(--s3);
-    flex-basis: 300px;
-    line-height: 0;
+    gap: var(--s-1);
+    height: var(--button-height);
+    line-height: var(--button-height);
     text-decoration: none;
     text-align: center;
     border-radius: var(--button-border-radius);
     font-size: var(--fs-0);
     font-weight: 600;
     color: var(--button-color, var(--button-text-color));
-    background: var(--button-background, var(--button-primary-color));
+    background: var(--button-background, var(--button-primary-background));
     border: none;
     box-shadow: var(--button-outline);
     flex: 1;
@@ -21,28 +21,28 @@
 }
 
 .button:hover {
-    background: var(--button-background-hover, var(--button-primary-color-hover));
+    background: var(--button-background-hover, var(--button-primary-background-hover));
     box-shadow: var(--button-outline-hover, var(--button-primary-outline-hover));
 }
 
 .button:active {
-    background: var(--button-background-active, var(--button-primary-color-active));
+    background: var(--button-background-active, var(--button-primary-background-active));
     box-shadow: var(--button-outline-active);
     /* transform: scale(98%); */
     /* transform-origin: center; */
 }
 
 .secondary {
-    --button-background: var(--button-secondary-color);
-    --button-background-hover: var(--button-secondary-color-hover);
-    --button-background-active: var(--button-secondary-color-active);
+    --button-background: var(--button-secondary-background);
+    --button-background-hover: var(--button-secondary-background-hover);
+    --button-background-active: var(--button-secondary-background-active);
     --button-outline-hover: var(--button-secondary-outline-hover);
 }
 
 .outlined {
     --button-background: transparent;
     --button-background-hover: transparent;
-    --button-background-active: var(--button-outlined-color-active);
+    --button-background-active: var(--button-outlined-background-active);
     --button-outline: var(--button-outlined-outline);
     --button-outline-hover: var(--button-outlined-outline-hover);
 }

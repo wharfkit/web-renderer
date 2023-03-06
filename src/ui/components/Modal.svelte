@@ -61,13 +61,12 @@
 
     dialog {
         font-family: system-ui, ui-sans-serif;
-        margin-top: 30vh;
+        margin-top: 25vh;
         margin-inline: auto;
         border: none !important;
         border-radius: var(--card-border-radius);
         padding: 0;
-        max-width: 418px;
-        min-width: 418px;
+        width: 418px;
         box-shadow: 0px 4px 154px rgba(0, 0, 0, 0.35);
         background-color: var(--background-color);
         overflow: hidden;
@@ -78,7 +77,6 @@
     .modal-content {
         padding: var(--s2);
         background-color: var(--surface-color);
-        max-height: 418px;
         overflow-y: scroll;
     }
 </style>

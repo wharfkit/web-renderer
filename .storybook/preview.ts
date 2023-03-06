@@ -5,7 +5,11 @@ import '../src/styles/buttonStyles.css'
 const preview: Preview = {
     parameters: {
         backgrounds: {
-            default: 'light',
+            default: 'White',
+            values: [
+                {name: 'White', value: '#ffffff'},
+                {name: 'Black', value: '#000000'},
+            ],
         },
         actions: {argTypesRegex: '^on[A-Z].*'},
         controls: {

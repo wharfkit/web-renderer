@@ -1,23 +1,28 @@
-<script>
-    import {Meta, Story} from '@storybook/addon-svelte-csf'
-
+<script lang="ts">
+    import {Meta, Template, Story} from '@storybook/addon-svelte-csf'
     import Button from '../ui/components/Button.svelte'
 </script>
 
-<Meta title="Components/Button" component={Button} />
+<Meta
+    title="Components/Button"
+    component={Button}
+    argTypes={{
+        variant: {control: 'select', options: ['primary', 'secondary', 'outlined']},
+        icon: {control: 'dropdown'},
+        onClick: {action: 'clicked'},
+    }}
+/>
 
-<Story name="Primary">
-    <Button>Private Key Signer</Button>
-</Story>
+<Template let:args>
+    <div style="display: flex;">
+        <Button {...args} />
+    </div>
+</Template>
 
-<Story name="Primary w/ Icon">
-    <Button icon="close">Decline</Button>
-</Story>
+<Story name="Primary" args={{variant: 'primary', label: 'Private Key Signer'}} />
 
-<Story name="Secondary">
-    <Button variant="secondary">Private Key Signer</Button>
-</Story>
+<Story name="Primary w/ Icon" args={{variant: 'primary', label: 'Accept', icon: 'check'}} />
 
-<Story name="Outlined">
-    <Button variant="outlined">Private Key Signer</Button>
-</Story>
+<Story name="Secondary" args={{variant: 'secondary', label: 'Decline', icon: 'close'}} />
+
+<Story name="Outlined" args={{variant: 'outlined', label: 'Login', icon: 'login'}} />
