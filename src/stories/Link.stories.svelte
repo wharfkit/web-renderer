@@ -6,10 +6,14 @@
 
 <Meta title="Components/Link" component={Link} />
 
-<Story name="Button">
+<Story name="Link Button">
     <Link data={{href: '', label: 'Button', button: true}} />
 </Story>
 
-<Story name="Default">
-    <Link data={{href: '#', label: 'Button'}} />
+<Story name="Link Button w/ Icon">
+    <Link data={{href: '', label: 'Decline', button: true, icon: 'close'}} />
+</Story>
+
+<Story name="Default Link">
+    <Link data={{href: '#', label: 'Link'}} />
 </Story>

@@ -1,6 +1,16 @@
 /* Imports aren't working for some reason, reset included in Modal.svelte instead */
 /* @import 'reset.css'; */
 
+@media (prefers-color-scheme: dark) {
+    :host dialog,
+    :root {
+        /* --button-text-color: #fff;
+        --button-primary-color: var(--color-secondary-500);
+        --button-primary-hover: var(--color-secondary-600);
+        --button-primary-active: var(--color-secondary-700); */
+    }
+}
+
 /**  
 
 Globals and custom properties
@@ -15,28 +25,49 @@ Globals and custom properties
           Theme 
     ******************/
     --surface-color: var(--color-primary-50);
-    --background-color: var(--color-primary-700);
-
     --on-surface-color: var(--color-primary-700);
+
+    --background-color: var(--color-primary-700);
     --on-background-color: var(--color-primary-50);
 
-    --header-button-outline: var(--color-primary-900);
     --header-text-color: var(--color-primary-50);
+    --header-button-background: var(--background-color);
+    --header-button-outline: var(--color-primary-900);
 
-    --button-text-color: #fff;
-    --button-primary-color: #1cb095;
+    --button-text-color: var(--wharf-blue);
+    --button-outline-active: inset 0 0 0 2px var(--button-text-color);
+
+    --button-primary-color: var(--color-secondary-200);
+    --button-primary-color-hover: var(--color-secondary-200);
+    --button-primary-color-active: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)),
+        var(--color-secondary-200);
+    --button-primary-outline-hover: inset 0 0 0 1px #00000030,
+        inset 0 0 0 1px var(--color-secondary-200);
+
+    --button-secondary-color: var(--color-custom-1);
+    --button-secondary-color-hover: var(--color-custom-1);
+    --button-secondary-color-active: var(--color-secondary-200);
+    --button-secondary-outline-hover: inset 0 0 0 1px #00000020,
+        inset 0 0 0 1px var(--color-secondary-200);
+
+    --button-outlined-color-active: var(--color-secondary-200);
+    --button-outlined-outline: inset 0 0 0 1px var(--color-secondary-200);
+    --button-outlined-outline-hover: inset 0 0 0 1px #00000020,
+        inset 0 0 0 1px var(--color-secondary-200);
+
+    /* 
     --button-secondary-color: #3d435a;
-    --button-tertiary-color: #494e62;
+    --button-tertiary-color: #494e62; */
 
     /****************** 
           Colors 
     ******************/
 
     /* Brand */
-    --wharf-blue: #494e62;
-    --reef-turquoise: #7be7ce;
-    --seafoam-mint: #b2f2e1;
-    --swell-mist: #f4faf4;
+    --wharf-blue: var(--color-primary-700);
+    --reef-turquoise: var(--color-secondary-300);
+    --seafoam-mint: var(--color-secondary-200);
+    --swell-mist: var(--color-accent-50);
 
     /* Primary */
     --color-primary-50: #f6f7f9;
@@ -46,15 +77,15 @@ Globals and custom properties
     --color-primary-400: #8991a7;
     --color-primary-500: #6b738c;
     --color-primary-600: #565c73;
-    --color-primary-700: var(--wharf-blue);
+    --color-primary-700: #494e62; /* Wharf Blue */
     --color-primary-800: #3c4050;
     --color-primary-900: #363944;
 
     /* Secondary */
     --color-secondary-50: #f1fcf9;
     --color-secondary-100: #cef9ed;
-    --color-secondary-200: var(--seafoam-mint);
-    --color-secondary-300: var(--reef-turquoise);
+    --color-secondary-200: #b2f2e1; /* Seafoam Mint */
+    --color-secondary-300: #7be7ce; /* Reef Turquoise */
     --color-secondary-400: #35ccae;
     --color-secondary-500: #1cb095;
     --color-secondary-600: #148d79;
@@ -63,7 +94,7 @@ Globals and custom properties
     --color-secondary-900: #164b43;
 
     /* Accent */
-    --color-accent-50: var(--swell-mist);
+    --color-accent-50: #f4faf4; /* Swell Mist */
     --color-accent-100: #e4f4e5;
     --color-accent-200: #cae8cc;
     --color-accent-300: #a1d4a3;
@@ -84,6 +115,10 @@ Globals and custom properties
     --color-neutral-700: #515151;
     --color-neutral-800: #434343;
     --color-neutral-900: #383838;
+
+    /* Custom */
+
+    --color-custom-1: #f3f8f3;
 
     /****************** 
         Typography 
@@ -109,36 +144,22 @@ Globals and custom properties
       Size and Spacing 
     ******************/
 
-    /* generated modular scale */
-    /* @link https://utopia.fyi/space/calculator?c=320,16,1.2,1440,24,1.25,5,2,&s=0.75|0.5,1.5|2|3|4|5|6|7|10,s-l&g=s,l,xl,12 */
+    /* Fixed ratio spacing scale */
+    --ratio: 1.5;
+    --measure: 75ch;
+    --s-5: calc(var(--s-4) / var(--ratio));
+    --s-4: calc(var(--s-3) / var(--ratio));
+    --s-3: calc(var(--s-2) / var(--ratio));
+    --s-2: calc(var(--s-1) / var(--ratio));
+    --s-1: calc(var(--s0) / var(--ratio));
+    --s0: 1rem;
+    --s1: calc(var(--s0) * var(--ratio));
+    --s2: calc(var(--s1) * var(--ratio));
+    --s3: calc(var(--s2) * var(--ratio));
+    --s4: calc(var(--s3) * var(--ratio));
+    --s5: calc(var(--s4) * var(--ratio));
 
-    --space-2xs: clamp(0.5rem, calc(0.43rem + 0.36vw), 0.75rem);
-    --space-xs: clamp(0.75rem, calc(0.64rem + 0.54vw), 1.13rem);
-    --space-s: clamp(1rem, calc(0.86rem + 0.71vw), 1.5rem);
-    --space-m: clamp(1.5rem, calc(1.29rem + 1.07vw), 2.25rem);
-    --space-l: clamp(2rem, calc(1.71rem + 1.43vw), 3rem);
-    --space-xl: clamp(3rem, calc(2.57rem + 2.14vw), 4.5rem);
-    --space-2xl: clamp(4rem, calc(3.43rem + 2.86vw), 6rem);
-    --space-3xl: clamp(5rem, calc(4.29rem + 3.57vw), 7.5rem);
-    --space-4xl: clamp(6rem, calc(5.14rem + 4.29vw), 9rem);
-    --space-5xl: clamp(7rem, calc(6rem + 5vw), 10.5rem);
-    --space-6xl: clamp(10rem, calc(8.57rem + 7.14vw), 15rem);
-
-    /* One-up pairs */
-    --space-2xs-xs: clamp(0.5rem, calc(0.32rem + 0.89vw), 1.13rem);
-    --space-xs-s: clamp(0.75rem, calc(0.54rem + 1.07vw), 1.5rem);
-    --space-s-m: clamp(1rem, calc(0.64rem + 1.79vw), 2.25rem);
-    --space-m-l: clamp(1.5rem, calc(1.07rem + 2.14vw), 3rem);
-    --space-l-xl: clamp(2rem, calc(1.29rem + 3.57vw), 4.5rem);
-    --space-xl-2xl: clamp(3rem, calc(2.14rem + 4.29vw), 6rem);
-    --space-2xl-3xl: clamp(4rem, calc(3rem + 5vw), 7.5rem);
-    --space-3xl-4xl: clamp(5rem, calc(3.86rem + 5.71vw), 9rem);
-    --space-4xl-5xl: clamp(6rem, calc(4.71rem + 6.43vw), 10.5rem);
-    --space-5xl-6xl: clamp(7rem, calc(4.71rem + 11.43vw), 15rem);
-
-    /* Custom pairs */
-    --space-s-l: clamp(1rem, calc(0.43rem + 2.86vw), 3rem);
-
-    /* Other spacing */
-    --border-radius: var(--space-s);
+    /* Other sizes */
+    --card-border-radius: 24px;
+    --button-border-radius: 12px;
 }

@@ -12,9 +12,14 @@
 
 <div>
     {#if chains}
-        {#each chains as chain}
-            <button on:click={() => dispatch('select', chain.id)}>{chain.name}</button>
-        {/each}
+        <ul>
+            {#each chains as chain}
+                <li>
+                    <button on:click={() => dispatch('select', chain.id)}>{chain.name}</button>
+                </li>
+            {/each}
+        </ul>
     {/if}
+
     <button on:click={() => dispatch('cancel')}>cancel</button>
 </div>

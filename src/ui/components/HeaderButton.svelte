@@ -12,9 +12,9 @@
 
 <style lang="scss">
     button {
-        background: none;
+        background: var(--header-button-background);
         border: 1px solid var(--header-button-outline);
-        border-radius: var(--space-2xs);
+        border-radius: var(--button-border-radius);
         cursor: pointer;
         width: 46px;
         height: 46px;
@@ -27,8 +27,8 @@
         }
 
         &:active {
-            transform: scale(95%);
-            transform-origin: center;
+            // transform: scale(95%);
+            // transform-origin: center;
         }
     }
 </style>

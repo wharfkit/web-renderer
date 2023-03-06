@@ -57,13 +57,14 @@
 </dialog>
 
 <style lang="scss">
-    @use '../../styles/index.css';
+    @use '../../styles/variables.css';
 
     dialog {
+        font-family: system-ui, ui-sans-serif;
         margin-top: 30vh;
         margin-inline: auto;
         border: none !important;
-        border-radius: var(--border-radius);
+        border-radius: var(--card-border-radius);
         padding: 0;
         max-width: 418px;
         min-width: 418px;
@@ -75,8 +76,8 @@
         background: rgba(0, 0, 0, 0.75);
     }
     .modal-content {
-        // padding: 50px 59px;
-        background-color: white;
+        padding: var(--s2);
+        background-color: var(--surface-color);
         max-height: 418px;
         overflow-y: scroll;
     }

@@ -31,20 +31,19 @@
 
 <style lang="scss">
     .modal-header {
-        min-height: var(--space-2xl);
-        max-height: var(--space-4xl);
+        max-height: var(--s5);
         color: var(--header-text-color);
         background: var(--background-color);
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: 1fr auto 1fr;
         align-items: center;
-        padding: var(--space-s);
+        padding: var(--s0);
 
         .center {
             display: grid;
             place-content: center;
             text-align: center;
-            gap: var(--space-2xs);
+            gap: var(--s-3);
         }
 
         .right {
@@ -52,14 +51,17 @@
             justify-content: flex-end;
         }
 
+        :is(h2, p) {
+            margin: 0;
+            line-height: 1.1em;
+        }
+
         h2 {
             font-size: var(--fs-2);
             font-weight: 700;
-            line-height: 1em;
         }
         p {
             font-size: var(--fs-0);
-            line-height: 1em;
         }
     }
 </style>
