@@ -31,7 +31,8 @@
 
 <style lang="scss">
     .modal-header {
-        max-height: var(--s5);
+        box-sizing: border-box;
+        height: var(--header-height);
         color: var(--header-text-color);
         background: var(--background-color);
         display: grid;

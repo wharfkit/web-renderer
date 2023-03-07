@@ -61,22 +61,25 @@
 
     dialog {
         font-family: system-ui, ui-sans-serif;
-        margin-top: 25vh;
+        margin-bottom: 0;
+        margin-top: var(--s3);
         margin-inline: auto;
         border: none !important;
         border-radius: var(--card-border-radius);
         padding: 0;
-        width: 418px;
+        width: min(418px, 100vw - var(--s0));
         box-shadow: 0px 4px 154px rgba(0, 0, 0, 0.35);
         background-color: var(--background-color);
-        overflow: hidden;
     }
     dialog::backdrop {
         background: rgba(0, 0, 0, 0.75);
     }
     .modal-content {
-        padding: var(--s2);
+        --max-modal-content-height: calc(100svh - var(--header-height) - var(--s3) - var(--s3));
+        padding-inline: var(--s2);
+        padding-block: var(--s1);
         background-color: var(--surface-color);
         overflow-y: scroll;
+        max-height: var(--max-modal-content-height);
     }
 </style>

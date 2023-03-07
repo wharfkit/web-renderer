@@ -64,7 +64,7 @@
             cursor: pointer;
             display: block;
             width: 300px;
-            height: 65px;
+            // height: 65px;
             border-radius: 12px;
             font-size: 16px;
             font-weight: 600;

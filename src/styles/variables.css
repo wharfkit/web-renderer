@@ -141,22 +141,35 @@ Globals and custom properties
       Size and Spacing 
     ******************/
 
-    /* Fixed ratio spacing scale */
+    /*** 
+    * Fixed ratio spacing scale, 
+    * pixel equivalents are approximate based on ratio = 1.5 
+    */
     --ratio: 1.5;
     --measure: 75ch;
-    --s-5: calc(var(--s-4) / var(--ratio));
-    --s-4: calc(var(--s-3) / var(--ratio));
-    --s-3: calc(var(--s-2) / var(--ratio));
-    --s-2: calc(var(--s-1) / var(--ratio));
-    --s-1: calc(var(--s0) / var(--ratio));
-    --s0: 1rem;
-    --s1: calc(var(--s0) * var(--ratio));
-    --s2: calc(var(--s1) * var(--ratio));
-    --s3: calc(var(--s2) * var(--ratio));
-    --s4: calc(var(--s3) * var(--ratio));
-    --s5: calc(var(--s4) * var(--ratio));
+    --s-5: calc(var(--s-4) / var(--ratio)); /* 2     */
+    --s-4: calc(var(--s-3) / var(--ratio)); /* 3     */
+    --s-3: calc(var(--s-2) / var(--ratio)); /* 4.5   */
+    --s-2: calc(var(--s-1) / var(--ratio)); /* 7     */
+    --s-1: calc(var(--s0) / var(--ratio)); /*  10.5  */
+    --s0: 1rem; /* 16 */
+    --s1: calc(var(--s0) * var(--ratio)); /*  24    */
+    --s2: calc(var(--s1) * var(--ratio)); /*  36    */
+    --s3: calc(var(--s2) * var(--ratio)); /*  54    */
+    --s4: calc(var(--s3) * var(--ratio)); /*  81    */
+    --s5: calc(var(--s4) * var(--ratio)); /*  121.5 */
+    --s6: calc(var(--s5) * var(--ratio)); /*  182.5 */
+    --s7: calc(var(--s6) * var(--ratio)); /*  273   */
+    --s8: calc(var(--s7) * var(--ratio)); /*  410   */
+    --s9: calc(var(--s8) * var(--ratio)); /*  615   */
+    --s10: calc(var(--s9) * var(--ratio)); /* 922.5 */
 
     /* Other sizes */
     --card-border-radius: 24px;
     --button-border-radius: 12px;
+    --header-height: var(--s4);
+}
+
+* {
+    box-sizing: border-box;
 }
