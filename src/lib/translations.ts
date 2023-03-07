@@ -5,12 +5,15 @@ import lang from './translations/lang.json'
 
 import en from './translations/en/common.json'
 import ko from './translations/ko/common.json'
-import zh from './translations/zh/common.json'
+import zh_hans from './translations/zh_hans/common.json'
+import zh_hant from './translations/zh_hant/common.json'
 
 const translations = {
     en: {...lang, ...en},
     ko: {...lang, ...ko},
-    zh: {...lang, ...zh},
+    zh: {...lang, ...zh_hans},
+    zh_hans: {...lang, ...zh_hans},
+    zh_hant: {...lang, ...zh_hant},
 }
 
 interface Params {
