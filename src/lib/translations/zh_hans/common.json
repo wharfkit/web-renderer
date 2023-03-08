@@ -1,0 +1,32 @@
+{
+    "accept": "接受",
+    "cancel": "取消",
+    "close": "关闭",
+    "decline": "下降",
+    "error": {
+        "title": "错误",
+        "subtitle": "发生错误。"
+    },
+    "loading": "加载中。。。",
+    "login": {
+        "complete": "使用您选择的钱包完成登陆。",
+        "select": {
+            "account": "选择一个帐户",
+            "blockchain": "选择一个区块链",
+            "wallet": "选择一个钱包",
+            "no_match": "未找到与 {{publicKey}} 匹配的帐户。"
+        },
+        "title": "登陆",
+        "subtitle": "请登陆以继续",
+        "title-app": "登陆到 {{appName}}"
+    },
+    "transact": {
+        "title": "办理",
+        "subtitle": "",
+        "processing": "做交易的东西 - 很酷的动画！",
+        "signing": "签署交易",
+        "signed": "交易已签署",
+        "broadcasting": "广播交易",
+        "broadcasted": "交易广播"
+    }
+}
