@@ -10,6 +10,11 @@
     "loading": "Loading...",
     "login": {
         "complete": "Complete the login using your selected wallet.",
+        "enter": {
+            "account": "Enter account name",
+            "lookup": "Lookup Account",
+            "not_found": "Unable to find account"
+        },
         "select": {
             "account": "Select an Account",
             "blockchain": "Select a Blockchain",

@@ -10,6 +10,11 @@
     "loading": "加载中。。。",
     "login": {
         "complete": "使用您选择的钱包完成登陆。",
+        "enter": {
+            "account": "Enter account name",
+            "lookup": "Lookup Account",
+            "not_found": "Unable to find account"
+        },
         "select": {
             "account": "选择一个帐户",
             "blockchain": "选择一个区块链",

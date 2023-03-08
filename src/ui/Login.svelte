@@ -22,6 +22,7 @@
 
     enum Steps {
         done = 'done',
+        enterPermission = 'enterPermission',
         selectChain = 'selectChain',
         selectPermission = 'selectPermission',
         selectWallet = 'selectWallet',
@@ -32,6 +33,9 @@
         ([$currentContext, $currentResponse]) => {
             if (!$currentContext || $currentResponse.chainId === undefined) {
                 return undefined
+            }
+            if ($currentContext.chain) {
+                return $currentContext.chain
             }
             return $currentContext.chains.find((c) => c.id === $currentResponse.chainId)
         }
@@ -75,35 +79,35 @@
             return $currentContext.chains
         }
     )
-    onMount(() => {
-        // Update the title of the Modal to match that of the appName
-        if ($loginContext && $loginContext.appName) {
+
+    loginContext.subscribe((currentContext) => {
+        if (currentContext) {
+            // If an appName is specified, set the title to it.
             $props.title = $t('login.title-app', {
-                appName: $loginContext.appName,
+                appName: currentContext.appName,
                 default: 'Login to {{appName}}',
             })
-        } else {
-            $props.title = $t('login.title', {default: 'Login'})
-        }
-
-        if ($loginContext) {
             // If a chain is specified, set it on the response
-            if ($loginContext.chain) {
-                $loginResponse.chainId = $loginContext.chain.id
+            if (currentContext.chain) {
+                $loginResponse.chainId = currentContext.chain.id
             }
             // If only one chain is provided, default to it
-            if ($loginContext.chains.length === 1) {
-                $loginResponse.chainId = $loginContext.chains[0].id
+            if (currentContext.chains.length === 1) {
+                $loginResponse.chainId = currentContext.chains[0].id
             }
             // If a permissionLevel is defined, set it on the response
-            if ($loginContext.permissionLevel) {
-                $loginResponse.permissionLevel = $loginContext.permissionLevel
+            if (currentContext.permissionLevel) {
+                $loginResponse.permissionLevel = currentContext.permissionLevel
             }
             // If only one wallet is provided, default to it
-            if ($loginContext.walletPlugins.length === 1) {
+            if (currentContext.walletPlugins.length === 1) {
                 $loginResponse.walletPluginIndex = 0
             }
         }
+    })
+
+    onMount(() => {
+        $props.title = $t('login.title', {default: 'Login'})
     })
 
     const step = derived(
@@ -114,11 +118,18 @@
                 return Steps.selectWallet
             }
 
-            const {requiresChainSelect, requiresPermissionSelect, supportedChains} =
-                $currentWalletPlugin.config
+            const {
+                requiresChainSelect,
+                requiresPermissionEntry,
+                requiresPermissionSelect,
+                supportedChains,
+            } = $currentWalletPlugin.config
 
             if (!$currentResponse.chainId && supportedChains && supportedChains.length === 1) {
                 $loginResponse.chainId = supportedChains[0]
+                return Steps.selectPermission
+            } else if (!$currentResponse.chainId && $loginContext && $loginContext.chain) {
+                $loginResponse.chainId = $loginContext?.chain.id
                 return Steps.selectPermission
             } else if (!$currentResponse.chainId && requiresChainSelect) {
                 $props.title = $t('login.select.blockchain', {default: 'Select a Blockchain'})
@@ -126,6 +137,9 @@
             } else if (!$currentResponse.permissionLevel && requiresPermissionSelect) {
                 $props.title = $t('login.select.account', {default: 'Select an Account'})
                 return Steps.selectPermission
+            } else if (!$currentResponse.permissionLevel && requiresPermissionEntry) {
+                $props.title = $t('login.enter.account', {default: 'Enter account name'})
+                return Steps.enterPermission
             }
 
             // We have completed, return response to kit for the WalletPlugin to trigger
@@ -159,6 +173,13 @@
         <Wallet on:select={selectWallet} on:cancel={cancel} wallets={$loginContext.walletPlugins} />
     {:else if $step === Steps.selectChain && $chains}
         <Blockchain on:select={selectChain} on:cancel={unselectWallet} chains={$chains} />
+    {:else if $step === Steps.enterPermission && $client && $walletPlugin}
+        <Permission
+            on:select={selectPermission}
+            on:cancel={unselectChain}
+            client={$client}
+            walletPlugin={$walletPlugin}
+        />
     {:else if $step === Steps.selectPermission && $client && $walletPlugin}
         <Permission
             on:select={selectPermission}

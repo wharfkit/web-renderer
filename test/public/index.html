@@ -103,6 +103,7 @@
                 // Various wallet configurations, uncomment one or more to test
                 walletPlugins: [
                     new WebUIRenderer.WalletPluginAnchor(),
+                    new WebUIRenderer.WalletPluginCleos(),
                     new WebUIRenderer.WalletPluginCloudWallet(),
                     new WebUIRenderer.WalletPluginMock(),
                     new WebUIRenderer.WalletPluginPrivateKey(
@@ -182,8 +183,6 @@
                         session = result.session
                         didLogin()
                         refreshAccount()
-                    }).catch((e) => {
-                        console.log('error caught in login', e)
                     })
             }
 
