@@ -1,15 +1,21 @@
 <script>
-    import {Meta, Story} from '@storybook/addon-svelte-csf'
+    import {Meta, Story, Template} from '@storybook/addon-svelte-csf'
 
     import Header from '../ui/components/Header.svelte'
     import Icon from '../ui/components/Icon.svelte'
 </script>
 
-<Meta title="Components/Header" component={Header} />
+<Meta
+    title="Components/Header"
+    component={Header}
+    argTypes={{title: {control: 'text'}, subtitle: {control: 'text'}}}
+/>
 
-<Story name="Default">
-    <Header title="Login" subtitle="Please login to continue" />
-</Story>
+<Template let:args>
+    <Header {...args} />
+</Template>
+
+<Story name="Default" args={{title: 'Login', subtitle: 'Please login to continue'}} />
 
 <Story name="With Logo">
     <Header title="Unicove">

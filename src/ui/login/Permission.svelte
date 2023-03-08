@@ -6,6 +6,9 @@
     import {i18nType} from 'src/lib/translations'
 
     import {GetAccountsByAuthorizers} from '../../interfaces'
+    import Button from '../components/Button.svelte'
+    import List from '../components/List.svelte'
+    import ListItem from '../components/ListItem.svelte'
 
     const {t} = getContext<i18nType>('i18n')
 
@@ -37,13 +40,14 @@
     {#if $busy}
         <p>{$t('loading', {default: 'Loading...'})}</p>
     {:else if permissions && permissions.length > 0}
-        {#each permissions as permission}
-            <div class="option">
-                <button on:click={() => dispatch('select', permission)}>
-                    {String(permission)}
-                </button>
-            </div>
-        {/each}
+        <List>
+            {#each permissions as permission}
+                <ListItem
+                    label={String(permission)}
+                    onClick={() => dispatch('select', permission)}
+                />
+            {/each}
+        </List>
     {:else}
         <p>
             {$t('login.select.no_match', {
@@ -52,27 +56,18 @@
             })}
         </p>
     {/if}
-    <button on:click={() => dispatch('cancel')}>
-        {$t('cancel', {default: 'Cancel'})}
-    </button>
+
+    <Button
+        variant="secondary"
+        label={$t('cancel', {default: 'Cancel'})}
+        onClick={() => dispatch('cancel')}
+    />
 </div>
 
 <style lang="scss">
-    .option {
-        padding-top: 27px;
-        button {
-            cursor: pointer;
-            display: block;
-            width: 300px;
-            // height: 65px;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--button-text-color);
-            background-color: var(--button-primary-color);
-            border: none;
-            box-shadow: none;
-            margin: 0 auto;
-        }
+    div {
+        display: flex;
+        flex-direction: column;
+        gap: var(--s1);
     }
 </style>

@@ -5,4 +5,6 @@
 /test/public/*.js
 /test/public/*.js.map
 
+/storybook-static
+
 .DS_Store

@@ -37,6 +37,8 @@
         background: var(--background-color);
         display: grid;
         grid-template-columns: 1fr auto 1fr;
+        // grid-template-columns: 1fr 2fr 1fr;
+        gap: var(--s0);
         align-items: center;
         padding: var(--s0);
 
@@ -45,6 +47,7 @@
             place-content: center;
             text-align: center;
             gap: var(--s-3);
+            overflow: hidden;
         }
 
         .right {
