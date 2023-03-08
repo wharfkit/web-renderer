@@ -1,10 +1,17 @@
 <script lang="ts">
     import type {ComponentProps} from 'svelte'
     import Icon from './Icon.svelte'
-    export let label: string
-    export let icon: ComponentProps<Icon>['name'] | undefined = undefined
-    export let onClick
-    export let variant: 'primary' | 'secondary' | 'outlined' = 'primary'
+
+    type ButtonProps = {
+        label: string
+        icon: ComponentProps<Icon>['name'] | undefined
+        onClick
+        variant: 'primary' | 'secondary' | 'outlined'
+    }
+
+    export let data: ButtonProps
+
+    const {label, icon, onClick, variant} = data
 
     $: onKeydown = onClick
 </script>

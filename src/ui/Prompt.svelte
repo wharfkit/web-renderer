@@ -4,10 +4,12 @@
 
     import Accept from './components/Accept.svelte'
     import Asset from './components/Asset.svelte'
+    import Button from './components/Button.svelte'
     import Close from './components/Close.svelte'
     import Link from './components/Link.svelte'
     import Countdown from './components/Countdown.svelte'
     import Qr from './components/Qr.svelte'
+    import Textarea from './components/Textarea.svelte'
 
     import {prompt} from './state'
 
@@ -69,6 +71,24 @@
                     case 'countdown': {
                         components.push({
                             component: Countdown,
+                            props: {
+                                data: element.data,
+                            },
+                        })
+                        break
+                    }
+                    case 'textarea': {
+                        components.push({
+                            component: Textarea,
+                            props: {
+                                data: element.data,
+                            },
+                        })
+                        break
+                    }
+                    case 'button': {
+                        components.push({
+                            component: Button,
                             props: {
                                 data: element.data,
                             },

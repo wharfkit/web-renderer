@@ -1,1 +1,37 @@
-{}
+{
+    "accept": "Accept",
+    "cancel": "Cancel",
+    "close": "Close",
+    "decline": "Decline",
+    "error": {
+        "title": "Error",
+        "subtitle": "An Error happened."
+    },
+    "loading": "Loading...",
+    "login": {
+        "complete": "Complete the login using your selected wallet.",
+        "enter": {
+            "account": "Enter account name",
+            "lookup": "Lookup Account",
+            "not_found": "Unable to find account"
+        },
+        "select": {
+            "account": "Select an Account",
+            "blockchain": "Select a Blockchain",
+            "wallet": "Select a Wallet",
+            "no_match": "No accounts found matching {{publicKey}}"
+        },
+        "title": "Login",
+        "subtitle": "Please login to continue",
+        "title_app": "{{appName}}"
+    },
+    "transact": {
+        "title": "Transact",
+        "subtitle": "",
+        "processing": "Doing transact stuffs - cool animation!",
+        "signing": "Signing transaction",
+        "signed": "Transaction signed",
+        "broadcasting": "Broadcasting transaction",
+        "broadcasted": "Transaction broadcasted!"
+    }
+}

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {APIClient, PermissionLevel, UserInterfaceWalletPlugin} from '@wharfkit/session'
+    import {APIClient, Name, PermissionLevel, UserInterfaceWalletPlugin} from '@wharfkit/session'
     import {createEventDispatcher, getContext, onMount} from 'svelte'
     import {writable} from 'svelte/store'
 
@@ -21,19 +21,54 @@
     }>()
 
     let busy = writable(true)
+    let input: string = ''
+    let accountName: Name | undefined
+    let accountNotFound: boolean = false
     let permissions: PermissionLevel[] | undefined
+
     onMount(async () => {
-        const response = await client.call<GetAccountsByAuthorizers>({
-            path: '/v1/chain/get_accounts_by_authorizers',
-            params: {
-                keys: [walletPlugin.metadata.publicKey],
-            },
-        })
-        busy.set(false)
-        permissions = response.accounts.map((account) =>
-            PermissionLevel.from(`${account.account_name}@${account.permission_name}`)
-        )
+        if (walletPlugin.config.requiresPermissionSelect) {
+            const response = await client.call<GetAccountsByAuthorizers>({
+                path: '/v1/chain/get_accounts_by_authorizers',
+                params: {
+                    keys: [walletPlugin.metadata.publicKey],
+                },
+            })
+            busy.set(false)
+            permissions = response.accounts.map((account) =>
+                PermissionLevel.from(`${account.account_name}@${account.permission_name}`)
+            )
+        } else if (walletPlugin.config.requiresPermissionEntry) {
+            busy.set(false)
+            permissions = []
+        }
     })
+
+    async function lookup() {
+        busy.set(true)
+        try {
+            const response = await client.v1.chain.get_account(input)
+            if (response.account_name.equals(input)) {
+                accountName = response.account_name
+                permissions = response.permissions.map((permission) =>
+                    PermissionLevel.from(`${response.account_name}@${permission.perm_name}`)
+                )
+            }
+            accountNotFound = false
+        } catch (error) {
+            accountNotFound = true
+        } finally {
+            busy.set(false)
+        }
+    }
+
+    function handleKeyup(event) {
+        if (event.code == 'Enter') {
+            event.preventDefault()
+            lookup()
+            return false
+        }
+    }
 </script>
 
 <div>
@@ -48,13 +83,32 @@
                 />
             {/each}
         </List>
-    {:else}
+    {:else if walletPlugin.metadata.publicKey}
         <p>
             {$t('login.select.no_match', {
                 default: 'No accounts found matching {{publicKey}}',
                 publicKey: walletPlugin.metadata.publicKey,
             })}
         </p>
+    {:else if !accountName}
+        <p>
+            {$t('login.enter.account', {
+                default: 'Enter account name',
+            })}
+        </p>
+        <input autofocus type="text" on:keyup|preventDefault={handleKeyup} bind:value={input} />
+        <button type="submit" on:click={lookup}>
+            {$t('login.enter.lookup', {
+                default: 'Lookup Account',
+            })}
+        </button>
+        {#if accountNotFound}
+            <p>
+                {$t('login.enter.not_found', {
+                    default: 'Unable to find account',
+                })}
+            </p>
+        {/if}
     {/if}
 
     <Button
