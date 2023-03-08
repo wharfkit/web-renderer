@@ -37,7 +37,7 @@
         border: none;
         background: none;
         color: var(--text-color);
-        font-size: var(--fs-0);
+        font-size: var(--fs-1);
     }
 
     div {

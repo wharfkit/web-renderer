@@ -61,7 +61,7 @@
         }
 
         h2 {
-            font-size: var(--fs-2);
+            font-size: var(--fs-3);
             font-weight: 700;
         }
         p {

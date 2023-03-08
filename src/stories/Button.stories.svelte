@@ -10,6 +10,7 @@
         variant: {control: 'select', options: ['primary', 'secondary', 'outlined']},
         icon: {control: 'dropdown'},
         onClick: {action: 'clicked'},
+        label: {control: 'text'},
     }}
 />
 

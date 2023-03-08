@@ -10,14 +10,14 @@
     text-decoration: none;
     text-align: center;
     border-radius: var(--button-border-radius);
-    font-size: var(--fs-0);
+    font-size: var(--fs-1);
     font-weight: 600;
     color: var(--button-color, var(--button-text-color));
     background: var(--button-background, var(--button-primary-background));
     border: none;
     box-shadow: var(--button-outline);
     flex: 1;
-    padding-inline: var(--s2);
+    /* padding-inline: var(--s2); */
 }
 
 .button:hover {

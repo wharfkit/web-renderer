@@ -81,5 +81,15 @@
         background-color: var(--surface-color);
         overflow-y: scroll;
         max-height: var(--max-modal-content-height);
+        scrollbar-gutter: stable both-edges;
+        scrollbar-color: var(--background-color);
+    }
+
+    .modal-content::-webkit-scrollbar {
+        width: 2px;
+        background-color: var(--surface-color);
+    }
+    .modal-content::-webkit-scrollbar-thumb {
+        background: var(--background-color);
     }
 </style>
