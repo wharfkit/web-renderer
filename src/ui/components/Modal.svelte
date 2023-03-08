@@ -65,7 +65,7 @@
         margin-top: var(--s3);
         margin-inline: auto;
         border: none !important;
-        border-radius: var(--card-border-radius);
+        border-radius: var(--border-radius-outer);
         padding: 0;
         width: min(418px, 100vw - var(--s0));
         box-shadow: 0px 4px 154px rgba(0, 0, 0, 0.35);
@@ -77,7 +77,7 @@
     .modal-content {
         --max-modal-content-height: calc(100svh - var(--header-height) - var(--s3) - var(--s3));
         padding-inline: var(--s2);
-        padding-block: var(--s1);
+        padding-block: var(--s2);
         background-color: var(--surface-color);
         overflow-y: scroll;
         max-height: var(--max-modal-content-height);

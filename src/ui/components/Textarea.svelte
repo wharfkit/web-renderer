@@ -1,5 +1,9 @@
-<script>
-    export let data = {}
+<script lang="ts">
+    type TextareaProps = {
+        content?: string
+    }
+
+    export let data: TextareaProps = {}
 </script>
 
 <textarea rows="10">{data.content}</textarea>

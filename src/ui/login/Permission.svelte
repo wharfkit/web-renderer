@@ -9,6 +9,7 @@
     import Button from '../components/Button.svelte'
     import List from '../components/List.svelte'
     import ListItem from '../components/ListItem.svelte'
+    import TextInput from '../components/TextInput.svelte'
 
     const {t} = getContext<i18nType>('i18n')
 
@@ -22,6 +23,7 @@
 
     let busy = writable(true)
     let input: string = ''
+    let prevInput: string = ''
     let accountName: Name | undefined
     let accountNotFound: boolean = false
     let permissions: PermissionLevel[] | undefined
@@ -58,6 +60,7 @@
         } catch (error) {
             accountNotFound = true
         } finally {
+            prevInput = input
             busy.set(false)
         }
     }
@@ -73,7 +76,7 @@
 
 <div>
     {#if $busy}
-        <p>{$t('loading', {default: 'Loading...'})}</p>
+        <p class="loading">{$t('loading', {default: 'Loading...'})}</p>
     {:else if permissions && permissions.length > 0}
         <List>
             {#each permissions as permission}
@@ -91,30 +94,38 @@
             })}
         </p>
     {:else if !accountName}
-        <p>
-            {$t('login.enter.account', {
-                default: 'Enter account name',
-            })}
-        </p>
-        <input autofocus type="text" on:keyup|preventDefault={handleKeyup} bind:value={input} />
-        <button type="submit" on:click={lookup}>
-            {$t('login.enter.lookup', {
-                default: 'Lookup Account',
-            })}
-        </button>
+        <TextInput
+            onKeyup={handleKeyup}
+            bind:value={input}
+            placeholder="Account name"
+            autofocus={!input}
+            error={accountNotFound && input === prevInput}
+        />
         {#if accountNotFound}
-            <p>
+            <p class="error">
                 {$t('login.enter.not_found', {
                     default: 'Unable to find account',
                 })}
+                {prevInput}
             </p>
         {/if}
+        <Button
+            data={{
+                variant: 'primary',
+                onClick: lookup,
+                label: $t('login.enter.lookup', {
+                    default: 'Lookup Account',
+                }),
+            }}
+        />
     {/if}
 
     <Button
-        variant="secondary"
-        label={$t('cancel', {default: 'Cancel'})}
-        onClick={() => dispatch('cancel')}
+        data={{
+            variant: 'secondary',
+            label: $t('cancel', {default: 'Cancel'}),
+            onClick: () => dispatch('cancel'),
+        }}
     />
 </div>
 
@@ -122,6 +133,13 @@
     div {
         display: flex;
         flex-direction: column;
-        gap: var(--s1);
+        gap: var(--s0);
+        color: black;
+    }
+
+    p.error {
+        margin: 0;
+        text-align: center;
+        color: var(--color-error);
     }
 </style>

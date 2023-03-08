@@ -27,7 +27,7 @@
         </List>
     {/if}
 
-    <Button variant="secondary" onClick={() => dispatch('cancel')} label="Cancel" />
+    <Button data={{variant: 'secondary', onClick: () => dispatch('cancel'), label: 'Cancel'}} />
 </div>
 
 <style lang="scss">

@@ -4,7 +4,8 @@
     import wharf from './icons/Wharf.svelte'
     import login from './icons/LogIn.svelte'
     import check from './icons/Check.svelte'
-    import chevronright from './icons/ChevronRight.svelte'
+    import ChevronRight from './icons/ChevronRight.svelte'
+    import ChevronLeft from './icons/ChevronLeft.svelte'
 
     export let name: keyof typeof icons
 
@@ -14,7 +15,8 @@
         wharf,
         login,
         check,
-        'chevron-right': chevronright,
+        'chevron-right': ChevronRight,
+        'chevron-left': ChevronLeft,
     }
 </script>
 

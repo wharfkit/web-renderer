@@ -2,19 +2,23 @@
     import type {ComponentProps} from 'svelte'
     import Icon from './Icon.svelte'
 
-    export let leadingIcon: ComponentProps<Icon>['name'] = ''
-    export let trailingIcon: ComponentProps<Icon>['name'] = 'chevron-right'
+    export let leadingIcon: ComponentProps<Icon>['name'] | undefined = undefined
+    export let trailingIcon: ComponentProps<Icon>['name'] | undefined = 'chevron-right'
     export let label: string | undefined
     export let onClick
 </script>
 
 <li>
     <button on:click={onClick}>
-        <Icon name={leadingIcon} />
+        {#if leadingIcon}
+            <Icon name={leadingIcon} />
+        {/if}
 
         <div>
             <span>{label}</span>
-            <Icon name={trailingIcon} />
+            {#if trailingIcon}
+                <Icon name={trailingIcon} />
+            {/if}
         </div>
     </button>
 </li>

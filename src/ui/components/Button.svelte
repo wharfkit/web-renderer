@@ -4,14 +4,14 @@
 
     type ButtonProps = {
         label: string
-        icon: ComponentProps<Icon>['name'] | undefined
+        icon?: ComponentProps<Icon>['name'] | undefined
         onClick
         variant: 'primary' | 'secondary' | 'outlined'
     }
 
     export let data: ButtonProps
 
-    const {label, icon, onClick, variant} = data
+    const {label, icon, onClick, variant = 'primary'} = data
 
     $: onKeydown = onClick
 </script>

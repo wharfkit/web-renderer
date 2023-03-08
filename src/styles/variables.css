@@ -1,12 +1,12 @@
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
     :host dialog,
     :root {
-        /* --button-text-color: #fff;
+        --button-text-color: #fff;
         --button-primary-color: var(--color-secondary-500);
         --button-primary-hover: var(--color-secondary-600);
-        --button-primary-active: var(--color-secondary-700); */
+        --button-primary-active: var(--color-secondary-700);
     }
-}
+} */
 
 /**  
 
@@ -116,6 +116,7 @@ Globals and custom properties
     /* Custom */
 
     --color-custom-1: #f3f8f3;
+    --color-error: #cd3939;
 
     /****************** 
         Typography 
@@ -158,8 +159,8 @@ Globals and custom properties
 
     /* Other sizes */
     --measure: 75ch;
-    --card-border-radius: 24px;
-    --button-border-radius: 12px;
+    --border-radius-outer: 24px;
+    --border-radius-inner: 12px;
     --header-height: var(--s4);
 }
 

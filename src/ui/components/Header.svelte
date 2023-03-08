@@ -12,7 +12,9 @@
 
 <div class="modal-header">
     <slot name="left">
-        <div class="left" />
+        <div class="left">
+            <HeaderButton icon="chevron-left" onClick={() => dispatch('cancel')} />
+        </div>
     </slot>
     <slot name="center">
         <div class="center">
@@ -38,7 +40,7 @@
         display: grid;
         grid-template-columns: 1fr auto 1fr;
         // grid-template-columns: 1fr 2fr 1fr;
-        gap: var(--s0);
+        gap: var(--s1);
         align-items: center;
         padding: var(--s0);
 

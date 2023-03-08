@@ -14,7 +14,7 @@
     button {
         background: var(--header-button-background);
         border: 1px solid var(--header-button-outline);
-        border-radius: var(--button-border-radius);
+        border-radius: var(--border-radius-inner);
         cursor: pointer;
         width: 46px;
         height: 46px;
@@ -26,9 +26,9 @@
             background: var(--header-button-outline);
         }
 
-        &:active {
-            // transform: scale(95%);
-            // transform-origin: center;
-        }
+        // &:active {
+        //     transform: scale(95%);
+        //     transform-origin: center;
+        // }
     }
 </style>

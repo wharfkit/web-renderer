@@ -1,3 +1,8 @@
+/***  
+* Note: This stylesheet is used to synchronize styles between the Button.svelte component and the Link.svelte component.
+* If styled buttons are needed, please import the appropriate Button or Link component instead of using this file.
+***/
+
 .button {
     --button-height: var(--s3);
     cursor: pointer;
@@ -9,7 +14,7 @@
     line-height: var(--button-height);
     text-decoration: none;
     text-align: center;
-    border-radius: var(--button-border-radius);
+    border-radius: var(--border-radius-inner);
     font-size: var(--fs-1);
     font-weight: 600;
     color: var(--button-color, var(--button-text-color));

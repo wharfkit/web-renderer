@@ -18,8 +18,10 @@
             {#each wallets as wallet, index}
                 <li>
                     <Button
-                        label={wallet.metadata.name}
-                        onClick={() => dispatch('select', index)}
+                        data={{
+                            label: wallet.metadata.name,
+                            onClick: () => dispatch('select', index),
+                        }}
                     />
                 </li>
             {/each}
@@ -28,8 +30,6 @@
 </div>
 
 <style lang="scss">
-    @use '../../styles/buttonStyles.css';
-
     ul {
         padding: 0;
         margin: 0;
