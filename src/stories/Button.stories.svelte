@@ -7,10 +7,12 @@
     title="Components/Button"
     component={Button}
     argTypes={{
-        variant: {control: 'select', options: ['primary', 'secondary', 'outlined']},
-        icon: {control: 'dropdown'},
-        onClick: {action: 'clicked'},
-        label: {control: 'text'},
+        data: {
+            variant: {control: 'select', options: ['primary', 'secondary', 'outlined']},
+            icon: {control: 'dropdown'},
+            onClick: {action: 'clicked'},
+            label: {control: 'text'},
+        },
     }}
 />
 
@@ -20,10 +22,10 @@
     </div>
 </Template>
 
-<Story name="Primary" args={{variant: 'primary', label: 'Private Key Signer'}} />
+<Story name="Primary" args={{data: {variant: 'primary', label: 'Private Key Signer'}}} />
 
-<Story name="Primary w/ Icon" args={{variant: 'primary', label: 'Accept', icon: 'check'}} />
+<Story name="Primary w/ Icon" args={{data: {variant: 'primary', label: 'Accept', icon: 'check'}}} />
 
-<Story name="Secondary" args={{variant: 'secondary', label: 'Decline', icon: 'close'}} />
+<Story name="Secondary" args={{data: {variant: 'secondary', label: 'Decline', icon: 'close'}}} />
 
-<Story name="Outlined" args={{variant: 'outlined', label: 'Login', icon: 'login'}} />
+<Story name="Outlined" args={{data: {variant: 'outlined', label: 'Login', icon: 'login'}}} />

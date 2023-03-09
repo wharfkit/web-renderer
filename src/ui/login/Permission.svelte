@@ -133,7 +133,7 @@
     div {
         display: flex;
         flex-direction: column;
-        gap: var(--s0);
+        gap: var(--space-m);
         color: black;
     }
 

@@ -34,6 +34,6 @@
     div {
         display: flex;
         flex-direction: column;
-        gap: var(--s1);
+        gap: var(--space-l);
     }
 </style>

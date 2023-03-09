@@ -60,14 +60,17 @@
     @use '../../styles/variables.css';
 
     dialog {
-        font-family: system-ui, ui-sans-serif;
+        --margin-top: var(--space-xl);
+        // font-family: system-ui, ui-sans-serif;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+            Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         margin-bottom: 0;
-        margin-top: var(--s3);
+        margin-top: var(--margin-top);
         margin-inline: auto;
         border: none !important;
         border-radius: var(--border-radius-outer);
         padding: 0;
-        width: min(418px, 100vw - var(--s0));
+        width: min(var(--space-7xl-8xl), 100vw - var(--space-m));
         box-shadow: 0px 4px 154px rgba(0, 0, 0, 0.35);
         background-color: var(--background-color);
     }
@@ -75,9 +78,10 @@
         background: rgba(0, 0, 0, 0.75);
     }
     .modal-content {
-        --max-modal-content-height: calc(100svh - var(--header-height) - var(--s3) - var(--s3));
-        padding-inline: var(--s2);
-        padding-block: var(--s2);
+        --max-modal-content-height: calc(
+            100svh - var(--header-height) - var(--margin-top) - var(--margin-top)
+        );
+        padding: var(--space-m);
         background-color: var(--surface-color);
         overflow-y: scroll;
         max-height: var(--max-modal-content-height);

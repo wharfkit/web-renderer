@@ -8,6 +8,7 @@
     import ChevronLeft from './icons/ChevronLeft.svelte'
 
     export let name: keyof typeof icons
+    // export let size: string = 'var(--space-l)'
 
     const icons = {
         close,

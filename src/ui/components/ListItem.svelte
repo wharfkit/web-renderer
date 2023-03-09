@@ -2,10 +2,10 @@
     import type {ComponentProps} from 'svelte'
     import Icon from './Icon.svelte'
 
-    export let leadingIcon: ComponentProps<Icon>['name'] | undefined = undefined
-    export let trailingIcon: ComponentProps<Icon>['name'] | undefined = 'chevron-right'
     export let label: string | undefined
     export let onClick
+    export let leadingIcon: ComponentProps<Icon>['name'] | undefined = undefined
+    export let trailingIcon: ComponentProps<Icon>['name'] | undefined = 'chevron-right'
 </script>
 
 <li>
@@ -35,7 +35,7 @@
     li button {
         flex: 1;
         display: flex;
-        gap: var(--s1);
+        gap: var(--space-l);
         align-items: center;
         cursor: pointer;
         border: none;
@@ -45,7 +45,7 @@
     }
 
     div {
-        padding-block: var(--s0);
+        padding-block: var(--space-m);
         // background-color: green;
         display: flex;
         flex: 1;

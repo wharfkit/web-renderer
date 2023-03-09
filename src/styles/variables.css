@@ -125,20 +125,26 @@ Globals and custom properties
     --base-font: 14px;
     --text-color: var(--wharf-blue);
 
-    /* Font Sizing - Minimal */
+    /* Font Sizing - Fixed */
 
-    --fs-0: 12px;
+    /* --fs-0: 12px;
     --fs-1: 14px;
     --fs-2: 16px;
-    --fs-3: 20px;
+    --fs-3: 20px; */
+
+    /* Font Sizing - Fluid */
+    /* @link https://utopia.fyi/type/calculator?c=320,12,1.2,1240,20,1.25,3,0,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
+
+    --fs-0: clamp(0.75rem, calc(0.66rem + 0.43vw), 1rem);
+    --fs-1: clamp(0.9rem, calc(0.78rem + 0.61vw), 1.25rem);
+    --fs-2: clamp(1.08rem, calc(0.91rem + 0.84vw), 1.56rem);
+    --fs-3: clamp(1.3rem, calc(1.07rem + 1.14vw), 1.95rem);
 
     /****************** 
       Size and Spacing 
     ******************/
 
-    /*** 
-    * Fixed ratio spacing scale, 
-    */
+    /* Spacing Scale - Fixed */
     --ratio: 1.5;
     --s-5: calc(var(--s-4) / var(--ratio));
     --s-4: calc(var(--s-3) / var(--ratio));
@@ -157,11 +163,46 @@ Globals and custom properties
     --s9: calc(var(--s8) * var(--ratio));
     --s10: calc(var(--s9) * var(--ratio));
 
+    /* Spacing Scale - Fluid */
+    /* @link https://utopia.fyi/space/calculator?c=320,12,1.2,1240,16,1.25,3,0,&s=0.75|0.5|0.25,1.5|2|3|4|6|10|16|25|30|40,s-l&g=s,l,xl,12 */
+
+    --space-3xs: clamp(0.19rem, calc(0.17rem + 0.11vw), 0.25rem);
+    --space-2xs: clamp(0.38rem, calc(0.33rem + 0.22vw), 0.5rem);
+    --space-xs: clamp(0.56rem, calc(0.5rem + 0.33vw), 0.75rem);
+    --space-s: clamp(0.75rem, calc(0.66rem + 0.43vw), 1rem);
+    --space-m: clamp(1.13rem, calc(0.99rem + 0.65vw), 1.5rem);
+    --space-l: clamp(1.5rem, calc(1.33rem + 0.87vw), 2rem);
+    --space-xl: clamp(2.25rem, calc(1.99rem + 1.3vw), 3rem);
+    --space-2xl: clamp(3rem, calc(2.65rem + 1.74vw), 4rem);
+    --space-3xl: clamp(4.5rem, calc(3.98rem + 2.61vw), 6rem);
+    --space-4xl: clamp(7.5rem, calc(6.63rem + 4.35vw), 10rem);
+    --space-5xl: clamp(12rem, calc(10.61rem + 6.96vw), 16rem);
+    --space-6xl: clamp(18.75rem, calc(16.58rem + 10.87vw), 25rem);
+    --space-7xl: clamp(22.5rem, calc(19.89rem + 13.04vw), 30rem);
+    --space-8xl: clamp(30rem, calc(26.52rem + 17.39vw), 40rem);
+
+    /* One-up pairs */
+    --space-3xs-2xs: clamp(0.19rem, calc(0.08rem + 0.54vw), 0.5rem);
+    --space-2xs-xs: clamp(0.38rem, calc(0.24rem + 0.65vw), 0.75rem);
+    --space-xs-s: clamp(0.56rem, calc(0.41rem + 0.76vw), 1rem);
+    --space-s-m: clamp(0.75rem, calc(0.49rem + 1.3vw), 1.5rem);
+    --space-m-l: clamp(1.13rem, calc(0.82rem + 1.52vw), 2rem);
+    --space-l-xl: clamp(1.5rem, calc(0.98rem + 2.61vw), 3rem);
+    --space-xl-2xl: clamp(2.25rem, calc(1.64rem + 3.04vw), 4rem);
+    --space-2xl-3xl: clamp(3rem, calc(1.96rem + 5.22vw), 6rem);
+    --space-3xl-4xl: clamp(4.5rem, calc(2.59rem + 9.57vw), 10rem);
+    --space-4xl-5xl: clamp(7.5rem, calc(4.54rem + 14.78vw), 16rem);
+    --space-5xl-6xl: clamp(12rem, calc(7.48rem + 22.61vw), 25rem);
+    --space-6xl-7xl: clamp(18.75rem, calc(14.84rem + 19.57vw), 30rem);
+    --space-7xl-8xl: clamp(22.5rem, calc(16.41rem + 30.43vw), 40rem);
+
+    /* Custom pairs */
+    --space-s-l: clamp(0.75rem, calc(0.32rem + 2.17vw), 2rem);
+
     /* Other sizes */
-    --measure: 75ch;
     --border-radius-outer: 24px;
     --border-radius-inner: 12px;
-    --header-height: var(--s4);
+    --header-height: var(--space-3xl);
 }
 
 * {

@@ -12,12 +12,14 @@
 
 <style lang="scss">
     button {
+        --button-size: 46px;
+        --button-size: var(--space-2xl);
         background: var(--header-button-background);
         border: 1px solid var(--header-button-outline);
         border-radius: var(--border-radius-inner);
         cursor: pointer;
-        width: 46px;
-        height: 46px;
+        width: var(--button-size);
+        height: var(--button-size);
         display: grid;
         place-content: center;
         color: var(--header-text-color);

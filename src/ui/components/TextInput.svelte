@@ -18,11 +18,13 @@
 <style lang="scss">
     input {
         height: var(--s3);
+        height: var(--space-2xl);
         border-radius: var(--border-radius-inner);
         border: 1px solid #00000030;
-        padding-inline: var(--s0);
+        padding-inline: var(--space-m);
         color: var(--text-color);
         background-color: var(--surface-color);
+        font-size: var(--fs-1);
     }
     input::placeholder {
         font-size: var(--fs-1);

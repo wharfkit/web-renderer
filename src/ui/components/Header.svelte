@@ -34,22 +34,23 @@
 <style lang="scss">
     .modal-header {
         box-sizing: border-box;
-        height: var(--header-height);
+        min-height: var(--header-height);
         color: var(--header-text-color);
         background: var(--background-color);
         display: grid;
         grid-template-columns: 1fr auto 1fr;
         // grid-template-columns: 1fr 2fr 1fr;
-        gap: var(--s1);
-        align-items: center;
-        padding: var(--s0);
+        gap: var(--space-s);
+        padding: var(--space-m);
 
         .center {
-            display: grid;
-            place-content: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
             text-align: center;
-            gap: var(--s-3);
-            overflow: hidden;
+            // gap: var(--space-2xs);
+            // overflow: hidden;
         }
 
         .right {

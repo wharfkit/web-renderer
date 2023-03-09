@@ -4,12 +4,12 @@
 ***/
 
 .button {
-    --button-height: var(--s3);
+    --button-height: var(--space-2xl);
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: var(--s-1);
+    gap: var(--space-l);
     height: var(--button-height);
     line-height: var(--button-height);
     text-decoration: none;
