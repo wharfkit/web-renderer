@@ -10,7 +10,22 @@
 <Story name="Default">
     <Checkbox />
 </Story>
+<Story name="In context">
+    <div>
+        <Checkbox />
 
-<Story name="Checked">
-    <Checkbox args={{checked: true}} />
+        Auto approve this transaction
+    </div>
 </Story>
+
+<style>
+    div {
+        padding: var(--space-l);
+        background-color: var(--swell-mist);
+        border-radius: var(--border-radius-inner);
+        display: flex;
+        align-items: center;
+        gap: var(--space-s);
+        color: var(--wharf-blue);
+    }
+</style>

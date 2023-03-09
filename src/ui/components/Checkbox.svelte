@@ -1,15 +1,11 @@
 <script lang="ts">
+    import {draw, scale} from 'svelte/transition'
+    import {quintIn, quintInOut, quintOut} from 'svelte/easing'
+
     export let checked: boolean | null | undefined = null
 
     const toggleChecked = () => {
         checked = !checked
-        animate()
-    }
-
-    let boxFill
-
-    const animate = () => {
-        boxFill.beginElement()
     }
 </script>
 
@@ -26,52 +22,50 @@
     stroke-linecap="round"
     stroke-linejoin="round"
 >
-    <path
-        id="box-fill"
-        stroke="none"
-        d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"
-    >
-        <animateTransform
-            bind:this={boxFill}
-            attributeName="transform"
-            attributeType="XML"
-            type="scale"
-            begin="indefinite"
-            fill="freeze"
-            from={!checked ? 1 : 0}
-            to={!checked ? 0 : 1}
-            dur="200ms"
-            calcMode="spline"
-            keyTimes="0;1"
-            keySplines="0.230 1.000 0.320 1.000"
+    {#if checked}
+        <path
+            id="box-fill"
+            in:scale={{duration: 200, easing: quintOut}}
+            out:scale={{duration: 100, easing: quintOut}}
+            stroke="none"
+            d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"
         />
-    </path>
-    <path id="check" fill="none" d="m9 11 3 3L22 4">
-        <animate
-            attributeName="stroke-dashoffset"
-            from="290"
-            to="0"
-            begin="indefinite"
-            dur="6s"
-            fill="freeze"
+
+        <path
+            id="check"
+            in:draw={{duration: 300, easing: quintOut}}
+            out:draw={{duration: 100, easing: quintOut}}
+            fill="none"
+            d="m9 11 3 3L22 4"
         />
-    </path>
+    {/if}
 
     <path
         id="box-outline"
         fill="none"
-        d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"
+        d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"
+        stroke-dasharray="70 1000"
+        stroke-dashoffset={checked ? 15 : 0}
     />
+    <!-- Original -->
+    <!-- d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" -->
 </svg>
-
-{checked}
 
 <style>
     svg {
         stroke: var(--wharf-blue);
         fill: var(--reef-turquoise);
     }
+
+    svg:active {
+        scale: 98%;
+    }
+
     #box-fill {
         transform-origin: center;
+    }
+
+    #box-outline {
+        transition: 100ms ease-out;
     }
 </style>
