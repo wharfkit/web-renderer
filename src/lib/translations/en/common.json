@@ -27,7 +27,7 @@
     },
     "transact": {
         "title": "Transact",
-        "subtitle": "",
+        "subtitle": " ",
         "processing": "Doing transact stuffs - cool animation!",
         "signing": "Signing transaction",
         "signed": "Transaction signed",
