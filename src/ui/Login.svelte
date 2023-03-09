@@ -114,7 +114,7 @@
         [loginResponse, walletPlugin],
         ([$currentResponse, $currentWalletPlugin]) => {
             if (!$currentWalletPlugin) {
-                $props.title = $t('login.select.wallet', {default: 'Select a Wallet'})
+                $props.subtitle = $t('login.select.wallet', {default: 'Select a Wallet'})
                 return Steps.selectWallet
             }
 
@@ -132,13 +132,13 @@
                 $loginResponse.chainId = $loginContext?.chain.id
                 return Steps.selectPermission
             } else if (!$currentResponse.chainId && requiresChainSelect) {
-                $props.title = $t('login.select.blockchain', {default: 'Select a Blockchain'})
+                $props.subtitle = $t('login.select.blockchain', {default: 'Select a Blockchain'})
                 return Steps.selectChain
             } else if (!$currentResponse.permissionLevel && requiresPermissionSelect) {
-                $props.title = $t('login.select.account', {default: 'Select an Account'})
+                $props.subtitle = $t('login.select.account', {default: 'Select an Account'})
                 return Steps.selectPermission
             } else if (!$currentResponse.permissionLevel && requiresPermissionEntry) {
-                $props.title = $t('login.enter.account', {default: 'Enter account name'})
+                $props.subtitle = $t('login.enter.account', {default: 'Enter account name'})
                 return Steps.enterPermission
             }
 
