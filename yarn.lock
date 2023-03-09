@@ -1382,10 +1382,10 @@
   dependencies:
     tslib "^2.1.0"
 
-"@wharfkit/wallet-plugin-anchor@^0.3.0-ui-16":
-  version "0.3.0-ui-16"
-  resolved "https://registry.yarnpkg.com/@wharfkit/wallet-plugin-anchor/-/wallet-plugin-anchor-0.3.0-ui-16.tgz#26e12d3d8de854d3c3aaf4282dcb229a8654d2d2"
-  integrity sha512-vgJHs+ekCgoN7kEmOqwkMTOFGBQgis8s9BnIts9TSv3Gdr4FX9NcoXWXNxtyspF3+KHi3xlIAnLD4Uhil9d7xg==
+"@wharfkit/wallet-plugin-anchor@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@wharfkit/wallet-plugin-anchor/-/wallet-plugin-anchor-0.3.0.tgz#7b109ee0478f139946f90e242b450728b58662d3"
+  integrity sha512-gqrKwgzAmssaH76652L0dMTe8fXVYM/C8fo2xR4U+xTrtTd0CzBtXyOK+Lndq2yHFdM7BALKVrTu8+hw7QfdvQ==
   dependencies:
     "@greymass/buoy" "^1.0.3"
     "@greymass/miniaes" "^1.0.0"
