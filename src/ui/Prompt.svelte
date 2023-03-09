@@ -111,8 +111,10 @@
 </script>
 
 <div>
-    <h3>{$prompt?.args.title}</h3>
-    <p>{$prompt?.args.body}</p>
+    <div class="text">
+        <h3>{$prompt?.args.title}</h3>
+        <p>{$prompt?.args.body}</p>
+    </div>
     {#each $elements as component}
         <div>
             <svelte:component
@@ -124,3 +126,32 @@
         </div>
     {/each}
 </div>
+
+<style>
+    :is(h3, p) {
+        text-align: center;
+        margin: 0;
+    }
+
+    h3 {
+        color: var(--on-surface-color);
+        font-size: var(--fs-2);
+        font-weight: 600;
+    }
+
+    p {
+        color: var(--on-surface-variant-color);
+        font-size: var(--fs-1);
+        font-weight: 400;
+    }
+
+    div {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-m);
+    }
+
+    .text {
+        gap: var(--space-2xs);
+    }
+</style>

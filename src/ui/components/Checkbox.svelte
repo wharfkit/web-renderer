@@ -1,6 +1,6 @@
 <script lang="ts">
     import {draw, scale} from 'svelte/transition'
-    import {quintIn, quintInOut, quintOut} from 'svelte/easing'
+    import {quintOut} from 'svelte/easing'
 
     export let checked: boolean | null | undefined = null
 
@@ -47,8 +47,6 @@
         stroke-dasharray="70 1000"
         stroke-dashoffset={checked ? 15 : 0}
     />
-    <!-- Original -->
-    <!-- d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" -->
 </svg>
 
 <style>

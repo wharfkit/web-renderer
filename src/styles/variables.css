@@ -23,6 +23,7 @@ Globals and custom properties
     ******************/
     --surface-color: white;
     --on-surface-color: var(--color-primary-700);
+    --on-surface-variant-color: var(--color-neutral-700);
 
     --background-color: var(--color-primary-700);
     --on-background-color: var(--color-primary-50);
@@ -122,7 +123,6 @@ Globals and custom properties
         Typography 
     ******************/
     font-family: system-ui, ui-sans-serif;
-    --base-font: 14px;
     --text-color: var(--wharf-blue);
 
     /* Font Sizing - Fixed */
@@ -207,4 +207,11 @@ Globals and custom properties
 
 * {
     box-sizing: border-box;
+}
+
+::selection {
+    color: var(--wharf-blue);
+    background-color: var(--seafoam-mint);
+    color: red;
+    background-color: black;
 }
