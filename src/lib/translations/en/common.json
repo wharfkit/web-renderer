@@ -23,7 +23,7 @@
         },
         "title": "Login",
         "subtitle": "Please login to continue",
-        "title_app": "{{appName}}"
+        "title-app": "{{appName}}"
     },
     "transact": {
         "title": "Transact",
