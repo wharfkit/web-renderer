@@ -23,7 +23,7 @@
         },
         "title": "로그인",
         "subtitle": "계속하려면 로그인하십시오",
-        "title_app": "{{appName}}에 로그인"
+        "title-app": "{{appName}}에 로그인"
     },
     "transact": {
         "title": "거래하다",
