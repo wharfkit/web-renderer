@@ -1338,20 +1338,20 @@
     "@typescript-eslint/types" "5.49.0"
     eslint-visitor-keys "^3.3.0"
 
-"@wharfkit/session@^0.3.1":
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/@wharfkit/session/-/session-0.3.1.tgz#7aa8380481925806ba986025cca05bac8a14b773"
-  integrity sha512-ZipRLwPR2/kNDqM9kQvQyijeURJQ0mSiCtEYMOPRL17Chp39bZa3zTeBfFlTZMoY8nkn0M3k7+bkkOh9D+UwBQ==
+"@wharfkit/session@^0.3.2":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@wharfkit/session/-/session-0.3.2.tgz#98e946d028434a37b5038da995c12eed72c1f3e2"
+  integrity sha512-rxZKL0Vqm9L20l4C/0wwdmoiPlw9Xd0TQNLax7ZcJB3qsZ4nK+GRlynLfcoM3WppGCL/I5uQ8g/2csFEl0U0pg==
   dependencies:
     "@greymass/eosio" "^0.6.9"
     eosio-signing-request "^2.5.2"
     pako "^2.0.4"
     tslib "^2.1.0"
 
-"@wharfkit/transact-plugin-autocorrect@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@wharfkit/transact-plugin-autocorrect/-/transact-plugin-autocorrect-0.3.0.tgz#9950e8ba7f21a744f30f1a144e2b2431e8f8162b"
-  integrity sha512-38IrkM+ACkwYjfMgVKqVXqvB5F4qWEUJzx+1zOSxpuN5jpUdUG3v597SALpw63qqCk5a24apLeg6+ej/B7yiRQ==
+"@wharfkit/transact-plugin-autocorrect@^0.3.2":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@wharfkit/transact-plugin-autocorrect/-/transact-plugin-autocorrect-0.3.2.tgz#ceb6676109ee3030914fd1ccd42b6f8929b5ba5b"
+  integrity sha512-rE1H/JcP7fSCGxZKQ4VIi2dzjokwDrn+zt80v01thKg+LTLd7Yp/cL6hDaS+Cf5Zjf6hrvc6JX4r6fCXOulLuw==
   dependencies:
     "@greymass/eosio-resources" "^0.9.0"
     tslib "^2.1.0"
