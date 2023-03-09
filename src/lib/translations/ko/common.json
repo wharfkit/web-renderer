@@ -27,7 +27,7 @@
     },
     "transact": {
         "title": "거래하다",
-        "subtitle": "",
+        "subtitle": " ",
         "processing": "물건을 거래하는 것 - 멋진 애니메이션!",
         "signing": "서명 트랜잭션",
         "signed": "트랜잭션 서명",
