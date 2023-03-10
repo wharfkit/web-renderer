@@ -12,9 +12,3 @@
         <ErrorMessage title={$t('error.title', {default: 'Error'})} details={$errorDetails} />
     {/if}
 </div>
-<!-- 
-<style lang="scss">
-    .error {
-        text-align: center;
-    }
-</style> -->

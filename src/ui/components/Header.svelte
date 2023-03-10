@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {createEventDispatcher, setContext} from 'svelte'
+    import {createEventDispatcher, getContext} from 'svelte'
     import HeaderButton from './HeaderButton.svelte'
 
     export let title: string
