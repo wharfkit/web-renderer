@@ -11,24 +11,24 @@
 </script>
 
 <div class="modal-header">
-    <slot name="left">
-        <div class="left">
+    <div class="slot left">
+        <slot name="left">
             <HeaderButton icon="chevron-left" onClick={() => dispatch('cancel')} />
-        </div>
-    </slot>
-    <slot name="center">
-        <div class="center">
+        </slot>
+    </div>
+    <div class="slot center">
+        <slot name="center">
             <h2>{title}</h2>
             {#if subtitle}
                 <p>{subtitle}</p>
             {/if}
-        </div>
-    </slot>
-    <slot name="right">
-        <div class="right">
+        </slot>
+    </div>
+    <div class="slot right">
+        <slot name="right">
             <HeaderButton icon="close" onClick={() => dispatch('cancel')} />
-        </div>
-    </slot>
+        </slot>
+    </div>
 </div>
 
 <style lang="scss">
@@ -43,18 +43,18 @@
         gap: var(--space-s);
         padding: var(--space-m);
 
-        .center {
+        .slot {
             display: flex;
+            align-items: center;
+        }
+
+        .center {
             flex-direction: column;
             justify-content: space-around;
-            align-items: center;
             text-align: center;
-            // gap: var(--space-2xs);
-            // overflow: hidden;
         }
 
         .right {
-            display: flex;
             justify-content: flex-end;
         }
 
