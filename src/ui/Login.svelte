@@ -164,7 +164,7 @@
 
     const selectPermission = (e) => {
         $loginResponse.permissionLevel = e.detail
-        $backAction = unselectChain
+        $backAction = undefined
         transitionDirection = right
     }
     const unselectPermission = () => {
