@@ -136,3 +136,5 @@ export const loginPromise = writable<LoginPromise | undefined>(undefined)
 export const loginResponse = writable<UserInterfaceLoginData>({...defaultLoginResponse})
 
 export const errorDetails = writable<string | undefined>(undefined)
+
+export const backAction = writable<Function | undefined>(undefined)

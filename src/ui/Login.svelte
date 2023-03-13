@@ -4,7 +4,7 @@
     import {derived, Readable} from 'svelte/store'
 
     import {i18nType} from 'src/lib/translations'
-    import {loginContext, loginResponse, props, UserInterfaceLoginData} from './state'
+    import {loginContext, loginResponse, props, UserInterfaceLoginData, backAction} from './state'
 
     import Blockchain from './login/Blockchain.svelte'
     import Permission from './login/Permission.svelte'
@@ -147,17 +147,24 @@
         }
     )
 
+    let transitionDirection
+    const right = 100
+    const left = -100
+
     const selectChain = (e) => {
         $loginResponse.chainId = e.detail
+        $backAction = unselectChain
         transitionDirection = right
     }
     const unselectChain = () => {
         $loginResponse.chainId = undefined
+        $backAction = unselectWallet
         transitionDirection = left
     }
 
     const selectPermission = (e) => {
         $loginResponse.permissionLevel = e.detail
+        $backAction = unselectChain
         transitionDirection = right
     }
     const unselectPermission = () => {
@@ -167,16 +174,14 @@
 
     const selectWallet = (e) => {
         $loginResponse.walletPluginIndex = e.detail
+        $backAction = unselectWallet
         transitionDirection = right
     }
     const unselectWallet = () => {
         $loginResponse.walletPluginIndex = undefined
+        $backAction = undefined
         transitionDirection = left
     }
-
-    const right = 100
-    const left = -100
-    let transitionDirection
 
     const complete = () => {
         if (!completed) {

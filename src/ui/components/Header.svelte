@@ -1,9 +1,10 @@
 <script lang="ts">
-    import {createEventDispatcher, getContext} from 'svelte'
+    import {createEventDispatcher} from 'svelte'
     import HeaderButton from './HeaderButton.svelte'
+    import {backAction} from '../state'
 
     export let title: string
-    export let subtitle: string
+    export let subtitle: string | undefined
 
     const dispatch = createEventDispatcher<{
         cancel: void
@@ -13,7 +14,9 @@
 <div class="modal-header">
     <div class="slot left">
         <slot name="left">
-            <HeaderButton icon="chevron-left" onClick={() => dispatch('cancel')} />
+            {#if $backAction}
+                <HeaderButton icon="chevron-left" onClick={$backAction} />
+            {/if}
         </slot>
     </div>
     <div class="slot center">
