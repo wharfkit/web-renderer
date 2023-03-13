@@ -1,12 +1,14 @@
 <script lang="ts">
-    import {createEventDispatcher} from 'svelte'
+    import {createEventDispatcher, setContext} from 'svelte'
     import {ChainDefinition, Checksum256} from '@wharfkit/session'
     import Icon from '../components/Icon.svelte'
     import Button from '../components/Button.svelte'
     import List from '../components/List.svelte'
     import ListItem from '../components/ListItem.svelte'
+    import {fly} from 'svelte/transition'
 
     export let chains: ChainDefinition[]
+    export let direction: number
 
     const dispatch = createEventDispatcher<{
         select: Checksum256
@@ -14,7 +16,7 @@
     }>()
 </script>
 
-<div>
+<div in:fly={{duration: 200, x: direction}}>
     {#if chains}
         <List>
             {#each chains as chain}

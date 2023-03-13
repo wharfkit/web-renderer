@@ -1,12 +1,14 @@
 <script lang="ts">
     import {createEventDispatcher} from 'svelte'
     import {UserInterfaceWalletPlugin} from '@wharfkit/session'
+    import {fly} from 'svelte/transition'
 
     import Button from '../components/Button.svelte'
     import List from '../components/List.svelte'
     import ListItem from '../components/ListItem.svelte'
 
     export let wallets: UserInterfaceWalletPlugin[]
+    export let direction: number
 
     const dispatch = createEventDispatcher<{
         select: number
@@ -14,7 +16,7 @@
     }>()
 </script>
 
-<div>
+<div in:fly={{duration: 200, x: direction}}>
     {#if wallets}
         <List>
             {#each wallets as wallet, index}

@@ -1,8 +1,7 @@
 <script lang="ts">
     import {APIClient, ChainDefinition, UserInterfaceWalletPlugin} from '@wharfkit/session'
-    import {createEventDispatcher, getContext} from 'svelte'
+    import {createEventDispatcher, getContext, onMount} from 'svelte'
     import {derived, Readable} from 'svelte/store'
-    import {onMount} from 'svelte'
 
     import {i18nType} from 'src/lib/translations'
     import {loginContext, loginResponse, props, UserInterfaceLoginData} from './state'
@@ -147,14 +146,36 @@
         }
     )
 
-    const selectChain = (e) => ($loginResponse.chainId = e.detail)
-    const unselectChain = () => ($loginResponse.chainId = undefined)
+    const selectChain = (e) => {
+        $loginResponse.chainId = e.detail
+        transitionDirection = right
+    }
+    const unselectChain = () => {
+        $loginResponse.chainId = undefined
+        transitionDirection = left
+    }
 
-    const selectPermission = (e) => ($loginResponse.permissionLevel = e.detail)
-    const unselectPermission = () => ($loginResponse.permissionLevel = undefined)
+    const selectPermission = (e) => {
+        $loginResponse.permissionLevel = e.detail
+        transitionDirection = right
+    }
+    const unselectPermission = () => {
+        $loginResponse.permissionLevel = undefined
+        transitionDirection = left
+    }
 
-    const selectWallet = (e) => ($loginResponse.walletPluginIndex = e.detail)
-    const unselectWallet = () => ($loginResponse.walletPluginIndex = undefined)
+    const selectWallet = (e) => {
+        $loginResponse.walletPluginIndex = e.detail
+        transitionDirection = right
+    }
+    const unselectWallet = () => {
+        $loginResponse.walletPluginIndex = undefined
+        transitionDirection = left
+    }
+
+    const right = 100
+    const left = -100
+    let transitionDirection
 
     const complete = () => {
         if (!completed) {
@@ -170,15 +191,26 @@
 
 {#if $props && $loginContext}
     {#if $step === Steps.selectWallet}
-        <Wallet on:select={selectWallet} on:cancel={cancel} wallets={$loginContext.walletPlugins} />
+        <Wallet
+            on:select={selectWallet}
+            on:cancel={cancel}
+            wallets={$loginContext.walletPlugins}
+            direction={transitionDirection}
+        />
     {:else if $step === Steps.selectChain && $chains}
-        <Blockchain on:select={selectChain} on:cancel={unselectWallet} chains={$chains} />
+        <Blockchain
+            on:select={selectChain}
+            on:cancel={unselectWallet}
+            chains={$chains}
+            direction={transitionDirection}
+        />
     {:else if $step === Steps.enterPermission && $client && $walletPlugin}
         <Permission
             on:select={selectPermission}
             on:cancel={unselectChain}
             client={$client}
             walletPlugin={$walletPlugin}
+            direction={transitionDirection}
         />
     {:else if $step === Steps.selectPermission && $client && $walletPlugin}
         <Permission
@@ -186,6 +218,7 @@
             on:cancel={unselectChain}
             client={$client}
             walletPlugin={$walletPlugin}
+            direction={transitionDirection}
         />
     {:else}
         <p>{$t('login.complete', {default: 'Complete the login using your selected wallet.'})}</p>
