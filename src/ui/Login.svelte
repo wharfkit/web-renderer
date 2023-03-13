@@ -9,6 +9,7 @@
     import Blockchain from './login/Blockchain.svelte'
     import Permission from './login/Permission.svelte'
     import Wallet from './login/Wallet.svelte'
+    import Transition from './components/Transition.svelte'
 
     const {t} = getContext<i18nType>('i18n')
 
@@ -191,35 +192,35 @@
 
 {#if $props && $loginContext}
     {#if $step === Steps.selectWallet}
-        <Wallet
-            on:select={selectWallet}
-            on:cancel={cancel}
-            wallets={$loginContext.walletPlugins}
-            direction={transitionDirection}
-        />
+        <Transition direction={transitionDirection}>
+            <Wallet
+                on:select={selectWallet}
+                on:cancel={cancel}
+                wallets={$loginContext.walletPlugins}
+            />
+        </Transition>
     {:else if $step === Steps.selectChain && $chains}
-        <Blockchain
-            on:select={selectChain}
-            on:cancel={unselectWallet}
-            chains={$chains}
-            direction={transitionDirection}
-        />
+        <Transition direction={transitionDirection}>
+            <Blockchain on:select={selectChain} on:cancel={unselectWallet} chains={$chains} />
+        </Transition>
     {:else if $step === Steps.enterPermission && $client && $walletPlugin}
-        <Permission
-            on:select={selectPermission}
-            on:cancel={unselectChain}
-            client={$client}
-            walletPlugin={$walletPlugin}
-            direction={transitionDirection}
-        />
+        <Transition direction={transitionDirection}>
+            <Permission
+                on:select={selectPermission}
+                on:cancel={unselectChain}
+                client={$client}
+                walletPlugin={$walletPlugin}
+            />
+        </Transition>
     {:else if $step === Steps.selectPermission && $client && $walletPlugin}
-        <Permission
-            on:select={selectPermission}
-            on:cancel={unselectChain}
-            client={$client}
-            walletPlugin={$walletPlugin}
-            direction={transitionDirection}
-        />
+        <Transition direction={transitionDirection}>
+            <Permission
+                on:select={selectPermission}
+                on:cancel={unselectChain}
+                client={$client}
+                walletPlugin={$walletPlugin}
+            />
+        </Transition>
     {:else}
         <p>{$t('login.complete', {default: 'Complete the login using your selected wallet.'})}</p>
     {/if}

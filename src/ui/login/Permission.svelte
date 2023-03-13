@@ -2,7 +2,6 @@
     import {APIClient, Name, PermissionLevel, UserInterfaceWalletPlugin} from '@wharfkit/session'
     import {createEventDispatcher, getContext, onMount} from 'svelte'
     import {writable} from 'svelte/store'
-    import {fly} from 'svelte/transition'
 
     import {i18nType} from 'src/lib/translations'
 
@@ -16,7 +15,6 @@
 
     export let client: APIClient
     export let walletPlugin: UserInterfaceWalletPlugin
-    export let direction: number
 
     const dispatch = createEventDispatcher<{
         select: PermissionLevel
@@ -76,7 +74,7 @@
     }
 </script>
 
-<div in:fly={{duration: 200, x: direction}}>
+<div>
     {#if $busy}
         <p class="loading">{$t('loading', {default: 'Loading...'})}</p>
     {:else if permissions && permissions.length > 0}

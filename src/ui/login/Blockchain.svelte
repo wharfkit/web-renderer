@@ -5,10 +5,8 @@
     import Button from '../components/Button.svelte'
     import List from '../components/List.svelte'
     import ListItem from '../components/ListItem.svelte'
-    import {fly} from 'svelte/transition'
 
     export let chains: ChainDefinition[]
-    export let direction: number
 
     const dispatch = createEventDispatcher<{
         select: Checksum256
@@ -16,7 +14,7 @@
     }>()
 </script>
 
-<div in:fly={{duration: 200, x: direction}}>
+<div>
     {#if chains}
         <List>
             {#each chains as chain}
