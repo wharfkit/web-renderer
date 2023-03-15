@@ -24,6 +24,7 @@ export function resetState() {
     loginResponse.set({...defaultLoginResponse})
 
     errorDetails.set(undefined)
+    backAction.set(undefined)
 }
 
 /** Whether or not the interface is active in the browser */

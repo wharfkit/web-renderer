@@ -2,6 +2,7 @@
     import {createEventDispatcher} from 'svelte'
     import HeaderButton from './HeaderButton.svelte'
     import {backAction} from '../state'
+    import {fade} from 'svelte/transition'
 
     export let title: string
     export let subtitle: string | undefined
@@ -15,7 +16,9 @@
     <div class="slot left">
         <slot name="left">
             {#if $backAction}
-                <HeaderButton icon="chevron-left" onClick={$backAction} />
+                <div transition:fade={{duration: 100}}>
+                    <HeaderButton icon="chevron-left" onClick={$backAction} />
+                </div>
             {/if}
         </slot>
     </div>

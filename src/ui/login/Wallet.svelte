@@ -2,7 +2,6 @@
     import {createEventDispatcher} from 'svelte'
     import {UserInterfaceWalletPlugin} from '@wharfkit/session'
 
-    import Button from '../components/Button.svelte'
     import List from '../components/List.svelte'
     import ListItem from '../components/ListItem.svelte'
 
@@ -18,14 +17,7 @@
     {#if wallets}
         <List>
             {#each wallets as wallet, index}
-                <ListItem label={wallet.metadata.name} onClick={() => dispatch('select', index)}>
-                    <!-- <Button
-                        data={{
-                            label: wallet.metadata.name,
-                            onClick: () => dispatch('select', index),
-                        }}
-                    /> -->
-                </ListItem>
+                <ListItem label={wallet.metadata.name} onClick={() => dispatch('select', index)} />
             {/each}
         </List>
     {/if}

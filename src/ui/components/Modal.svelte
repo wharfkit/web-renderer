@@ -72,7 +72,6 @@
         padding: 0;
         width: min(var(--space-7xl-8xl), 100vw - var(--space-m));
         box-shadow: 0px 4px 154px rgba(0, 0, 0, 0.35);
-        background-color: var(--background-color);
     }
     dialog::backdrop {
         background: rgba(0, 0, 0, 0.75);
@@ -85,6 +84,8 @@
         background-color: var(--surface-color);
         overflow-y: scroll;
         max-height: var(--max-modal-content-height);
+
+        // Give Chrome some nicer scrollbars
         scrollbar-gutter: stable both-edges;
         scrollbar-color: var(--background-color);
     }

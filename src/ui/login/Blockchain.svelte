@@ -26,8 +26,6 @@
             {/each}
         </List>
     {/if}
-
-    <Button data={{variant: 'secondary', onClick: () => dispatch('cancel'), label: 'Cancel'}} />
 </div>
 
 <style lang="scss">

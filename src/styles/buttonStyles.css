@@ -33,6 +33,7 @@
 .button:active {
     background: var(--button-background-active, var(--button-primary-background-active));
     box-shadow: var(--button-outline-active);
+    color: var(--button-text-color-active);
     /* transform: scale(98%); */
     /* transform-origin: center; */
 }

@@ -10,6 +10,7 @@
     import List from '../components/List.svelte'
     import ListItem from '../components/ListItem.svelte'
     import TextInput from '../components/TextInput.svelte'
+    import WarningMessage from '../components/WarningMessage.svelte'
 
     const {t} = getContext<i18nType>('i18n')
 
@@ -87,12 +88,15 @@
             {/each}
         </List>
     {:else if walletPlugin.metadata.publicKey}
-        <p>
-            {$t('login.select.no_match', {
+        <WarningMessage
+            title={$t('login.select.no_accounts', {
+                default: 'No accounts found',
+            })}
+            details={$t('login.select.no_match', {
                 default: 'No accounts found matching {{publicKey}}',
                 publicKey: walletPlugin.metadata.publicKey,
             })}
-        </p>
+        />
     {:else if !accountName}
         <TextInput
             onKeyup={handleKeyup}
@@ -119,14 +123,6 @@
             }}
         />
     {/if}
-
-    <Button
-        data={{
-            variant: 'secondary',
-            label: $t('cancel', {default: 'Cancel'}),
-            onClick: () => dispatch('cancel'),
-        }}
-    />
 </div>
 
 <style lang="scss">
@@ -134,7 +130,6 @@
         display: flex;
         flex-direction: column;
         gap: var(--space-m);
-        color: black;
     }
 
     p.error {

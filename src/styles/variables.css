@@ -1,26 +1,16 @@
-/* @media (prefers-color-scheme: dark) {
-    :host dialog,
-    :root {
-        --button-text-color: #fff;
-        --button-primary-color: var(--color-secondary-500);
-        --button-primary-hover: var(--color-secondary-600);
-        --button-primary-active: var(--color-secondary-700);
-    }
-} */
-
 /**  
-
 Globals and custom properties
 
 :host selector for web component, 
 :root selector for storybook 
 */
 
+/****************** 
+    Default Theme 
+******************/
+
 :host dialog,
 :root {
-    /****************** 
-          Theme 
-    ******************/
     --surface-color: white;
     --on-surface-color: var(--color-primary-700);
     --on-surface-variant-color: var(--color-neutral-700);
@@ -34,6 +24,7 @@ Globals and custom properties
     --header-button-outline: var(--color-primary-900);
 
     --button-text-color: var(--wharf-blue);
+    --button-text-color-active: var(--wharf-blue);
     --button-outline-active: inset 0 0 0 2px var(--button-text-color);
 
     --button-primary-background: var(--color-secondary-200);
@@ -57,7 +48,52 @@ Globals and custom properties
     /* 
     --button-secondary-color: #3d435a;
     --button-tertiary-color: #494e62; */
+}
 
+/****************** 
+    Dark Theme 
+******************/
+
+@media (prefers-color-scheme: dark) {
+    :host dialog,
+    :root {
+        --surface-color: var(--color-primary-700);
+        --on-surface-color: white;
+        --on-surface-variant-color: var(--color-neutral-300);
+        --text-color: white;
+
+        /* --background-color: var(--color-primary-300); */
+        --background-color: white;
+        --on-background-color: var(--color-neutral-700);
+
+        --header-text-color: var(--color-primary-700);
+        --header-button-background: var(--background-color);
+        --header-button-outline: var(--seafoam-mint);
+
+        --button-text-color: var(--text-color);
+        --button-text-color-active: var(--reef-turquoise);
+        --button-outline-active: inset 0 0 0 2px var(--reef-turquoise);
+
+        --button-primary-background: var(--color-secondary-500);
+        --button-primary-background-hover: var(--color-secondary-500);
+        --button-primary-background-active: var(--color-custom-2);
+        --button-primary-outline-hover: inset 0 0 0 1px white;
+
+        --button-secondary-background: var(--color-custom-1);
+        --button-secondary-background-hover: var(--color-custom-1);
+        --button-secondary-background-active: var(--color-secondary-500);
+        --button-secondary-outline-hover: inset 0 0 0 1px #00000020,
+            inset 0 0 0 1px var(--color-secondary-500);
+
+        --button-outlined-background-active: var(--color-secondary-500);
+        --button-outlined-outline: inset 0 0 0 1px var(--color-secondary-500);
+        --button-outlined-outline-hover: inset 0 0 0 1px #00000020,
+            inset 0 0 0 1px var(--color-secondary-500);
+    }
+}
+
+:host dialog,
+:root {
     /****************** 
           Colors 
     ******************/
@@ -118,6 +154,7 @@ Globals and custom properties
     /* Custom */
 
     --color-custom-1: #f3f8f3;
+    --color-custom-2: #415e60;
     --color-error: #cd3939;
 
     /****************** 
@@ -134,12 +171,12 @@ Globals and custom properties
     --fs-3: 20px; */
 
     /* Font Sizing - Fluid */
-    /* @link https://utopia.fyi/type/calculator?c=320,12,1.2,1240,20,1.25,3,0,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
+    /* @link https://utopia.fyi/type/calculator?c=320,12,1.125,1240,16,1.25,3,0,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
 
     --fs-0: clamp(0.75rem, calc(0.66rem + 0.43vw), 1rem);
-    --fs-1: clamp(0.9rem, calc(0.78rem + 0.61vw), 1.25rem);
-    --fs-2: clamp(1.08rem, calc(0.91rem + 0.84vw), 1.56rem);
-    --fs-3: clamp(1.3rem, calc(1.07rem + 1.14vw), 1.95rem);
+    --fs-1: clamp(0.84rem, calc(0.7rem + 0.71vw), 1.25rem);
+    --fs-2: clamp(0.95rem, calc(0.74rem + 1.07vw), 1.56rem);
+    --fs-3: clamp(1.07rem, calc(0.76rem + 1.54vw), 1.95rem);
 
     /****************** 
       Size and Spacing 
@@ -208,6 +245,7 @@ Globals and custom properties
 
 * {
     box-sizing: border-box;
+    color: var(--text-color);
 }
 
 ::selection {

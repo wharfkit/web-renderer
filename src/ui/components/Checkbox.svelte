@@ -25,7 +25,7 @@
     {#if checked}
         <path
             id="box-fill"
-            in:scale={{duration: 200, easing: quintOut}}
+            in:scale={{duration: 400, easing: quintOut}}
             out:scale={{duration: 100, easing: quintOut}}
             stroke="none"
             d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"
@@ -56,7 +56,11 @@
     }
 
     svg:active {
-        scale: 98%;
+        scale: 95%;
+    }
+    svg:active #box-fill {
+        fill: var(--seafoam-mint);
+        /* scale: 75%; */
     }
 
     #box-fill {
