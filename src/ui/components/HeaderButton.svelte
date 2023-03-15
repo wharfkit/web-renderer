@@ -30,14 +30,15 @@
         place-content: center;
         color: var(--header-text-color);
 
-        &:hover .background {
-            opacity: 1;
-            // background: var(--header-button-outline);
-        }
-
         &:active {
             transform: scale(95%);
             transform-origin: center;
+        }
+    }
+
+    @media (hover: hover) {
+        button:hover .background {
+            opacity: 1;
         }
     }
 
