@@ -40,7 +40,7 @@
         cursor: pointer;
         border: none;
         background: none;
-        color: var(--text-color);
+        color: var(--body-text-color);
         font-size: var(--fs-1);
     }
 

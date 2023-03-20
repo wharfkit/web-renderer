@@ -42,7 +42,7 @@
         box-sizing: border-box;
         min-height: var(--header-height);
         color: var(--header-text-color);
-        background: var(--background-color);
+        background: var(--header-background-color);
         display: grid;
         grid-template-columns: 1fr auto 1fr;
         // grid-template-columns: 1fr 2fr 1fr;

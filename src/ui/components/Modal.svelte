@@ -81,20 +81,20 @@
             100svh - var(--header-height) - var(--margin-top) - var(--margin-top)
         );
         padding: var(--space-m);
-        background-color: var(--surface-color);
+        background-color: var(--body-background-color);
         overflow-y: scroll;
         max-height: var(--max-modal-content-height);
 
         // Give Chrome some nicer scrollbars
         scrollbar-gutter: stable both-edges;
-        scrollbar-color: var(--background-color);
+        scrollbar-color: var(--header-background-color);
     }
 
     .modal-content::-webkit-scrollbar {
         width: 2px;
-        background-color: var(--surface-color);
+        background-color: var(--body-background-color);
     }
     .modal-content::-webkit-scrollbar-thumb {
-        background: var(--background-color);
+        background: var(--header-background-color);
     }
 </style>

@@ -134,13 +134,13 @@
     }
 
     h3 {
-        color: var(--on-surface-color);
+        color: var(--body-text-color);
         font-size: var(--fs-2);
         font-weight: 600;
     }
 
     p {
-        color: var(--on-surface-variant-color);
+        color: var(--body-text-color-variant);
         font-size: var(--fs-1);
         font-weight: 400;
     }

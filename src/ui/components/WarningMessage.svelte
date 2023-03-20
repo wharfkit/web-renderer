@@ -5,7 +5,6 @@
 
 <div>
     <svg
-        xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
@@ -30,7 +29,7 @@
         align-items: center;
         gap: var(--space-s);
         text-align: center;
-        color: var(--on-surface-color);
+        color: var(--body-text-color);
         margin-block: var(--space-s);
     }
 
@@ -38,18 +37,15 @@
         --size: var(--space-3xl);
         width: var(--size);
         height: var(--size);
-        // color: var(--on-surface-color);
     }
 
     h2 {
-        // color: var(--on-surface-color);
         font-size: var(--fs-3);
         font-weight: 600;
         margin: 0;
     }
 
     p {
-        // color: var(--on-surface-color);
         font-size: var(--fs-1);
         font-weight: 400;
         margin: 0;

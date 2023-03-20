@@ -29,6 +29,7 @@
         display: grid;
         place-content: center;
         color: var(--header-text-color);
+        transition: transform 80ms ease;
 
         &:active {
             transform: scale(95%);

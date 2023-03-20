@@ -22,8 +22,8 @@
         border-radius: var(--border-radius-inner);
         border: 1px solid #00000030;
         padding-inline: var(--space-m);
-        color: var(--text-color);
-        background-color: var(--surface-color);
+        color: var(--body-text-color);
+        background-color: var(--body-background-color);
         font-size: var(--fs-1);
     }
     input::placeholder {
@@ -41,6 +41,6 @@
     }
     input.error:focus-within {
         border: 1px solid transparent;
-        color: var(--text-color);
+        color: var(--body-text-color);
     }
 </style>

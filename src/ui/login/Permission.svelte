@@ -132,6 +132,12 @@
         gap: var(--space-m);
     }
 
+    p.loading {
+        margin: 0;
+        text-align: center;
+        height: var(--space-4xl);
+    }
+
     p.error {
         margin: 0;
         text-align: center;

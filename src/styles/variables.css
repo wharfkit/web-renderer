@@ -11,16 +11,13 @@ Globals and custom properties
 
 :host dialog,
 :root {
-    --surface-color: white;
-    --on-surface-color: var(--color-primary-700);
-    --on-surface-variant-color: var(--color-neutral-700);
-    --text-color: var(--color-primary-700);
+    --body-background-color: white;
+    --body-text-color: var(--color-primary-700);
+    --body-text-color-variant: var(--color-neutral-700);
 
-    --background-color: var(--color-primary-700);
-    --on-background-color: var(--color-primary-50);
-
+    --header-background-color: var(--color-primary-700);
     --header-text-color: var(--color-primary-50);
-    --header-button-background: var(--background-color);
+    --header-button-background: var(--header-background-color);
     --header-button-outline: var(--color-primary-900);
 
     --button-text-color: var(--wharf-blue);
@@ -57,20 +54,16 @@ Globals and custom properties
 @media (prefers-color-scheme: dark) {
     :host dialog,
     :root {
-        --surface-color: var(--color-primary-700);
-        --on-surface-color: white;
-        --on-surface-variant-color: var(--color-neutral-300);
-        --text-color: white;
+        --body-background-color: var(--color-primary-700);
+        --body-text-color: white;
+        --body-text-color-variant: var(--color-neutral-300);
 
-        /* --background-color: var(--color-primary-300); */
-        --background-color: white;
-        --on-background-color: var(--color-neutral-700);
-
+        --header-background-color: white;
         --header-text-color: var(--color-primary-700);
-        --header-button-background: var(--background-color);
+        --header-button-background: var(--header-background-color);
         --header-button-outline: var(--seafoam-mint);
 
-        --button-text-color: var(--text-color);
+        --button-text-color: var(--body-text-color);
         --button-text-color-active: var(--reef-turquoise);
         --button-outline-active: inset 0 0 0 2px var(--reef-turquoise);
 
@@ -156,6 +149,7 @@ Globals and custom properties
     --color-custom-1: #f3f8f3;
     --color-custom-2: #415e60;
     --color-error: #cd3939;
+    --color-error-2: #ff5454;
 
     /****************** 
         Typography 
@@ -245,7 +239,6 @@ Globals and custom properties
 
 * {
     box-sizing: border-box;
-    color: var(--text-color);
 }
 
 ::selection {
