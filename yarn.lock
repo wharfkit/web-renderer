@@ -1398,10 +1398,10 @@
   dependencies:
     tslib "^2.1.0"
 
-"@wharfkit/wallet-plugin-cloudwallet@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@wharfkit/wallet-plugin-cloudwallet/-/wallet-plugin-cloudwallet-0.3.0.tgz#4953bd08448748dcb225a60d502709ee824651ce"
-  integrity sha512-eyMcqYFz+CL54MxW1SftTn13qy/S4nDmzXbGv+UWokovaO/p4qzGLNK2b5HnzJuBvDGhte/ZnxEnkQKklzfIVg==
+"@wharfkit/wallet-plugin-cloudwallet@^0.3.2":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@wharfkit/wallet-plugin-cloudwallet/-/wallet-plugin-cloudwallet-0.3.2.tgz#7fc3e8ad062687f4f483691a3dbe6e076b7f0155"
+  integrity sha512-sc4Sg02hCNjVclBIiZ7f/zFNigpk52AZB+EiOQfrwfqwi+Uqa5ZT2EvE7ESWl8FVTVi0kTPs+qdlS4hY0Nq5Gg==
   dependencies:
     tslib "^2.1.0"
 
