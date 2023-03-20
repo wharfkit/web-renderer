@@ -4,7 +4,7 @@
 <script lang="ts">
     import {setContext} from 'svelte'
 
-    import Error from './Error.svelte'
+    import ErrorPage from './Error.svelte'
     import Prompt from './Prompt.svelte'
     import Login from './Login.svelte'
     import Modal from './components/Modal.svelte'
@@ -12,47 +12,69 @@
 
     import {active, errorDetails, prompt, router, loginPromise} from './state'
     import {i18nType} from 'src/lib/translations'
+    import type {UserInterfaceLoginResponse} from '@wharfkit/session'
 
     // Set the i18n context for all child components
     export let i18n
     setContext<i18nType>('i18n', i18n)
 
-    function cancel({detail}) {
+    let cancelled = false
+    let completed = false
+    let completedDetails: UserInterfaceLoginResponse | undefined
+
+    function handleCancel() {
+        cancelled = true
+    }
+
+    function handleComplete({detail}) {
+        completed = true
+        completedDetails = detail
+    }
+
+    function cancel() {
         // Reject any promises that are waiting for a response
         if ($loginPromise) {
-            $loginPromise.reject(detail)
+            $loginPromise.reject(new Error('User cancelled.'))
         }
         if ($prompt) {
-            $prompt.reject(detail)
+            $prompt.reject(new Error('User cancelled.'))
             prompt.reset()
         }
         router.back()
+
+        cancelled = false
     }
 
-    function complete({detail}) {
+    function complete() {
         // Reject any promises that are waiting for a response
         if ($loginPromise) {
-            $loginPromise.resolve(detail)
+            $loginPromise.resolve(completedDetails!)
         }
         if ($prompt) {
-            $prompt.resolve(detail)
+            $prompt.resolve(completedDetails!)
             prompt.reset()
         }
         // Go back to previous path and remove it from the history
         router.back()
+
+        completed = false
     }
+
+    $: $loginPromise, $prompt, cancelled && cancel()
+
+    $: $loginPromise, $prompt, completed && complete()
 </script>
 
 <Modal>
     {#if $active}
         {#if $errorDetails}
-            <Error on:cancel={cancel} on:complete={complete} />
+            <ErrorPage on:cancel={handleCancel} on:complete={handleComplete} />
         {:else if $prompt}
-            <Prompt on:cancel={cancel} on:complete={complete} />
+            <Prompt on:cancel={handleCancel} on:complete={handleComplete} />
         {:else if $router.path === 'login'}
-            <Login on:cancel={cancel} on:complete={complete} />
+            <Login on:cancel={handleCancel} on:complete={handleComplete} />
         {:else if $router.path === 'transact'}
-            <Transact on:cancel={cancel} on:complete={complete} />
+            <Transact on:cancel={handleCancel} on:complete={handleComplete} />
         {/if}
     {:else}
         <p>Modal inactive</p>
