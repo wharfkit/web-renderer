@@ -93,7 +93,6 @@ export class WebUIRenderer extends AbstractUserInterface implements UserInterfac
         this.log('login', context)
         active.set(true)
         router.push('login')
-        loginContext.set(context)
         const promise = cancelable(
             new Promise<UserInterfaceLoginResponse>((resolve, reject) =>
                 loginPromise.set({
@@ -103,6 +102,7 @@ export class WebUIRenderer extends AbstractUserInterface implements UserInterfac
             )
         )
         this.addCancelablePromise(promise.cancel)
+        loginContext.set(context)
         return promise
     }
 
