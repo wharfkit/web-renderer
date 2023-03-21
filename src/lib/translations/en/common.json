@@ -23,11 +23,11 @@
         },
         "title": "Login",
         "subtitle": "Please login to continue",
-        "title_app": "{{appName}}"
+        "title-app": "Login to {{appName}}"
     },
     "transact": {
         "title": "Transact",
-        "subtitle": "",
+        "subtitle": " ",
         "processing": "Doing transact stuffs - cool animation!",
         "signing": "Signing transaction",
         "signed": "Transaction signed",

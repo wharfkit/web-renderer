@@ -39,7 +39,7 @@
         "crypto": false
     },
     "peerDependencies": {
-        "@wharfkit/session": "^0.3.0"
+        "@wharfkit/session": "^0.3.2"
     },
     "devDependencies": {
         "@babel/core": "^7.20.12",
@@ -63,13 +63,13 @@
         "@tsconfig/svelte": "^3.0.0",
         "@typescript-eslint/eslint-plugin": "^5.49.0",
         "@typescript-eslint/parser": "^5.49.0",
-        "@wharfkit/session": "^0.3.1",
-        "@wharfkit/transact-plugin-autocorrect": "^0.3.0",
-        "@wharfkit/transact-plugin-cosigner": "^0.3.0",
+        "@wharfkit/session": "^0.3.2",
+        "@wharfkit/transact-plugin-autocorrect": "^0.3.4",
+        "@wharfkit/transact-plugin-cosigner": "^0.3.4",
         "@wharfkit/transact-plugin-explorerlink": "^0.3.0",
         "@wharfkit/transact-plugin-mock": "^0.3.0",
         "@wharfkit/transact-plugin-resource-provider": "^0.3.0",
-        "@wharfkit/wallet-plugin-anchor": "^0.3.0-ui-16",
+        "@wharfkit/wallet-plugin-anchor": "^0.3.1",
         "@wharfkit/wallet-plugin-cleos": "^0.3.1",
         "@wharfkit/wallet-plugin-cloudwallet": "^0.3.0",
         "@wharfkit/wallet-plugin-mock": "^0.3.0",
