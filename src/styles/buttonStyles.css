@@ -1,6 +1,6 @@
 /***  
 * Note: This stylesheet is used to synchronize styles between the Button.svelte component and the Link.svelte component.
-* If styled buttons are needed, please import the appropriate Button or Link component instead of using this file.
+* If styled buttons are required in a component, please import the appropriate Button or Link component instead of using this file to apply styles.
 ***/
 
 .button {
@@ -9,7 +9,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: var(--space-l);
+    gap: var(--space-2xs);
     height: var(--button-height);
     line-height: var(--button-height);
     text-decoration: none;

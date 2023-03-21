@@ -22,10 +22,17 @@
     div {
         padding: var(--space-l);
         background-color: var(--swell-mist);
+        color: var(--wharf-blue);
         border-radius: var(--border-radius-inner);
         display: flex;
         align-items: center;
         gap: var(--space-s);
-        color: var(--wharf-blue);
+    }
+
+    @media (prefers-color-scheme: dark) {
+        div {
+            background-color: #494e62;
+            color: white;
+        }
     }
 </style>

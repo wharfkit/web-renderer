@@ -141,6 +141,6 @@
     p.error {
         margin: 0;
         text-align: center;
-        color: var(--color-error);
+        color: var(--error-color);
     }
 </style>

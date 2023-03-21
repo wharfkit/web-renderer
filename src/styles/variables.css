@@ -42,9 +42,16 @@ Globals and custom properties
     --button-outlined-outline-hover: inset 0 0 0 1px #00000020,
         inset 0 0 0 1px var(--color-secondary-200);
 
-    /* 
-    --button-secondary-color: #3d435a;
-    --button-tertiary-color: #494e62; */
+    --input-placeholder-color: var(--color-neutral-500);
+    --input-background-focus: var(--color-neutral-100);
+    --input-border-color: #00000030;
+    --input-border-color-hover: var(--color-custom-5);
+    --input-border-color-focus: var(--wharf-blue);
+
+    --checkbox-stroke: var(--wharf-blue);
+    --checkbox-fill: var(--reef-turquoise);
+
+    --error-color: var(--color-error-1);
 }
 
 /****************** 
@@ -72,16 +79,25 @@ Globals and custom properties
         --button-primary-background-active: var(--color-custom-2);
         --button-primary-outline-hover: inset 0 0 0 1px white;
 
-        --button-secondary-background: var(--color-custom-1);
-        --button-secondary-background-hover: var(--color-custom-1);
-        --button-secondary-background-active: var(--color-secondary-500);
-        --button-secondary-outline-hover: inset 0 0 0 1px #00000020,
-            inset 0 0 0 1px var(--color-secondary-500);
+        --button-secondary-background: var(--color-primary-800);
+        --button-secondary-background-hover: var(--color-primary-800);
+        --button-secondary-background-active: var(--color-primary-900);
+        --button-secondary-outline-hover: inset 0 0 0 1px #ffffff30;
 
-        --button-outlined-background-active: var(--color-secondary-500);
-        --button-outlined-outline: inset 0 0 0 1px var(--color-secondary-500);
-        --button-outlined-outline-hover: inset 0 0 0 1px #00000020,
-            inset 0 0 0 1px var(--color-secondary-500);
+        --button-outlined-background-active: var(--color-primary-900);
+        --button-outlined-outline: inset 0 0 0 1px #00000030;
+        --button-outlined-outline-hover: inset 0 0 0 1px #ffffff30;
+
+        --input-placeholder-color: #ffffff75;
+        --input-background-focus: var(--color-custom-4);
+        --input-border-color: #ffffff30;
+        --input-border-color-hover: var(--color-custom-6);
+        --input-border-color-focus: var(--reef-turquoise);
+
+        --checkbox-stroke: var(--reef-turquoise);
+        --checkbox-fill: var(--color-custom-3);
+
+        --error-color: var(--color-error-3);
     }
 }
 
@@ -148,8 +164,13 @@ Globals and custom properties
 
     --color-custom-1: #f3f8f3;
     --color-custom-2: #415e60;
-    --color-error: #cd3939;
+    --color-custom-3: #344b4d;
+    --color-custom-4: #3d435a;
+    --color-custom-5: #8ec2b4;
+    --color-custom-6: #777b8b;
+    --color-error-1: #cd3939;
     --color-error-2: #ff5454;
+    --color-error-3: #ffacac;
 
     /****************** 
         Typography 
@@ -177,7 +198,7 @@ Globals and custom properties
     ******************/
 
     /* Spacing Scale - Fixed */
-    --ratio: 1.5;
+    /* --ratio: 1.5;
     --s-5: calc(var(--s-4) / var(--ratio));
     --s-4: calc(var(--s-3) / var(--ratio));
     --s-3: calc(var(--s-2) / var(--ratio));
@@ -193,7 +214,7 @@ Globals and custom properties
     --s7: calc(var(--s6) * var(--ratio));
     --s8: calc(var(--s7) * var(--ratio));
     --s9: calc(var(--s8) * var(--ratio));
-    --s10: calc(var(--s9) * var(--ratio));
+    --s10: calc(var(--s9) * var(--ratio)); */
 
     /* Spacing Scale - Fluid */
     /* @link https://utopia.fyi/space/calculator?c=320,12,1.2,1240,16,1.25,3,0,&s=0.75|0.5|0.25,1.5|2|3|4|6|10|16|25|30|40,s-l&g=s,l,xl,12 */

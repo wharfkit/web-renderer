@@ -25,7 +25,7 @@
     {#if checked}
         <path
             id="box-fill"
-            in:scale={{duration: 400, easing: quintOut}}
+            in:scale={{duration: 300, easing: quintOut}}
             out:scale={{duration: 100, easing: quintOut}}
             stroke="none"
             d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"
@@ -33,7 +33,7 @@
 
         <path
             id="check"
-            in:draw={{duration: 300, easing: quintOut}}
+            in:draw={{duration: 200, easing: quintOut}}
             out:draw={{duration: 100, easing: quintOut}}
             fill="none"
             d="m9 11 3 3L22 4"
@@ -51,15 +51,16 @@
 
 <style>
     svg {
-        stroke: var(--wharf-blue);
-        fill: var(--reef-turquoise);
+        stroke: var(--checkbox-stroke);
+        fill: var(--checkbox-fill);
     }
 
     svg:active {
         scale: 95%;
     }
     svg:active #box-fill {
-        fill: var(--seafoam-mint);
+        /* fill: var(--seafoam-mint); */
+        opacity: 50%;
         /* scale: 75%; */
     }
 
@@ -68,6 +69,6 @@
     }
 
     #box-outline {
-        transition: 100ms ease-out;
+        transition: 100ms cubic-bezier(0.23, 1, 0.32, 1);
     }
 </style>

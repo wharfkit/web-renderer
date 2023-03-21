@@ -4,6 +4,7 @@
 
     import List from '../components/List.svelte'
     import ListItem from '../components/ListItem.svelte'
+    import Loading from '../components/Loading.svelte'
 
     export let wallets: UserInterfaceWalletPlugin[]
 
@@ -14,6 +15,7 @@
 </script>
 
 <div>
+    <!-- <Loading loading /> -->
     {#if wallets}
         <List>
             {#each wallets as wallet, index}

@@ -17,10 +17,10 @@
 
 <style lang="scss">
     input {
-        height: var(--s3);
+        box-sizing: border-box;
         height: var(--space-2xl);
         border-radius: var(--border-radius-inner);
-        border: 1px solid #00000030;
+        border: 1px solid var(--input-border-color);
         padding-inline: var(--space-m);
         color: var(--body-text-color);
         background-color: var(--body-background-color);
@@ -28,16 +28,24 @@
     }
     input::placeholder {
         font-size: var(--fs-1);
-        color: #00000050;
+        color: var(--input-placeholder-color);
         font-style: italic;
+    }
+
+    input:hover {
+        // border: 2px solid var(--input-border-color-hover);
+        border: 1px solid transparent;
+        outline: 2px solid var(--input-border-color-hover);
+        background-color: var(--input-background-focus);
     }
     input:focus-within {
         border: 1px solid transparent;
-        outline: 2px solid var(--wharf-blue);
+        outline: 2px solid var(--input-border-color-focus);
+        background-color: var(--input-background-focus);
     }
     input.error {
-        border: 1px solid var(--color-error);
-        color: var(--color-error);
+        border: 1px solid var(--error-color);
+        color: var(--error-color);
     }
     input.error:focus-within {
         border: 1px solid transparent;

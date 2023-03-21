@@ -1,6 +1,6 @@
 <script lang="ts">
     import icons from './icons/index'
-    import {Space} from '../../styles/types'
+    import type {Space} from '../../types'
     export let name: keyof typeof icons
     export let size: Space = '--space-l'
 </script>
