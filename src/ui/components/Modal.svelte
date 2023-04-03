@@ -1,11 +1,12 @@
 <script lang="ts">
     import Header from './Header.svelte'
     import {active, cancelablePromises, resetState} from '../state'
+    import {onDestroy} from 'svelte'
 
     let dialog: HTMLDialogElement
 
     // Control the dialog element display based on state.active
-    active.subscribe((current) => {
+    const unsubscribe = active.subscribe((current) => {
         if (dialog) {
             if (current && !dialog.open) {
                 dialog.showModal()
@@ -15,6 +16,8 @@
             }
         }
     })
+
+    onDestroy(unsubscribe)
 
     // Perform work required to cancel request
     function cancelRequest() {

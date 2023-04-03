@@ -1,8 +1,7 @@
 <script lang="ts">
     import {APIClient, ChainDefinition, UserInterfaceWalletPlugin} from '@wharfkit/session'
-    import {createEventDispatcher, getContext} from 'svelte'
+    import {createEventDispatcher, getContext, onDestroy, onMount} from 'svelte'
     import {derived, Readable} from 'svelte/store'
-    import {onMount} from 'svelte'
 
     import {i18nType} from 'src/lib/translations'
     import {loginContext, loginResponse, props, UserInterfaceLoginData} from './state'
@@ -80,7 +79,7 @@
         }
     )
 
-    loginContext.subscribe((currentContext) => {
+    const loginContextUnsubscribe = loginContext.subscribe((currentContext) => {
         if (currentContext) {
             // If an appName is specified, set the title to it.
             $props.title = $t('login.title-app', {
@@ -109,6 +108,8 @@
     onMount(() => {
         $props.title = $t('login.title', {default: 'Login'})
     })
+
+    onDestroy(loginContextUnsubscribe)
 
     const step = derived(
         [loginResponse, walletPlugin],
