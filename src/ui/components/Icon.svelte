@@ -5,4 +5,6 @@
     export let size: Space = '--space-l'
 </script>
 
-<svelte:component this={icons[name]} {...$$props} size={`var(${size})`} />
+<div style="width: var({size}); display: grid; place-content: center;">
+    <svelte:component this={icons[name]} {...$$props} />
+</div>

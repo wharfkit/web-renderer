@@ -46,11 +46,9 @@
 
     div {
         padding-block: var(--space-m);
-        // background-color: green;
         display: flex;
         flex: 1;
         align-items: center;
         justify-content: space-between;
-        // border-bottom: 1px solid var(--color-neutral-200);
     }
 </style>
