@@ -85,8 +85,8 @@
         border: none !important;
         border-radius: var(--border-radius);
         padding: 0;
-        max-width: 418px;
-        min-width: 418px;
+        width: 418px;
+        max-width: 100%;
         box-shadow: 0px 4px 154px rgba(0, 0, 0, 0.35);
     }
     dialog::backdrop {

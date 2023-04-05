@@ -9,6 +9,7 @@
         cursor: pointer;
         display: block;
         width: 300px;
+        max-width: 100%;
         height: 65px;
         line-height: 65px;
         text-decoration: none;
