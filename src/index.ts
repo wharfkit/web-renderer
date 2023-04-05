@@ -62,8 +62,13 @@ export class WebUIRenderer extends AbstractUserInterface implements UserInterfac
         this.i18n = makeLocalization()
         this.log(`Setting language to ${lang}`)
         this.i18n.loadTranslations(lang)
-        // Add listener to append to body
-        document.addEventListener('DOMContentLoaded', () => this.appendDialogElement())
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
+            // Document is ready, append element
+            this.appendDialogElement()
+        } else {
+            // Add listener to append to body
+            document.addEventListener('DOMContentLoaded', () => this.appendDialogElement())
+        }
     }
 
     appendDialogElement() {
@@ -93,7 +98,6 @@ export class WebUIRenderer extends AbstractUserInterface implements UserInterfac
         this.log('login', context)
         active.set(true)
         router.push('login')
-        loginContext.set(context)
         const promise = cancelable(
             new Promise<UserInterfaceLoginResponse>((resolve, reject) =>
                 loginPromise.set({
@@ -103,6 +107,7 @@ export class WebUIRenderer extends AbstractUserInterface implements UserInterfac
             )
         )
         this.addCancelablePromise(promise.cancel)
+        loginContext.set(context)
         return promise
     }
 

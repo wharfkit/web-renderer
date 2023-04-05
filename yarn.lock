@@ -3028,10 +3028,10 @@
   dependencies:
     tslib "^2.1.0"
 
-"@wharfkit/wallet-plugin-anchor@^0.3.1":
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/@wharfkit/wallet-plugin-anchor/-/wallet-plugin-anchor-0.3.1.tgz#63e61c88d902b42e403fa652ac29a57241bab1c8"
-  integrity sha512-qw8C1k85plgu2UtXFejwaF8n+Fa20kbKv7Tlu3bN4BP0C32k4G1WmE37wwqmKOOiO6Ty4OCeFq/BPzPFvyYvjg==
+"@wharfkit/wallet-plugin-anchor@^0.3.2":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@wharfkit/wallet-plugin-anchor/-/wallet-plugin-anchor-0.3.2.tgz#e5306739caf89e765574f643cde6e8def55c48a1"
+  integrity sha512-LWsYwgHN84xgh9SQZhpNL27EpgyKAj60i+/pv8CNln8Hy1xTO6lclLcwoMS+mqXwpMTtTSe4S/Q+i5zsizM9lQ==
   dependencies:
     "@greymass/buoy" "^1.0.3"
     "@greymass/miniaes" "^1.0.0"
@@ -3044,10 +3044,10 @@
   dependencies:
     tslib "^2.1.0"
 
-"@wharfkit/wallet-plugin-cloudwallet@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@wharfkit/wallet-plugin-cloudwallet/-/wallet-plugin-cloudwallet-0.3.0.tgz#4953bd08448748dcb225a60d502709ee824651ce"
-  integrity sha512-eyMcqYFz+CL54MxW1SftTn13qy/S4nDmzXbGv+UWokovaO/p4qzGLNK2b5HnzJuBvDGhte/ZnxEnkQKklzfIVg==
+"@wharfkit/wallet-plugin-cloudwallet@^0.3.2":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@wharfkit/wallet-plugin-cloudwallet/-/wallet-plugin-cloudwallet-0.3.2.tgz#7fc3e8ad062687f4f483691a3dbe6e076b7f0155"
+  integrity sha512-sc4Sg02hCNjVclBIiZ7f/zFNigpk52AZB+EiOQfrwfqwi+Uqa5ZT2EvE7ESWl8FVTVi0kTPs+qdlS4hY0Nq5Gg==
   dependencies:
     tslib "^2.1.0"
 
