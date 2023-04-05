@@ -6,6 +6,11 @@
     import {i18nType} from 'src/lib/translations'
 
     import {GetAccountsByAuthorizers} from '../../interfaces'
+    import Button from '../components/Button.svelte'
+    import List from '../components/List.svelte'
+    import ListItem from '../components/ListItem.svelte'
+    import TextInput from '../components/TextInput.svelte'
+    import WarningMessage from '../components/WarningMessage.svelte'
 
     const {t} = getContext<i18nType>('i18n')
 
@@ -19,6 +24,7 @@
 
     let busy = writable(true)
     let input: string = ''
+    let prevInput: string = ''
     let accountName: Name | undefined
     let accountNotFound: boolean = false
     let permissions: PermissionLevel[] | undefined
@@ -55,6 +61,7 @@
         } catch (error) {
             accountNotFound = true
         } finally {
+            prevInput = input
             busy.set(false)
         }
     }
@@ -70,63 +77,70 @@
 
 <div>
     {#if $busy}
-        <p>{$t('loading', {default: 'Loading...'})}</p>
+        <p class="loading">{$t('loading', {default: 'Loading...'})}</p>
     {:else if permissions && permissions.length > 0}
-        {#each permissions as permission}
-            <div class="option">
-                <button on:click={() => dispatch('select', permission)}>
-                    {String(permission)}
-                </button>
-            </div>
-        {/each}
+        <List>
+            {#each permissions as permission}
+                <ListItem
+                    label={String(permission)}
+                    onClick={() => dispatch('select', permission)}
+                />
+            {/each}
+        </List>
     {:else if walletPlugin.metadata.publicKey}
-        <p>
-            {$t('login.select.no_match', {
+        <WarningMessage
+            title={$t('login.select.no_accounts', {
+                default: 'No accounts found',
+            })}
+            details={$t('login.select.no_match', {
                 default: 'No accounts found matching {{publicKey}}',
                 publicKey: walletPlugin.metadata.publicKey,
             })}
-        </p>
+        />
     {:else if !accountName}
-        <p>
-            {$t('login.enter.account', {
-                default: 'Enter account name',
-            })}
-        </p>
-        <input autofocus type="text" on:keyup|preventDefault={handleKeyup} bind:value={input} />
-        <button type="submit" on:click={lookup}>
-            {$t('login.enter.lookup', {
-                default: 'Lookup Account',
-            })}
-        </button>
+        <TextInput
+            onKeyup={handleKeyup}
+            bind:value={input}
+            placeholder="Account name"
+            autofocus={!input}
+            error={accountNotFound && input === prevInput}
+        />
         {#if accountNotFound}
-            <p>
+            <p class="error">
                 {$t('login.enter.not_found', {
                     default: 'Unable to find account',
                 })}
+                {prevInput}
             </p>
         {/if}
+        <Button
+            data={{
+                variant: 'primary',
+                onClick: lookup,
+                label: $t('login.enter.lookup', {
+                    default: 'Lookup Account',
+                }),
+            }}
+        />
     {/if}
-    <button on:click={() => dispatch('cancel')}>
-        {$t('cancel', {default: 'Cancel'})}
-    </button>
 </div>
 
 <style lang="scss">
-    .option {
-        padding-top: 27px;
-        button {
-            cursor: pointer;
-            display: block;
-            width: 300px;
-            height: 65px;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--button-text-color);
-            background-color: var(--button-primary-color);
-            border: none;
-            box-shadow: none;
-            margin: 0 auto;
-        }
+    div {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-m);
+    }
+
+    p.loading {
+        margin: 0;
+        text-align: center;
+        height: var(--space-4xl);
+    }
+
+    p.error {
+        margin: 0;
+        text-align: center;
+        color: var(--error-color);
     }
 </style>

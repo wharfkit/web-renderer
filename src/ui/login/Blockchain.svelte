@@ -1,6 +1,10 @@
 <script lang="ts">
-    import {createEventDispatcher} from 'svelte'
+    import {createEventDispatcher, setContext} from 'svelte'
     import {ChainDefinition, Checksum256} from '@wharfkit/session'
+    import Icon from '../components/Icon.svelte'
+    import Button from '../components/Button.svelte'
+    import List from '../components/List.svelte'
+    import ListItem from '../components/ListItem.svelte'
 
     export let chains: ChainDefinition[]
 
@@ -12,9 +16,22 @@
 
 <div>
     {#if chains}
-        {#each chains as chain}
-            <button on:click={() => dispatch('select', chain.id)}>{chain.name}</button>
-        {/each}
+        <List>
+            {#each chains as chain}
+                <ListItem
+                    label={chain.name}
+                    onClick={() => dispatch('select', chain.id)}
+                    leadingIcon="wharf"
+                />
+            {/each}
+        </List>
     {/if}
-    <button on:click={() => dispatch('cancel')}>cancel</button>
 </div>
+
+<style lang="scss">
+    div {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-l);
+    }
+</style>

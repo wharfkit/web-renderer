@@ -1,0 +1,54 @@
+/***  
+* Note: This stylesheet is used to synchronize styles between the Button.svelte component and the Link.svelte component.
+* If styled buttons are required in a component, please import the appropriate Button or Link component instead of using this file to apply styles.
+***/
+
+.button {
+    --button-height: var(--space-2xl);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-2xs);
+    height: var(--button-height);
+    line-height: var(--button-height);
+    text-decoration: none;
+    text-align: center;
+    border-radius: var(--border-radius-inner);
+    font-size: var(--fs-1);
+    font-weight: 600;
+    color: var(--button-color, var(--button-text-color));
+    background: var(--button-background, var(--button-primary-background));
+    border: none;
+    box-shadow: var(--button-outline);
+    flex: 1;
+    /* padding-inline: var(--s2); */
+}
+
+.button:hover {
+    background: var(--button-background-hover, var(--button-primary-background-hover));
+    box-shadow: var(--button-outline-hover, var(--button-primary-outline-hover));
+}
+
+.button:active {
+    background: var(--button-background-active, var(--button-primary-background-active));
+    box-shadow: var(--button-outline-active);
+    color: var(--button-text-color-active);
+    /* transform: scale(98%); */
+    /* transform-origin: center; */
+}
+
+.secondary {
+    --button-background: var(--button-secondary-background);
+    --button-background-hover: var(--button-secondary-background-hover);
+    --button-background-active: var(--button-secondary-background-active);
+    --button-outline-hover: var(--button-secondary-outline-hover);
+}
+
+.outlined {
+    --button-background: transparent;
+    --button-background-hover: transparent;
+    --button-background-active: var(--button-outlined-background-active);
+    --button-outline: var(--button-outlined-outline);
+    --button-outline-hover: var(--button-outlined-outline-hover);
+}

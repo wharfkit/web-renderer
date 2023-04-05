@@ -2,6 +2,10 @@
     import {createEventDispatcher} from 'svelte'
     import {UserInterfaceWalletPlugin} from '@wharfkit/session'
 
+    import List from '../components/List.svelte'
+    import ListItem from '../components/ListItem.svelte'
+    import Loading from '../components/Loading.svelte'
+
     export let wallets: UserInterfaceWalletPlugin[]
 
     const dispatch = createEventDispatcher<{
@@ -11,33 +15,27 @@
 </script>
 
 <div>
+    <!-- <Loading loading /> -->
     {#if wallets}
-        {#each wallets as wallet, index}
-            <div class="option">
-                <button on:click={() => dispatch('select', index)}>
-                    {wallet.metadata.name}
-                </button>
-            </div>
-        {/each}
+        <List>
+            {#each wallets as wallet, index}
+                <ListItem label={wallet.metadata.name} onClick={() => dispatch('select', index)} />
+            {/each}
+        </List>
     {/if}
 </div>
 
 <style lang="scss">
-    .option {
-        padding-top: 27px;
-        button {
-            cursor: pointer;
-            display: block;
-            width: 300px;
-            height: 65px;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--button-text-color);
-            background-color: var(--button-primary-color);
-            border: none;
-            box-shadow: none;
-            margin: 0 auto;
-        }
+    ul {
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-m);
+    }
+
+    li {
+        flex: 1;
+        display: flex;
     }
 </style>

@@ -4,11 +4,12 @@
     import {derived, Readable} from 'svelte/store'
 
     import {i18nType} from 'src/lib/translations'
-    import {loginContext, loginResponse, props, UserInterfaceLoginData} from './state'
+    import {loginContext, loginResponse, props, UserInterfaceLoginData, backAction} from './state'
 
     import Blockchain from './login/Blockchain.svelte'
     import Permission from './login/Permission.svelte'
     import Wallet from './login/Wallet.svelte'
+    import Transition from './components/Transition.svelte'
 
     const {t} = getContext<i18nType>('i18n')
 
@@ -115,7 +116,7 @@
         [loginResponse, walletPlugin],
         ([$currentResponse, $currentWalletPlugin]) => {
             if (!$currentWalletPlugin) {
-                $props.title = $t('login.select.wallet', {default: 'Select a Wallet'})
+                $props.subtitle = $t('login.select.wallet', {default: 'Select a Wallet'})
                 return Steps.selectWallet
             }
 
@@ -133,13 +134,13 @@
                 $loginResponse.chainId = $loginContext?.chain.id
                 return Steps.selectPermission
             } else if (!$currentResponse.chainId && requiresChainSelect) {
-                $props.title = $t('login.select.blockchain', {default: 'Select a Blockchain'})
+                $props.subtitle = $t('login.select.blockchain', {default: 'Select a Blockchain'})
                 return Steps.selectChain
             } else if (!$currentResponse.permissionLevel && requiresPermissionSelect) {
-                $props.title = $t('login.select.account', {default: 'Select an Account'})
+                $props.subtitle = $t('login.select.account', {default: 'Select an Account'})
                 return Steps.selectPermission
             } else if (!$currentResponse.permissionLevel && requiresPermissionEntry) {
-                $props.title = $t('login.enter.account', {default: 'Enter account name'})
+                $props.subtitle = $t('login.enter.account', {default: 'Enter account name'})
                 return Steps.enterPermission
             }
 
@@ -148,14 +149,41 @@
         }
     )
 
-    const selectChain = (e) => ($loginResponse.chainId = e.detail)
-    const unselectChain = () => ($loginResponse.chainId = undefined)
+    let transitionDirection
+    const right = 100
+    const left = -100
 
-    const selectPermission = (e) => ($loginResponse.permissionLevel = e.detail)
-    const unselectPermission = () => ($loginResponse.permissionLevel = undefined)
+    const selectChain = (e) => {
+        $loginResponse.chainId = e.detail
+        $backAction = unselectChain
+        transitionDirection = right
+    }
+    const unselectChain = () => {
+        $loginResponse.chainId = undefined
+        $backAction = unselectWallet
+        transitionDirection = left
+    }
 
-    const selectWallet = (e) => ($loginResponse.walletPluginIndex = e.detail)
-    const unselectWallet = () => ($loginResponse.walletPluginIndex = undefined)
+    const selectPermission = (e) => {
+        $loginResponse.permissionLevel = e.detail
+        $backAction = undefined
+        transitionDirection = right
+    }
+    const unselectPermission = () => {
+        $loginResponse.permissionLevel = undefined
+        transitionDirection = left
+    }
+
+    const selectWallet = (e) => {
+        $loginResponse.walletPluginIndex = e.detail
+        $backAction = unselectWallet
+        transitionDirection = right
+    }
+    const unselectWallet = () => {
+        $loginResponse.walletPluginIndex = undefined
+        $backAction = undefined
+        transitionDirection = left
+    }
 
     const complete = () => {
         if (!completed) {
@@ -171,23 +199,35 @@
 
 {#if $props && $loginContext}
     {#if $step === Steps.selectWallet}
-        <Wallet on:select={selectWallet} on:cancel={cancel} wallets={$loginContext.walletPlugins} />
+        <Transition direction={transitionDirection}>
+            <Wallet
+                on:select={selectWallet}
+                on:cancel={cancel}
+                wallets={$loginContext.walletPlugins}
+            />
+        </Transition>
     {:else if $step === Steps.selectChain && $chains}
-        <Blockchain on:select={selectChain} on:cancel={unselectWallet} chains={$chains} />
+        <Transition direction={transitionDirection}>
+            <Blockchain on:select={selectChain} on:cancel={unselectWallet} chains={$chains} />
+        </Transition>
     {:else if $step === Steps.enterPermission && $client && $walletPlugin}
-        <Permission
-            on:select={selectPermission}
-            on:cancel={unselectChain}
-            client={$client}
-            walletPlugin={$walletPlugin}
-        />
+        <Transition direction={transitionDirection}>
+            <Permission
+                on:select={selectPermission}
+                on:cancel={unselectChain}
+                client={$client}
+                walletPlugin={$walletPlugin}
+            />
+        </Transition>
     {:else if $step === Steps.selectPermission && $client && $walletPlugin}
-        <Permission
-            on:select={selectPermission}
-            on:cancel={unselectChain}
-            client={$client}
-            walletPlugin={$walletPlugin}
-        />
+        <Transition direction={transitionDirection}>
+            <Permission
+                on:select={selectPermission}
+                on:cancel={unselectChain}
+                client={$client}
+                walletPlugin={$walletPlugin}
+            />
+        </Transition>
     {:else}
         <p>{$t('login.complete', {default: 'Complete the login using your selected wallet.'})}</p>
     {/if}

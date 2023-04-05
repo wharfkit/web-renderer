@@ -24,6 +24,7 @@ export function resetState() {
     loginResponse.set({...defaultLoginResponse})
 
     errorDetails.set(undefined)
+    backAction.set(undefined)
 }
 
 /** Whether or not the interface is active in the browser */
@@ -136,3 +137,5 @@ export const loginPromise = writable<LoginPromise | undefined>(undefined)
 export const loginResponse = writable<UserInterfaceLoginData>({...defaultLoginResponse})
 
 export const errorDetails = writable<string | undefined>(undefined)
+
+export const backAction = writable<Function | undefined>(undefined)

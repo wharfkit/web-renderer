@@ -1,0 +1,268 @@
+/**  
+Globals and custom properties
+
+:host selector for web component, 
+:root selector for storybook 
+*/
+
+/****************** 
+    Default Theme 
+******************/
+
+:host dialog,
+:root {
+    --body-background-color: white;
+    --body-text-color: var(--color-primary-700);
+    --body-text-color-variant: var(--color-neutral-700);
+
+    --header-background-color: var(--color-primary-700);
+    --header-text-color: var(--color-primary-50);
+    --header-button-background: var(--header-background-color);
+    --header-button-outline: var(--color-primary-900);
+
+    --button-text-color: var(--wharf-blue);
+    --button-text-color-active: var(--wharf-blue);
+    --button-outline-active: inset 0 0 0 2px var(--button-text-color);
+
+    --button-primary-background: var(--color-secondary-200);
+    --button-primary-background-hover: var(--color-secondary-200);
+    --button-primary-background-active: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)),
+        var(--color-secondary-200);
+    --button-primary-outline-hover: inset 0 0 0 1px #00000030,
+        inset 0 0 0 1px var(--color-secondary-200);
+
+    --button-secondary-background: var(--color-custom-1);
+    --button-secondary-background-hover: var(--color-custom-1);
+    --button-secondary-background-active: var(--color-secondary-200);
+    --button-secondary-outline-hover: inset 0 0 0 1px #00000020,
+        inset 0 0 0 1px var(--color-secondary-200);
+
+    --button-outlined-background-active: var(--color-secondary-200);
+    --button-outlined-outline: inset 0 0 0 1px var(--color-secondary-200);
+    --button-outlined-outline-hover: inset 0 0 0 1px #00000020,
+        inset 0 0 0 1px var(--color-secondary-200);
+
+    --input-placeholder-color: var(--color-neutral-500);
+    --input-background-focus: var(--color-neutral-100);
+    --input-border-color: #00000030;
+    --input-border-color-hover: var(--color-custom-5);
+    --input-border-color-focus: var(--wharf-blue);
+
+    --checkbox-stroke: var(--wharf-blue);
+    --checkbox-fill: var(--reef-turquoise);
+
+    --error-color: var(--color-error-1);
+}
+
+/****************** 
+    Dark Theme 
+******************/
+
+@media (prefers-color-scheme: dark) {
+    :host dialog,
+    :root {
+        --body-background-color: var(--color-primary-700);
+        --body-text-color: white;
+        --body-text-color-variant: var(--color-neutral-300);
+
+        --header-background-color: white;
+        --header-text-color: var(--color-primary-700);
+        --header-button-background: var(--header-background-color);
+        --header-button-outline: var(--seafoam-mint);
+
+        --button-text-color: var(--body-text-color);
+        --button-text-color-active: var(--reef-turquoise);
+        --button-outline-active: inset 0 0 0 2px var(--reef-turquoise);
+
+        --button-primary-background: var(--color-secondary-500);
+        --button-primary-background-hover: var(--color-secondary-500);
+        --button-primary-background-active: var(--color-custom-2);
+        --button-primary-outline-hover: inset 0 0 0 1px white;
+
+        --button-secondary-background: var(--color-primary-800);
+        --button-secondary-background-hover: var(--color-primary-800);
+        --button-secondary-background-active: var(--color-primary-900);
+        --button-secondary-outline-hover: inset 0 0 0 1px #ffffff30;
+
+        --button-outlined-background-active: var(--color-primary-900);
+        --button-outlined-outline: inset 0 0 0 1px #00000030;
+        --button-outlined-outline-hover: inset 0 0 0 1px #ffffff30;
+
+        --input-placeholder-color: #ffffff75;
+        --input-background-focus: var(--color-custom-4);
+        --input-border-color: #ffffff30;
+        --input-border-color-hover: var(--color-custom-6);
+        --input-border-color-focus: var(--reef-turquoise);
+
+        --checkbox-stroke: var(--reef-turquoise);
+        --checkbox-fill: var(--color-custom-3);
+
+        --error-color: var(--color-error-3);
+    }
+}
+
+:host dialog,
+:root {
+    /****************** 
+          Colors 
+    ******************/
+
+    /* Brand */
+    --wharf-blue: var(--color-primary-700);
+    --reef-turquoise: var(--color-secondary-300);
+    --seafoam-mint: var(--color-secondary-200);
+    --swell-mist: var(--color-accent-50);
+
+    /* Primary */
+    --color-primary-50: #f6f7f9;
+    --color-primary-100: #ededf1;
+    --color-primary-200: #d6d8e1;
+    --color-primary-300: #b3b8c6;
+    --color-primary-400: #8991a7;
+    --color-primary-500: #6b738c;
+    --color-primary-600: #565c73;
+    --color-primary-700: #494e62; /* Wharf Blue */
+    --color-primary-800: #3c4050;
+    --color-primary-900: #363944;
+
+    /* Secondary */
+    --color-secondary-50: #f1fcf9;
+    --color-secondary-100: #cef9ed;
+    --color-secondary-200: #b2f2e1; /* Seafoam Mint */
+    --color-secondary-300: #7be7ce; /* Reef Turquoise */
+    --color-secondary-400: #35ccae;
+    --color-secondary-500: #1cb095;
+    --color-secondary-600: #148d79;
+    --color-secondary-700: #147163;
+    --color-secondary-800: #155a51;
+    --color-secondary-900: #164b43;
+
+    /* Accent */
+    --color-accent-50: #f4faf4; /* Swell Mist */
+    --color-accent-100: #e4f4e5;
+    --color-accent-200: #cae8cc;
+    --color-accent-300: #a1d4a3;
+    --color-accent-400: #70b874;
+    --color-accent-500: #4c9b51;
+    --color-accent-600: #3a7f3e;
+    --color-accent-700: #306534;
+    --color-accent-800: #2a512d;
+    --color-accent-900: #244326;
+
+    /* Neutrals */
+    --color-neutral-100: #f7f7f7;
+    --color-neutral-200: #e3e3e3;
+    --color-neutral-300: #c8c8c8;
+    --color-neutral-400: #a4a4a4;
+    --color-neutral-500: #818181;
+    --color-neutral-600: #666666;
+    --color-neutral-700: #515151;
+    --color-neutral-800: #434343;
+    --color-neutral-900: #383838;
+
+    /* Custom */
+
+    --color-custom-1: #f3f8f3;
+    --color-custom-2: #415e60;
+    --color-custom-3: #344b4d;
+    --color-custom-4: #3d435a;
+    --color-custom-5: #8ec2b4;
+    --color-custom-6: #777b8b;
+    --color-error-1: #cd3939;
+    --color-error-2: #ff5454;
+    --color-error-3: #ffacac;
+
+    /****************** 
+        Typography 
+    ******************/
+    font-family: system-ui, ui-sans-serif;
+    --measure: 35ch;
+
+    /* Font Sizing - Fixed */
+
+    /* --fs-0: 12px;
+    --fs-1: 14px;
+    --fs-2: 16px;
+    --fs-3: 20px; */
+
+    /* Font Sizing - Fluid */
+    /* @link https://utopia.fyi/type/calculator?c=320,12,1.125,1240,16,1.25,3,0,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
+
+    --fs-0: clamp(0.75rem, calc(0.66rem + 0.43vw), 1rem);
+    --fs-1: clamp(0.84rem, calc(0.7rem + 0.71vw), 1.25rem);
+    --fs-2: clamp(0.95rem, calc(0.74rem + 1.07vw), 1.56rem);
+    --fs-3: clamp(1.07rem, calc(0.76rem + 1.54vw), 1.95rem);
+
+    /****************** 
+      Size and Spacing 
+    ******************/
+
+    /* Spacing Scale - Fixed */
+    /* --ratio: 1.5;
+    --s-5: calc(var(--s-4) / var(--ratio));
+    --s-4: calc(var(--s-3) / var(--ratio));
+    --s-3: calc(var(--s-2) / var(--ratio));
+    --s-2: calc(var(--s-1) / var(--ratio));
+    --s-1: calc(var(--s0) / var(--ratio));
+    --s0: 1rem;
+    --s1: calc(var(--s0) * var(--ratio));
+    --s2: calc(var(--s1) * var(--ratio));
+    --s3: calc(var(--s2) * var(--ratio));
+    --s4: calc(var(--s3) * var(--ratio));
+    --s5: calc(var(--s4) * var(--ratio));
+    --s6: calc(var(--s5) * var(--ratio));
+    --s7: calc(var(--s6) * var(--ratio));
+    --s8: calc(var(--s7) * var(--ratio));
+    --s9: calc(var(--s8) * var(--ratio));
+    --s10: calc(var(--s9) * var(--ratio)); */
+
+    /* Spacing Scale - Fluid */
+    /* @link https://utopia.fyi/space/calculator?c=320,12,1.2,1240,16,1.25,3,0,&s=0.75|0.5|0.25,1.5|2|3|4|6|10|16|25|30|40,s-l&g=s,l,xl,12 */
+
+    --space-3xs: clamp(0.19rem, calc(0.17rem + 0.11vw), 0.25rem);
+    --space-2xs: clamp(0.38rem, calc(0.33rem + 0.22vw), 0.5rem);
+    --space-xs: clamp(0.56rem, calc(0.5rem + 0.33vw), 0.75rem);
+    --space-s: clamp(0.75rem, calc(0.66rem + 0.43vw), 1rem);
+    --space-m: clamp(1.13rem, calc(0.99rem + 0.65vw), 1.5rem);
+    --space-l: clamp(1.5rem, calc(1.33rem + 0.87vw), 2rem);
+    --space-xl: clamp(2.25rem, calc(1.99rem + 1.3vw), 3rem);
+    --space-2xl: clamp(3rem, calc(2.65rem + 1.74vw), 4rem);
+    --space-3xl: clamp(4.5rem, calc(3.98rem + 2.61vw), 6rem);
+    --space-4xl: clamp(7.5rem, calc(6.63rem + 4.35vw), 10rem);
+    --space-5xl: clamp(12rem, calc(10.61rem + 6.96vw), 16rem);
+    --space-6xl: clamp(18.75rem, calc(16.58rem + 10.87vw), 25rem);
+    --space-7xl: clamp(22.5rem, calc(19.89rem + 13.04vw), 30rem);
+    --space-8xl: clamp(30rem, calc(26.52rem + 17.39vw), 40rem);
+
+    /* One-up pairs */
+    --space-3xs-2xs: clamp(0.19rem, calc(0.08rem + 0.54vw), 0.5rem);
+    --space-2xs-xs: clamp(0.38rem, calc(0.24rem + 0.65vw), 0.75rem);
+    --space-xs-s: clamp(0.56rem, calc(0.41rem + 0.76vw), 1rem);
+    --space-s-m: clamp(0.75rem, calc(0.49rem + 1.3vw), 1.5rem);
+    --space-m-l: clamp(1.13rem, calc(0.82rem + 1.52vw), 2rem);
+    --space-l-xl: clamp(1.5rem, calc(0.98rem + 2.61vw), 3rem);
+    --space-xl-2xl: clamp(2.25rem, calc(1.64rem + 3.04vw), 4rem);
+    --space-2xl-3xl: clamp(3rem, calc(1.96rem + 5.22vw), 6rem);
+    --space-3xl-4xl: clamp(4.5rem, calc(2.59rem + 9.57vw), 10rem);
+    --space-4xl-5xl: clamp(7.5rem, calc(4.54rem + 14.78vw), 16rem);
+    --space-5xl-6xl: clamp(12rem, calc(7.48rem + 22.61vw), 25rem);
+    --space-6xl-7xl: clamp(18.75rem, calc(14.84rem + 19.57vw), 30rem);
+    --space-7xl-8xl: clamp(22.5rem, calc(16.41rem + 30.43vw), 40rem);
+
+    /* Custom pairs */
+    --space-s-l: clamp(0.75rem, calc(0.32rem + 2.17vw), 2rem);
+
+    /* Other sizes */
+    --border-radius-outer: 24px;
+    --border-radius-inner: 12px;
+    --header-height: var(--space-3xl);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+::selection {
+    color: var(--wharf-blue);
+    background-color: var(--seafoam-mint);
+}

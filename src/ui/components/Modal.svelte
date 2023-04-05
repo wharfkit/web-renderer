@@ -1,6 +1,6 @@
 <script lang="ts">
     import Header from './Header.svelte'
-    import {active, cancelablePromises, resetState} from '../state'
+    import {active, cancelablePromises, resetState, props} from '../state'
     import {onDestroy} from 'svelte'
 
     let dialog: HTMLDialogElement
@@ -53,46 +53,51 @@
     on:click|capture|nonpassive={backgroundClose}
     on:keyup|preventDefault|capture|nonpassive={escapeClose}
 >
-    <Header on:cancel={cancelRequest} />
+    <Header title={$props.title} subtitle={$props.subtitle} on:cancel={cancelRequest} />
     <div class="modal-content">
         <slot />
     </div>
 </dialog>
 
 <style lang="scss">
-    :host {
-        all: initial;
-        // Shapes
-        --border-radius: 24px;
-
-        // Colors
-        --foreground-color: #000;
-        --background-color: #f2f8f2;
-
-        --button-text-color: #fff;
-        --button-primary-color: #1cb095;
-        --button-secondary-color: #3d435a;
-        --button-tertiary-color: #494e62;
-
-        // Text
-        --base-font: 14px;
-
-        font-family: system-ui, ui-sans-serif;
-        text-justify: auto;
-    }
+    @use '../../styles/variables.css';
 
     dialog {
+        --margin-top: var(--space-xl);
+        // font-family: system-ui, ui-sans-serif;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+            Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        margin-bottom: 0;
+        margin-top: var(--margin-top);
+        margin-inline: auto;
         border: none !important;
-        border-radius: var(--border-radius);
+        border-radius: var(--border-radius-outer);
         padding: 0;
-        max-width: 418px;
-        min-width: 418px;
+        width: min(var(--space-7xl-8xl), 100vw - var(--space-m));
         box-shadow: 0px 4px 154px rgba(0, 0, 0, 0.35);
     }
     dialog::backdrop {
         background: rgba(0, 0, 0, 0.75);
     }
     .modal-content {
-        padding: 50px 59px;
+        --max-modal-content-height: calc(
+            100svh - var(--header-height) - var(--margin-top) - var(--margin-top)
+        );
+        padding: var(--space-m);
+        background-color: var(--body-background-color);
+        overflow-y: scroll;
+        max-height: var(--max-modal-content-height);
+
+        // Give Chrome some nicer scrollbars
+        scrollbar-gutter: stable both-edges;
+        scrollbar-color: var(--header-background-color);
+    }
+
+    .modal-content::-webkit-scrollbar {
+        width: 2px;
+        background-color: var(--body-background-color);
+    }
+    .modal-content::-webkit-scrollbar-thumb {
+        background: var(--header-background-color);
     }
 </style>

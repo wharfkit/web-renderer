@@ -7,8 +7,8 @@
 
 {#if data}
     <div class="asset">
-        <h2>{data.value}</h2>
-        <h6>{data.label}</h6>
+        <p class="value">{data.value}</p>
+        <p class="label">{data.label}</p>
     </div>
 {/if}
 
@@ -16,9 +16,21 @@
     .asset {
         padding: 10px 0;
         text-align: center;
-        h2,
-        h6 {
+
+        > * {
             margin: 0;
         }
+    }
+
+    .value {
+        font-size: var(--fs-2);
+        font-weight: 600;
+        color: var(--body-text-color);
+    }
+
+    .label {
+        font-size: var(--fs-0);
+        font-weight: 400;
+        color: var(--body-text-color-variant);
     }
 </style>
