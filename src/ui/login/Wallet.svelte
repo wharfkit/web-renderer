@@ -1,10 +1,10 @@
 <script lang="ts">
     import {createEventDispatcher} from 'svelte'
     import {UserInterfaceWalletPlugin} from '@wharfkit/session'
-
+    import Icon from '../components/Icon.svelte'
     import List from '../components/List.svelte'
     import ListItem from '../components/ListItem.svelte'
-    import Loading from '../components/Loading.svelte'
+    import {isBase64Image} from '../../lib/utils'
 
     export let wallets: UserInterfaceWalletPlugin[]
 
@@ -12,18 +12,37 @@
         select: number
         cancel: void
     }>()
+
+    const hasValidLogo = ({metadata: {logo, name}}: UserInterfaceWalletPlugin) => {
+        if (isBase64Image(logo)) {
+            return true
+        } else {
+            console.warn(`${name} logo is not a valid base64 image`)
+            return false
+        }
+    }
 </script>
 
-<div>
-    <!-- <Loading loading /> -->
-    {#if wallets}
-        <List>
-            {#each wallets as wallet, index}
-                <ListItem label={wallet.metadata.name} onClick={() => dispatch('select', index)} />
-            {/each}
-        </List>
-    {/if}
-</div>
+{#if wallets}
+    <List>
+        {#each wallets as wallet, index}
+            <ListItem label={wallet.metadata.name} onClick={() => dispatch('select', index)}>
+                <div class="logo" slot="logo">
+                    {#if hasValidLogo(wallet)}
+                        <img
+                            src={wallet.metadata.logo}
+                            alt={wallet.metadata.name}
+                            width="32"
+                            height="32"
+                        />
+                    {:else}
+                        <Icon name="wallet" />
+                    {/if}
+                </div>
+            </ListItem>
+        {/each}
+    </List>
+{/if}
 
 <style lang="scss">
     ul {
@@ -37,5 +56,10 @@
     li {
         flex: 1;
         display: flex;
+    }
+
+    .logo {
+        display: grid;
+        place-content: center;
     }
 </style>
