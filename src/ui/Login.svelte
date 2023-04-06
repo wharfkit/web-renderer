@@ -175,8 +175,8 @@
     }
 
     const selectWallet = (e) => {
-        $loginResponse.walletPluginIndex = e.detail
         $backAction = unselectWallet
+        $loginResponse.walletPluginIndex = e.detail
         transitionDirection = right
     }
     const unselectWallet = () => {
@@ -189,6 +189,7 @@
         if (!completed) {
             completed = true
             dispatch('complete', $loginResponse)
+            backAction.set(undefined)
         }
     }
 
