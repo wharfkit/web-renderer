@@ -20,10 +20,10 @@
         <span style={expanded ? expandedStyles : ''} on:click={collapse} on:keydown={collapse}>
             {@html generateQr(data)}
         </span>
-        <button on:click={toggleExpanded}>
+        <!-- <button on:click={toggleExpanded}>
             <span class="visually-hidden">Expand</span>
             <Icon name="expand" size="--space-s" />
-        </button>
+        </button> -->
     </div>
 {/if}
 
