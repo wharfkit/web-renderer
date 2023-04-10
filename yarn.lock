@@ -1328,6 +1328,17 @@
     hash.js "^1.0.0"
     tslib "^2.0.3"
 
+"@greymass/eosio@^0.6.10":
+  version "0.6.10"
+  resolved "https://registry.yarnpkg.com/@greymass/eosio/-/eosio-0.6.10.tgz#20028c2f71da8c071e0a78959904660fa54e1182"
+  integrity sha512-lgml9eAR85q1s3cDSFiipK1XensUASpBWPU6vu3FRDot0CBOC46kHnNWXjF9p+/jI2TzxFqPVU185ZxzC9Q3mw==
+  dependencies:
+    bn.js "^4.11.9"
+    brorand "^1.1.0"
+    elliptic "^6.5.4"
+    hash.js "^1.0.0"
+    tslib "^2.0.3"
+
 "@greymass/miniaes@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@greymass/miniaes/-/miniaes-1.0.0.tgz#2337a4637edbb49289f3c977c5891bb6bef1ba75"
@@ -2984,13 +2995,13 @@
     "@typescript-eslint/types" "5.49.0"
     eslint-visitor-keys "^3.3.0"
 
-"@wharfkit/session@^0.3.2":
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/@wharfkit/session/-/session-0.3.2.tgz#98e946d028434a37b5038da995c12eed72c1f3e2"
-  integrity sha512-rxZKL0Vqm9L20l4C/0wwdmoiPlw9Xd0TQNLax7ZcJB3qsZ4nK+GRlynLfcoM3WppGCL/I5uQ8g/2csFEl0U0pg==
+"@wharfkit/session@^0.3.3":
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/@wharfkit/session/-/session-0.3.3.tgz#fc09975a6065fb2173706318ef496cf3b38413d0"
+  integrity sha512-RMJEIXHlvS5jTqPjCARIBSwOFxyPib0KjEHehTkEzYxwFgfBUTs4yjYnrqFYxYMqLWNKYwtCoKsvgbRmg3E9dQ==
   dependencies:
-    "@greymass/eosio" "^0.6.9"
-    eosio-signing-request "^2.5.2"
+    "@greymass/eosio" "^0.6.10"
+    eosio-signing-request "^2.5.3"
     pako "^2.0.4"
     tslib "^2.1.0"
 
@@ -4174,10 +4185,10 @@ envinfo@^7.7.3:
   resolved "https://registry.yarnpkg.com/envinfo/-/envinfo-7.8.1.tgz#06377e3e5f4d379fea7ac592d5ad8927e0c4d475"
   integrity sha512-/o+BXHmB7ocbHEAs6F2EnG0ogybVVUdkRunTT2glZU9XAaGmhqskrvKwqXuDfNjEO0LZKWdejEEpnq8aM0tOaw==
 
-eosio-signing-request@^2.5.2:
-  version "2.5.2"
-  resolved "https://registry.yarnpkg.com/eosio-signing-request/-/eosio-signing-request-2.5.2.tgz#3cf53d71204d32bb5112e2ac84aba189661a630c"
-  integrity sha512-mkWhsjZYVfyvUujbeSBZ4u1NlT5Pks/VAT2CesUtMsffg1e4LaA2/uijrDoGNkhRzVv4VDxrssh9jVPdyV97rw==
+eosio-signing-request@^2.5.3:
+  version "2.5.3"
+  resolved "https://registry.yarnpkg.com/eosio-signing-request/-/eosio-signing-request-2.5.3.tgz#4b15bcc67d2814393a83084c45e4473d638b16e1"
+  integrity sha512-jb4cKjQM+NI8+JwtGClYiCDX9sgSeUreRTE7YkIAga0fo21vtLTjTn0ZUH1zyfQU5b4Drdcs/yUMXdPUtqp9bg==
   dependencies:
     "@greymass/eosio" "^0.6.0"
     tslib "^2.0.3"
