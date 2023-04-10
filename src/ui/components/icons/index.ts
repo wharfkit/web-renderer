@@ -7,6 +7,7 @@ import Login from './LogIn.svelte'
 import ChevronRight from './ChevronRight.svelte'
 import ChevronLeft from './ChevronLeft.svelte'
 import Wallet from './Wallet.svelte'
+import Expand from './Expand.svelte'
 
 export default {
     copy: Copy,
@@ -18,4 +19,5 @@ export default {
     'chevron-right': ChevronRight,
     'chevron-left': ChevronLeft,
     wallet: Wallet,
+    expand: Expand,
 }

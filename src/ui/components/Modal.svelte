@@ -73,7 +73,7 @@
         border: none !important;
         border-radius: var(--border-radius-outer);
         padding: 0;
-        width: min(var(--space-7xl-8xl), 100vw - var(--space-m));
+        width: min(var(--space-7xl), 100vw - var(--space-m));
         box-shadow: 0px 4px 154px rgba(0, 0, 0, 0.35);
     }
     dialog::backdrop {

@@ -47,10 +47,17 @@
     }
 
     div {
-        padding-block: var(--space-m);
+        padding-block: var(--space-s);
         display: flex;
         flex: 1;
         align-items: center;
         justify-content: space-between;
+    }
+
+    span {
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 </style>

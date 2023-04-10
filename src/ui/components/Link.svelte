@@ -8,7 +8,7 @@
         icon?: ComponentProps<Icon>['name']
     }
 
-    let {button, href, label, icon} = data
+    let {button = true, href, label, icon} = data
 </script>
 
 <a class:button {href} target="_blank" rel="noreferrer">
