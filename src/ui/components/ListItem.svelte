@@ -14,6 +14,8 @@
             <Icon name={leadingIcon} />
         {/if}
 
+        <slot name="logo" />
+
         <div>
             <span>{label}</span>
             {#if trailingIcon}
