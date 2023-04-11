@@ -44,6 +44,12 @@
         background: none;
         color: var(--body-text-color);
         font-size: var(--fs-1);
+        font-weight: 500;
+    }
+
+    li button:hover {
+        color: var(--list-item-text-color-hover);
+        background: var(--color-custom-7);
     }
 
     div {
