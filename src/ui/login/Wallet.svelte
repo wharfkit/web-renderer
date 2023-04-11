@@ -32,8 +32,8 @@
                         <img
                             src={wallet.metadata.logo}
                             alt={wallet.metadata.name}
-                            width="32"
-                            height="32"
+                            width="30"
+                            height="30"
                         />
                     {:else}
                         <Icon name="wallet" />
