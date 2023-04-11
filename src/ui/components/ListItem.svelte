@@ -30,7 +30,7 @@
         display: flex;
     }
 
-    li:not(:last-child) button div {
+    li:not(:last-child) button {
         border-bottom: 1px solid var(--color-neutral-200);
     }
 
