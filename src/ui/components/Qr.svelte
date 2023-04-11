@@ -30,25 +30,29 @@
 <style>
     div {
         position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        display: grid;
         background: var(--body-background-color);
         border-radius: var(--space-s);
         padding: var(--space-s);
-        border: 2px solid var(--qr-border-color);
+        border: 1px solid var(--qr-border-color);
+        aspect-ratio: 1;
+        align-self: stretch;
     }
 
     span {
         background: white;
         padding: var(--space-xs);
-        padding-bottom: var(--space-2xs);
         border-radius: var(--space-2xs);
         transition: scale 200ms ease;
         z-index: 2;
     }
 
-    button {
+    span :global(svg) {
+        width: 100%;
+        height: 100%;
+    }
+
+    /* button {
         position: absolute;
         bottom: calc(var(--space-m) * -1);
         border: none;
@@ -67,5 +71,5 @@
         clip: rect(0, 0, 0, 0);
         white-space: nowrap;
         border: 0;
-    }
+    } */
 </style>
