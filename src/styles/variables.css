@@ -56,6 +56,7 @@ Globals and custom properties
     --error-color: var(--color-error-1);
 
     --list-item-text-color-hover: var(--color-secondary-500);
+    --list-divider-color: #00000010;
 }
 
 /****************** 
@@ -106,6 +107,7 @@ Dark Theme
         --error-color: var(--color-error-3);
 
         --list-item-text-color-hover: var(--color-secondary-400);
+        --list-divider-color: #ffffff10;
     }
 }
 

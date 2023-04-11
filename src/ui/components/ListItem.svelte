@@ -29,7 +29,7 @@
     }
 
     li:not(:last-child) button {
-        border-bottom: 1px solid var(--color-neutral-200);
+        border-bottom: 1px solid var(--list-divider-color);
     }
 
     li button {
