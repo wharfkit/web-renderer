@@ -44,15 +44,12 @@
         color: var(--body-text-color);
         font-size: var(--fs-1);
         font-weight: 500;
+        padding-block: var(--space-s);
     }
 
     li button:hover {
         color: var(--list-item-text-color-hover);
         background: var(--color-custom-7);
-    }
-
-    div {
-        padding-block: var(--space-s);
     }
 
     span {
