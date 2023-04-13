@@ -11,14 +11,18 @@
 <li>
     <button on:click={onClick}>
         {#if leadingIcon}
-            <Icon name={leadingIcon} />
+            <div class="icon leading">
+                <Icon name={leadingIcon} />
+            </div>
         {/if}
         <slot name="logo" />
 
         <span>{label}</span>
 
         {#if trailingIcon}
-            <Icon name={trailingIcon} />
+            <div class="icon trailing">
+                <Icon name={trailingIcon} />
+            </div>
         {/if}
     </button>
 </li>
@@ -47,9 +51,16 @@
         padding-block: var(--space-s);
     }
 
+    .icon.trailing {
+        opacity: 0.2;
+    }
+
     li button:hover {
-        color: var(--list-item-text-color-hover);
-        background: var(--color-custom-7);
+        background: var(--list-item-background-color-hover);
+
+        & .icon.trailing {
+            opacity: 1;
+        }
     }
 
     span {

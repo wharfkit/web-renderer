@@ -106,6 +106,7 @@ Dark Theme
 
         --error-color: var(--color-error-3);
 
+        --list-item-background-color-hover: var(--color-custom-8);
         --list-item-text-color-hover: var(--color-secondary-400);
         --list-divider-color: #ffffff10;
     }
@@ -179,6 +180,7 @@ Dark Theme
     --color-custom-5: #8ec2b4;
     --color-custom-6: #777b8b;
     --color-custom-7: #35ccae10;
+    --color-custom-8: #575c6e;
     --color-error-1: #cd3939;
     --color-error-2: #ff5454;
     --color-error-3: #ffacac;
