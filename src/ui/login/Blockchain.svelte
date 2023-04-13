@@ -5,8 +5,10 @@
     import Button from '../components/Button.svelte'
     import List from '../components/List.svelte'
     import ListItem from '../components/ListItem.svelte'
+    import BodyTitle from '../components/BodyTitle.svelte'
 
     export let chains: ChainDefinition[]
+    export let title: string
 
     const dispatch = createEventDispatcher<{
         select: Checksum256
@@ -14,8 +16,9 @@
     }>()
 </script>
 
-<div>
-    {#if chains}
+{#if chains}
+    <section>
+        <BodyTitle>{title}</BodyTitle>
         <List>
             {#each chains as chain}
                 <ListItem
@@ -25,13 +28,13 @@
                 />
             {/each}
         </List>
-    {/if}
-</div>
+    </section>
+{/if}
 
 <style lang="scss">
-    div {
+    section {
         display: flex;
         flex-direction: column;
-        gap: var(--space-l);
+        gap: var(--space-s);
     }
 </style>
