@@ -11,11 +11,13 @@
     import ListItem from '../components/ListItem.svelte'
     import TextInput from '../components/TextInput.svelte'
     import WarningMessage from '../components/WarningMessage.svelte'
+    import BodyTitle from '../components/BodyTitle.svelte'
 
     const {t} = getContext<i18nType>('i18n')
 
     export let client: APIClient
     export let walletPlugin: UserInterfaceWalletPlugin
+    export let title: string
 
     const dispatch = createEventDispatcher<{
         select: PermissionLevel
@@ -75,7 +77,8 @@
     }
 </script>
 
-<div>
+<section>
+    <BodyTitle>{title}</BodyTitle>
     {#if $busy}
         <p class="loading">{$t('loading', {default: 'Loading...'})}</p>
     {:else if permissions && permissions.length > 0}
@@ -98,38 +101,40 @@
             })}
         />
     {:else if !accountName}
-        <TextInput
-            onKeyup={handleKeyup}
-            bind:value={input}
-            placeholder="Account name"
-            autofocus={!input}
-            error={accountNotFound && input === prevInput}
-        />
-        {#if accountNotFound}
-            <p class="error">
-                {$t('login.enter.not_found', {
-                    default: 'Unable to find account',
-                })}
-                {prevInput}
-            </p>
-        {/if}
-        <Button
-            data={{
-                variant: 'primary',
-                onClick: lookup,
-                label: $t('login.enter.lookup', {
-                    default: 'Lookup Account',
-                }),
-            }}
-        />
+        <div class="input-group">
+            <TextInput
+                onKeyup={handleKeyup}
+                bind:value={input}
+                placeholder="Account name"
+                autofocus={!input}
+                error={accountNotFound && input === prevInput}
+            />
+            {#if accountNotFound}
+                <p class="error">
+                    {$t('login.enter.not_found', {
+                        default: 'Unable to find account',
+                    })}
+                    {prevInput}
+                </p>
+            {/if}
+            <Button
+                data={{
+                    variant: 'primary',
+                    onClick: lookup,
+                    label: $t('login.enter.lookup', {
+                        default: 'Lookup Account',
+                    }),
+                }}
+            />
+        </div>
     {/if}
-</div>
+</section>
 
 <style lang="scss">
-    div {
+    section {
         display: flex;
         flex-direction: column;
-        gap: var(--space-m);
+        gap: var(--space-s);
     }
 
     p.loading {
@@ -142,5 +147,12 @@
         margin: 0;
         text-align: center;
         color: var(--error-color);
+    }
+
+    .input-group {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-m);
+        margin-top: var(--space-s);
     }
 </style>

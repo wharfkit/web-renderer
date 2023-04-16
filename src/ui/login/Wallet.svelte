@@ -5,8 +5,9 @@
     import List from '../components/List.svelte'
     import ListItem from '../components/ListItem.svelte'
     import {isBase64Image} from '../../lib/utils'
-
+    import BodyTitle from '../components/BodyTitle.svelte'
     export let wallets: UserInterfaceWalletPlugin[]
+    export let title: string
 
     const dispatch = createEventDispatcher<{
         select: number
@@ -24,27 +25,36 @@
 </script>
 
 {#if wallets}
-    <List>
-        {#each wallets as wallet, index}
-            <ListItem label={wallet.metadata.name} onClick={() => dispatch('select', index)}>
-                <div class="logo" slot="logo">
-                    {#if hasValidLogo(wallet)}
-                        <img
-                            src={wallet.metadata.logo}
-                            alt={wallet.metadata.name}
-                            width="32"
-                            height="32"
-                        />
-                    {:else}
-                        <Icon name="wallet" />
-                    {/if}
-                </div>
-            </ListItem>
-        {/each}
-    </List>
+    <section>
+        <BodyTitle>{title}</BodyTitle>
+        <List>
+            {#each wallets as wallet, index}
+                <ListItem label={wallet.metadata.name} onClick={() => dispatch('select', index)}>
+                    <div class="logo" slot="logo">
+                        {#if hasValidLogo(wallet)}
+                            <img
+                                src={wallet.metadata.logo}
+                                alt={wallet.metadata.name}
+                                width="32"
+                                height="32"
+                            />
+                        {:else}
+                            <Icon name="wallet" />
+                        {/if}
+                    </div>
+                </ListItem>
+            {/each}
+        </List>
+    </section>
 {/if}
 
 <style lang="scss">
+    section {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-s);
+    }
+
     ul {
         padding: 0;
         margin: 0;
