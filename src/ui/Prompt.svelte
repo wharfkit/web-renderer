@@ -132,9 +132,10 @@
         display: flex;
         flex-direction: column;
         gap: var(--space-m);
+        gap: var(--space-l);
     }
 
     .text {
-        gap: var(--space-2xs);
+        gap: var(--space-s);
     }
 </style>
