@@ -1,7 +1,8 @@
 <script lang="ts">
     import {createEventDispatcher, getContext} from 'svelte'
-    import {i18nType} from 'src/lib/translations'
+    import type {i18nType} from 'src/lib/translations'
     import Button from './Button.svelte'
+    import ButtonGroup from './ButtonGroup.svelte'
 
     const {t} = getContext<i18nType>('i18n')
 
@@ -11,18 +12,22 @@
     }>()
 </script>
 
-<Button
-    data={{
-        variant: 'primary',
-        label: $t('accept', {default: 'Accept'}),
-        onClick: () => dispatch('complete'),
-    }}
-/>
+<ButtonGroup>
+    <Button
+        data={{
+            variant: 'outlined',
+            label: $t('decline', {default: 'Decline'}),
+            onClick: () => dispatch('cancel'),
+            icon: 'close',
+        }}
+    />
 
-<Button
-    data={{
-        variant: 'secondary',
-        label: $t('decline', {default: 'Decline'}),
-        onClick: () => dispatch('cancel'),
-    }}
-/>
+    <Button
+        data={{
+            variant: 'primary',
+            label: $t('accept', {default: 'Accept'}),
+            onClick: () => dispatch('complete'),
+            icon: 'check',
+        }}
+    />
+</ButtonGroup>

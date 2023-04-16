@@ -118,14 +118,12 @@
         <BodyText>{$prompt?.args.body}</BodyText>
     </div>
     {#each $elements as component}
-        <div>
-            <svelte:component
-                this={component.component}
-                on:complete={() => dispatch('complete')}
-                on:cancel={() => dispatch('cancel')}
-                {...component.props}
-            />
-        </div>
+        <svelte:component
+            this={component.component}
+            on:complete={() => dispatch('complete')}
+            on:cancel={() => dispatch('cancel')}
+            {...component.props}
+        />
     {/each}
 </div>
 
@@ -133,7 +131,6 @@
     div {
         display: flex;
         flex-direction: column;
-        align-items: center;
         gap: var(--space-m);
     }
 
