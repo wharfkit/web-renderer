@@ -11,17 +11,19 @@
 <li>
     <button on:click={onClick}>
         {#if leadingIcon}
-            <Icon name={leadingIcon} />
+            <div class="icon leading">
+                <Icon name={leadingIcon} />
+            </div>
         {/if}
-
         <slot name="logo" />
 
-        <div>
-            <span>{label}</span>
-            {#if trailingIcon}
+        <span>{label}</span>
+
+        {#if trailingIcon}
+            <div class="icon trailing">
                 <Icon name={trailingIcon} />
-            {/if}
-        </div>
+            </div>
+        {/if}
     </button>
 </li>
 
@@ -30,32 +32,39 @@
         display: flex;
     }
 
-    li:not(:last-child) button div {
-        border-bottom: 1px solid var(--color-neutral-200);
+    li:not(:last-child) button {
+        border-bottom: 1px solid var(--list-divider-color);
     }
 
     li button {
         flex: 1;
-        display: flex;
-        gap: var(--space-l);
+        display: grid;
+        grid-template-columns: var(--space-xl) 1fr auto;
         align-items: center;
+        gap: var(--space-s);
         cursor: pointer;
         border: none;
         background: none;
         color: var(--body-text-color);
         font-size: var(--fs-1);
+        font-weight: 500;
+        padding-block: var(--space-s);
     }
 
-    div {
-        padding-block: var(--space-s);
-        display: flex;
-        flex: 1;
-        align-items: center;
-        justify-content: space-between;
+    .icon.trailing {
+        opacity: 0.2;
+    }
+
+    li button:hover {
+        background: var(--list-item-background-color-hover);
+
+        & .icon.trailing {
+            opacity: 1;
+        }
     }
 
     span {
-        display: block;
+        text-align: start;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;

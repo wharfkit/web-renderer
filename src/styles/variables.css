@@ -55,12 +55,15 @@ Globals and custom properties
 
     --error-color: var(--color-error-1);
 
+    --list-item-text-color-hover: var(--color-secondary-500);
+    --list-divider-color: #00000010;
+
     --text-area-background: var(--swell-mist);
     --text-area-text-color: #242424;
 }
 
 /****************** 
-    Dark Theme 
+Dark Theme 
 ******************/
 
 @media (prefers-color-scheme: dark) {
@@ -105,6 +108,10 @@ Globals and custom properties
         --checkbox-fill: var(--color-custom-3);
 
         --error-color: var(--color-error-3);
+
+        --list-item-background-color-hover: var(--color-custom-8);
+        --list-item-text-color-hover: var(--color-secondary-400);
+        --list-divider-color: #ffffff10;
 
         --text-area-background: var(--color-primary-900);
         --text-area-text-color: #ffffff;
@@ -178,6 +185,8 @@ Globals and custom properties
     --color-custom-4: #3d435a;
     --color-custom-5: #8ec2b4;
     --color-custom-6: #777b8b;
+    --color-custom-7: #35ccae10;
+    --color-custom-8: #575c6e;
     --color-error-1: #cd3939;
     --color-error-2: #ff5454;
     --color-error-3: #ffacac;
