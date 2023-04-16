@@ -11,7 +11,7 @@
     let {button = true, href, label, icon} = data
 </script>
 
-<a class:button {href} target="_blank" rel="noreferrer">
+<a class:button class="outlined" {href} target="_blank" rel="noreferrer">
     {#if icon}
         <Icon name={icon} />
     {/if}
@@ -20,4 +20,8 @@
 
 <style lang="scss">
     @use '../../styles/buttonStyles.css';
+
+    a {
+        align-self: stretch;
+    }
 </style>

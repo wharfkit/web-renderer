@@ -3,10 +3,9 @@
     import Icon from './Icon.svelte'
     export let onClick
     export let icon: ComponentProps<Icon>['name']
-    const onKeydown = onClick
 </script>
 
-<button on:click={onClick} on:keydown={onKeydown}>
+<button on:click={onClick}>
     <span class="background" />
     <Icon name={icon} />
     <span class="label visually-hidden">{icon}</span>

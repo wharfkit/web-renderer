@@ -6,15 +6,20 @@
     let remaining
     let timer
 
-    onMount(() => {
+    $: {
+        if (timer) {
+            clearInterval(timer)
+        }
+
         deadline = new Date(data)
         timer = setInterval(() => {
             remaining = deadline - Date.now()
+
             if (remaining <= 0) {
                 clearInterval(timer)
             }
         }, 200)
-    })
+    }
 
     onDestroy(() => {
         if (timer) {

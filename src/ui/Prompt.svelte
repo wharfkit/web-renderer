@@ -12,6 +12,8 @@
     import Textarea from './components/Textarea.svelte'
 
     import {prompt} from './state'
+    import BodyTitle from './components/BodyTitle.svelte'
+    import BodyText from './components/BodyText.svelte'
 
     interface UIComponent {
         component: ComponentType<SvelteComponentTyped>
@@ -112,47 +114,28 @@
 
 <div>
     <div class="text">
-        <h3>{$prompt?.args.title}</h3>
-        <p>{$prompt?.args.body}</p>
+        <BodyTitle>{$prompt?.args.title}</BodyTitle>
+        <BodyText>{$prompt?.args.body}</BodyText>
     </div>
     {#each $elements as component}
-        <div>
-            <svelte:component
-                this={component.component}
-                on:complete={() => dispatch('complete')}
-                on:cancel={() => dispatch('cancel')}
-                {...component.props}
-            />
-        </div>
+        <svelte:component
+            this={component.component}
+            on:complete={() => dispatch('complete')}
+            on:cancel={() => dispatch('cancel')}
+            {...component.props}
+        />
     {/each}
 </div>
 
 <style>
-    :is(h3, p) {
-        text-align: center;
-        margin: 0;
-    }
-
-    h3 {
-        color: var(--body-text-color);
-        font-size: var(--fs-2);
-        font-weight: 600;
-    }
-
-    p {
-        color: var(--body-text-color-variant);
-        font-size: var(--fs-1);
-        font-weight: 400;
-    }
-
     div {
         display: flex;
         flex-direction: column;
-        align-items: center;
         gap: var(--space-m);
+        gap: var(--space-l);
     }
 
     .text {
-        gap: var(--space-2xs);
+        gap: var(--space-s);
     }
 </style>

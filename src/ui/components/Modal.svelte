@@ -35,7 +35,7 @@
             event.clientY <= rect.top + rect.height &&
             rect.left <= event.clientX &&
             event.clientX <= rect.left + rect.width
-        if (!isInDialog) {
+        if (event.originalTarget === dialog && !isInDialog) {
             cancelRequest()
         }
     }
@@ -64,7 +64,6 @@
 
     dialog {
         --margin-top: var(--space-xl);
-        // font-family: system-ui, ui-sans-serif;
         font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
             Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         margin-bottom: 0;

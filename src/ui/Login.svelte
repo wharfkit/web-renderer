@@ -83,7 +83,7 @@
     const loginContextUnsubscribe = loginContext.subscribe((currentContext) => {
         if (currentContext) {
             // If an appName is specified, set the title to it.
-            $props.title = $t('login.title-app', {
+            $props.subtitle = $t('login.title-app', {
                 appName: currentContext.appName,
                 default: 'Login to {{appName}}',
             })
@@ -116,7 +116,6 @@
         [loginResponse, walletPlugin],
         ([$currentResponse, $currentWalletPlugin]) => {
             if (!$currentWalletPlugin) {
-                $props.subtitle = $t('login.select.wallet', {default: 'Select a Wallet'})
                 return Steps.selectWallet
             }
 
@@ -134,13 +133,10 @@
                 $loginResponse.chainId = $loginContext?.chain.id
                 return Steps.selectPermission
             } else if (!$currentResponse.chainId && requiresChainSelect) {
-                $props.subtitle = $t('login.select.blockchain', {default: 'Select a Blockchain'})
                 return Steps.selectChain
             } else if (!$currentResponse.permissionLevel && requiresPermissionSelect) {
-                $props.subtitle = $t('login.select.account', {default: 'Select an Account'})
                 return Steps.selectPermission
             } else if (!$currentResponse.permissionLevel && requiresPermissionEntry) {
-                $props.subtitle = $t('login.enter.account', {default: 'Enter account name'})
                 return Steps.enterPermission
             }
 
@@ -205,11 +201,17 @@
                 on:select={selectWallet}
                 on:cancel={cancel}
                 wallets={$loginContext.walletPlugins}
+                title={$t('login.select.wallet', {default: 'Select a Wallet'})}
             />
         </Transition>
     {:else if $step === Steps.selectChain && $chains}
         <Transition direction={transitionDirection}>
-            <Blockchain on:select={selectChain} on:cancel={unselectWallet} chains={$chains} />
+            <Blockchain
+                on:select={selectChain}
+                on:cancel={unselectWallet}
+                chains={$chains}
+                title={$t('login.select.blockchain', {default: 'Select a Blockchain'})}
+            />
         </Transition>
     {:else if $step === Steps.enterPermission && $client && $walletPlugin}
         <Transition direction={transitionDirection}>
@@ -218,6 +220,7 @@
                 on:cancel={unselectChain}
                 client={$client}
                 walletPlugin={$walletPlugin}
+                title={$t('login.enter.account', {default: 'Enter account name'})}
             />
         </Transition>
     {:else if $step === Steps.selectPermission && $client && $walletPlugin}
@@ -227,6 +230,7 @@
                 on:cancel={unselectChain}
                 client={$client}
                 walletPlugin={$walletPlugin}
+                title={$t('login.select.account', {default: 'Select an Account'})}
             />
         </Transition>
     {:else}
