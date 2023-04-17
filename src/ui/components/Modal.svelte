@@ -35,8 +35,7 @@
             event.clientY <= rect.top + rect.height &&
             rect.left <= event.clientX &&
             event.clientX <= rect.left + rect.width
-
-        if (event.target === dialog && !isInDialog) {
+        if (event.originalTarget === dialog && !isInDialog) {
             cancelRequest()
         }
     }
