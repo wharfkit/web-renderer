@@ -6,16 +6,18 @@
     export let onClick
     export let leadingIcon: ComponentProps<Icon>['name'] | undefined = undefined
     export let trailingIcon: ComponentProps<Icon>['name'] | undefined = 'chevron-right'
+    export let logo: string | undefined = undefined
 </script>
 
 <li>
     <button on:click={onClick}>
-        {#if leadingIcon}
+        {#if logo}
+            <img class="logo leading" src={logo} alt={''} width="32" height="32" />
+        {:else if leadingIcon}
             <div class="icon leading">
                 <Icon name={leadingIcon} />
             </div>
         {/if}
-        <slot name="logo" />
 
         <span>{label}</span>
 
@@ -38,8 +40,7 @@
 
     li button {
         flex: 1;
-        display: grid;
-        grid-template-columns: var(--space-xl) 1fr auto;
+        display: flex;
         align-items: center;
         gap: var(--space-s);
         cursor: pointer;
@@ -49,6 +50,12 @@
         font-size: var(--fs-1);
         font-weight: 500;
         padding-block: var(--space-s);
+    }
+
+    :is(.icon, .logo).leading {
+        flex-basis: var(--space-xl);
+        display: grid;
+        place-content: center;
     }
 
     .icon.trailing {
@@ -64,6 +71,7 @@
     }
 
     span {
+        flex: 1;
         text-align: start;
         overflow: hidden;
         text-overflow: ellipsis;

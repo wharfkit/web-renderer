@@ -29,20 +29,12 @@
         <BodyTitle>{title}</BodyTitle>
         <List>
             {#each wallets as wallet, index}
-                <ListItem label={wallet.metadata.name} onClick={() => dispatch('select', index)}>
-                    <div class="logo" slot="logo">
-                        {#if hasValidLogo(wallet)}
-                            <img
-                                src={wallet.metadata.logo}
-                                alt={wallet.metadata.name}
-                                width="32"
-                                height="32"
-                            />
-                        {:else}
-                            <Icon name="wallet" />
-                        {/if}
-                    </div>
-                </ListItem>
+                <ListItem
+                    label={wallet.metadata.name}
+                    onClick={() => dispatch('select', index)}
+                    leadingIcon="wallet"
+                    logo={hasValidLogo(wallet) ? wallet.metadata.logo : undefined}
+                />
             {/each}
         </List>
     </section>
