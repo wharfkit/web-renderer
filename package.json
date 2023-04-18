@@ -1,13 +1,13 @@
 {
-    "name": "@wharfkit/web-ui-renderer",
+    "name": "@wharfkit/web-renderer",
     "type": "module",
     "version": "0.3.7",
     "description": "",
     "license": "BSD-3-Clause",
-    "main": "lib/web-ui-renderer.js",
-    "module": "lib/web-ui-renderer.m.js",
-    "types": "lib/web-ui-renderer.d.ts",
-    "unpkg": "lib/web-ui-renderer.bundle.js",
+    "main": "lib/web-renderer.js",
+    "module": "lib/web-renderer.m.js",
+    "types": "lib/web-renderer.d.ts",
+    "unpkg": "lib/web-renderer.bundle.js",
     "scripts": {
         "build": "rollup -c --bundleConfigAsCjs",
         "build-test": "rollup -c test/rollup.config.js --bundleConfigAsCjs",
@@ -21,15 +21,15 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/@wharfkit/web-ui-renderer.git"
+        "url": "git+https://github.com/@wharfkit/web-renderer.git"
     },
     "authors": [
         "Aaron Cox <aaron@greymass.com>"
     ],
     "bugs": {
-        "url": "https://github.com/@wharfkit/web-ui-renderer/issues"
+        "url": "https://github.com/@wharfkit/web-renderer/issues"
     },
-    "homepage": "https://github.com/@wharfkit/web-ui-renderer",
+    "homepage": "https://github.com/@wharfkit/web-renderer",
     "files": [
         "lib/*",
         "src/*"
