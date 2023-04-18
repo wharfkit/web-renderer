@@ -24,6 +24,7 @@
                 <ListItem
                     label={chain.name}
                     onClick={() => dispatch('select', chain.id)}
+                    logo={chain.getLogo()}
                     leadingIcon="wharf"
                 />
             {/each}
