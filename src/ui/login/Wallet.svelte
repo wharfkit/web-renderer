@@ -22,6 +22,16 @@
             return false
         }
     }
+
+    let colorScheme = 'light'
+    if (window.matchMedia) {
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            colorScheme = 'dark'
+        }
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
+            colorScheme = event.matches ? 'dark' : 'light'
+        })
+    }
 </script>
 
 {#if wallets}
@@ -33,7 +43,7 @@
                     label={wallet.metadata.name}
                     onClick={() => dispatch('select', index)}
                     leadingIcon="wallet"
-                    logo={hasValidLogo(wallet) ? wallet.metadata.logo : undefined}
+                    logo={hasValidLogo(wallet) ? wallet.metadata.logo[colorScheme] : undefined}
                 />
             {/each}
         </List>
