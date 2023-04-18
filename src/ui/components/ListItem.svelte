@@ -63,6 +63,7 @@
 
     .leading img {
         max-inline-size: 30px;
+        max-block-size: 30px;
         object-fit: contain;
     }
 
