@@ -2995,10 +2995,10 @@
     "@typescript-eslint/types" "5.49.0"
     eslint-visitor-keys "^3.3.0"
 
-"@wharfkit/session@^0.3.3":
-  version "0.3.3"
-  resolved "https://registry.yarnpkg.com/@wharfkit/session/-/session-0.3.3.tgz#fc09975a6065fb2173706318ef496cf3b38413d0"
-  integrity sha512-RMJEIXHlvS5jTqPjCARIBSwOFxyPib0KjEHehTkEzYxwFgfBUTs4yjYnrqFYxYMqLWNKYwtCoKsvgbRmg3E9dQ==
+"@wharfkit/session@^0.4.0-rc2":
+  version "0.4.0-rc2"
+  resolved "https://registry.yarnpkg.com/@wharfkit/session/-/session-0.4.0-rc2.tgz#5d5096a75f15a636a79ff8c1de905dc1aedeb257"
+  integrity sha512-67VMttiYLekX40sS+i9KLXQS0cl+hOqTVQKKKMNCfVzbG1AdvZh5cViR+CJw/8Be+4Rh2+uaj2Q7Ce+TByOC8w==
   dependencies:
     "@greymass/eosio" "^0.6.10"
     eosio-signing-request "^2.5.3"
