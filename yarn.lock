@@ -2995,10 +2995,10 @@
     "@typescript-eslint/types" "5.49.0"
     eslint-visitor-keys "^3.3.0"
 
-"@wharfkit/session@^0.4.0-rc2":
-  version "0.4.0-rc2"
-  resolved "https://registry.yarnpkg.com/@wharfkit/session/-/session-0.4.0-rc2.tgz#5d5096a75f15a636a79ff8c1de905dc1aedeb257"
-  integrity sha512-67VMttiYLekX40sS+i9KLXQS0cl+hOqTVQKKKMNCfVzbG1AdvZh5cViR+CJw/8Be+4Rh2+uaj2Q7Ce+TByOC8w==
+"@wharfkit/session@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@wharfkit/session/-/session-0.4.0.tgz#bfb7b4800a3e373f5747fcf33ccbe759dcf328be"
+  integrity sha512-mNAYF2DG5g1yJsI3AYUbHu0eAULmehtDg7BBEzm2FlMy2wo4z2tUD5BtjmGWo2ZmYR6tKQ5jY69kRNVnxzWARg==
   dependencies:
     "@greymass/eosio" "^0.6.10"
     eosio-signing-request "^2.5.3"
@@ -3039,41 +3039,41 @@
   dependencies:
     tslib "^2.1.0"
 
-"@wharfkit/wallet-plugin-anchor@^0.3.4":
-  version "0.3.4"
-  resolved "https://registry.yarnpkg.com/@wharfkit/wallet-plugin-anchor/-/wallet-plugin-anchor-0.3.4.tgz#8c8c39dcb67f1c46f2a330df12f45f70199cf924"
-  integrity sha512-lWX0NdQccgKwWv0HSQUv0RNhOIEtydqxK3XN+Yal466Z4PZutetYQ41FKTl792Nr0e3UXqf6SNT2ky8xIO+Y1w==
+"@wharfkit/wallet-plugin-anchor@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@wharfkit/wallet-plugin-anchor/-/wallet-plugin-anchor-0.4.0.tgz#634d82730b3051186a05db4cf7556e080385d8f2"
+  integrity sha512-9+kNELqFzyBo4zCEbTfgm9YDsZrqgwH+HLtlvo+8vvEB0oOcjtJ7qTMXMPFJdCjYn+DVo1TWddxKSnZDU1+iBw==
   dependencies:
     "@greymass/buoy" "^1.0.3"
     "@greymass/miniaes" "^1.0.0"
     isomorphic-ws "^5.0.0"
     ws "^8.13.0"
 
-"@wharfkit/wallet-plugin-cleos@^0.3.1":
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/@wharfkit/wallet-plugin-cleos/-/wallet-plugin-cleos-0.3.1.tgz#aed1793fff22e67d397172d5fa078d126b533dae"
-  integrity sha512-ISfh1WMXpveGC9pAHebsmuC5tappa0TYXSi5EjbfWcutNOz3WptPcNLkQnjGBrt1ZiWTn7YWrhtr+ZNpQ8ZUHA==
+"@wharfkit/wallet-plugin-cleos@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@wharfkit/wallet-plugin-cleos/-/wallet-plugin-cleos-0.4.0.tgz#b5c140049f02278dec1205171341343e1f42eb75"
+  integrity sha512-3n3Hehs6zq1nEPoX3zLal3t42vIX6o6CyUeyvIeSoFof6zIJwooaFORR8NR/MfJD5WOI/z60H8lxpkoJ/+oAgA==
   dependencies:
     tslib "^2.1.0"
 
-"@wharfkit/wallet-plugin-cloudwallet@^0.3.2":
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/@wharfkit/wallet-plugin-cloudwallet/-/wallet-plugin-cloudwallet-0.3.2.tgz#7fc3e8ad062687f4f483691a3dbe6e076b7f0155"
-  integrity sha512-sc4Sg02hCNjVclBIiZ7f/zFNigpk52AZB+EiOQfrwfqwi+Uqa5ZT2EvE7ESWl8FVTVi0kTPs+qdlS4hY0Nq5Gg==
+"@wharfkit/wallet-plugin-cloudwallet@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@wharfkit/wallet-plugin-cloudwallet/-/wallet-plugin-cloudwallet-0.4.0.tgz#61908a33be384ce7090d4d1f954db09b71483049"
+  integrity sha512-hW489WJjDfhJhmSeuyjQTIdM7kEyeS/6qmA7yzK4ReqiACEoyofw1oyVieVu3bfdm+rnKwHb8DFBG/h4aVSa1w==
   dependencies:
     tslib "^2.1.0"
 
-"@wharfkit/wallet-plugin-mock@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@wharfkit/wallet-plugin-mock/-/wallet-plugin-mock-0.3.0.tgz#1d96ad466766cfc8eed3757eb910ecb56937df97"
-  integrity sha512-EmunrKyH9BVTUB+eXCepo0rBzh19dLRRveqfawSYg+FTIlInnaDIHS2S6J9jpJ0xqBEpnIpar/vEWJChUT97mg==
+"@wharfkit/wallet-plugin-mock@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@wharfkit/wallet-plugin-mock/-/wallet-plugin-mock-0.4.0.tgz#b317e2f21ccb3a4df11338ecba60854a2e493901"
+  integrity sha512-g06eO+mlpltqanb60xzLRNGR+XhWFQYNMj6BoMT5XTNcWfmE8mjoGnUf5ApjLXcv+mVgN8BrJHpV5XxTwvVa7g==
   dependencies:
     tslib "^2.1.0"
 
-"@wharfkit/wallet-plugin-privatekey@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@wharfkit/wallet-plugin-privatekey/-/wallet-plugin-privatekey-0.3.0.tgz#a54b03c9b71cbdb132a33eceaf6afec5066be101"
-  integrity sha512-ysEqenJ5CrL4Aja0qVtr3ya4Ah2ADuA4e+16mPMtBGcdDpmFkK/rF8006icLuHNQRXYh5QQTRiVrkQN04V+mZQ==
+"@wharfkit/wallet-plugin-privatekey@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@wharfkit/wallet-plugin-privatekey/-/wallet-plugin-privatekey-0.4.0.tgz#1f7050850b161699cf854f7898e2a081743008a7"
+  integrity sha512-mUpHssEEqbCiOhwI2xTbo+rLfTUx86E+82EBVaWmb43U+OV1Pg/FnYcNkMaI8U5pYgbKVphBBWVymfaQ8uDTcw==
   dependencies:
     tslib "^2.1.0"
 
