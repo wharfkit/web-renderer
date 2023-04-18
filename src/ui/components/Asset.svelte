@@ -14,11 +14,11 @@
 
 <style lang="scss">
     .asset {
-        padding: 10px 0;
         text-align: center;
 
         > * {
             margin: 0;
+            line-height: 1.5;
         }
     }
 
