@@ -55,6 +55,7 @@ Globals and custom properties
 
     --error-color: var(--color-error-1);
 
+    --list-item-background-color-hover: var(--color-custom-9);
     --list-item-text-color-hover: var(--color-secondary-500);
     --list-divider-color: #00000010;
 
@@ -187,6 +188,7 @@ Dark Theme
     --color-custom-6: #777b8b;
     --color-custom-7: #35ccae10;
     --color-custom-8: #575c6e;
+    --color-custom-9: #f4f5f7;
     --color-error-1: #cd3939;
     --color-error-2: #ff5454;
     --color-error-3: #ffacac;

@@ -13,7 +13,9 @@
     <button on:click={onClick}>
         <div class="leading">
             {#if logo}
-                <img class="logo" src={logo} alt={''} />
+                <div class="logo">
+                    <img src={logo} alt={`${label} logo`} />
+                </div>
             {:else if leadingIcon}
                 <div class="icon">
                     <Icon name={leadingIcon} />
@@ -24,7 +26,7 @@
         <span>{label}</span>
 
         {#if trailingIcon}
-            <div class="icon trailing">
+            <div class="trailing">
                 <Icon name={trailingIcon} />
             </div>
         {/if}
@@ -44,7 +46,6 @@
         flex: 1;
         display: flex;
         align-items: center;
-        gap: var(--space-s);
         cursor: pointer;
         border: none;
         background: none;
@@ -54,29 +55,26 @@
         padding-block: var(--space-s);
     }
 
-    .leading {
-        flex-basis: var(--space-xl);
+    .leading > * {
         display: grid;
         place-content: center;
-        height: 32px;
-        min-height: 32px;
-        width: 32px;
-        min-width: 32px;
-        .icon,
-        .logo {
-            max-width: 32px;
-            max-height: 32px;
-        }
+        inline-size: var(--space-xl);
     }
 
-    .icon.trailing {
+    .leading img {
+        max-inline-size: 30px;
+        max-block-size: 30px;
+        object-fit: contain;
+    }
+
+    .trailing {
         opacity: 0.2;
     }
 
     li button:hover {
         background: var(--list-item-background-color-hover);
 
-        & .icon.trailing {
+        & .trailing {
             opacity: 1;
         }
     }
@@ -87,5 +85,6 @@
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+        padding-inline-start: var(--space-xs);
     }
 </style>
