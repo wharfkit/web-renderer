@@ -6,7 +6,9 @@ import {
     TransactContext,
     UserInterfaceLoginResponse,
 } from '@wharfkit/session'
+import type {ColorScheme} from '../types'
 import {Writable, writable} from 'svelte/store'
+import {getStoredColorScheme} from '../lib/utils'
 
 // Reset data in all stores
 export function resetState() {
@@ -139,3 +141,10 @@ export const loginResponse = writable<UserInterfaceLoginData>({...defaultLoginRe
 export const errorDetails = writable<string | undefined>(undefined)
 
 export const backAction = writable<Function | undefined>(undefined)
+
+// define a writable store to hold the color scheme preference and set the initial color scheme preference based on localStorage
+export const colorScheme = writable<ColorScheme>(getStoredColorScheme() || 'light')
+// listen for changes to the color scheme preference and update localStorage
+colorScheme.subscribe((value) => {
+    localStorage.setItem('colorScheme', value)
+})

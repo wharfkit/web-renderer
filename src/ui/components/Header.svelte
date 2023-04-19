@@ -3,6 +3,7 @@
     import HeaderButton from './HeaderButton.svelte'
     import {backAction} from '../state'
     import {fade} from 'svelte/transition'
+    import ThemeToggle from './ThemeToggle.svelte'
 
     export let title: string
     export let subtitle: string | undefined
@@ -20,6 +21,8 @@
                     <HeaderButton icon="chevron-left" onClick={$backAction} />
                 </div>
             {/if}
+
+            <ThemeToggle />
         </slot>
     </div>
     <div class="slot center">

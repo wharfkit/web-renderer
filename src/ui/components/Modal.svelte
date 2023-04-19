@@ -1,6 +1,6 @@
 <script lang="ts">
     import Header from './Header.svelte'
-    import {active, cancelablePromises, resetState, props} from '../state'
+    import {active, cancelablePromises, resetState, props, colorScheme} from '../state'
     import {onDestroy} from 'svelte'
 
     let dialog: HTMLDialogElement
@@ -52,6 +52,7 @@
     bind:this={dialog}
     on:click|capture|nonpassive={backgroundClose}
     on:keyup|preventDefault|capture|nonpassive={escapeClose}
+    data-theme={$colorScheme}
 >
     <Header title={$props.title} subtitle={$props.subtitle} on:cancel={cancelRequest} />
     <div class="modal-content">
@@ -60,7 +61,7 @@
 </dialog>
 
 <style lang="scss">
-    @use '../../styles/variables.css';
+    @import '../../styles/variables';
 
     dialog {
         --margin-top: var(--space-xl);
