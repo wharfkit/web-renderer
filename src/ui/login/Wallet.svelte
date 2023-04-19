@@ -4,8 +4,9 @@
     import Icon from '../components/Icon.svelte'
     import List from '../components/List.svelte'
     import ListItem from '../components/ListItem.svelte'
-    import {isBase64Image} from '../../lib/utils'
+    import {isBase64Image, isUrlImage} from '../../lib/utils'
     import BodyTitle from '../components/BodyTitle.svelte'
+    import type {ColorScheme} from '../../types'
     export let wallets: UserInterfaceWalletPlugin[]
     export let title: string
 
@@ -14,16 +15,24 @@
         cancel: void
     }>()
 
-    const hasValidLogo = ({metadata: {logo, name}}: UserInterfaceWalletPlugin) => {
-        if (isBase64Image(logo)) {
-            return true
-        } else {
-            console.warn(`${name} logo is not a valid base64 image`)
-            return false
+    const getLogo = (
+        wallet: UserInterfaceWalletPlugin,
+        colorScheme: ColorScheme
+    ): string | undefined => {
+        const {logo, name} = wallet.metadata ?? {}
+        if (!logo) {
+            console.warn(`${name} does not have a logo.`)
+            return
         }
+        const oppositeColorScheme = colorScheme === 'light' ? 'dark' : 'light'
+        const themedLogo: string = logo[colorScheme] ?? logo[oppositeColorScheme]
+        if (isBase64Image(themedLogo) || isUrlImage(themedLogo)) {
+            return themedLogo
+        }
+        console.warn(`${name} ${colorScheme} logo is not a supported image format.`)
     }
 
-    let colorScheme = 'light'
+    let colorScheme: ColorScheme = 'light'
     if (window.matchMedia) {
         if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
             colorScheme = 'dark'
@@ -43,7 +52,7 @@
                     label={wallet.metadata.name}
                     onClick={() => dispatch('select', index)}
                     leadingIcon="wallet"
-                    logo={hasValidLogo(wallet) ? wallet.metadata.logo[colorScheme] : undefined}
+                    logo={getLogo(wallet, colorScheme)}
                 />
             {/each}
         </List>
