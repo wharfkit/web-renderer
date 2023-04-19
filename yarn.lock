@@ -3049,10 +3049,10 @@
     isomorphic-ws "^5.0.0"
     ws "^8.13.0"
 
-"@wharfkit/wallet-plugin-cleos@^0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@wharfkit/wallet-plugin-cleos/-/wallet-plugin-cleos-0.4.0.tgz#b5c140049f02278dec1205171341343e1f42eb75"
-  integrity sha512-3n3Hehs6zq1nEPoX3zLal3t42vIX6o6CyUeyvIeSoFof6zIJwooaFORR8NR/MfJD5WOI/z60H8lxpkoJ/+oAgA==
+"@wharfkit/wallet-plugin-cleos@^0.4.1":
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/@wharfkit/wallet-plugin-cleos/-/wallet-plugin-cleos-0.4.1.tgz#aaad9f32254cf43023d142de07ea5bc8309da6fe"
+  integrity sha512-scxhjuLEJr7c79ROFYGSGCRmqaCyKVtp8oRkksicY/ZR6HIrtGLMFxL8Ws+uRis8KKvCOu3Vc88q47CCnHZTnQ==
   dependencies:
     tslib "^2.1.0"
 
