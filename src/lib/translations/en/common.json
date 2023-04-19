@@ -28,7 +28,7 @@
     "transact": {
         "title": "Transact",
         "subtitle": " ",
-        "processing": "Doing transact stuffs - cool animation!",
+        "processing": "Processing transaction...",
         "signing": "Signing transaction",
         "signed": "Transaction signed",
         "broadcasting": "Broadcasting transaction",

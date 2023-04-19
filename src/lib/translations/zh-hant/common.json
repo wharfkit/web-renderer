@@ -28,7 +28,7 @@
     "transact": {
         "title": "辦理",
         "subtitle": "",
-        "processing": "做交易的東西 - 很酷的動畫！",
+        "processing": "Processing transaction...",
         "signing": "簽署交易",
         "signed": "交易已簽署",
         "broadcasting": "廣播交易",
