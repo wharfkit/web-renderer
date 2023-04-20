@@ -28,7 +28,7 @@
     "transact": {
         "title": "办理",
         "subtitle": " ",
-        "processing": "做交易的东西 - 很酷的动画！",
+        "processing": "Processing transaction...",
         "signing": "签署交易",
         "signed": "交易已签署",
         "broadcasting": "广播交易",

@@ -6,11 +6,11 @@ Globals and custom properties
 */
 
 /****************** 
-    Default Theme 
+    Light Theme 
 ******************/
 
-:host dialog,
-:root {
+@mixin light-theme {
+    color-scheme: light;
     --body-background-color: white;
     --body-text-color: var(--color-primary-700);
     --body-text-color-variant: var(--color-neutral-700);
@@ -54,54 +54,86 @@ Globals and custom properties
     --checkbox-fill: var(--reef-turquoise);
 
     --error-color: var(--color-error-1);
+
+    --list-item-background-color-hover: var(--color-custom-9);
+    --list-item-text-color-hover: var(--color-secondary-500);
+    --list-divider-color: #00000010;
+
+    --text-area-background: var(--swell-mist);
+    --text-area-text-color: #242424;
 }
 
-/****************** 
-    Dark Theme 
-******************/
+@mixin dark-theme {
+    color-scheme: dark;
+    --body-background-color: var(--color-primary-700);
+    --body-text-color: white;
+    --body-text-color-variant: var(--color-neutral-300);
 
+    --header-background-color: white;
+    --header-text-color: var(--color-primary-700);
+    --header-button-background: var(--header-background-color);
+    --header-button-outline: var(--seafoam-mint);
+
+    --button-text-color: var(--body-text-color);
+    --button-text-color-active: var(--reef-turquoise);
+    --button-outline-active: inset 0 0 0 2px var(--reef-turquoise);
+
+    --button-primary-background: var(--color-secondary-500);
+    --button-primary-background-hover: var(--color-secondary-500);
+    --button-primary-background-active: var(--color-custom-2);
+    --button-primary-outline-hover: inset 0 0 0 1px white;
+
+    --button-secondary-background: var(--color-primary-800);
+    --button-secondary-background-hover: var(--color-primary-800);
+    --button-secondary-background-active: var(--color-primary-900);
+    --button-secondary-outline-hover: inset 0 0 0 1px #ffffff30;
+
+    --button-outlined-background-active: var(--color-primary-900);
+    --button-outlined-outline: inset 0 0 0 1px #00000030;
+    --button-outlined-outline-hover: inset 0 0 0 1px #ffffff30;
+
+    --input-placeholder-color: #ffffff75;
+    --input-background-focus: var(--color-custom-4);
+    --input-border-color: #ffffff30;
+    --input-border-color-hover: var(--color-custom-6);
+    --input-border-color-focus: var(--reef-turquoise);
+
+    --qr-border-color: rgba(0 0 0 / 0.2);
+
+    --checkbox-stroke: var(--reef-turquoise);
+    --checkbox-fill: var(--color-custom-3);
+
+    --error-color: var(--color-error-3);
+
+    --list-item-background-color-hover: var(--color-custom-8);
+    --list-item-text-color-hover: var(--color-secondary-400);
+    --list-divider-color: #ffffff10;
+
+    --text-area-background: var(--color-primary-900);
+    --text-area-text-color: #ffffff;
+}
+
+// Default theme, no user or system preference
+:host dialog,
+:root {
+    @include light-theme;
+}
+
+// No system preference, User prefers dark theme
+:host dialog[data-theme='dark'] {
+    @include dark-theme;
+}
+
+// System dark mode enables dark theme
 @media (prefers-color-scheme: dark) {
     :host dialog,
     :root {
-        --body-background-color: var(--color-primary-700);
-        --body-text-color: white;
-        --body-text-color-variant: var(--color-neutral-300);
+        @include dark-theme;
+    }
 
-        --header-background-color: white;
-        --header-text-color: var(--color-primary-700);
-        --header-button-background: var(--header-background-color);
-        --header-button-outline: var(--seafoam-mint);
-
-        --button-text-color: var(--body-text-color);
-        --button-text-color-active: var(--reef-turquoise);
-        --button-outline-active: inset 0 0 0 2px var(--reef-turquoise);
-
-        --button-primary-background: var(--color-secondary-500);
-        --button-primary-background-hover: var(--color-secondary-500);
-        --button-primary-background-active: var(--color-custom-2);
-        --button-primary-outline-hover: inset 0 0 0 1px white;
-
-        --button-secondary-background: var(--color-primary-800);
-        --button-secondary-background-hover: var(--color-primary-800);
-        --button-secondary-background-active: var(--color-primary-900);
-        --button-secondary-outline-hover: inset 0 0 0 1px #ffffff30;
-
-        --button-outlined-background-active: var(--color-primary-900);
-        --button-outlined-outline: inset 0 0 0 1px #00000030;
-        --button-outlined-outline-hover: inset 0 0 0 1px #ffffff30;
-
-        --input-placeholder-color: #ffffff75;
-        --input-background-focus: var(--color-custom-4);
-        --input-border-color: #ffffff30;
-        --input-border-color-hover: var(--color-custom-6);
-        --input-border-color-focus: var(--reef-turquoise);
-
-        --qr-border-color: rgba(0 0 0 / 0.2);
-
-        --checkbox-stroke: var(--reef-turquoise);
-        --checkbox-fill: var(--color-custom-3);
-
-        --error-color: var(--color-error-3);
+    // User prefers light theme in system dark mode
+    :host dialog[data-theme='light'] {
+        @include light-theme;
     }
 }
 
@@ -172,6 +204,9 @@ Globals and custom properties
     --color-custom-4: #3d435a;
     --color-custom-5: #8ec2b4;
     --color-custom-6: #777b8b;
+    --color-custom-7: #35ccae10;
+    --color-custom-8: #575c6e;
+    --color-custom-9: #f4f5f7;
     --color-error-1: #cd3939;
     --color-error-2: #ff5454;
     --color-error-3: #ffacac;
@@ -179,7 +214,8 @@ Globals and custom properties
     /****************** 
         Typography 
     ******************/
-    font-family: system-ui, ui-sans-serif;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+        Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     --measure: 35ch;
 
     /* Font Sizing - Fixed */
@@ -191,11 +227,6 @@ Globals and custom properties
 
     /* Font Sizing - Fluid */
     /* @link https://utopia.fyi/type/calculator?c=320,12,1.125,1240,16,1.25,3,0,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
-
-    /* --fs-0: clamp(0.75rem, calc(0.66rem + 0.43vw), 1rem);
-    --fs-1: clamp(0.84rem, calc(0.7rem + 0.71vw), 1.25rem);
-    --fs-2: clamp(0.95rem, calc(0.74rem + 1.07vw), 1.56rem);
-    --fs-3: clamp(1.07rem, calc(0.76rem + 1.54vw), 1.95rem); */
 
     /****************** 
       Size and Spacing 
@@ -222,92 +253,6 @@ Globals and custom properties
 
     /* Spacing Scale - Fluid */
     /* @link https://utopia.fyi/space/calculator?c=320,12,1.2,1240,16,1.25,3,0,&s=0.75|0.5|0.25,1.5|2|3|4|6|10|16|25|30|40,s-l&g=s,l,xl,12 */
-
-    /* Space 3xs: 3px → 4px */
-    /* --space-3xs: clamp(0.19rem, calc(0.17rem + 0.11vw), 0.25rem); */
-
-    /* Space 2xs: 6px → 8px */
-    /* --space-2xs: clamp(0.38rem, calc(0.33rem + 0.22vw), 0.5rem); */
-
-    /* Space xs: 9px → 12px */
-    /* --space-xs: clamp(0.56rem, calc(0.5rem + 0.33vw), 0.75rem); */
-
-    /* Space s: 12px → 16px */
-    /* --space-s: clamp(0.75rem, calc(0.66rem + 0.43vw), 1rem); */
-
-    /* Space m: 18px → 24px */
-    /* --space-m: clamp(1.13rem, calc(0.99rem + 0.65vw), 1.5rem); */
-
-    /* Space l: 24px → 32px */
-    /* --space-l: clamp(1.5rem, calc(1.33rem + 0.87vw), 2rem); */
-
-    /* Space xl: 36px → 48px */
-    /* --space-xl: clamp(2.25rem, calc(1.99rem + 1.3vw), 3rem); */
-
-    /* Space 2xl: 48px → 64px */
-    /* --space-2xl: clamp(3rem, calc(2.65rem + 1.74vw), 4rem); */
-
-    /* Space 3xl: 72px → 96px */
-    /* --space-3xl: clamp(4.5rem, calc(3.98rem + 2.61vw), 6rem); */
-
-    /* Space 4xl: 120px → 160px */
-    /* --space-4xl: clamp(7.5rem, calc(6.63rem + 4.35vw), 10rem); */
-
-    /* Space 5xl: 192px → 256px */
-    /* --space-5xl: clamp(12rem, calc(10.61rem + 6.96vw), 16rem); */
-
-    /* Space 6xl: 300px → 400px */
-    /* --space-6xl: clamp(18.75rem, calc(16.58rem + 10.87vw), 25rem); */
-
-    /* Space 7xl: 360px → 480px */
-    /* --space-7xl: clamp(22.5rem, calc(19.89rem + 13.04vw), 30rem); */
-
-    /* Space 8xl: 480px → 640px */
-    /* --space-8xl: clamp(30rem, calc(26.52rem + 17.39vw), 40rem); */
-
-    /* One-up pairs */
-    /* Space 3xs-2xs: 3px → 8px */
-    /* --space-3xs-2xs: clamp(0.19rem, calc(0.08rem + 0.54vw), 0.5rem); */
-
-    /* Space 2xs-xs: 6px → 12px */
-    /* --space-2xs-xs: clamp(0.38rem, calc(0.24rem + 0.65vw), 0.75rem); */
-
-    /* Space xs-s: 9px → 16px */
-    /* --space-xs-s: clamp(0.56rem, calc(0.41rem + 0.76vw), 1rem); */
-
-    /* Space s-m: 12px → 24px */
-    /* --space-s-m: clamp(0.75rem, calc(0.49rem + 1.3vw), 1.5rem); */
-
-    /* Space m-l: 18px → 32px */
-    /* --space-m-l: clamp(1.13rem, calc(0.82rem + 1.52vw), 2rem); */
-
-    /* Space l-xl: 24px → 48px */
-    /* --space-l-xl: clamp(1.5rem, calc(0.98rem + 2.61vw), 3rem); */
-
-    /* Space xl-2xl: 36px → 64px */
-    /* --space-xl-2xl: clamp(2.25rem, calc(1.64rem + 3.04vw), 4rem); */
-
-    /* Space 2xl-3xl: 48px → 96px */
-    /* --space-2xl-3xl: clamp(3rem, calc(1.96rem + 5.22vw), 6rem); */
-
-    /* Space 3xl-4xl: 72px → 160px */
-    /* --space-3xl-4xl: clamp(4.5rem, calc(2.59rem + 9.57vw), 10rem); */
-
-    /* Space 4xl-5xl: 120px → 256px */
-    /* --space-4xl-5xl: clamp(7.5rem, calc(4.54rem + 14.78vw), 16rem); */
-
-    /* Space 5xl-6xl: 192px → 400px */
-    /* --space-5xl-6xl: clamp(12rem, calc(7.48rem + 22.61vw), 25rem); */
-
-    /* Space 6xl-7xl: 300px → 480px */
-    /* --space-6xl-7xl: clamp(18.75rem, calc(14.84rem + 19.57vw), 30rem); */
-
-    /* Space 7xl-8xl: 360px → 640px */
-    /* --space-7xl-8xl: clamp(22.5rem, calc(16.41rem + 30.43vw), 40rem); */
-
-    /* Custom pairs */
-    /* Space s-l: 12px → 32px */
-    /* --space-s-l: clamp(0.75rem, calc(0.32rem + 2.17vw), 2rem); */
 
     /* Other sizes */
     --border-radius-outer: 24px;

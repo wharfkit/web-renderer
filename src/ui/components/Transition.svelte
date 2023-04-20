@@ -3,6 +3,6 @@
     export let direction: number = 0
 </script>
 
-<div in:fly={{duration: 200, x: direction}}>
+<div class="transition" in:fly={{duration: 200, x: direction}}>
     <slot />
 </div>

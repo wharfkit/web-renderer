@@ -1,6 +1,6 @@
 <script lang="ts">
     import Header from './Header.svelte'
-    import {active, cancelablePromises, resetState, props} from '../state'
+    import {active, cancelablePromises, resetState, props, colorScheme} from '../state'
     import {onDestroy} from 'svelte'
 
     let dialog: HTMLDialogElement
@@ -35,7 +35,7 @@
             event.clientY <= rect.top + rect.height &&
             rect.left <= event.clientX &&
             event.clientX <= rect.left + rect.width
-        if (!isInDialog) {
+        if (event.target === dialog && !isInDialog) {
             cancelRequest()
         }
     }
@@ -52,6 +52,7 @@
     bind:this={dialog}
     on:click|capture|nonpassive={backgroundClose}
     on:keyup|preventDefault|capture|nonpassive={escapeClose}
+    data-theme={$colorScheme}
 >
     <Header title={$props.title} subtitle={$props.subtitle} on:cancel={cancelRequest} />
     <div class="modal-content">
@@ -60,11 +61,10 @@
 </dialog>
 
 <style lang="scss">
-    @use '../../styles/variables.css';
+    @import '../../styles/variables';
 
     dialog {
         --margin-top: var(--space-xl);
-        // font-family: system-ui, ui-sans-serif;
         font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
             Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         margin-bottom: 0;
