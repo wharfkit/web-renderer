@@ -21,16 +21,16 @@
                     <HeaderButton icon="chevron-left" onClick={$backAction} />
                 </div>
             {/if}
-
-            <ThemeToggle />
         </slot>
     </div>
     <div class="slot center">
         <slot name="center">
-            <h2>{title}</h2>
-            {#if subtitle}
-                <p>{subtitle}</p>
-            {/if}
+            <ThemeToggle>
+                <h2>{title}</h2>
+                {#if subtitle}
+                    <p>{subtitle}</p>
+                {/if}
+            </ThemeToggle>
         </slot>
     </div>
     <div class="slot right">
@@ -68,6 +68,7 @@
         }
 
         :is(h2, p) {
+            color: var(--header-text-color);
             margin: 0;
             line-height: 1.1em;
         }

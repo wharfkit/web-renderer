@@ -21,10 +21,21 @@
     })
 </script>
 
-<label>
-    <input type="checkbox" on:change={toggleColorScheme} checked={$colorScheme === 'dark'} />
-    Current Theme: {$colorScheme}
-</label>
+<button on:click={toggleColorScheme}>
+    <slot />
+</button>
 
-<style>
+<style lang="scss">
+    button {
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        text-align: center;
+    }
 </style>
