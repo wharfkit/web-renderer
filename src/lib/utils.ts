@@ -16,7 +16,7 @@ export function getThemedLogo(
     metadata: WalletPluginMetadata | ChainDefinition
 ): string | undefined {
     const {name, logo} = metadata
-    const theme = get(colorScheme)
+    const theme = get(colorScheme) as ColorScheme
     const oppositeColorScheme = theme === 'light' ? 'dark' : 'light'
 
     if (!logo) {

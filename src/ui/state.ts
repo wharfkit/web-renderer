@@ -143,8 +143,8 @@ export const errorDetails = writable<string | undefined>(undefined)
 export const backAction = writable<Function | undefined>(undefined)
 
 // define a writable store to hold the color scheme preference and set the initial color scheme preference based on localStorage
-export const colorScheme = writable<ColorScheme>(getStoredColorScheme() || 'light')
+export const colorScheme = writable<ColorScheme | null>(getStoredColorScheme())
 // listen for changes to the color scheme preference and update localStorage
 colorScheme.subscribe((value) => {
-    localStorage.setItem('colorScheme', value)
+    if (value) localStorage.setItem('colorScheme', value)
 })

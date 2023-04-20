@@ -8,15 +8,13 @@
     }
 
     onMount(() => {
-        // initialize the color scheme based on user preference or system default
+        // initialize the color scheme based on existing user preference otherwise system default
         if (window.matchMedia) {
             const mql = window.matchMedia('(prefers-color-scheme: dark)')
             colorScheme.set(getStoredColorScheme() ?? (mql.matches ? 'dark' : 'light'))
             mql.addEventListener('change', () => {
                 colorScheme.set(mql.matches ? 'dark' : 'light')
             })
-        } else {
-            colorScheme.set(getStoredColorScheme() || 'light')
         }
     })
 </script>
