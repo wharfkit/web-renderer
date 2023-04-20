@@ -4,7 +4,6 @@
     import List from '../components/List.svelte'
     import ListItem from '../components/ListItem.svelte'
     import BodyTitle from '../components/BodyTitle.svelte'
-    import {colorScheme} from '../state'
     import {getThemedLogo} from '../../lib/utils'
     export let wallets: UserInterfaceWalletPlugin[]
     export let title: string
@@ -24,7 +23,7 @@
                     label={wallet.metadata.name}
                     onClick={() => dispatch('select', index)}
                     leadingIcon="wallet"
-                    logo={getThemedLogo(wallet, $colorScheme)}
+                    logo={getThemedLogo(wallet.metadata)}
                 />
             {/each}
         </List>

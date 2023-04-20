@@ -1,35 +1,38 @@
-import type {UserInterfaceWalletPlugin} from '@wharfkit/session'
+import type {ChainDefinition, WalletPluginMetadata} from '@wharfkit/session'
 import type {ColorScheme} from '../types'
+import {colorScheme} from '../ui/state'
+import {get} from 'svelte/store'
 
-export function isBase64Image(str: string | undefined): boolean {
-    if (!str) return false
-    const regex = /^data:image\/(jpeg|png|gif|bmp|svg\+xml);base64,([^\s]*)$/
-    return regex.test(str)
+export function isUrlImage(str: string) {
+    return str.startsWith('http://') || str.startsWith('https://')
 }
 
-//function to test a valid url of an image
-export function isUrlImage(str: string | undefined): boolean {
-    if (!str) return false
-    const regex = /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i
-    return regex.test(str)
+export function isBase64Image(str: string) {
+    return str.startsWith('data:image/')
 }
 
 // Returns a themed logo based on the wallet metadata and the current color scheme preference
 export function getThemedLogo(
-    wallet: UserInterfaceWalletPlugin,
-    $colorScheme: ColorScheme
+    metadata: WalletPluginMetadata | ChainDefinition
 ): string | undefined {
-    const {logo, name} = wallet.metadata ?? {}
+    const {name, logo} = metadata
+    const theme = get(colorScheme)
+    const oppositeColorScheme = theme === 'light' ? 'dark' : 'light'
+
     if (!logo) {
+        if ('getLogo' in metadata) {
+            return metadata.getLogo()?.[theme] ?? metadata.getLogo()?.[oppositeColorScheme]
+        }
         console.warn(`${name} does not have a logo.`)
         return
     }
-    const oppositeColorScheme = $colorScheme === 'light' ? 'dark' : 'light'
-    const themedLogo: string = logo[$colorScheme] ?? logo[oppositeColorScheme]
-    if (isBase64Image(themedLogo) || isUrlImage(themedLogo)) {
-        return themedLogo
+
+    if (!isUrlImage(logo.toString()) && !isBase64Image(logo.toString())) {
+        console.warn(`${name} ${theme} logo is not a supported image format.`)
+        return
     }
-    console.warn(`${name} ${$colorScheme} logo is not a supported image format.`)
+
+    return logo[theme] ?? logo[oppositeColorScheme]
 }
 
 export function getStoredColorScheme(): ColorScheme | null {
