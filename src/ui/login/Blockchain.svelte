@@ -1,11 +1,10 @@
 <script lang="ts">
     import {createEventDispatcher, setContext} from 'svelte'
     import {ChainDefinition, Checksum256} from '@wharfkit/session'
-    import Icon from '../components/Icon.svelte'
-    import Button from '../components/Button.svelte'
     import List from '../components/List.svelte'
     import ListItem from '../components/ListItem.svelte'
     import BodyTitle from '../components/BodyTitle.svelte'
+    import {getThemedLogo} from '../../lib/utils'
 
     export let chains: ChainDefinition[]
     export let title: string
@@ -24,8 +23,8 @@
                 <ListItem
                     label={chain.name}
                     onClick={() => dispatch('select', chain.id)}
-                    logo={chain.getLogo()}
                     leadingIcon="wharf"
+                    logo={getThemedLogo(chain)}
                 />
             {/each}
         </List>

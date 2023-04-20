@@ -3,6 +3,7 @@
     import HeaderButton from './HeaderButton.svelte'
     import {backAction} from '../state'
     import {fade} from 'svelte/transition'
+    import ThemeToggle from './ThemeToggle.svelte'
 
     export let title: string
     export let subtitle: string | undefined
@@ -24,10 +25,12 @@
     </div>
     <div class="slot center">
         <slot name="center">
-            <h2>{title}</h2>
-            {#if subtitle}
-                <p>{subtitle}</p>
-            {/if}
+            <ThemeToggle>
+                <h2>{title}</h2>
+                {#if subtitle}
+                    <p>{subtitle}</p>
+                {/if}
+            </ThemeToggle>
         </slot>
     </div>
     <div class="slot right">
@@ -65,6 +68,7 @@
         }
 
         :is(h2, p) {
+            color: var(--header-text-color);
             margin: 0;
             line-height: 1.1em;
         }

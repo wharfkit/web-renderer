@@ -1,11 +1,10 @@
 <script lang="ts">
     import {createEventDispatcher} from 'svelte'
     import {UserInterfaceWalletPlugin} from '@wharfkit/session'
-    import Icon from '../components/Icon.svelte'
     import List from '../components/List.svelte'
     import ListItem from '../components/ListItem.svelte'
-    import {isBase64Image} from '../../lib/utils'
     import BodyTitle from '../components/BodyTitle.svelte'
+    import {getThemedLogo} from '../../lib/utils'
     export let wallets: UserInterfaceWalletPlugin[]
     export let title: string
 
@@ -13,25 +12,6 @@
         select: number
         cancel: void
     }>()
-
-    const hasValidLogo = ({metadata: {logo, name}}: UserInterfaceWalletPlugin) => {
-        if (isBase64Image(logo)) {
-            return true
-        } else {
-            console.warn(`${name} logo is not a valid base64 image`)
-            return false
-        }
-    }
-
-    let colorScheme = 'light'
-    if (window.matchMedia) {
-        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            colorScheme = 'dark'
-        }
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
-            colorScheme = event.matches ? 'dark' : 'light'
-        })
-    }
 </script>
 
 {#if wallets}
@@ -43,7 +23,7 @@
                     label={wallet.metadata.name}
                     onClick={() => dispatch('select', index)}
                     leadingIcon="wallet"
-                    logo={hasValidLogo(wallet) ? wallet.metadata.logo[colorScheme] : undefined}
+                    logo={getThemedLogo(wallet.metadata)}
                 />
             {/each}
         </List>

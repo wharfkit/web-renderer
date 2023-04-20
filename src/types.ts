@@ -1,3 +1,5 @@
+export type ColorScheme = 'light' | 'dark'
+
 export type Space =
     | '--space-3xs'
     | '--space-2xs'
