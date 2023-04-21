@@ -53,6 +53,7 @@
         font-size: var(--fs-1);
         font-weight: 500;
         padding-block: var(--space-s);
+        margin: 0;
     }
 
     .leading > * {
