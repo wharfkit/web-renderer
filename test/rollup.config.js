@@ -33,11 +33,11 @@ function serve() {
 
 const exportFix = `
 (function () {
-    var pkg = WebUIRenderer;
-    WebUIRenderer = pkg.default;
+    var pkg = WebRenderer;
+    WebRenderer = pkg.default;
     for (var key in pkg) {
         if (key === 'default') continue;
-        WebUIRenderer[key] = pkg[key];
+        WebRenderer[key] = pkg[key];
     }
 })()
 `
@@ -50,7 +50,7 @@ const replaceVersion = replace({
 export default {
     input: 'test/index.ts',
     output: {
-        name: 'WebUIRenderer',
+        name: 'WebRenderer',
         file: 'test/public/bundle.js',
         footer: exportFix,
         format: 'iife',

@@ -1,9 +1,9 @@
 // export library
 export * from '../src/index'
 
-// default export is WebUIRenderer class for convenience
-import WebUIRenderer from '../src/index'
-export default WebUIRenderer
+// default export is WebRenderer class for convenience
+import WebRenderer from '../src/index'
+export default WebRenderer
 
 // expose dependencies
 export * from '@wharfkit/session'

@@ -26,12 +26,12 @@ import {
     router,
 } from './ui/state'
 
-export interface WebUIRendererOptions {
+export interface WebRendererOptions {
     id?: string
     translations?: Record<string, Record<string, string>>
 }
 
-export const defaultWebUIRendererOptions = {
+export const defaultWebRendererOptions = {
     id: 'wharfkit-web-ui',
 }
 
@@ -41,7 +41,7 @@ const getNavigatorLanguage = () =>
         : navigator.language || 'en'
     ).split('-')[0]
 
-export class WebUIRenderer extends AbstractUserInterface implements UserInterface {
+export class WebRenderer extends AbstractUserInterface implements UserInterface {
     static version = '__ver' // replaced by build script
 
     public elementId = 'wharfkit-web-ui'
@@ -50,11 +50,11 @@ export class WebUIRenderer extends AbstractUserInterface implements UserInterfac
 
     public i18n
 
-    constructor(options: WebUIRendererOptions = defaultWebUIRendererOptions) {
+    constructor(options: WebRendererOptions = defaultWebRendererOptions) {
         super()
         // Create the dialog element and its shadow root
         this.element = document.createElement('div')
-        this.elementId = options.id || defaultWebUIRendererOptions.id
+        this.elementId = options.id || defaultWebRendererOptions.id
         this.element.id = this.elementId
         this.shadow = this.element.attachShadow({mode: 'closed'})
         // Load translations for the current locale
@@ -91,7 +91,7 @@ export class WebUIRenderer extends AbstractUserInterface implements UserInterfac
 
     log(...args: any[]) {
         // eslint-disable-next-line no-console
-        console.log('WebUIRenderer, LOG:', ...args)
+        console.log('WebRenderer, LOG:', ...args)
     }
 
     login(context: LoginContext): Cancelable<UserInterfaceLoginResponse> {
@@ -264,4 +264,4 @@ export class WebUIRenderer extends AbstractUserInterface implements UserInterfac
     }
 }
 
-export default WebUIRenderer
+export default WebRenderer

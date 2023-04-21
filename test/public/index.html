@@ -15,16 +15,16 @@
                 Session,
                 SignedTransaction,
                 Transaction,
-            } = WebUIRenderer
+            } = WebRenderer
 
-            const autoCorrect = new WebUIRenderer.TransactPluginAutoCorrect()
-            const cosigner = new WebUIRenderer.TransactPluginCosigner({
+            const autoCorrect = new WebRenderer.TransactPluginAutoCorrect()
+            const cosigner = new WebRenderer.TransactPluginCosigner({
                 actor: 'wharfkitnoop',
                 permission: 'cosign',
                 privateKey: '5JfFWg1CWsNTeXTWMyfChXXbyD31TCTknSVGwXDSpT6bPxKYLMM',
             })
-            const explorerLink = new WebUIRenderer.TransactPluginExplorerLink()
-            const mockTransactPlugin = new WebUIRenderer.TransactPluginMock({
+            const explorerLink = new WebRenderer.TransactPluginExplorerLink()
+            const mockTransactPlugin = new WebRenderer.TransactPluginMock({
                 prompt: true,
                 promptOptions: {
                     continueOnAccept: true,
@@ -34,9 +34,9 @@
                 },
             })
 
-            const resourceProvider = new WebUIRenderer.TransactPluginResourceProvider()
+            const resourceProvider = new WebRenderer.TransactPluginResourceProvider()
 
-            const ui = new WebUIRenderer()
+            const ui = new WebRenderer()
 
             const sessionKit = new SessionKit({
                 appName: 'demo-app',
@@ -103,11 +103,11 @@
                 transactPlugins: [],
                 // Various wallet configurations, uncomment one or more to test
                 walletPlugins: [
-                    new WebUIRenderer.WalletPluginAnchor(),
-                    new WebUIRenderer.WalletPluginCleos(),
-                    new WebUIRenderer.WalletPluginCloudWallet(),
-                    new WebUIRenderer.WalletPluginMock(),
-                    new WebUIRenderer.WalletPluginPrivateKey(
+                    new WebRenderer.WalletPluginAnchor(),
+                    new WebRenderer.WalletPluginCleos(),
+                    new WebRenderer.WalletPluginCloudWallet(),
+                    new WebRenderer.WalletPluginMock(),
+                    new WebRenderer.WalletPluginPrivateKey(
                         '5Jtoxgny5tT7NiNFp1MLogviuPJ9NniWjnU4wKzaX4t7pL4kJ8s'
                     ),
                 ],
