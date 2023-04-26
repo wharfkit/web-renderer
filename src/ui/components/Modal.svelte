@@ -35,7 +35,7 @@
             event.clientY <= rect.top + rect.height &&
             rect.left <= event.clientX &&
             event.clientX <= rect.left + rect.width
-        if (event.target === dialog && !isInDialog) {
+        if (!isInDialog) {
             cancelRequest()
         }
     }
@@ -50,8 +50,8 @@
 
 <dialog
     bind:this={dialog}
-    on:click|capture|nonpassive={backgroundClose}
-    on:keyup|preventDefault|capture|nonpassive={escapeClose}
+    on:click|capture|nonpassive|self={backgroundClose}
+    on:keydown|preventDefault={escapeClose}
     data-theme={$colorScheme}
 >
     <Header title={$props.title} subtitle={$props.subtitle} on:cancel={cancelRequest} />

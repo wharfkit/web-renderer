@@ -48,7 +48,7 @@ Globals and custom properties
     --input-border-color-hover: var(--color-custom-5);
     --input-border-color-focus: var(--wharf-blue);
 
-    --qr-border-color: var(--seafoam-mint);
+    --qr-border-color: inset 0 0 0 1px rgba(0 0 0 / 0.3), inset 0 0 0 1px var(--seafoam-mint);
 
     --checkbox-stroke: var(--wharf-blue);
     --checkbox-fill: var(--reef-turquoise);
@@ -98,7 +98,7 @@ Globals and custom properties
     --input-border-color-hover: var(--color-custom-6);
     --input-border-color-focus: var(--reef-turquoise);
 
-    --qr-border-color: rgba(0 0 0 / 0.2);
+    --qr-border-color: inset 0 0 0 1px rgba(0 0 0 / 0.3);
 
     --checkbox-stroke: var(--reef-turquoise);
     --checkbox-fill: var(--color-custom-3);
