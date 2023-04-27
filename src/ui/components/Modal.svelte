@@ -75,6 +75,7 @@
         padding: 0;
         width: min(var(--space-7xl), 100vw - var(--space-m));
         box-shadow: 0px 4px 154px rgba(0, 0, 0, 0.35);
+        background: none;
     }
     dialog::backdrop {
         background: rgba(0, 0, 0, 0.75);
