@@ -9,7 +9,7 @@ import ChevronLeft from './ChevronLeft.svelte'
 import Wallet from './Wallet.svelte'
 import Expand from './Expand.svelte'
 
-export default {
+const icons = {
     copy: Copy,
     check: Check,
     close: Close,
@@ -21,3 +21,6 @@ export default {
     wallet: Wallet,
     expand: Expand,
 }
+
+export type Icon = keyof typeof icons
+export default icons
