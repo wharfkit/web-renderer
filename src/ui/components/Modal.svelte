@@ -50,7 +50,7 @@
 
 <dialog
     bind:this={dialog}
-    on:click|capture|nonpassive={backgroundClose}
+    on:mousedown|capture|nonpassive={backgroundClose}
     on:keydown|capture|nonpassive={escapeClose}
     data-theme={$colorScheme}
 >
