@@ -85,6 +85,7 @@
         );
         padding: var(--space-m);
         background-color: var(--body-background-color);
+        overflow: hidden;
         overflow-y: scroll;
         max-height: var(--max-modal-content-height);
 
