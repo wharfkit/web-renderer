@@ -51,7 +51,7 @@
 <dialog
     bind:this={dialog}
     on:mousedown|capture|nonpassive={backgroundClose}
-    on:keyup|preventDefault|capture|nonpassive={escapeClose}
+    on:keydown|capture|nonpassive={escapeClose}
     data-theme={$colorScheme}
 >
     <Header title={$props.title} subtitle={$props.subtitle} on:cancel={cancelRequest} />
