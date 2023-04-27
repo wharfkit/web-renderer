@@ -61,6 +61,9 @@ Globals and custom properties
 
     --text-area-background: var(--swell-mist);
     --text-area-text-color: #242424;
+
+    --loading-circle-color: var(--reef-turquoise);
+    --loading-circle-track-color: rgba(0 0 0 / 0.05);
 }
 
 @mixin dark-theme {
@@ -111,6 +114,9 @@ Globals and custom properties
 
     --text-area-background: var(--color-primary-900);
     --text-area-text-color: #ffffff;
+
+    --loading-circle-color: var(--seafoam-mint);
+    --loading-circle-track-color: rgba(0 0 0 / 0.05);
 }
 
 // Default theme, no user or system preference

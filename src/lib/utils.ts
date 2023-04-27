@@ -2,6 +2,7 @@ import type {ChainDefinition, WalletPluginMetadata} from '@wharfkit/session'
 import type {ColorScheme} from '../types'
 import {colorScheme} from '../ui/state'
 import {get} from 'svelte/store'
+import icons, {Icon} from '../ui/components/icons'
 
 export function isUrlImage(str: string) {
     return str.startsWith('http://') || str.startsWith('https://')
@@ -9,6 +10,10 @@ export function isUrlImage(str: string) {
 
 export function isBase64Image(str: string) {
     return str.startsWith('data:image/')
+}
+
+export function isValidIcon(str: string): str is Icon {
+    return str in icons
 }
 
 // Returns a themed logo based on the wallet metadata and the current color scheme preference

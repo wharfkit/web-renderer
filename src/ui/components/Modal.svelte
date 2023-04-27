@@ -50,7 +50,7 @@
 
 <dialog
     bind:this={dialog}
-    on:click|capture|nonpassive|self={backgroundClose}
+    on:mousedown|capture|nonpassive|self={backgroundClose}
     on:keydown|preventDefault={escapeClose}
     data-theme={$colorScheme}
 >
@@ -85,6 +85,7 @@
         );
         padding: var(--space-m);
         background-color: var(--body-background-color);
+        overflow: hidden;
         overflow-y: scroll;
         max-height: var(--max-modal-content-height);
 
