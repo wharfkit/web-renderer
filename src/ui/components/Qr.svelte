@@ -62,7 +62,7 @@
         {#if width > 600}
             <button class="expand" on:click={toggleExpanded}>
                 <span class="visually-hidden">Expand</span>
-                <Icon name="expand" size="100%" />
+                <Icon name="expand" size="var(--space-l)" />
             </button>
         {/if}
     </div>
