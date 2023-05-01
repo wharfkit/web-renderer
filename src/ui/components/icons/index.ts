@@ -9,6 +9,8 @@ import ChevronLeft from './ChevronLeft.svelte'
 import Wallet from './Wallet.svelte'
 import Expand from './Expand.svelte'
 import Signal from './Signal.svelte'
+import Error from './Error.svelte'
+import Alert from './Alert.svelte'
 
 const icons = {
     copy: Copy,
@@ -22,6 +24,8 @@ const icons = {
     wallet: Wallet,
     expand: Expand,
     signal: Signal,
+    error: Error,
+    alert: Alert,
 }
 
 export type Icon = keyof typeof icons
