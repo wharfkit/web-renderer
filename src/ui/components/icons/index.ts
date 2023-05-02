@@ -10,6 +10,12 @@ import Wallet from './Wallet.svelte'
 import Expand from './Expand.svelte'
 import Signal from './Signal.svelte'
 import Settings from './Settings.svelte'
+import Globe from './Globe.svelte'
+import Github from './Github.svelte'
+import Info from './Info.svelte'
+import Theme from './Theme.svelte'
+import Waves from './Waves.svelte'
+import ExternalLink from './ExternalLink.svelte'
 
 const icons = {
     copy: Copy,
@@ -24,6 +30,12 @@ const icons = {
     expand: Expand,
     signal: Signal,
     settings: Settings,
+    globe: Globe,
+    github: Github,
+    info: Info,
+    theme: Theme,
+    waves: Waves,
+    'external-link': ExternalLink,
 }
 
 export type Icon = keyof typeof icons

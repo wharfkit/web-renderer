@@ -6,7 +6,7 @@ import {
     TransactContext,
     UserInterfaceLoginResponse,
 } from '@wharfkit/session'
-import type {Theme} from '../types'
+import type {Theme, TransitionDirection} from '../types'
 import {Writable, writable} from 'svelte/store'
 import {getStoredTheme} from '../lib/utils'
 
@@ -27,6 +27,7 @@ export function resetState() {
 
     errorDetails.set(undefined)
     backAction.set(undefined)
+    transitionDirection.set(undefined)
 }
 
 /** Whether or not the interface is active in the browser */
@@ -148,3 +149,5 @@ export const theme = writable<Theme | null>(getStoredTheme())
 theme.subscribe((value) => {
     if (value) localStorage.setItem('theme', value)
 })
+
+export const transitionDirection = writable<TransitionDirection | undefined>(undefined)

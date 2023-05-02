@@ -1,7 +1,7 @@
 <script lang="ts">
     import {createEventDispatcher} from 'svelte'
     import HeaderButton from './HeaderButton.svelte'
-    import {backAction} from '../state'
+    import {backAction, router, transitionDirection} from '../state'
     import {fade} from 'svelte/transition'
     import ThemeToggle from './ThemeToggle.svelte'
 
@@ -17,13 +17,15 @@
     <div class="slot left">
         <slot name="left">
             {#if $backAction}
-                <div transition:fade={{duration: 100}}>
-                    <HeaderButton icon="chevron-left" onClick={$backAction} />
-                </div>
+                <HeaderButton icon="chevron-left" onClick={$backAction} />
             {:else}
-                <div transition:fade={{duration: 100}}>
-                    <HeaderButton icon="settings" onClick={() => {}} />
-                </div>
+                <HeaderButton
+                    icon="settings"
+                    onClick={() => {
+                        router.push('settings')
+                        $transitionDirection = 'rtl'
+                    }}
+                />
             {/if}
         </slot>
     </div>
