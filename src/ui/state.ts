@@ -6,9 +6,9 @@ import {
     TransactContext,
     UserInterfaceLoginResponse,
 } from '@wharfkit/session'
-import type {ColorScheme} from '../types'
+import type {Theme} from '../types'
 import {Writable, writable} from 'svelte/store'
-import {getStoredColorScheme} from '../lib/utils'
+import {getStoredTheme} from '../lib/utils'
 
 // Reset data in all stores
 export function resetState() {
@@ -35,15 +35,16 @@ export const active = writable<boolean>(false)
 /** The properties of the UserInterface */
 export interface UserInterfaceProps {
     error?: Error
-    language: string
-    subtitle: string
     title: string
+    subtitle: string
+    language: string
+    theme?: Theme
 }
 
 export const defaultUserInterfaceProps: UserInterfaceProps = {
-    language: 'en',
-    subtitle: 'Status Message',
     title: 'Wharf',
+    subtitle: 'Status Message',
+    language: 'en',
 }
 
 export const props = writable<UserInterfaceProps>(defaultUserInterfaceProps)
@@ -142,9 +143,8 @@ export const errorDetails = writable<string | undefined>(undefined)
 
 export const backAction = writable<Function | undefined>(undefined)
 
-// define a writable store to hold the color scheme preference and set the initial color scheme preference based on localStorage
-export const colorScheme = writable<ColorScheme | null>(getStoredColorScheme())
-// listen for changes to the color scheme preference and update localStorage
-colorScheme.subscribe((value) => {
-    if (value) localStorage.setItem('colorScheme', value)
+export const theme = writable<Theme | null>(getStoredTheme())
+
+theme.subscribe((value) => {
+    if (value) localStorage.setItem('theme', value)
 })

@@ -1,4 +1,4 @@
-export type ColorScheme = 'light' | 'dark'
+export type Theme = 'light' | 'dark'
 
 export type PercentageString = `${number}%`
 

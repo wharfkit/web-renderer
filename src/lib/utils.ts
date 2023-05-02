@@ -1,6 +1,6 @@
 import type {ChainDefinition, WalletPluginMetadata} from '@wharfkit/session'
-import type {ColorScheme} from '../types'
-import {colorScheme} from '../ui/state'
+import type {Theme} from '../types'
+import {theme as storedTheme} from '../ui/state'
 import {get} from 'svelte/store'
 import icons, {Icon} from '../ui/components/icons'
 
@@ -21,12 +21,12 @@ export function getThemedLogo(
     metadata: WalletPluginMetadata | ChainDefinition
 ): string | undefined {
     const {name, logo} = metadata
-    const theme = get(colorScheme) as ColorScheme
-    const oppositeColorScheme = theme === 'light' ? 'dark' : 'light'
+    const theme = get(storedTheme) as Theme
+    const oppositeTheme = theme === 'light' ? 'dark' : 'light'
 
     if (!logo) {
         if ('getLogo' in metadata) {
-            return metadata.getLogo()?.[theme] ?? metadata.getLogo()?.[oppositeColorScheme]
+            return metadata.getLogo()?.[theme] ?? metadata.getLogo()?.[oppositeTheme]
         }
         console.warn(`${name} does not have a logo.`)
         return
@@ -37,9 +37,9 @@ export function getThemedLogo(
         return
     }
 
-    return logo[theme] ?? logo[oppositeColorScheme]
+    return logo[theme] ?? logo[oppositeTheme]
 }
 
-export function getStoredColorScheme(): ColorScheme | null {
-    return localStorage.getItem('colorScheme') as ColorScheme
+export function getStoredTheme(): Theme | null {
+    return localStorage.getItem('theme') as Theme
 }

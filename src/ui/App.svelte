@@ -9,6 +9,7 @@
     import Login from './Login.svelte'
     import Modal from './components/Modal.svelte'
     import Transact from './Transact.svelte'
+    import Settings from './Settings.svelte'
 
     import {active, errorDetails, prompt, router, loginPromise} from './state'
     import {i18nType} from 'src/lib/translations'
@@ -53,6 +54,8 @@
             <Login on:cancel={cancel} on:complete={complete} />
         {:else if $router.path === 'transact'}
             <Transact on:cancel={cancel} on:complete={complete} />
+        {:else if $router.path === 'settings'}
+            <Settings on:cancel={cancel} on:complete={complete} />
         {/if}
     {:else}
         <p>Modal inactive</p>

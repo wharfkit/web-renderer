@@ -20,6 +20,10 @@
                 <div transition:fade={{duration: 100}}>
                     <HeaderButton icon="chevron-left" onClick={$backAction} />
                 </div>
+            {:else}
+                <div transition:fade={{duration: 100}}>
+                    <HeaderButton icon="settings" onClick={() => {}} />
+                </div>
             {/if}
         </slot>
     </div>
