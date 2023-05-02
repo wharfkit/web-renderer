@@ -1,6 +1,6 @@
 export type Theme = 'light' | 'dark'
 
-export type TransitionDirection = 'ltr' | 'rtl'
+export type TransitionDirection = 'ltr' | 'rtl' | 'ttb' | 'btt'
 
 export type PercentageString = `${number}%`
 
