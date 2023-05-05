@@ -3,7 +3,6 @@
     import HeaderButton from './HeaderButton.svelte'
     import {backAction, router, transitionDirection} from '../state'
     import {fade} from 'svelte/transition'
-    import ThemeToggle from './ThemeToggle.svelte'
 
     export let title: string
     export let subtitle: string | undefined
@@ -31,12 +30,10 @@
     </div>
     <div class="slot center">
         <slot name="center">
-            <ThemeToggle>
-                <h2>{title}</h2>
-                {#if subtitle}
-                    <p>{subtitle}</p>
-                {/if}
-            </ThemeToggle>
+            <h2>{title}</h2>
+            {#if subtitle}
+                <p>{subtitle}</p>
+            {/if}
         </slot>
     </div>
     <div class="slot right">

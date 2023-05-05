@@ -1,10 +1,19 @@
-<script>
+<script lang="ts">
     import {onMount} from 'svelte'
     import {theme} from '../state'
-    import {getStoredTheme} from '../../lib/utils'
+    import {capitalize, getStoredTheme} from '../../lib/utils'
+    import List from '../components/List.svelte'
+    import ListItem from '../components/ListItem.svelte'
+    import type {Theme} from '../../types'
+
+    const themes = ['automatic', 'dark', 'light'] as Theme[]
 
     function toggleTheme() {
         theme.update((current) => (current === 'light' ? 'dark' : 'light'))
+    }
+
+    function selectTheme(newTheme: Theme) {
+        theme.set(newTheme)
     }
 
     onMount(() => {
@@ -19,22 +28,12 @@
     })
 </script>
 
-<button on:click={toggleTheme}>
-    <slot />
-</button>
-
-<style lang="scss">
-    button {
-        background: none;
-        border: none;
-        padding: 0;
-        cursor: pointer;
-
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        text-align: center;
-        align-items: center;
-    }
-</style>
+<List>
+    {#each themes as themeOption}
+        <ListItem
+            label={capitalize(themeOption)}
+            onClick={() => selectTheme(themeOption)}
+            trailingIcon={$theme === themeOption ? 'check' : null}
+        />
+    {/each}
+</List>

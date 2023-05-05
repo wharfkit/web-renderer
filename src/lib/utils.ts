@@ -43,3 +43,7 @@ export function getThemedLogo(
 export function getStoredTheme(): Theme | null {
     return localStorage.getItem('theme') as Theme
 }
+
+export function capitalize(str: string): string {
+    return str.charAt(0).toUpperCase() + str.slice(1)
+}

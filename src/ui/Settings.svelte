@@ -1,12 +1,17 @@
 <script lang="ts">
     import {writable} from 'svelte/store'
     import {onMount, getContext} from 'svelte'
-    import {backAction, props, router, transitionDirection} from './state'
+    import {backAction, props, router, transitionDirection, initRouter} from './state'
     import BodyTitle from './components/BodyTitle.svelte'
     import {i18nType} from 'src/lib/translations'
     import List from './components/List.svelte'
     import ListItem from './components/ListItem.svelte'
     import Transition from './components/Transition.svelte'
+    import About from './settings/About.svelte'
+    import Theme from './settings/Theme.svelte'
+    import Language from './settings/Language.svelte'
+
+    const settingsRouter = initRouter()
 
     const {t} = getContext<i18nType>('i18n')
 
@@ -39,16 +44,28 @@
     // selectedAnimations.subscribe((value) => setSetting('animations', value))
     // selectedDefaultWallet.subscribe((value) => setSetting('defaultWallet', value))
 
-    onMount(() => {
+    function closeSettings() {
+        $transitionDirection = 'ltr'
+        router.back()
+        backAction.set(undefined)
+    }
+
+    function navigateTo(path: string) {
+        $transitionDirection = 'rtl'
+        settingsRouter.push(path)
         backAction.set(() => {
             $transitionDirection = 'ltr'
-            router.back()
-            backAction.set(undefined)
+            settingsRouter.back()
+            backAction.set(closeSettings)
         })
+    }
+
+    onMount(() => {
+        backAction.set(closeSettings)
 
         $props.title = $t('settings.title', {default: 'Settings'})
         $props.subtitle = $t('settings.subtitle')
-        $transitionDirection = 'ltr'
+        $transitionDirection = 'rtl'
         // settings.theme = theme
         // settings.language = language
         // settings.animations = animations
@@ -57,18 +74,37 @@
 </script>
 
 <div class="settings-menu">
-    <Transition direction={$transitionDirection}>
-        <List>
-            <ListItem label="Theme" onClick={() => {}} leadingIcon="theme" />
-            <ListItem label="Language" onClick={() => {}} leadingIcon="globe" />
-            <ListItem label="Animations" onClick={() => {}} leadingIcon="waves" />
-            <ListItem label="About" onClick={() => {}} leadingIcon="info" />
-            <ListItem
-                label="Report an issue on GitHub"
-                onClick={() => {}}
-                leadingIcon="github"
-                trailingIcon="external-link"
-            />
-        </List>
-    </Transition>
+    {#if !$settingsRouter.path}
+        <Transition direction={$transitionDirection}>
+            <List>
+                <ListItem label="Theme" onClick={() => navigateTo('theme')} leadingIcon="theme" />
+                <ListItem
+                    label="Language"
+                    onClick={() => navigateTo('language')}
+                    leadingIcon="globe"
+                />
+                <ListItem label="Animations" onClick={() => {}} leadingIcon="waves" />
+                <ListItem label="About" onClick={() => navigateTo('about')} leadingIcon="info" />
+                <ListItem
+                    label="Report an issue on GitHub"
+                    onClick={() => {}}
+                    leadingIcon="github"
+                    trailingIcon="external-link"
+                />
+            </List>
+        </Transition>
+    {/if}
+    {#if $settingsRouter.path === 'about'}
+        <Transition direction={$transitionDirection}>
+            <About />
+        </Transition>
+    {:else if $settingsRouter.path === 'theme'}
+        <Transition direction={$transitionDirection}>
+            <Theme />
+        </Transition>
+    {:else if $settingsRouter.path === 'language'}
+        <Transition direction={$transitionDirection}>
+            <Language />
+        </Transition>
+    {/if}
 </div>

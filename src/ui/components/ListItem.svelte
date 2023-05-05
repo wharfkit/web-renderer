@@ -5,7 +5,7 @@
     export let label: string | undefined
     export let onClick
     export let leadingIcon: ComponentProps<Icon>['name'] | undefined = undefined
-    export let trailingIcon: ComponentProps<Icon>['name'] | undefined = 'chevron-right'
+    export let trailingIcon: ComponentProps<Icon>['name'] | undefined | null = 'chevron-right'
     export let logo: string | undefined = undefined
 </script>
 
@@ -54,6 +54,7 @@
         font-weight: 500;
         padding-block: var(--space-s);
         margin: 0;
+        height: calc(var(--space-l) * 2); // 48px
     }
 
     .leading > * {
