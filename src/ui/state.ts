@@ -8,7 +8,6 @@ import {
 } from '@wharfkit/session'
 import type {Theme, TransitionDirection} from '../types'
 import {Writable, writable} from 'svelte/store'
-import {getStoredTheme} from '../lib/utils'
 
 // Reset data in all stores
 export function resetState() {
@@ -37,7 +36,7 @@ export const active = writable<boolean>(false)
 export interface UserInterfaceProps {
     error?: Error
     title: string
-    subtitle: string
+    subtitle?: string
     language: string
     theme?: Theme
 }
@@ -143,11 +142,5 @@ export const loginResponse = writable<UserInterfaceLoginData>({...defaultLoginRe
 export const errorDetails = writable<string | undefined>(undefined)
 
 export const backAction = writable<Function | undefined>(undefined)
-
-export const theme = writable<Theme | null>(getStoredTheme())
-
-theme.subscribe((value) => {
-    if (value) localStorage.setItem('theme', value)
-})
 
 export const transitionDirection = writable<TransitionDirection | undefined>(undefined)

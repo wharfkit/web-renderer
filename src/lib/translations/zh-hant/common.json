@@ -33,5 +33,17 @@
         "signed": "交易已簽署",
         "broadcasting": "廣播交易",
         "broadcasted": "交易廣播"
+    },
+    "settings": {
+        "title": "設置",
+        "language": {
+            "title": "語言"
+        },
+        "theme": {
+            "title": "主題",
+            "automatic": "自動",
+            "light": "光",
+            "dark": "暗"
+        }
     }
 }

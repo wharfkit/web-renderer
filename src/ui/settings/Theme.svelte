@@ -1,39 +1,57 @@
 <script lang="ts">
-    import {onMount} from 'svelte'
-    import {theme} from '../state'
-    import {capitalize, getStoredTheme} from '../../lib/utils'
+    import {getContext} from 'svelte'
+    import {props} from '../state'
+    import {getSetting, setSetting} from '../../lib/utils'
     import List from '../components/List.svelte'
     import ListItem from '../components/ListItem.svelte'
     import type {Theme} from '../../types'
+    import {i18nType} from 'src/lib/translations'
+    import Icon from '../components/Icon.svelte'
+    import ListOption from '../components/ListOption.svelte'
 
-    const themes = ['automatic', 'dark', 'light'] as Theme[]
+    const {t} = getContext<i18nType>('i18n')
 
-    function toggleTheme() {
-        theme.update((current) => (current === 'light' ? 'dark' : 'light'))
+    let selectedTheme = getSetting('theme', undefined) as Theme | undefined
+
+    function setTheme(theme: Theme | undefined) {
+        $props.theme = theme
+        setSetting('theme', theme)
+        selectedTheme = theme
     }
 
-    function selectTheme(newTheme: Theme) {
-        theme.set(newTheme)
+    type ThemeOption = {
+        label: string
+        value: Theme | undefined
     }
 
-    onMount(() => {
-        // initialize the color scheme based on existing user preference otherwise system default
-        if (window.matchMedia) {
-            const mql = window.matchMedia('(prefers-color-scheme: dark)')
-            theme.set(getStoredTheme() ?? (mql.matches ? 'dark' : 'light'))
-            mql.addEventListener('change', () => {
-                theme.set(mql.matches ? 'dark' : 'light')
-            })
-        }
-    })
+    const options: ThemeOption[] = [
+        {
+            label: $t('settings.theme.automatic'),
+            value: undefined,
+        },
+        {
+            label: $t('settings.theme.dark'),
+            value: 'dark',
+        },
+        {
+            label: $t('settings.theme.light'),
+            value: 'light',
+        },
+    ]
 </script>
 
 <List>
-    {#each themes as themeOption}
-        <ListItem
-            label={capitalize(themeOption)}
-            onClick={() => selectTheme(themeOption)}
-            trailingIcon={$theme === themeOption ? 'check' : null}
-        />
+    {#each options as option}
+        <ListItem>
+            <ListOption
+                label={option.label}
+                name="theme"
+                value={option.value}
+                checked={selectedTheme === option.value}
+                bind:group={selectedTheme}
+                onChange={() => setTheme(option.value)}
+                hidden
+            />
+        </ListItem>
     {/each}
 </List>

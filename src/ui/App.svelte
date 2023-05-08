@@ -2,7 +2,7 @@
 </script>
 
 <script lang="ts">
-    import {setContext} from 'svelte'
+    import {setContext, onMount} from 'svelte'
 
     import Error from './Error.svelte'
     import Prompt from './Prompt.svelte'
@@ -11,8 +11,10 @@
     import Transact from './Transact.svelte'
     import Settings from './Settings.svelte'
 
-    import {active, errorDetails, prompt, router, loginPromise} from './state'
+    import {active, errorDetails, prompt, router, loginPromise, props} from './state'
     import {i18nType} from 'src/lib/translations'
+
+    import {getSetting} from '../lib/utils'
 
     // Set the i18n context for all child components
     export let i18n
@@ -42,6 +44,15 @@
         // Go back to previous path and remove it from the history
         router.back()
     }
+
+    onMount(() => {
+        // Initialize the theme
+        const theme = getSetting('theme', undefined)
+
+        if (theme) {
+            $props.theme = theme
+        }
+    })
 </script>
 
 <Modal>

@@ -1,6 +1,6 @@
 import type {ChainDefinition, WalletPluginMetadata} from '@wharfkit/session'
 import type {Theme} from '../types'
-import {theme as storedTheme} from '../ui/state'
+import {props} from 'src/ui/state'
 import {get} from 'svelte/store'
 import icons, {Icon} from '../ui/components/icons'
 
@@ -21,8 +21,15 @@ export function getThemedLogo(
     metadata: WalletPluginMetadata | ChainDefinition
 ): string | undefined {
     const {name, logo} = metadata
-    const theme = get(storedTheme) as Theme
+    let {theme} = get(props)
     const oppositeTheme = theme === 'light' ? 'dark' : 'light'
+
+    if (!theme) {
+        // if no theme is set, use the system preference for logo
+        window.matchMedia('(prefers-color-scheme: dark)').matches
+            ? (theme = 'dark')
+            : (theme = 'light')
+    }
 
     if (!logo) {
         if ('getLogo' in metadata) {
@@ -40,10 +47,23 @@ export function getThemedLogo(
     return logo[theme] ?? logo[oppositeTheme]
 }
 
-export function getStoredTheme(): Theme | null {
-    return localStorage.getItem('theme') as Theme
-}
-
 export function capitalize(str: string): string {
     return str.charAt(0).toUpperCase() + str.slice(1)
+}
+
+export const getSetting = (key: string, defaultValue: any = undefined) => {
+    const value = localStorage.getItem(key)
+    return value !== null ? JSON.parse(value) : defaultValue
+}
+
+export const setSetting = (key: string, value: any) => {
+    if (value === undefined) {
+        clearSetting(key)
+        return
+    }
+    localStorage.setItem(key, JSON.stringify(value))
+}
+
+export const clearSetting = (key: string) => {
+    localStorage.removeItem(key)
 }
