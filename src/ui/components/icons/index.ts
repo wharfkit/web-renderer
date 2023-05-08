@@ -17,7 +17,7 @@ import Theme from './Theme.svelte'
 import Waves from './Waves.svelte'
 import ExternalLink from './ExternalLink.svelte'
 
-const icons = {
+const icons: {[index: string]: any} = {
     copy: Copy,
     check: Check,
     close: Close,
