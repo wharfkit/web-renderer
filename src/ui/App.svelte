@@ -46,12 +46,23 @@
     }
 
     onMount(() => {
-        // Initialize the theme
-        const theme = getSetting('theme', undefined)
-
-        if (theme) {
-            $props.theme = theme
-        }
+        // if (window.matchMedia) {
+        // explicit user-defined setting will override the browser theme
+        // const theme = getSetting('theme', undefined)
+        // const mql = window.matchMedia('(prefers-color-scheme: dark)')
+        // if (theme) {
+        // $theme = theme
+        // console.log('mount', $theme)
+        // mql.removeEventListener('change', () => {})
+        // } else {
+        // use the browser theme by default
+        // $theme = mql.matches ? 'dark' : 'light'
+        // update when the user changes device theme
+        // mql.addEventListener('change', () => {
+        //     $theme = mql.matches ? 'dark' : 'light'
+        // })
+        // }
+        // }
     })
 </script>
 

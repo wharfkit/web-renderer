@@ -12,7 +12,7 @@
     let {button = true, href, label, icon, variant = 'outlined'} = data
 </script>
 
-<a class:button class={variant} {href} target="_blank" rel="noreferrer">
+<a class:button class={variant} {href} rel="noreferrer">
     {#if icon}
         <Icon name={icon} />
     {/if}

@@ -1,6 +1,6 @@
 <script lang="ts">
     import {onMount, getContext} from 'svelte'
-    import {backAction, props, router, transitionDirection, initRouter} from './state'
+    import {backAction, props, router, transitionDirection, initRouter, theme} from './state'
     import {i18nType} from 'src/lib/translations'
     import List from './components/List.svelte'
     import ListItem from './components/ListItem.svelte'
@@ -48,9 +48,7 @@
                     label="Theme"
                     onClick={() => navigateTo('theme')}
                     leadingIcon="theme"
-                    value={$props.theme
-                        ? $t(`settings.theme.${$props.theme}`)
-                        : $t('settings.theme.automatic')}
+                    value={$theme ? $t(`settings.theme.${$theme}`) : $t('settings.theme.automatic')}
                 />
                 <ListItem
                     label="Language"

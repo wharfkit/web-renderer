@@ -4,10 +4,12 @@
     import type {PercentageString, Space} from '../../types'
     export let name: Icon
     export let size: Space | PercentageString = 'var(--space-l)'
+
+    const selectedIcon = icons[name]
 </script>
 
 <div style="width: {size}; display: grid; place-content: center;">
-    <svelte:component this={icons[name]} {...$$props} />
+    <svelte:component this={selectedIcon} {...$$props} />
 </div>
 
 <style lang="scss">

@@ -8,6 +8,7 @@ import {
 } from '@wharfkit/session'
 import type {Theme, TransitionDirection} from '../types'
 import {Writable, writable} from 'svelte/store'
+import {getSetting} from '../lib/utils'
 
 // Reset data in all stores
 export function resetState() {
@@ -144,3 +145,5 @@ export const errorDetails = writable<string | undefined>(undefined)
 export const backAction = writable<Function | undefined>(undefined)
 
 export const transitionDirection = writable<TransitionDirection | undefined>(undefined)
+
+export const theme = writable<Theme | undefined>(getSetting('theme', undefined))

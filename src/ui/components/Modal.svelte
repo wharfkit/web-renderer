@@ -1,7 +1,9 @@
 <script lang="ts">
     import Header from './Header.svelte'
-    import {active, cancelablePromises, resetState, props} from '../state'
-    import {onDestroy} from 'svelte'
+    import {active, cancelablePromises, resetState, props, theme} from '../state'
+    import {onDestroy, onMount} from 'svelte'
+    import {get} from 'svelte/store'
+    import {getSetting} from '../../lib/utils'
 
     let dialog: HTMLDialogElement
 
@@ -21,6 +23,7 @@
 
     // Perform work required to cancel request
     function cancelRequest() {
+        console.log($props)
         // Cancel any pending promises
         $cancelablePromises.map((f) => f('Modal closed', true))
         // Update state to close the modal
@@ -46,13 +49,18 @@
             cancelRequest()
         }
     }
+
+    onMount(() => {
+        // Set the theme
+        $theme = getSetting('theme', undefined)
+    })
 </script>
 
 <dialog
     bind:this={dialog}
     on:mousedown|capture|nonpassive|self={backgroundClose}
     on:keydown|preventDefault={escapeClose}
-    data-theme={$props.theme}
+    data-theme={$theme}
 >
     <Header title={$props.title} subtitle={$props.subtitle} on:cancel={cancelRequest} />
     <div class="modal-content">

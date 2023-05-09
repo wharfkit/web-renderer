@@ -1,5 +1,4 @@
 import type {ChainDefinition, WalletPluginMetadata} from '@wharfkit/session'
-import type {Theme} from '../types'
 import {props} from 'src/ui/state'
 import {get} from 'svelte/store'
 import icons, {Icon} from '../ui/components/icons'
