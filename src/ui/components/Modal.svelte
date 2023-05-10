@@ -1,9 +1,7 @@
 <script lang="ts">
     import Header from './Header.svelte'
-    import {active, cancelablePromises, resetState, props, theme} from '../state'
+    import {active, cancelablePromises, resetState, props, settings} from '../state'
     import {onDestroy, onMount} from 'svelte'
-    import {get} from 'svelte/store'
-    import {getSetting} from '../../lib/utils'
 
     let dialog: HTMLDialogElement
 
@@ -49,18 +47,13 @@
             cancelRequest()
         }
     }
-
-    onMount(() => {
-        // Set the theme
-        $theme = getSetting('theme', undefined)
-    })
 </script>
 
 <dialog
     bind:this={dialog}
     on:mousedown|capture|nonpassive|self={backgroundClose}
     on:keydown|preventDefault={escapeClose}
-    data-theme={$theme}
+    data-theme={$settings.theme}
 >
     <Header title={$props.title} subtitle={$props.subtitle} on:cancel={cancelRequest} />
     <div class="modal-content">

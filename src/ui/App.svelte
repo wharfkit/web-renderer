@@ -14,8 +14,6 @@
     import {active, errorDetails, prompt, router, loginPromise, props} from './state'
     import {i18nType} from 'src/lib/translations'
 
-    import {getSetting} from '../lib/utils'
-
     // Set the i18n context for all child components
     export let i18n
     setContext<i18nType>('i18n', i18n)

@@ -3,10 +3,11 @@
     import ListItem from '../components/ListItem.svelte'
     import languages from '../../lib/translations/lang.json'
     import type {i18nType} from 'src/lib/translations'
-    import {props} from '../state'
+    import {props, settings} from '../state'
     import {getContext} from 'svelte'
     import Icon from '../components/Icon.svelte'
     import ListOption from '../components/ListOption.svelte'
+    import {get} from 'svelte/store'
 
     const {t, l, setLocale} = getContext<i18nType>('i18n')
 
@@ -15,9 +16,12 @@
     const changeLocale = (locale: string) => {
         setLocale(locale).then(() => {
             // Update the header title and subtitle immediately on selection
-            $props.language = locale
             $props.title = $t('settings.title')
             $props.subtitle = $t('settings.language.title')
+            settings.set({
+                ...get(settings),
+                language: locale,
+            })
         })
     }
 </script>
@@ -29,8 +33,8 @@
                 label={languages[loc]}
                 name="language"
                 value={loc}
-                checked={$props.language === loc}
-                bind:group={$props.language}
+                checked={$settings.language === loc}
+                bind:group={$settings.language}
                 onChange={() => changeLocale(loc)}
                 hidden
             />
