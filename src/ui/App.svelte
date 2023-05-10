@@ -2,7 +2,7 @@
 </script>
 
 <script lang="ts">
-    import {setContext, onMount} from 'svelte'
+    import {setContext} from 'svelte'
 
     import Error from './Error.svelte'
     import Prompt from './Prompt.svelte'
@@ -42,26 +42,6 @@
         // Go back to previous path and remove it from the history
         router.back()
     }
-
-    onMount(() => {
-        // if (window.matchMedia) {
-        // explicit user-defined setting will override the browser theme
-        // const theme = getSetting('theme', undefined)
-        // const mql = window.matchMedia('(prefers-color-scheme: dark)')
-        // if (theme) {
-        // $theme = theme
-        // console.log('mount', $theme)
-        // mql.removeEventListener('change', () => {})
-        // } else {
-        // use the browser theme by default
-        // $theme = mql.matches ? 'dark' : 'light'
-        // update when the user changes device theme
-        // mql.addEventListener('change', () => {
-        //     $theme = mql.matches ? 'dark' : 'light'
-        // })
-        // }
-        // }
-    })
 </script>
 
 <Modal>

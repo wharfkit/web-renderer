@@ -39,11 +39,13 @@ export const active = writable<boolean>(false)
 export interface UserInterfaceSettings {
     language: string
     theme: Theme | undefined
+    animations: boolean
 }
 
 export const defaultUserInterfaceSettings: UserInterfaceSettings = {
     language: '',
     theme: undefined,
+    animations: true,
 }
 
 export function makeSettingsStore(data = defaultUserInterfaceSettings) {

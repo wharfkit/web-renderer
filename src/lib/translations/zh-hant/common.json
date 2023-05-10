@@ -44,6 +44,11 @@
             "automatic": "自動",
             "light": "光",
             "dark": "暗"
+        },
+        "animations": {
+            "title": "動畫",
+            "enabled": "啟用",
+            "disabled": "殘"
         }
     }
 }

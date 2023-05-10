@@ -44,6 +44,11 @@
             "automatic": "Automatic",
             "light": "Light",
             "dark": "Dark"
+        },
+        "animations": {
+            "title": "Animations",
+            "enabled": "Enabled",
+            "disabled": "Disabled"
         }
     }
 }

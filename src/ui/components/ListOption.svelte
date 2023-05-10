@@ -1,8 +1,9 @@
 <script lang="ts">
     import Icon from '../components/Icon.svelte'
+    import type {SelectorOptions} from 'src/types'
 
     export let name: string
-    export let value: string | undefined
+    export let value: SelectorOptions<any>['value']
     export let checked: boolean
     export let group: string | undefined
     export let onChange: () => void

@@ -67,6 +67,7 @@ export class WebRenderer extends AbstractUserInterface implements UserInterface 
             lang = settingsLanguage
         }
         this.log(`Setting language to ${lang}`)
+        settings.update((current) => ({...current, language: lang}))
         this.i18n.loadTranslations(lang)
         if (document.readyState === 'complete' || document.readyState === 'interactive') {
             // Document is ready, append element

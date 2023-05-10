@@ -1,7 +1,7 @@
 <script lang="ts">
     import Header from './Header.svelte'
     import {active, cancelablePromises, resetState, props, settings} from '../state'
-    import {onDestroy, onMount} from 'svelte'
+    import {onDestroy} from 'svelte'
 
     let dialog: HTMLDialogElement
 

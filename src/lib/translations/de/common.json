@@ -1,0 +1,54 @@
+{
+    "accept": "Akzeptieren",
+    "cancel": "Abbrechen",
+    "close": "Schließen",
+    "decline": "Ablehnen",
+    "error": {
+        "title": "Fehler",
+        "subtitle": "Es ist ein Fehler aufgetreten."
+    },
+    "loading": "Laden...",
+    "login": {
+        "complete": "Schließen Sie die Anmeldung mit Ihrer ausgewählten Brieftasche ab.",
+        "enter": {
+            "account": "Geben Sie den Kontonamen ein",
+            "lookup": "Konto suchen",
+            "not_found": "Konto konnte nicht gefunden werden"
+        },
+        "select": {
+            "account": "Wählen Sie ein Konto aus",
+            "blockchain": "Wählen Sie eine Blockchain aus",
+            "wallet": "Wählen Sie eine Brieftasche aus",
+            "no_match": "Keine Konten gefunden, die mit {{publicKey}} übereinstimmen"
+        },
+        "title": "Anmeldung",
+        "subtitle": "Bitte melden Sie sich an, um fortzufahren",
+        "title-app": "{{appName}}"
+    },
+    "transact": {
+        "title": "Transaktion",
+        "subtitle": " ",
+        "processing": "Transaktion wird bearbeitet...",
+        "signing": "Transaktion wird signiert",
+        "signed": "Transaktion signiert",
+        "broadcasting": "Transaktion wird übertragen",
+        "broadcasted": "Transaktion übertragen!"
+    },
+    "settings": {
+        "title": "Einstellungen",
+        "language": {
+            "title": "Sprache"
+        },
+        "theme": {
+            "title": "Thema",
+            "automatic": "Automatisch",
+            "light": "Hell",
+            "dark": "Dunkel"
+        },
+        "animations": {
+            "title": "Animationen",
+            "enabled": "Aktiviert",
+            "disabled": "Deaktiviert"
+        }
+    }
+}

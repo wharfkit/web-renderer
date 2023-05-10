@@ -56,3 +56,8 @@ export type ThemeColor =
     | 'var(--checkbox-stroke)'
     | 'var(--checkbox-fill)'
     | 'var(--error-color)'
+
+export type SelectorOptions<T> = {
+    label: string
+    value: T
+}
