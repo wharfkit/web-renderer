@@ -100,7 +100,7 @@
                         : $t('settings.theme.automatic')}
                 />
                 <ListItem
-                    label="Language"
+                    label={$t(`settings.language.title`)}
                     onClick={() => navigateTo('language')}
                     leadingIcon="globe"
                     value={languages[$settings.language]}
@@ -113,9 +113,13 @@
                         ? $t(`settings.animations.enabled`)
                         : $t('settings.animations.disabled')}
                 />
-                <ListItem label="About" onClick={() => navigateTo('about')} leadingIcon="info" />
                 <ListItem
-                    label="Report an issue on GitHub"
+                    label={$t('settings.about.title')}
+                    onClick={() => navigateTo('about')}
+                    leadingIcon="info"
+                />
+                <ListItem
+                    label={$t('settings.github')}
                     onClick={() => {}}
                     leadingIcon="github"
                     trailingIcon="external-link"

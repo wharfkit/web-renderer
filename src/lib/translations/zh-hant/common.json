@@ -49,6 +49,13 @@
             "title": "動畫",
             "enabled": "啟用",
             "disabled": "殘"
+        },
+        "github": "在 Github 上報告問題",
+        "about": {
+            "title": "關於",
+            "version": "版本 {{version}}",
+            "author": "由 Greymass 構建，許可證，謝謝，發佈出色的代碼始於一個堅實的平臺。由Greymass開發並由羚羊聯盟內的區塊鏈資助的Web用戶端SDK。",
+            "link": "閱讀更多關於碼頭的資訊"
         }
     }
 }

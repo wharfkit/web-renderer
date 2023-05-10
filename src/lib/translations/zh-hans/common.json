@@ -33,5 +33,29 @@
         "signed": "交易已签署",
         "broadcasting": "广播交易",
         "broadcasted": "交易广播"
+    },
+    "settings": {
+        "title": "设置",
+        "language": {
+            "title": "语言"
+        },
+        "theme": {
+            "title": "主题",
+            "automatic": "自动",
+            "light": "浅色",
+            "dark": "深色"
+        },
+        "animations": {
+            "title": "动画",
+            "enabled": "启用",
+            "disabled": "禁用"
+        },
+        "github": "在 Github 上报告问题",
+        "about": {
+            "title": "关于",
+            "version": "版本 {{version}}",
+            "author": "由 Greymass 构建，许可证，谢谢，发布出色的代码始于一个坚实的平台。由Greymass开发并由羚羊联盟内的区块链资助的Web客户端SDK。",
+            "link": "阅读更多关于码头的信息"
+        }
     }
 }

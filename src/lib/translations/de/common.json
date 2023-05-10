@@ -49,6 +49,13 @@
             "title": "Animationen",
             "enabled": "Aktiviert",
             "disabled": "Deaktiviert"
+        },
+        "github": "Ein Problem auf Github melden",
+        "about": {
+            "title": "Über",
+            "version": "Version {{version}}",
+            "author": "Erstellt von Greymass, Lizenzen, Danke, Versand Großartiger Code beginnt mit einer soliden Plattform. Ein Web-Client-SDK, das von Greymass entwickelt und von Blockchains innerhalb der Antelope Coalition finanziert wird.",
+            "link": "Lesen Sie mehr über Wharf"
         }
     }
 }

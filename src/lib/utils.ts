@@ -38,12 +38,14 @@ export function getThemedLogo(
         return
     }
 
-    if (!isUrlImage(logo.toString()) && !isBase64Image(logo.toString())) {
+    const image = logo[theme] ?? logo[oppositeTheme]
+
+    if (!isUrlImage(image.toString()) && !isBase64Image(image.toString())) {
         console.warn(`${name} ${theme} logo is not a supported image format.`)
         return
     }
 
-    return logo[theme] ?? logo[oppositeTheme]
+    return image
 }
 
 export function capitalize(str: string): string {

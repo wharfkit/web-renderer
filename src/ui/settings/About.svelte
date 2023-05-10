@@ -1,21 +1,35 @@
-<script>
+<script lang="ts">
+    import {getContext} from 'svelte'
+    import {i18nType} from 'src/lib/translations'
+
+    import {WalletPluginMetadata} from '@wharfkit/session'
     import BodyText from '../components/BodyText.svelte'
     import BodyTitle from '../components/BodyTitle.svelte'
-    import Button from '../components/Button.svelte'
+    import Link from '../components/Link.svelte'
+    import {getThemedLogo} from 'src/lib/utils'
+    const {t} = getContext<i18nType>('i18n')
+
+    const wharfLogo = {
+        name: 'Wharf',
+        logo: {
+            light: 'https://wharfkit.com/_app/immutable/assets/Wharf-logo-horizontal-057c7d1e.svg',
+            dark: 'https://wharfkit.com/_app/immutable/assets/Wharf-logo-horizontal-057c7d1e.svg',
+        },
+    } as WalletPluginMetadata
 </script>
 
 <div>
-    <!-- <img src="https://greymass.com/greymass.png" alt="Greymass" class="w-32 h-32 mx-auto" /> -->
-    <BodyTitle>Version 1.39.5</BodyTitle>
+    <img src={getThemedLogo(wharfLogo)} alt="Greymass" class="w-32 h-32 mx-auto" />
+    <BodyTitle>{$t('settings.about.version', {version: '1.39.5'})}</BodyTitle>
     <BodyText>
-        Built by Greymass, Licenses, Thanks, Shipping great code starts with a solid platform. A Web
-        Client SDK being developed by Greymass and funded by blockchains within the Antelope
-        Coalition.
+        {$t('settings.about.author')}
     </BodyText>
-    <Button
+    <Link
         data={{
-            label: 'View on Github',
-            href: '',
+            button: true,
+            variant: 'primary',
+            label: $t('settings.about.link'),
+            href: 'https://wharfkit.com',
         }}
     />
 </div>
