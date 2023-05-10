@@ -1,6 +1,7 @@
 <script lang="ts">
     import {getContext} from 'svelte'
     import {i18nType} from 'src/lib/translations'
+    import {version} from '../../../package.json'
 
     import {WalletPluginMetadata} from '@wharfkit/session'
     import BodyText from '../components/BodyText.svelte'
@@ -12,15 +13,15 @@
     const wharfLogo = {
         name: 'Wharf',
         logo: {
-            light: 'https://wharfkit.com/_app/immutable/assets/Wharf-logo-horizontal-057c7d1e.svg',
-            dark: 'https://wharfkit.com/_app/immutable/assets/Wharf-logo-horizontal-057c7d1e.svg',
+            light: 'https://raw.githubusercontent.com/wharfkit/assets/master/Logo/Svg/Wharf_logo_bright_horizontal_vector_no_bg.svg',
+            dark: 'https://raw.githubusercontent.com/wharfkit/assets/master/Logo/Svg/Wharf_logo_dark_horizontal_vector_no_bg.svg',
         },
     } as WalletPluginMetadata
 </script>
 
 <div>
-    <img src={getThemedLogo(wharfLogo)} alt="Greymass" class="w-32 h-32 mx-auto" />
-    <BodyTitle>{$t('settings.about.version', {version: '1.39.5'})}</BodyTitle>
+    <img src={getThemedLogo(wharfLogo)} alt="wharf logo" class="logo" />
+    <BodyTitle>{$t('settings.about.version', {version})}</BodyTitle>
     <BodyText>
         {$t('settings.about.author')}
     </BodyText>
@@ -41,5 +42,11 @@
         align-items: center;
         justify-content: center;
         gap: var(--space-m);
+    }
+
+    .logo {
+        width: 100%;
+        max-width: 200px;
+        /* margin-bottom: var(--space-m); */
     }
 </style>
