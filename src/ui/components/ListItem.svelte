@@ -8,35 +8,64 @@
     export let trailingIcon: ComponentProps<Icon>['name'] | undefined | null = 'chevron-right'
     export let logo: string | undefined = undefined
     export let value: string | undefined = undefined
+    export let link: string | undefined = undefined
 </script>
 
 <li>
     <slot>
-        <button on:click={onClick}>
-            <div class="leading">
-                {#if logo}
-                    <div class="logo">
-                        <img src={logo} alt={`${label} logo`} />
-                    </div>
-                {:else if leadingIcon}
-                    <div class="icon">
-                        <Icon name={leadingIcon} />
+        {#if !link}
+            <button on:click={onClick}>
+                <div class="leading">
+                    {#if logo}
+                        <div class="logo">
+                            <img src={logo} alt={`${label} logo`} />
+                        </div>
+                    {:else if leadingIcon}
+                        <div class="icon">
+                            <Icon name={leadingIcon} />
+                        </div>
+                    {/if}
+                </div>
+
+                <span class="label">{label}</span>
+
+                {#if value}
+                    <span class="value">{value}</span>
+                {/if}
+
+                {#if trailingIcon}
+                    <div class="trailing">
+                        <Icon name={trailingIcon} />
                     </div>
                 {/if}
-            </div>
-
-            <span class="label">{label}</span>
-
-            {#if value}
-                <span class="value">{value}</span>
-            {/if}
-
-            {#if trailingIcon}
-                <div class="trailing">
-                    <Icon name={trailingIcon} />
+            </button>
+        {:else}
+            <a href={link} target="_blank" rel="noreferrer">
+                <div class="leading">
+                    {#if logo}
+                        <div class="logo">
+                            <img src={logo} alt={`${label} logo`} />
+                        </div>
+                    {:else if leadingIcon}
+                        <div class="icon">
+                            <Icon name={leadingIcon} />
+                        </div>
+                    {/if}
                 </div>
-            {/if}
-        </button>
+
+                <span class="label">{label}</span>
+
+                {#if value}
+                    <span class="value">{value}</span>
+                {/if}
+
+                {#if trailingIcon}
+                    <div class="trailing">
+                        <Icon name={trailingIcon} />
+                    </div>
+                {/if}
+            </a>
+        {/if}
     </slot>
 </li>
 
@@ -54,7 +83,8 @@
         border-bottom: 1px solid var(--list-divider-color);
     }
 
-    button {
+    button,
+    a {
         flex: 1;
         height: 100%;
         display: flex;
@@ -66,6 +96,9 @@
         font-size: inherit;
         font-weight: inherit;
         margin: 0;
+        padding: 0;
+        padding-inline-start: var(--space-3xs);
+        text-decoration: none;
     }
 
     .leading > * {

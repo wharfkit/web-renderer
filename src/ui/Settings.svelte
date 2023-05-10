@@ -120,7 +120,7 @@
                 />
                 <ListItem
                     label={$t('settings.github')}
-                    onClick={() => {}}
+                    link="https://www.github.com/wharfkit"
                     leadingIcon="github"
                     trailingIcon="external-link"
                 />
