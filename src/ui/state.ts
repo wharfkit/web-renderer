@@ -1,4 +1,5 @@
 import {
+    BrowserLocalStorage,
     Checksum256Type,
     LoginContext,
     PermissionLevelType,
@@ -7,15 +8,16 @@ import {
     UserInterfaceLoginResponse,
 } from '@wharfkit/session'
 import type {Theme, TransitionDirection} from '../types'
-import {Writable, writable} from 'svelte/store'
-import {getSetting} from '../lib/utils'
+import {get, writable, Writable} from 'svelte/store'
+
+const storage = new BrowserLocalStorage('web.renderer')
 
 // Reset data in all stores
 export function resetState() {
     active.set(false)
 
-    props.set({...defaultUserInterfaceProps})
     router.set({...defaultUserInterfaceRouter})
+    props.set({...defaultUserInterfaceProps})
     prompt.reset()
 
     cancelablePromises.set([])
@@ -33,19 +35,53 @@ export function resetState() {
 /** Whether or not the interface is active in the browser */
 export const active = writable<boolean>(false)
 
+/** Persistent settings svelte store */
+export interface UserInterfaceSettings {
+    language: string
+    theme: Theme | undefined
+}
+
+export const defaultUserInterfaceSettings: UserInterfaceSettings = {
+    language: '',
+    theme: undefined,
+}
+
+export function makeSettingsStore(data = defaultUserInterfaceSettings) {
+    const store = writable(data)
+    const {subscribe, set} = store
+
+    storage.read('settings').then((existing) => {
+        if (existing) {
+            set(JSON.parse(existing))
+        }
+    })
+
+    return {
+        subscribe,
+        set: (n) => {
+            storage.write('settings', JSON.stringify(n))
+            set(n)
+        },
+        update: (cb) => {
+            const updatedStore = cb(get(store))
+            storage.write('settings', JSON.stringify(updatedStore))
+            set(updatedStore)
+        },
+    }
+}
+
+export const settings: Writable<UserInterfaceSettings> = makeSettingsStore()
+
 /** The properties of the UserInterface */
 export interface UserInterfaceProps {
     error?: Error
     title: string
     subtitle?: string
-    language: string
-    theme?: Theme
 }
 
 export const defaultUserInterfaceProps: UserInterfaceProps = {
     title: 'Wharf',
     subtitle: 'Status Message',
-    language: 'en',
 }
 
 export const props = writable<UserInterfaceProps>(defaultUserInterfaceProps)
@@ -145,5 +181,3 @@ export const errorDetails = writable<string | undefined>(undefined)
 export const backAction = writable<Function | undefined>(undefined)
 
 export const transitionDirection = writable<TransitionDirection | undefined>(undefined)
-
-export const theme = writable<Theme | undefined>(getSetting('theme', undefined))

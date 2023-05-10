@@ -1,5 +1,5 @@
 import type {ChainDefinition, WalletPluginMetadata} from '@wharfkit/session'
-import {props} from 'src/ui/state'
+import {settings} from 'src/ui/state'
 import {get} from 'svelte/store'
 import icons, {Icon} from '../ui/components/icons'
 
@@ -20,7 +20,7 @@ export function getThemedLogo(
     metadata: WalletPluginMetadata | ChainDefinition
 ): string | undefined {
     const {name, logo} = metadata
-    let {theme} = get(props)
+    let {theme} = get(settings)
     const oppositeTheme = theme === 'light' ? 'dark' : 'light'
 
     if (!theme) {
@@ -48,21 +48,4 @@ export function getThemedLogo(
 
 export function capitalize(str: string): string {
     return str.charAt(0).toUpperCase() + str.slice(1)
-}
-
-export const getSetting = (key: string, defaultValue: any = undefined) => {
-    const value = localStorage.getItem(key)
-    return value !== null ? JSON.parse(value) : defaultValue
-}
-
-export const setSetting = (key: string, value: any) => {
-    if (value === undefined) {
-        clearSetting(key)
-        return
-    }
-    localStorage.setItem(key, JSON.stringify(value))
-}
-
-export const clearSetting = (key: string) => {
-    localStorage.removeItem(key)
 }
