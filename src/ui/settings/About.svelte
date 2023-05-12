@@ -13,8 +13,8 @@
     const wharfLogo = {
         name: 'Wharf',
         logo: {
-            light: 'https://raw.githubusercontent.com/wharfkit/assets/master/Logo/Svg/Wharf_logo_bright_horizontal_vector_no_bg.svg',
-            dark: 'https://raw.githubusercontent.com/wharfkit/assets/master/Logo/Svg/Wharf_logo_dark_horizontal_vector_no_bg.svg',
+            light: 'https://assets.wharfkit.com/wharf-brand-assets/logo/svg/wharf-logo-bright-horizontal-vector-no-bg.svg',
+            dark: 'https://assets.wharfkit.com/wharf-brand-assets/logo/svg/wharf-logo-bright-horizontal-vector-no-bg.svg',
         },
     } as WalletPluginMetadata
 </script>
