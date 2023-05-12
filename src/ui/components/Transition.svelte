@@ -1,8 +1,11 @@
 <script lang="ts">
     import {fly} from 'svelte/transition'
     import {TransitionDirection} from '../../types'
+    import {settings} from '../state'
 
     export let direction: TransitionDirection | undefined = undefined
+
+    const {animations} = $settings
 
     const horizontal = ['ltr', 'rtl']
     // const vertical = ['ttb', 'btt']
@@ -18,6 +21,10 @@
         : [0, 0]
 </script>
 
-<div class="transition" in:fly={{duration: 200, x: x, y: y}}>
+{#if animations}
+    <div class="transition" in:fly={{duration: 200, x, y}}>
+        <slot />
+    </div>
+{:else}
     <slot />
-</div>
+{/if}
