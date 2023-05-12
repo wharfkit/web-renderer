@@ -21,7 +21,6 @@
 
     // Perform work required to cancel request
     function cancelRequest() {
-        console.log($props)
         // Cancel any pending promises
         $cancelablePromises.map((f) => f('Modal closed', true))
         // Update state to close the modal

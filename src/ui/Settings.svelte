@@ -8,7 +8,6 @@
     import About from './settings/About.svelte'
     import languages from 'src/lib/translations/lang.json'
     import Selector from './settings/Selector.svelte'
-    import type {SelectorOptions, Theme} from '../types'
     import {get} from 'svelte/store'
 
     const settingsRouter = initRouter()
@@ -22,12 +21,10 @@
     }
 
     function navigateTo(path: string) {
-        console.log($props)
         $transitionDirection = 'rtl'
         settingsRouter.push(path)
         $props.subtitle = $t(`settings.${path}.title`)
         backAction.set(() => {
-            console.log($props)
             $transitionDirection = 'ltr'
             settingsRouter.back()
             backAction.set(closeSettings)
