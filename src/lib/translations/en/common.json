@@ -33,5 +33,29 @@
         "signed": "Transaction signed",
         "broadcasting": "Broadcasting transaction",
         "broadcasted": "Transaction broadcasted!"
+    },
+    "settings": {
+        "title": "Settings",
+        "language": {
+            "title": "Language"
+        },
+        "theme": {
+            "title": "Theme",
+            "automatic": "Automatic",
+            "light": "Light",
+            "dark": "Dark"
+        },
+        "animations": {
+            "title": "Animations",
+            "enabled": "Enabled",
+            "disabled": "Disabled"
+        },
+        "github": "Report an issue on Github",
+        "about": {
+            "title": "About",
+            "version": "Version {{version}}",
+            "author": "Built by Greymass, Licenses, Thanks, Shipping great code starts with a solid platform. A Web Client SDK being developed by Greymass and funded by blockchains within the Antelope Coalition.",
+            "link": "Read more about Wharf"
+        }
     }
 }

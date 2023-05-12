@@ -1,6 +1,5 @@
 import type {ChainDefinition, WalletPluginMetadata} from '@wharfkit/session'
-import type {ColorScheme} from '../types'
-import {colorScheme} from '../ui/state'
+import {settings} from 'src/ui/state'
 import {get} from 'svelte/store'
 import icons, {Icon} from '../ui/components/icons'
 
@@ -21,25 +20,34 @@ export function getThemedLogo(
     metadata: WalletPluginMetadata | ChainDefinition
 ): string | undefined {
     const {name, logo} = metadata
-    const theme = get(colorScheme) as ColorScheme
-    const oppositeColorScheme = theme === 'light' ? 'dark' : 'light'
+    let {theme} = get(settings)
+    const oppositeTheme = theme === 'light' ? 'dark' : 'light'
+
+    if (!theme) {
+        // if no theme is set, use the system preference for logo
+        window.matchMedia('(prefers-color-scheme: dark)').matches
+            ? (theme = 'dark')
+            : (theme = 'light')
+    }
 
     if (!logo) {
         if ('getLogo' in metadata) {
-            return metadata.getLogo()?.[theme] ?? metadata.getLogo()?.[oppositeColorScheme]
+            return metadata.getLogo()?.[theme] ?? metadata.getLogo()?.[oppositeTheme]
         }
         console.warn(`${name} does not have a logo.`)
         return
     }
 
-    if (!isUrlImage(logo.toString()) && !isBase64Image(logo.toString())) {
+    const image = logo[theme] ?? logo[oppositeTheme]
+
+    if (!isUrlImage(image.toString()) && !isBase64Image(image.toString())) {
         console.warn(`${name} ${theme} logo is not a supported image format.`)
         return
     }
 
-    return logo[theme] ?? logo[oppositeColorScheme]
+    return image
 }
 
-export function getStoredColorScheme(): ColorScheme | null {
-    return localStorage.getItem('colorScheme') as ColorScheme
+export function capitalize(str: string): string {
+    return str.charAt(0).toUpperCase() + str.slice(1)
 }

@@ -1,4 +1,6 @@
-export type ColorScheme = 'light' | 'dark'
+export type Theme = 'light' | 'dark'
+
+export type TransitionDirection = 'ltr' | 'rtl' | 'ttb' | 'btt'
 
 export type PercentageString = `${number}%`
 
@@ -54,3 +56,8 @@ export type ThemeColor =
     | 'var(--checkbox-stroke)'
     | 'var(--checkbox-fill)'
     | 'var(--error-color)'
+
+export type SelectorOptions<T> = {
+    label: string
+    value: T
+}

@@ -4,7 +4,14 @@
     import {derived, Readable} from 'svelte/store'
 
     import {i18nType} from 'src/lib/translations'
-    import {loginContext, loginResponse, props, UserInterfaceLoginData, backAction} from './state'
+    import {
+        loginContext,
+        loginResponse,
+        props,
+        UserInterfaceLoginData,
+        backAction,
+        transitionDirection,
+    } from './state'
 
     import Blockchain from './login/Blockchain.svelte'
     import Permission from './login/Permission.svelte'
@@ -145,40 +152,36 @@
         }
     )
 
-    let transitionDirection
-    const right = 100
-    const left = -100
-
     const selectChain = (e) => {
         $loginResponse.chainId = e.detail
         $backAction = unselectChain
-        transitionDirection = right
+        $transitionDirection = 'rtl'
     }
     const unselectChain = () => {
         $loginResponse.chainId = undefined
         $backAction = unselectWallet
-        transitionDirection = left
+        $transitionDirection = 'ltr'
     }
 
     const selectPermission = (e) => {
         $loginResponse.permissionLevel = e.detail
         $backAction = undefined
-        transitionDirection = right
+        $transitionDirection = 'rtl'
     }
     const unselectPermission = () => {
         $loginResponse.permissionLevel = undefined
-        transitionDirection = left
+        $transitionDirection = 'ltr'
     }
 
     const selectWallet = (e) => {
         $backAction = unselectWallet
         $loginResponse.walletPluginIndex = e.detail
-        transitionDirection = right
+        $transitionDirection = 'rtl'
     }
     const unselectWallet = () => {
         $loginResponse.walletPluginIndex = undefined
         $backAction = undefined
-        transitionDirection = left
+        $transitionDirection = 'ltr'
     }
 
     const complete = () => {
@@ -196,7 +199,7 @@
 
 {#if $props && $loginContext}
     {#if $step === Steps.selectWallet}
-        <Transition direction={transitionDirection}>
+        <Transition direction={$transitionDirection}>
             <Wallet
                 on:select={selectWallet}
                 on:cancel={cancel}
@@ -205,7 +208,7 @@
             />
         </Transition>
     {:else if $step === Steps.selectChain && $chains}
-        <Transition direction={transitionDirection}>
+        <Transition direction={$transitionDirection}>
             <Blockchain
                 on:select={selectChain}
                 on:cancel={unselectWallet}
@@ -214,7 +217,7 @@
             />
         </Transition>
     {:else if $step === Steps.enterPermission && $client && $walletPlugin}
-        <Transition direction={transitionDirection}>
+        <Transition direction={$transitionDirection}>
             <Permission
                 on:select={selectPermission}
                 on:cancel={unselectChain}
@@ -224,7 +227,7 @@
             />
         </Transition>
     {:else if $step === Steps.selectPermission && $client && $walletPlugin}
-        <Transition direction={transitionDirection}>
+        <Transition direction={$transitionDirection}>
             <Permission
                 on:select={selectPermission}
                 on:cancel={unselectChain}

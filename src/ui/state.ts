@@ -1,4 +1,5 @@
 import {
+    BrowserLocalStorage,
     Checksum256Type,
     LoginContext,
     PermissionLevelType,
@@ -6,16 +7,17 @@ import {
     TransactContext,
     UserInterfaceLoginResponse,
 } from '@wharfkit/session'
-import type {ColorScheme} from '../types'
-import {Writable, writable} from 'svelte/store'
-import {getStoredColorScheme} from '../lib/utils'
+import type {Theme, TransitionDirection} from '../types'
+import {get, writable, Writable} from 'svelte/store'
+
+const storage = new BrowserLocalStorage('web.renderer')
 
 // Reset data in all stores
 export function resetState() {
     active.set(false)
 
-    props.set({...defaultUserInterfaceProps})
     router.set({...defaultUserInterfaceRouter})
+    props.set({...defaultUserInterfaceProps})
     prompt.reset()
 
     cancelablePromises.set([])
@@ -27,23 +29,61 @@ export function resetState() {
 
     errorDetails.set(undefined)
     backAction.set(undefined)
+    transitionDirection.set(undefined)
 }
 
 /** Whether or not the interface is active in the browser */
 export const active = writable<boolean>(false)
 
+/** Persistent settings svelte store */
+export interface UserInterfaceSettings {
+    language: string
+    theme: Theme | undefined
+    animations: boolean
+}
+
+export const defaultUserInterfaceSettings: UserInterfaceSettings = {
+    language: '',
+    theme: undefined,
+    animations: true,
+}
+
+export function makeSettingsStore(data = defaultUserInterfaceSettings) {
+    const store = writable(data)
+    const {subscribe, set} = store
+
+    storage.read('settings').then((existing) => {
+        if (existing) {
+            set(JSON.parse(existing))
+        }
+    })
+
+    return {
+        subscribe,
+        set: (n) => {
+            storage.write('settings', JSON.stringify(n))
+            set(n)
+        },
+        update: (cb) => {
+            const updatedStore = cb(get(store))
+            storage.write('settings', JSON.stringify(updatedStore))
+            set(updatedStore)
+        },
+    }
+}
+
+export const settings: Writable<UserInterfaceSettings> = makeSettingsStore()
+
 /** The properties of the UserInterface */
 export interface UserInterfaceProps {
     error?: Error
-    language: string
-    subtitle: string
     title: string
+    subtitle?: string
 }
 
 export const defaultUserInterfaceProps: UserInterfaceProps = {
-    language: 'en',
-    subtitle: 'Status Message',
     title: 'Wharf',
+    subtitle: 'Status Message',
 }
 
 export const props = writable<UserInterfaceProps>(defaultUserInterfaceProps)
@@ -142,9 +182,4 @@ export const errorDetails = writable<string | undefined>(undefined)
 
 export const backAction = writable<Function | undefined>(undefined)
 
-// define a writable store to hold the color scheme preference and set the initial color scheme preference based on localStorage
-export const colorScheme = writable<ColorScheme | null>(getStoredColorScheme())
-// listen for changes to the color scheme preference and update localStorage
-colorScheme.subscribe((value) => {
-    if (value) localStorage.setItem('colorScheme', value)
-})
+export const transitionDirection = writable<TransitionDirection | undefined>(undefined)

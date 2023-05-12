@@ -33,5 +33,29 @@
         "signed": "트랜잭션 서명",
         "broadcasting": "방송 거래",
         "broadcasted": "거래 방송"
+    },
+    "settings": {
+        "title": "설정",
+        "language": {
+            "title": "언어"
+        },
+        "theme": {
+            "title": "테마",
+            "automatic": "자동",
+            "light": "밝은 테마",
+            "dark": "어두운 테마"
+        },
+        "animations": {
+            "title": "애니메이션",
+            "enabled": "활성화",
+            "disabled": "비활성화"
+        },
+        "github": "Github에서 문제 보고",
+        "about": {
+            "title": "정보",
+            "version": "{{version}} 버전",
+            "author": "Built by Greymass, Licenses, Thanks, Shipping 훌륭한 코드는 견고한 플랫폼에서 시작됩니다. Greymass에서 개발하고 Antelope Coalition 내의 블록체인에서 자금을 지원하는 웹 클라이언트 SDK입니다.",
+            "link": "부두에 대해 자세히 알아보기"
+        }
     }
 }

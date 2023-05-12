@@ -24,7 +24,9 @@ import {
     props,
     resetState,
     router,
+    settings,
 } from './ui/state'
+import {get} from 'svelte/store'
 
 export interface WebRendererOptions {
     id?: string
@@ -58,9 +60,14 @@ export class WebRenderer extends AbstractUserInterface implements UserInterface 
         this.element.id = this.elementId
         this.shadow = this.element.attachShadow({mode: 'closed'})
         // Load translations for the current locale
-        const lang = getNavigatorLanguage()
         this.i18n = makeLocalization()
+        let lang = getNavigatorLanguage()
+        const settingsLanguage = get(settings).language
+        if (settingsLanguage) {
+            lang = settingsLanguage
+        }
         this.log(`Setting language to ${lang}`)
+        settings.update((current) => ({...current, language: lang}))
         this.i18n.loadTranslations(lang)
         if (document.readyState === 'complete' || document.readyState === 'interactive') {
             // Document is ready, append element
