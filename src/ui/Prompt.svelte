@@ -14,6 +14,7 @@
     import {prompt} from './state'
     import BodyTitle from './components/BodyTitle.svelte'
     import BodyText from './components/BodyText.svelte'
+    import Message from './components/Message.svelte'
 
     interface UIComponent {
         component: ComponentType<SvelteComponentTyped>
@@ -113,10 +114,7 @@
 </script>
 
 <div>
-    <div class="text">
-        <BodyTitle>{$prompt?.args.title}</BodyTitle>
-        <BodyText>{$prompt?.args.body}</BodyText>
-    </div>
+    <Message title={$prompt?.args.title} details={$prompt?.args.body} />
     {#each $elements as component}
         <svelte:component
             this={component.component}
@@ -133,9 +131,5 @@
         flex-direction: column;
         gap: var(--space-m);
         gap: var(--space-l);
-    }
-
-    .text {
-        gap: var(--space-s);
     }
 </style>
