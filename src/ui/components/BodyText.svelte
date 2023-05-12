@@ -7,5 +7,6 @@
         font-weight: 400;
         text-align: center;
         margin: 0;
+        overflow-wrap: anywhere;
     }
 </style>

@@ -16,6 +16,8 @@ import Info from './Info.svelte'
 import Theme from './Theme.svelte'
 import Waves from './Waves.svelte'
 import ExternalLink from './ExternalLink.svelte'
+import Error from './Error.svelte'
+import Alert from './Alert.svelte'
 
 const icons = {
     copy: Copy,
@@ -36,6 +38,8 @@ const icons = {
     theme: Theme,
     waves: Waves,
     'external-link': ExternalLink,
+    error: Error,
+    alert: Alert,
 }
 
 export type Icon = keyof typeof icons
