@@ -14,7 +14,7 @@
         name: 'Wharf',
         logo: {
             light: 'https://assets.wharfkit.com/wharf-brand-assets/logo/svg/wharf-logo-bright-horizontal-vector-no-bg.svg',
-            dark: 'https://assets.wharfkit.com/wharf-brand-assets/logo/svg/wharf-logo-bright-horizontal-vector-no-bg.svg',
+            dark: 'https://assets.wharfkit.com/wharf-brand-assets/logo/svg/wharf-logo-dark-horizontal-vector-no-bg.svg',
         },
     } as WalletPluginMetadata
 </script>
