@@ -74,7 +74,6 @@
             stroke-dashoffset={0}
             fill="none"
         />
-        <!-- {#if animated} -->
         <circle
             class:animated
             class="spinner"
@@ -87,7 +86,6 @@
             fill="none"
             style="--radius: {radius}; --circumference: {$circumference};"
         />
-        <!-- {/if} -->
     </svg>
 
     {#if logo}
@@ -115,7 +113,6 @@
 <style lang="scss">
     .loader {
         position: relative;
-        height: var(--space-4xl);
         display: grid;
         place-items: center;
         grid-template-areas: 'stack' 'text';
