@@ -42,7 +42,7 @@
 
     // When escape keypress is captured, close
     document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape') {
+        if (event.key === 'Escape' && dialog.open) {
             cancelRequest()
         }
     })
