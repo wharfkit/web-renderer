@@ -41,17 +41,16 @@
     }
 
     // When escape keypress is captured, close
-    function escapeClose(event) {
-        if (event.key === 'Escape') {
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && dialog.open) {
             cancelRequest()
         }
-    }
+    })
 </script>
 
 <dialog
     bind:this={dialog}
     on:mousedown|capture|nonpassive|self={backgroundClose}
-    on:keydown|preventDefault={escapeClose}
     data-theme={$settings.theme}
 >
     <Header title={$props.title} subtitle={$props.subtitle} on:cancel={cancelRequest} />
