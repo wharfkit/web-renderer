@@ -2,7 +2,7 @@
 </script>
 
 <script lang="ts">
-    import {setContext} from 'svelte'
+    import {onDestroy, setContext} from 'svelte'
 
     import Error from './Error.svelte'
     import Prompt from './Prompt.svelte'
@@ -13,6 +13,7 @@
 
     import {active, errorDetails, prompt, router, loginPromise, props} from './state'
     import {i18nType} from 'src/lib/translations'
+    import {writable} from 'svelte/store'
 
     // Set the i18n context for all child components
     export let i18n
@@ -42,9 +43,20 @@
         // Go back to previous path and remove it from the history
         router.back()
     }
+
+    const allowSettings = writable(false)
+    const unsubscribe = router.subscribe((current) => {
+        if (current && current.path === 'login') {
+            allowSettings.set(true)
+        } else {
+            allowSettings.set(false)
+        }
+    })
+
+    onDestroy(unsubscribe)
 </script>
 
-<Modal>
+<Modal {allowSettings}>
     {#if $active}
         {#if $errorDetails}
             <Error on:cancel={cancel} on:complete={complete} />
