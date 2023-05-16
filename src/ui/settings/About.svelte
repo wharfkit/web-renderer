@@ -31,6 +31,7 @@
             variant: 'primary',
             label: $t('settings.about.link'),
             href: 'https://wharfkit.com',
+            target: '_blank',
         }}
     />
 </div>
