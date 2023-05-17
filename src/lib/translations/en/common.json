@@ -7,7 +7,7 @@
         "title": "Error",
         "subtitle": "An Error happened."
     },
-    "loading": "Loading...",
+    "loading": "Loading…",
     "login": {
         "complete": "Complete the login using your selected wallet.",
         "enter": {
@@ -28,10 +28,10 @@
     "transact": {
         "title": "Transact",
         "subtitle": " ",
-        "processing": "Processing transaction...",
+        "processing": "Processing transaction…",
         "signing": "Signing transaction",
         "signed": "Transaction signed",
         "broadcasting": "Broadcasting transaction",
-        "broadcasted": "Transaction broadcasted!"
+        "broadcasted": "Transaction broadcasted"
     }
 }
