@@ -94,6 +94,7 @@
         background: none;
         color: inherit;
         font-size: inherit;
+        font-family: inherit;
         font-weight: inherit;
         margin: 0;
         padding: 0;
