@@ -7,5 +7,6 @@
         font-weight: 600;
         text-align: center;
         margin: 0;
+        margin-block-start: var(--space-xs);
     }
 </style>
