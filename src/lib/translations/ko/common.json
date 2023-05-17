@@ -9,7 +9,7 @@
     },
     "loading": "로드...",
     "login": {
-        "complete": "선택한 지갑을 사용하여 로그인을 완료합니다.",
+        "complete": "",
         "enter": {
             "account": "Enter account name",
             "lookup": "Lookup Account",
@@ -22,13 +22,12 @@
             "no_match": "{{publicKey}}와 일치하는 계정을 찾을 수 없습니다."
         },
         "title": "로그인",
-        "subtitle": "계속하려면 로그인하십시오",
         "title-app": "{{appName}}에 로그인"
     },
     "transact": {
         "title": "거래하다",
         "subtitle": " ",
-        "processing": "Processing transaction...",
+        "processing": "Performing transaction...",
         "signing": "서명 트랜잭션",
         "signed": "트랜잭션 서명",
         "broadcasting": "방송 거래",
@@ -54,7 +53,7 @@
         "about": {
             "title": "정보",
             "version": "{{version}} 버전",
-            "author": "Built by Greymass, Licenses, Thanks, Shipping 훌륭한 코드는 견고한 플랫폼에서 시작됩니다. Greymass에서 개발하고 Antelope Coalition 내의 블록체인에서 자금을 지원하는 웹 클라이언트 SDK입니다.",
+            "author": "",
             "link": "부두에 대해 자세히 알아보기"
         }
     }

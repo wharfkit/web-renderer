@@ -9,7 +9,7 @@
     },
     "loading": "裝載。。。",
     "login": {
-        "complete": "使用您選擇的錢包完成登錄。",
+        "complete": "",
         "enter": {
             "account": "Enter account name",
             "lookup": "Lookup Account",
@@ -22,13 +22,12 @@
             "no_match": "未找到與 {{publicKey}} 匹配的帳戶。"
         },
         "title": "登錄",
-        "subtitle": "請登錄以繼續",
         "title-app": "登錄到 {{appName}}"
     },
     "transact": {
         "title": "辦理",
         "subtitle": "",
-        "processing": "Processing transaction...",
+        "processing": "Performing transaction...",
         "signing": "簽署交易",
         "signed": "交易已簽署",
         "broadcasting": "廣播交易",
@@ -54,7 +53,7 @@
         "about": {
             "title": "關於",
             "version": "版本 {{version}}",
-            "author": "由 Greymass 構建，許可證，謝謝，發佈出色的代碼始於一個堅實的平臺。由Greymass開發並由羚羊聯盟內的區塊鏈資助的Web用戶端SDK。",
+            "author": "",
             "link": "閱讀更多關於碼頭的資訊"
         }
     }

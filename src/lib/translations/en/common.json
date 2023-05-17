@@ -9,26 +9,25 @@
     },
     "loading": "Loading...",
     "login": {
-        "complete": "Complete the login using your selected wallet.",
+        "complete": "Awaiting response from your wallet.",
         "enter": {
             "account": "Enter account name",
             "lookup": "Lookup Account",
             "not_found": "Unable to find account"
         },
         "select": {
-            "account": "Select an Account",
-            "blockchain": "Select a Blockchain",
-            "wallet": "Select a Wallet",
+            "account": "Select an available account",
+            "blockchain": "Select which blockchain to login with",
+            "wallet": "Connect your wallet to login",
             "no_match": "No accounts found matching {{publicKey}}"
         },
         "title": "Login",
-        "subtitle": "Please login to continue",
         "title-app": "{{appName}}"
     },
     "transact": {
         "title": "Transact",
         "subtitle": " ",
-        "processing": "Processing transaction...",
+        "processing": "Performing transaction...",
         "signing": "Signing transaction",
         "signed": "Transaction signed",
         "broadcasting": "Broadcasting transaction",
@@ -54,7 +53,7 @@
         "about": {
             "title": "About",
             "version": "Version {{version}}",
-            "author": "Built by Greymass, Licenses, Thanks, Shipping great code starts with a solid platform. A Web Client SDK being developed by Greymass and funded by blockchains within the Antelope Coalition.",
+            "author": "An open source SDK for Antelope-based blockchains created by Greymass and made possible through funding by the Antelope Coalition (EOS, Telos, UX, and WAX).",
             "link": "Read more about Wharf"
         }
     }

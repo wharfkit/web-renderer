@@ -9,7 +9,7 @@
     },
     "loading": "加载中。。。",
     "login": {
-        "complete": "使用您选择的钱包完成登陆。",
+        "complete": "",
         "enter": {
             "account": "Enter account name",
             "lookup": "Lookup Account",
@@ -22,13 +22,12 @@
             "no_match": "未找到与 {{publicKey}} 匹配的帐户。"
         },
         "title": "登陆",
-        "subtitle": "请登陆以继续",
         "title-app": "登陆到 {{appName}}"
     },
     "transact": {
         "title": "办理",
         "subtitle": " ",
-        "processing": "Processing transaction...",
+        "processing": "Performing transaction...",
         "signing": "签署交易",
         "signed": "交易已签署",
         "broadcasting": "广播交易",
@@ -54,7 +53,7 @@
         "about": {
             "title": "关于",
             "version": "版本 {{version}}",
-            "author": "由 Greymass 构建，许可证，谢谢，发布出色的代码始于一个坚实的平台。由Greymass开发并由羚羊联盟内的区块链资助的Web客户端SDK。",
+            "author": "",
             "link": "阅读更多关于码头的信息"
         }
     }
