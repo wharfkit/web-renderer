@@ -5,15 +5,16 @@
     import {onDestroy, setContext} from 'svelte'
 
     import Error from './Error.svelte'
-    import Prompt from './Prompt.svelte'
     import Login from './Login.svelte'
-    import Modal from './components/Modal.svelte'
-    import Transact from './Transact.svelte'
+    import Prompt from './Prompt.svelte'
     import Settings from './Settings.svelte'
+    import Transact from './Transact.svelte'
+
+    import Countdown from './components/Countdown.svelte'
+    import Modal from './components/Modal.svelte'
 
     import {active, errorDetails, prompt, router, loginPromise, props, allowSettings} from './state'
     import {i18nType} from 'src/lib/translations'
-    import {writable} from 'svelte/store'
 
     // Set the i18n context for all child components
     export let i18n

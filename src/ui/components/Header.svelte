@@ -2,8 +2,6 @@
     import {createEventDispatcher} from 'svelte'
     import HeaderButton from './HeaderButton.svelte'
     import {allowSettings, backAction, router, transitionDirection} from '../state'
-    import {fade} from 'svelte/transition'
-    import {Writable} from 'svelte/store'
 
     export let title: string
     export let subtitle: string | undefined
