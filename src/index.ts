@@ -147,7 +147,7 @@ export class WebRenderer extends AbstractUserInterface implements UserInterface 
         props.update((current) => ({
             ...current,
             title: this.i18n.t.get('login.title', {default: 'Login'}),
-            subtitle: this.i18n.t.get('login.subtitle', {default: 'Please login to continue.'}),
+            subtitle: '',
         }))
         // Push the new path to the router
         router.push('login')
@@ -169,7 +169,7 @@ export class WebRenderer extends AbstractUserInterface implements UserInterface 
         props.update((c) => ({
             ...c,
             title: this.i18n.t.get('transact.title', {default: 'Transact'}),
-            subtitle: this.i18n.t.get('transact.subtitle', {default: ' '}),
+            subtitle: '',
         }))
         // Push the new path to the router
         router.push('transact')
@@ -185,42 +185,18 @@ export class WebRenderer extends AbstractUserInterface implements UserInterface 
 
     async onSign(): Promise<void> {
         this.log('onSign')
-        // Set the title/subtitle to match the transact state
-        props.update((c) => ({
-            ...c,
-            subtitle: this.i18n.t.get('transact.signing', {default: 'Signing transaction'}),
-        }))
     }
 
     async onSignComplete(): Promise<void> {
         this.log('onSignComplete')
-        // Set the title/subtitle to match the transact state
-        props.update((c) => ({
-            ...c,
-            subtitle: this.i18n.t.get('transact.signed', {default: 'Transaction signed'}),
-        }))
     }
 
     async onBroadcast(): Promise<void> {
         this.log('onBroadcast')
-        // Set the title/subtitle to match the transact state
-        props.update((c) => ({
-            ...c,
-            subtitle: this.i18n.t.get('transact.broadcasting', {
-                default: 'Broadcasting transaction',
-            }),
-        }))
     }
 
     async onBroadcastComplete(): Promise<void> {
         this.log('onBroadcastComplete')
-        // Set the title/subtitle to match the transact state
-        props.update((c) => ({
-            ...c,
-            subtitle: this.i18n.t.get('transact.broadcasted', {
-                default: 'Transaction broadcasted!',
-            }),
-        }))
     }
 
     prompt(args: PromptArgs): Cancelable<PromptResponse> {
