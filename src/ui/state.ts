@@ -35,6 +35,9 @@ export function resetState() {
 /** Whether or not the interface is active in the browser */
 export const active = writable<boolean>(false)
 
+/** Whether or not the settings button should be visable/usable */
+export const allowSettings = writable(false)
+
 /** Persistent settings svelte store */
 export interface UserInterfaceSettings {
     language: string
