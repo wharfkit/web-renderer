@@ -1,13 +1,12 @@
 <script lang="ts">
     import {createEventDispatcher} from 'svelte'
     import HeaderButton from './HeaderButton.svelte'
-    import {backAction, router, transitionDirection} from '../state'
+    import {allowSettings, backAction, router, transitionDirection} from '../state'
     import {fade} from 'svelte/transition'
     import {Writable} from 'svelte/store'
 
     export let title: string
     export let subtitle: string | undefined
-    export let allowSettings: Writable<boolean>
 
     const dispatch = createEventDispatcher<{
         cancel: void

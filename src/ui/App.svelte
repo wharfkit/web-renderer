@@ -11,7 +11,7 @@
     import Transact from './Transact.svelte'
     import Settings from './Settings.svelte'
 
-    import {active, errorDetails, prompt, router, loginPromise, props} from './state'
+    import {active, errorDetails, prompt, router, loginPromise, props, allowSettings} from './state'
     import {i18nType} from 'src/lib/translations'
     import {writable} from 'svelte/store'
 
@@ -44,7 +44,6 @@
         router.back()
     }
 
-    const allowSettings = writable(false)
     const unsubscribe = router.subscribe((current) => {
         if (current && current.path === 'login') {
             allowSettings.set(true)
@@ -56,7 +55,7 @@
     onDestroy(unsubscribe)
 </script>
 
-<Modal {allowSettings}>
+<Modal>
     {#if $active}
         {#if $errorDetails}
             <Error on:cancel={cancel} on:complete={complete} />

@@ -5,7 +5,6 @@
     import {Writable, writable} from 'svelte/store'
 
     let dialog: HTMLDialogElement
-    export let allowSettings: Writable<boolean>
 
     // Control the dialog element display based on state.active
     const unsubscribe = active.subscribe((current) => {
@@ -55,12 +54,7 @@
     on:mousedown|capture|nonpassive|self={backgroundClose}
     data-theme={$settings.theme}
 >
-    <Header
-        {allowSettings}
-        title={$props.title}
-        subtitle={$props.subtitle}
-        on:cancel={cancelRequest}
-    />
+    <Header title={$props.title} subtitle={$props.subtitle} on:cancel={cancelRequest} />
     <div class="modal-content">
         <slot />
     </div>
