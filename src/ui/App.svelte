@@ -66,6 +66,8 @@
             <Transact on:cancel={cancel} on:complete={complete} />
         {:else if $router.path === 'settings'}
             <Settings on:cancel={cancel} on:complete={complete} />
+        {:else}
+            <Countdown />
         {/if}
     {:else}
         <p>Modal inactive</p>

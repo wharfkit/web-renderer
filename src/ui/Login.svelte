@@ -17,6 +17,7 @@
     import Blockchain from './login/Blockchain.svelte'
     import Permission from './login/Permission.svelte'
     import Wallet from './login/Wallet.svelte'
+    import Countdown from './components/Countdown.svelte'
     import Transition from './components/Transition.svelte'
 
     const {t} = getContext<i18nType>('i18n')
@@ -239,7 +240,13 @@
             />
         </Transition>
     {:else}
-        <p>{$t('login.complete', {default: 'Complete the login using your selected wallet.'})}</p>
+        <Countdown
+            data={{
+                label: $t('login.complete', {
+                    default: 'Complete the login using your selected wallet.',
+                }),
+            }}
+        />
     {/if}
 {:else}
     <p>{$t('loading', {default: 'Loading...'})}</p>
