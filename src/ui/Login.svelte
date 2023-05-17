@@ -11,6 +11,7 @@
         UserInterfaceLoginData,
         backAction,
         transitionDirection,
+        allowSettings,
     } from './state'
 
     import Blockchain from './login/Blockchain.svelte'
@@ -189,6 +190,7 @@
             completed = true
             dispatch('complete', $loginResponse)
             backAction.set(undefined)
+            allowSettings.set(false)
         }
     }
 
