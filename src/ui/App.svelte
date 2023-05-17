@@ -39,9 +39,8 @@
         if ($prompt) {
             $prompt.resolve(detail)
             prompt.reset()
+            router.back()
         }
-        // Go back to previous path and remove it from the history
-        router.back()
     }
 
     const unsubscribe = router.subscribe((current) => {
