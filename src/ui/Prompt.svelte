@@ -113,8 +113,11 @@
     }>()
 </script>
 
-<div>
-    <Message title={$prompt?.args.title} details={$prompt?.args.body} />
+<div class="prompt">
+    <div class="text">
+        <BodyTitle>{$prompt?.args.title}</BodyTitle>
+        <BodyText>{$prompt?.args.body}</BodyText>
+    </div>
     {#each $elements as component}
         <svelte:component
             this={component.component}
@@ -126,10 +129,17 @@
 </div>
 
 <style>
-    div {
+    .prompt {
         display: flex;
         flex-direction: column;
         gap: var(--space-m);
         gap: var(--space-l);
+    }
+
+    .text {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-s);
+        text-align: center;
     }
 </style>
