@@ -2,6 +2,7 @@
     import {createEventDispatcher} from 'svelte'
     import HeaderButton from './HeaderButton.svelte'
     import {allowSettings, backAction, router, transitionDirection} from '../state'
+    import HeaderWaves from './HeaderWaves.svelte'
 
     export let title: string
     export let subtitle: string | undefined
@@ -41,6 +42,8 @@
         </slot>
     </div>
 </div>
+
+<HeaderWaves />
 
 <style lang="scss">
     .modal-header {
