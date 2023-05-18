@@ -64,6 +64,10 @@ Globals and custom properties
 
     --loading-circle-color: var(--reef-turquoise);
     --loading-circle-track-color: rgba(0 0 0 / 0.05);
+
+    --wave-foreground-color: var(--body-background-color);
+    --wave-midground-color: var(--seafoam-mint);
+    --wave-background-color: var(--reef-turquoise);
 }
 
 @mixin dark-theme {
@@ -117,6 +121,10 @@ Globals and custom properties
 
     --loading-circle-color: var(--seafoam-mint);
     --loading-circle-track-color: rgba(0 0 0 / 0.05);
+
+    --wave-foreground-color: var(--body-background-color);
+    --wave-midground-color: var(--reef-turquoise);
+    --wave-background-color: var(--seafoam-mint);
 }
 
 // Default theme, no user or system preference
