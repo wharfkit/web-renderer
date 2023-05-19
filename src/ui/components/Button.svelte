@@ -5,18 +5,17 @@
     type ButtonProps = {
         label: string
         icon?: ComponentProps<Icon>['name'] | undefined
-        onClick
+        onClick: () => void
         variant: 'primary' | 'secondary' | 'outlined'
+        autofocus?: boolean
     }
 
     export let data: ButtonProps
 
-    const {label, icon, onClick, variant = 'primary'} = data
-
-    $: onKeydown = onClick
+    const {label, icon, onClick, variant = 'primary', autofocus} = data
 </script>
 
-<button class="button {variant}" on:click={onClick} on:keydown={onKeydown}>
+<button class="button {variant}" on:click={onClick} {autofocus}>
     {#if icon}
         <Icon name={icon} />
     {/if}

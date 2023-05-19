@@ -6,12 +6,14 @@
         href: string
         label: string
         icon?: ComponentProps<Icon>['name']
+        variant?: 'primary' | 'secondary' | 'outlined'
+        target?: string
     }
 
-    let {button = true, href, label, icon} = data
+    let {button = true, href, label, icon, target, variant = 'outlined'} = data
 </script>
 
-<a class:button class="outlined" {href} target="_blank" rel="noreferrer">
+<a class:button class={variant} {href} {target} rel="noreferrer">
     {#if icon}
         <Icon name={icon} />
     {/if}

@@ -24,7 +24,9 @@ import {
     props,
     resetState,
     router,
+    settings,
 } from './ui/state'
+import {get} from 'svelte/store'
 
 export interface WebRendererOptions {
     id?: string
@@ -58,9 +60,14 @@ export class WebRenderer extends AbstractUserInterface implements UserInterface 
         this.element.id = this.elementId
         this.shadow = this.element.attachShadow({mode: 'closed'})
         // Load translations for the current locale
-        const lang = getNavigatorLanguage()
         this.i18n = makeLocalization()
+        let lang = getNavigatorLanguage()
+        const settingsLanguage = get(settings).language
+        if (settingsLanguage) {
+            lang = settingsLanguage
+        }
         this.log(`Setting language to ${lang}`)
+        settings.update((current) => ({...current, language: lang}))
         this.i18n.loadTranslations(lang)
         if (document.readyState === 'complete' || document.readyState === 'interactive') {
             // Document is ready, append element
@@ -140,7 +147,7 @@ export class WebRenderer extends AbstractUserInterface implements UserInterface 
         props.update((current) => ({
             ...current,
             title: this.i18n.t.get('login.title', {default: 'Login'}),
-            subtitle: this.i18n.t.get('login.subtitle', {default: 'Please login to continue.'}),
+            subtitle: '',
         }))
         // Push the new path to the router
         router.push('login')
@@ -162,7 +169,7 @@ export class WebRenderer extends AbstractUserInterface implements UserInterface 
         props.update((c) => ({
             ...c,
             title: this.i18n.t.get('transact.title', {default: 'Transact'}),
-            subtitle: this.i18n.t.get('transact.subtitle', {default: ' '}),
+            subtitle: '',
         }))
         // Push the new path to the router
         router.push('transact')
@@ -178,42 +185,18 @@ export class WebRenderer extends AbstractUserInterface implements UserInterface 
 
     async onSign(): Promise<void> {
         this.log('onSign')
-        // Set the title/subtitle to match the transact state
-        props.update((c) => ({
-            ...c,
-            subtitle: this.i18n.t.get('transact.signing', {default: 'Signing transaction'}),
-        }))
     }
 
     async onSignComplete(): Promise<void> {
         this.log('onSignComplete')
-        // Set the title/subtitle to match the transact state
-        props.update((c) => ({
-            ...c,
-            subtitle: this.i18n.t.get('transact.signed', {default: 'Transaction signed'}),
-        }))
     }
 
     async onBroadcast(): Promise<void> {
         this.log('onBroadcast')
-        // Set the title/subtitle to match the transact state
-        props.update((c) => ({
-            ...c,
-            subtitle: this.i18n.t.get('transact.broadcasting', {
-                default: 'Broadcasting transaction',
-            }),
-        }))
     }
 
     async onBroadcastComplete(): Promise<void> {
         this.log('onBroadcastComplete')
-        // Set the title/subtitle to match the transact state
-        props.update((c) => ({
-            ...c,
-            subtitle: this.i18n.t.get('transact.broadcasted', {
-                default: 'Transaction broadcasted!',
-            }),
-        }))
     }
 
     prompt(args: PromptArgs): Cancelable<PromptResponse> {

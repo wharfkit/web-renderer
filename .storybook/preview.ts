@@ -1,5 +1,5 @@
 import type {Preview} from '@storybook/svelte'
-import '../src/styles/variables.css'
+import '../src/styles/variables.scss'
 import '../src/styles/buttonStyles.css'
 
 const preview: Preview = {

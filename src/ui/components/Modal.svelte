@@ -1,7 +1,8 @@
 <script lang="ts">
     import Header from './Header.svelte'
-    import {active, cancelablePromises, resetState, props, colorScheme} from '../state'
+    import {active, cancelablePromises, resetState, props, settings} from '../state'
     import {onDestroy} from 'svelte'
+    import {Writable, writable} from 'svelte/store'
 
     let dialog: HTMLDialogElement
 
@@ -35,24 +36,23 @@
             event.clientY <= rect.top + rect.height &&
             rect.left <= event.clientX &&
             event.clientX <= rect.left + rect.width
-        if (event.target === dialog && !isInDialog) {
+        if (!isInDialog) {
             cancelRequest()
         }
     }
 
     // When escape keypress is captured, close
-    function escapeClose(event) {
-        if (event.key === 'Escape') {
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && dialog.open) {
             cancelRequest()
         }
-    }
+    })
 </script>
 
 <dialog
     bind:this={dialog}
-    on:click|capture|nonpassive={backgroundClose}
-    on:keyup|preventDefault|capture|nonpassive={escapeClose}
-    data-theme={$colorScheme}
+    on:mousedown|capture|nonpassive|self={backgroundClose}
+    data-theme={$settings.theme}
 >
     <Header title={$props.title} subtitle={$props.subtitle} on:cancel={cancelRequest} />
     <div class="modal-content">
@@ -75,6 +75,7 @@
         padding: 0;
         width: min(var(--space-7xl), 100vw - var(--space-m));
         box-shadow: 0px 4px 154px rgba(0, 0, 0, 0.35);
+        background: none;
     }
     dialog::backdrop {
         background: rgba(0, 0, 0, 0.75);
@@ -85,6 +86,7 @@
         );
         padding: var(--space-m);
         background-color: var(--body-background-color);
+        overflow: hidden;
         overflow-y: scroll;
         max-height: var(--max-modal-content-height);
 

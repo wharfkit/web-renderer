@@ -1,9 +1,8 @@
 <script lang="ts">
     import {createEventDispatcher} from 'svelte'
     import HeaderButton from './HeaderButton.svelte'
-    import {backAction} from '../state'
-    import {fade} from 'svelte/transition'
-    import ThemeToggle from './ThemeToggle.svelte'
+    import {allowSettings, backAction, router, transitionDirection} from '../state'
+    import HeaderWaves from './HeaderWaves.svelte'
 
     export let title: string
     export let subtitle: string | undefined
@@ -17,20 +16,24 @@
     <div class="slot left">
         <slot name="left">
             {#if $backAction}
-                <div transition:fade={{duration: 100}}>
-                    <HeaderButton icon="chevron-left" onClick={$backAction} />
-                </div>
+                <HeaderButton icon="chevron-left" onClick={$backAction} />
+            {:else if $allowSettings}
+                <HeaderButton
+                    icon="settings"
+                    onClick={() => {
+                        router.push('settings')
+                        $transitionDirection = 'rtl'
+                    }}
+                />
             {/if}
         </slot>
     </div>
     <div class="slot center">
         <slot name="center">
-            <ThemeToggle>
-                <h2>{title}</h2>
-                {#if subtitle}
-                    <p>{subtitle}</p>
-                {/if}
-            </ThemeToggle>
+            <h2>{title}</h2>
+            {#if subtitle}
+                <p>{subtitle}</p>
+            {/if}
         </slot>
     </div>
     <div class="slot right">
@@ -39,6 +42,8 @@
         </slot>
     </div>
 </div>
+
+<HeaderWaves />
 
 <style lang="scss">
     .modal-header {

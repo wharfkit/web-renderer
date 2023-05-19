@@ -14,6 +14,7 @@
     import {prompt} from './state'
     import BodyTitle from './components/BodyTitle.svelte'
     import BodyText from './components/BodyText.svelte'
+    import Message from './components/Message.svelte'
 
     interface UIComponent {
         component: ComponentType<SvelteComponentTyped>
@@ -112,7 +113,7 @@
     }>()
 </script>
 
-<div>
+<div class="prompt">
     <div class="text">
         <BodyTitle>{$prompt?.args.title}</BodyTitle>
         <BodyText>{$prompt?.args.body}</BodyText>
@@ -128,7 +129,7 @@
 </div>
 
 <style>
-    div {
+    .prompt {
         display: flex;
         flex-direction: column;
         gap: var(--space-m);
@@ -136,6 +137,9 @@
     }
 
     .text {
+        display: flex;
+        flex-direction: column;
         gap: var(--space-s);
+        text-align: center;
     }
 </style>

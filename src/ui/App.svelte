@@ -2,15 +2,18 @@
 </script>
 
 <script lang="ts">
-    import {setContext} from 'svelte'
+    import {onDestroy, setContext} from 'svelte'
 
     import Error from './Error.svelte'
-    import Prompt from './Prompt.svelte'
     import Login from './Login.svelte'
-    import Modal from './components/Modal.svelte'
+    import Prompt from './Prompt.svelte'
+    import Settings from './Settings.svelte'
     import Transact from './Transact.svelte'
 
-    import {active, errorDetails, prompt, router, loginPromise} from './state'
+    import Countdown from './components/Countdown.svelte'
+    import Modal from './components/Modal.svelte'
+
+    import {active, errorDetails, prompt, router, loginPromise, props, allowSettings} from './state'
     import {i18nType} from 'src/lib/translations'
 
     // Set the i18n context for all child components
@@ -37,10 +40,19 @@
         if ($prompt) {
             $prompt.resolve(detail)
             prompt.reset()
+            router.back()
         }
-        // Go back to previous path and remove it from the history
-        router.back()
     }
+
+    const unsubscribe = router.subscribe((current) => {
+        if (current && current.path === 'login') {
+            allowSettings.set(true)
+        } else {
+            allowSettings.set(false)
+        }
+    })
+
+    onDestroy(unsubscribe)
 </script>
 
 <Modal>
@@ -53,6 +65,10 @@
             <Login on:cancel={cancel} on:complete={complete} />
         {:else if $router.path === 'transact'}
             <Transact on:cancel={cancel} on:complete={complete} />
+        {:else if $router.path === 'settings'}
+            <Settings on:cancel={cancel} on:complete={complete} />
+        {:else}
+            <Countdown />
         {/if}
     {:else}
         <p>Modal inactive</p>

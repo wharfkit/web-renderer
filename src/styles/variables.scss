@@ -48,7 +48,7 @@ Globals and custom properties
     --input-border-color-hover: var(--color-custom-5);
     --input-border-color-focus: var(--wharf-blue);
 
-    --qr-border-color: var(--seafoam-mint);
+    --qr-border-color: inset 0 0 0 1px rgba(0 0 0 / 0.3), inset 0 0 0 1px var(--seafoam-mint);
 
     --checkbox-stroke: var(--wharf-blue);
     --checkbox-fill: var(--reef-turquoise);
@@ -61,6 +61,13 @@ Globals and custom properties
 
     --text-area-background: var(--swell-mist);
     --text-area-text-color: #242424;
+
+    --loading-circle-color: var(--reef-turquoise);
+    --loading-circle-track-color: rgba(0 0 0 / 0.05);
+
+    --wave-foreground-color: var(--body-background-color);
+    --wave-midground-color: var(--seafoam-mint);
+    --wave-background-color: var(--reef-turquoise);
 }
 
 @mixin dark-theme {
@@ -98,7 +105,7 @@ Globals and custom properties
     --input-border-color-hover: var(--color-custom-6);
     --input-border-color-focus: var(--reef-turquoise);
 
-    --qr-border-color: rgba(0 0 0 / 0.2);
+    --qr-border-color: inset 0 0 0 1px rgba(0 0 0 / 0.3);
 
     --checkbox-stroke: var(--reef-turquoise);
     --checkbox-fill: var(--color-custom-3);
@@ -111,6 +118,13 @@ Globals and custom properties
 
     --text-area-background: var(--color-primary-900);
     --text-area-text-color: #ffffff;
+
+    --loading-circle-color: var(--seafoam-mint);
+    --loading-circle-track-color: rgba(0 0 0 / 0.05);
+
+    --wave-foreground-color: var(--body-background-color);
+    --wave-midground-color: var(--reef-turquoise);
+    --wave-background-color: var(--seafoam-mint);
 }
 
 // Default theme, no user or system preference
