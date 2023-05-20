@@ -41,4 +41,4 @@ export const makeLocalization = (options: UserInterfaceLocalizationOptions = {})
     return new i18n(params)
 }
 
-export const {t, l, locales, locale, loadTranslations} = new i18n(config)
+export const {t, l, locales, locale, loadTranslations, setLocale} = new i18n(config)

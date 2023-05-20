@@ -9,7 +9,7 @@
     },
     "loading": "裝載。。。",
     "login": {
-        "complete": "使用您選擇的錢包完成登錄。",
+        "complete": "",
         "enter": {
             "account": "Enter account name",
             "lookup": "Lookup Account",
@@ -22,16 +22,39 @@
             "no_match": "未找到與 {{publicKey}} 匹配的帳戶。"
         },
         "title": "登錄",
-        "subtitle": "請登錄以繼續",
         "title-app": "登錄到 {{appName}}"
     },
     "transact": {
         "title": "辦理",
         "subtitle": "",
-        "processing": "Processing transaction...",
+        "processing": "Performing transaction...",
         "signing": "簽署交易",
         "signed": "交易已簽署",
         "broadcasting": "廣播交易",
         "broadcasted": "交易廣播"
+    },
+    "settings": {
+        "title": "設置",
+        "language": {
+            "title": "語言"
+        },
+        "theme": {
+            "title": "主題",
+            "automatic": "自動",
+            "light": "光",
+            "dark": "暗"
+        },
+        "animations": {
+            "title": "動畫",
+            "enabled": "啟用",
+            "disabled": "殘"
+        },
+        "github": "在 Github 上報告問題",
+        "about": {
+            "title": "關於",
+            "version": "版本 {{version}}",
+            "author": "",
+            "link": "閱讀更多關於碼頭的資訊"
+        }
     }
 }

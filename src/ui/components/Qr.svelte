@@ -2,63 +2,121 @@
     import generateQr from '../../lib/qrcode'
     import Icon from './Icon.svelte'
     export let data = ''
+
+    let dialog: HTMLDialogElement
+    let width: number
     let expanded = false
 
     const toggleExpanded = () => {
-        expanded = !expanded
+        if (expanded) {
+            collapse()
+        } else {
+            expanded = true
+            dialog.showModal()
+        }
     }
 
     const collapse = () => {
+        dialog.close()
         expanded = false
     }
 
-    const expandedStyles = 'scale: 2; transform-origin: center;'
+    // When background is clicked outside of modal, close
+    function backgroundClose(event) {
+        var rect = dialog.getBoundingClientRect()
+        var isInDialog =
+            rect.top <= event.clientY &&
+            event.clientY <= rect.top + rect.height &&
+            rect.left <= event.clientX &&
+            event.clientX <= rect.left + rect.width
+        if (!isInDialog) {
+            collapse()
+        }
+    }
+
+    // When escape keypress is captured, close
+    function escapeClose(event) {
+        if (event.key === 'Escape') {
+            collapse()
+        }
+    }
 </script>
 
+<svelte:window bind:innerWidth={width} />
+
 {#if data}
-    <div>
-        <span style={expanded ? expandedStyles : ''} on:click={collapse} on:keydown={collapse}>
+    <div class="wrapper">
+        <div class="qr">
             {@html generateQr(data)}
-        </span>
-        <!-- <button on:click={toggleExpanded}>
-            <span class="visually-hidden">Expand</span>
-            <Icon name="expand" size="--space-s" />
-        </button> -->
+        </div>
+        <dialog
+            bind:this={dialog}
+            on:click|self={backgroundClose}
+            on:keydown|stopPropagation|preventDefault|capture={escapeClose}
+        >
+            <button class="qr" on:click={collapse}>
+                {@html generateQr(data)}
+            </button>
+        </dialog>
+
+        {#if width > 600}
+            <button class="expand" on:click={toggleExpanded}>
+                <span class="visually-hidden">Expand</span>
+                <Icon name="expand" size="var(--space-l)" />
+            </button>
+        {/if}
     </div>
 {/if}
 
 <style>
-    div {
+    .wrapper {
         position: relative;
         display: grid;
         background: var(--body-background-color);
         border-radius: var(--space-s);
-        padding: var(--space-s);
-        border: 1px solid var(--qr-border-color);
+        padding: var(--space-m);
+        box-shadow: var(--qr-border-color);
         aspect-ratio: 1;
         align-self: stretch;
     }
 
-    span {
+    .qr {
         background: white;
         padding: var(--space-xs);
         border-radius: var(--space-2xs);
-        transition: scale 200ms ease;
-        z-index: 2;
     }
 
-    span :global(svg) {
+    .qr :global(svg) {
         width: 100%;
         height: 100%;
     }
 
-    /* button {
-        position: absolute;
-        bottom: calc(var(--space-m) * -1);
+    dialog {
+        padding: 0;
+        border-radius: var(--space-2xs);
         border: none;
-        background: var(--body-background-color);
-        padding: var(--space-s);
+    }
+
+    dialog .qr {
+        background-color: white;
+        width: min(800px, 80vmin);
+    }
+
+    button.expand {
+        position: absolute;
+        display: grid;
+        place-items: center;
+        width: fit-content;
+        height: fit-content;
+        bottom: 0;
+        left: 50%;
+        right: 50%;
+        transform: translateX(-50%) translateY(50%) scale(0.8);
+        border: none;
+        padding-inline: var(--space-s);
         cursor: pointer;
+        background: var(--body-background-color);
+        color: var(--body-text-color);
     }
 
     .visually-hidden {
@@ -71,5 +129,5 @@
         clip: rect(0, 0, 0, 0);
         white-space: nowrap;
         border: 0;
-    } */
+    }
 </style>

@@ -9,7 +9,7 @@
     },
     "loading": "加载中。。。",
     "login": {
-        "complete": "使用您选择的钱包完成登陆。",
+        "complete": "",
         "enter": {
             "account": "Enter account name",
             "lookup": "Lookup Account",
@@ -22,16 +22,39 @@
             "no_match": "未找到与 {{publicKey}} 匹配的帐户。"
         },
         "title": "登陆",
-        "subtitle": "请登陆以继续",
         "title-app": "登陆到 {{appName}}"
     },
     "transact": {
         "title": "办理",
         "subtitle": " ",
-        "processing": "Processing transaction...",
+        "processing": "Performing transaction...",
         "signing": "签署交易",
         "signed": "交易已签署",
         "broadcasting": "广播交易",
         "broadcasted": "交易广播"
+    },
+    "settings": {
+        "title": "设置",
+        "language": {
+            "title": "语言"
+        },
+        "theme": {
+            "title": "主题",
+            "automatic": "自动",
+            "light": "浅色",
+            "dark": "深色"
+        },
+        "animations": {
+            "title": "动画",
+            "enabled": "启用",
+            "disabled": "禁用"
+        },
+        "github": "在 Github 上报告问题",
+        "about": {
+            "title": "关于",
+            "version": "版本 {{version}}",
+            "author": "",
+            "link": "阅读更多关于码头的信息"
+        }
     }
 }

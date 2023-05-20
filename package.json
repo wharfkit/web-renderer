@@ -10,7 +10,7 @@
     "unpkg": "lib/web-renderer.bundle.js",
     "scripts": {
         "build": "rollup -c --bundleConfigAsCjs",
-        "build-test": "rollup -c test/rollup.config.js --bundleConfigAsCjs",
+        "build-test": "rollup -c test/rollup.config.js --bundleConfigAsCjs && storybook build -o test/public/storybook",
         "dev": "rollup -c test/rollup.config.js --bundleConfigAsCjs -w",
         "serve": "sirv test/public --no-clear --host",
         "storybook": "storybook dev -p 6006",

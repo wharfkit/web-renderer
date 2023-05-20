@@ -4,11 +4,20 @@
     import {derived, Readable} from 'svelte/store'
 
     import {i18nType} from 'src/lib/translations'
-    import {loginContext, loginResponse, props, UserInterfaceLoginData, backAction} from './state'
+    import {
+        loginContext,
+        loginResponse,
+        props,
+        UserInterfaceLoginData,
+        backAction,
+        transitionDirection,
+        allowSettings,
+    } from './state'
 
     import Blockchain from './login/Blockchain.svelte'
     import Permission from './login/Permission.svelte'
     import Wallet from './login/Wallet.svelte'
+    import Countdown from './components/Countdown.svelte'
     import Transition from './components/Transition.svelte'
 
     const {t} = getContext<i18nType>('i18n')
@@ -145,40 +154,36 @@
         }
     )
 
-    let transitionDirection
-    const right = 100
-    const left = -100
-
     const selectChain = (e) => {
         $loginResponse.chainId = e.detail
         $backAction = unselectChain
-        transitionDirection = right
+        $transitionDirection = 'rtl'
     }
     const unselectChain = () => {
         $loginResponse.chainId = undefined
         $backAction = unselectWallet
-        transitionDirection = left
+        $transitionDirection = 'ltr'
     }
 
     const selectPermission = (e) => {
         $loginResponse.permissionLevel = e.detail
         $backAction = undefined
-        transitionDirection = right
+        $transitionDirection = 'rtl'
     }
     const unselectPermission = () => {
         $loginResponse.permissionLevel = undefined
-        transitionDirection = left
+        $transitionDirection = 'ltr'
     }
 
     const selectWallet = (e) => {
         $backAction = unselectWallet
         $loginResponse.walletPluginIndex = e.detail
-        transitionDirection = right
+        $transitionDirection = 'rtl'
     }
     const unselectWallet = () => {
         $loginResponse.walletPluginIndex = undefined
         $backAction = undefined
-        transitionDirection = left
+        $transitionDirection = 'ltr'
     }
 
     const complete = () => {
@@ -186,6 +191,7 @@
             completed = true
             dispatch('complete', $loginResponse)
             backAction.set(undefined)
+            allowSettings.set(false)
         }
     }
 
@@ -196,7 +202,7 @@
 
 {#if $props && $loginContext}
     {#if $step === Steps.selectWallet}
-        <Transition direction={transitionDirection}>
+        <Transition direction={$transitionDirection}>
             <Wallet
                 on:select={selectWallet}
                 on:cancel={cancel}
@@ -205,7 +211,7 @@
             />
         </Transition>
     {:else if $step === Steps.selectChain && $chains}
-        <Transition direction={transitionDirection}>
+        <Transition direction={$transitionDirection}>
             <Blockchain
                 on:select={selectChain}
                 on:cancel={unselectWallet}
@@ -214,7 +220,7 @@
             />
         </Transition>
     {:else if $step === Steps.enterPermission && $client && $walletPlugin}
-        <Transition direction={transitionDirection}>
+        <Transition direction={$transitionDirection}>
             <Permission
                 on:select={selectPermission}
                 on:cancel={unselectChain}
@@ -224,7 +230,7 @@
             />
         </Transition>
     {:else if $step === Steps.selectPermission && $client && $walletPlugin}
-        <Transition direction={transitionDirection}>
+        <Transition direction={$transitionDirection}>
             <Permission
                 on:select={selectPermission}
                 on:cancel={unselectChain}
@@ -234,7 +240,13 @@
             />
         </Transition>
     {:else}
-        <p>{$t('login.complete', {default: 'Complete the login using your selected wallet.'})}</p>
+        <Countdown
+            data={{
+                label: $t('login.complete', {
+                    default: 'Complete the login using your selected wallet.',
+                }),
+            }}
+        />
     {/if}
 {:else}
     <p>{$t('loading', {default: 'Loading...'})}</p>

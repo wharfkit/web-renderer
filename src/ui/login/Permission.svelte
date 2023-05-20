@@ -78,10 +78,10 @@
 </script>
 
 <section>
-    <BodyTitle>{title}</BodyTitle>
     {#if $busy}
         <p class="loading">{$t('loading', {default: 'Loading...'})}</p>
     {:else if permissions && permissions.length > 0}
+        <BodyTitle>{$t('login.select.account')}</BodyTitle>
         <List>
             {#each permissions as permission}
                 <ListItem
@@ -91,6 +91,7 @@
             {/each}
         </List>
     {:else if walletPlugin.metadata.publicKey}
+        <BodyTitle>{title}</BodyTitle>
         <WarningMessage
             title={$t('login.select.no_accounts', {
                 default: 'No accounts found',
@@ -101,6 +102,7 @@
             })}
         />
     {:else if !accountName}
+        <BodyTitle>{title}</BodyTitle>
         <div class="input-group">
             <TextInput
                 onKeyup={handleKeyup}

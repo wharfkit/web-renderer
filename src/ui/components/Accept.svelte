@@ -28,6 +28,7 @@
             label: $t('accept', {default: 'Accept'}),
             onClick: () => dispatch('complete'),
             icon: 'check',
+            autofocus: true,
         }}
     />
 </ButtonGroup>

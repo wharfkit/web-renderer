@@ -2,6 +2,7 @@
     import {createEventDispatcher, getContext} from 'svelte'
 
     import {i18nType} from 'src/lib/translations'
+    import Countdown from './components/Countdown.svelte'
 
     const {t} = getContext<i18nType>('i18n')
 
@@ -19,4 +20,8 @@
     }
 </script>
 
-<p>{$t('transact.processing', {default: 'Doing transact stuffs - cool animation!'})}</p>
+<Countdown
+    data={{
+        label: $t('transact.processing', {default: 'Performing transaction...'}),
+    }}
+/>

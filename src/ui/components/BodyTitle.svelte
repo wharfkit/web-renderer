@@ -1,11 +1,12 @@
-<h3><slot /></h3>
+<h2><slot /></h2>
 
 <style>
-    h3 {
+    h2 {
         color: var(--body-text-color);
         font-size: var(--fs-2);
         font-weight: 600;
         text-align: center;
         margin: 0;
+        margin-block-start: var(--space-xs);
     }
 </style>
