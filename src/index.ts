@@ -30,6 +30,7 @@ import {get} from 'svelte/store'
 
 export interface WebRendererOptions {
     id?: string
+    logging?: boolean
     translations?: Record<string, Record<string, string>>
 }
 
@@ -51,6 +52,7 @@ export class WebRenderer extends AbstractUserInterface implements UserInterface 
     public shadow: ShadowRoot
 
     public i18n
+    public logging = false
 
     constructor(options: WebRendererOptions = defaultWebRendererOptions) {
         super()
@@ -65,6 +67,9 @@ export class WebRenderer extends AbstractUserInterface implements UserInterface 
         const settingsLanguage = get(settings).language
         if (settingsLanguage) {
             lang = settingsLanguage
+        }
+        if (options.logging !== undefined) {
+            this.logging = options.logging
         }
         this.log(`Setting language to ${lang}`)
         settings.update((current) => ({...current, language: lang}))
@@ -97,8 +102,10 @@ export class WebRenderer extends AbstractUserInterface implements UserInterface 
         cancelablePromises.update((current) => [...current, promise])
 
     log(...args: any[]) {
-        // eslint-disable-next-line no-console
-        console.log('WebRenderer, LOG:', ...args)
+        if (this.logging) {
+            // eslint-disable-next-line no-console
+            console.log('WebRenderer, LOG:', ...args)
+        }
     }
 
     login(context: LoginContext): Cancelable<UserInterfaceLoginResponse> {
