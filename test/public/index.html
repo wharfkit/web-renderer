@@ -33,6 +33,13 @@
                     timeout: 5000,
                 },
             })
+            console.log(WebRenderer.TransactPluginFinalityCallback)
+            const finalityCallback = new WebRenderer.TransactPluginFinalityCallback({
+                onFinalityCallback: () => {
+                    alert('Transaction finalized!')
+                }
+            })
+            const finalityChecker = new WebRenderer.TransactPluginFinalityChecker()
 
             const resourceProvider = new WebRenderer.TransactPluginResourceProvider()
 
@@ -118,9 +125,7 @@
 
             // tries to restore session, called when document is loaded
             async function restoreSession() {
-                session = await sessionKit.restore().catch((e) => {
-                    console.log('error caught in restore', e)
-                })
+                session = await sessionKit.restore()
                 updateSessions()
                 // If the session was defined, set the UI to logged in
                 if (session) {
@@ -178,17 +183,17 @@
 
             // login and store session if successful
             function login(options = {}) {
-                sessionKit
+                return sessionKit
                     .login(options)
-                    .then((result) => {
+                    .then(async (result) => {
                         session = result.session
                         didLogin()
-                        refreshAccount()
+                        await refreshAccount()
                     })
             }
 
             function refreshAccount() {
-                session.client.v1.chain.get_account(session.actor).then((result) => {
+                return session.client.v1.chain.get_account(session.actor).then((result) => {
                     account = result
                     document.getElementById('account-balance').textContent =
                         account.core_liquid_balance ? account.core_liquid_balance : '0.0000'
@@ -250,6 +255,12 @@
                 document.body.classList.add('logged-in')
             }
 
+            async function loginTransfer(loginOptions, transferOptions) {
+                login(loginOptions).then(() => {
+                    transfer(transferOptions)
+                })
+            }
+
             // transfer tokens using a session
             function transfer(options = {broadcast: false}) {
                 const action = {
@@ -267,7 +278,8 @@
                         memo: 'Yay WharfKit! Thank you <3',
                     },
                 }
-                const broadcast = document.getElementById("broadcast").checked
+                console.log(JSON.stringify(action))
+                const broadcast = options.broadcast || document.getElementById("broadcast").checked
                 session.transact({action}, {
                     ...options,
                     broadcast
@@ -288,8 +300,6 @@
                     }" target="_blank">View on Explorer</a>` : `Not broadcast`}
                 </div>`
                     document.getElementById('log').prepend(item)
-                }).catch((e) => {
-                    console.log('error caught in transact', e)
                 })
             }
 
@@ -391,6 +401,53 @@
                             <div class="form-group">
                                 <div class="form-group-body">
                                     <div class="form-checkbox">
+                                        <button class="btn btn-block" type="button" onclick="loginTransfer(
+                                            {
+                                                chain: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
+                                                permissionLevel: 'wharfkit1111@test',
+                                                walletPlugin: 'wallet-plugin-privatekey'
+                                            },
+                                            {broadcast: true}
+                                        )">
+                                            Token send 0.0001 from wharfkit111 to teamgreymass
+                                        </button>
+                                        <button class="btn btn-block" type="button" onclick="loginTransfer(
+                                            {
+                                                chain: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
+                                                permissionLevel: 'wharfkit1115@test',
+                                                walletPlugin: 'wallet-plugin-privatekey'
+                                            },
+                                            {broadcast: true}
+                                        )">
+                                            Token send that causes CPU/NET error
+                                        </button>
+                                        <button class="btn btn-block" type="button" onclick="loginTransfer(
+                                            {
+                                                chain: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
+                                                permissionLevel: 'wharfkit1114@test',
+                                                walletPlugin: 'wallet-plugin-privatekey'
+                                            },
+                                            {broadcast: true}
+                                        )">
+                                            Token send that causes RAM error
+                                        </button>
+                                        <button class="btn btn-block" type="button" onclick="loginTransfer(
+                                            {
+                                                chain: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
+                                                permissionLevel: 'wharfkit1114@test',
+                                                walletPlugin: 'wallet-plugin-privatekey'
+                                            },
+                                            {broadcast: true}
+                                        )">
+                                            Token send that causes RAM error
+                                        </button>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-group-body">
+                                    <div class="form-checkbox">
                                         <label>
                                             <input type="checkbox" id="broadcast"/>
                                             <em class="highlight">Broadcast?</em>
@@ -434,6 +491,9 @@
                                             onclick="transfer({transactPlugins: [autoCorrect]})"
                                         >
                                             transact with TransactPluginAutoCorrect
+                                        </button>
+                                        <button class="btn btn-block" type="button" onclick="transfer({transactPlugins: [finalityCallback]})">
+                                            transact with TransactPluginFinalityCallback (will alert on finality)
                                         </button>
                                     </div>
                                 </div>
