@@ -10,8 +10,6 @@ import {
 import type {Theme, TransitionDirection} from '../types'
 import {get, writable, Writable} from 'svelte/store'
 
-const storage = new BrowserLocalStorage('web.renderer')
-
 // Reset data in all stores
 export function resetState() {
     active.set(false)
@@ -55,21 +53,29 @@ export function makeSettingsStore(data = defaultUserInterfaceSettings) {
     const store = writable(data)
     const {subscribe, set} = store
 
-    storage.read('settings').then((existing) => {
-        if (existing) {
-            set(JSON.parse(existing))
-        }
-    })
+    let storage
+    if (typeof localStorage !== 'undefined') {
+        storage = new BrowserLocalStorage('web.renderer')
+        storage.read('settings').then((existing) => {
+            if (existing) {
+                set(JSON.parse(existing))
+            }
+        })
+    }
 
     return {
         subscribe,
         set: (n) => {
-            storage.write('settings', JSON.stringify(n))
+            if (storage) {
+                storage.write('settings', JSON.stringify(n))
+            }
             set(n)
         },
         update: (cb) => {
             const updatedStore = cb(get(store))
-            storage.write('settings', JSON.stringify(updatedStore))
+            if (storage) {
+                storage.write('settings', JSON.stringify(updatedStore))
+            }
             set(updatedStore)
         },
     }
