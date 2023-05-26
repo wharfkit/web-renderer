@@ -1,7 +1,7 @@
 {
     "name": "@wharfkit/web-renderer",
     "type": "module",
-    "version": "0.5.3-variant-b",
+    "version": "0.5.3-variant-b2",
     "description": "",
     "license": "BSD-3-Clause",
     "main": "lib/web-renderer.cjs",
