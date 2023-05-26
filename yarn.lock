@@ -3046,10 +3046,10 @@
   dependencies:
     tslib "^2.1.0"
 
-"@wharfkit/transact-plugin-resource-provider@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@wharfkit/transact-plugin-resource-provider/-/transact-plugin-resource-provider-0.3.0.tgz#b8163db3d4feab9ad2c3c54d054f8ebf5e963e12"
-  integrity sha512-W5Zy9xrm5Kjeq1osznVA3aodxhfkG8Ft/fVg1IWXP6/zlQYkXvZagnOemlK4DlqE7P7hghj1MlZojtVjZOUZ/A==
+"@wharfkit/transact-plugin-resource-provider@0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@wharfkit/transact-plugin-resource-provider/-/transact-plugin-resource-provider-0.4.0.tgz#cc9bf4d4ff0c73abbfdb89754c4e53008bd70e6a"
+  integrity sha512-0cmorrrqHS8q0lqdiq2Iwvou28CQMRaI2++sGoJnLHHGZaYI5BL5nsxp75mThPlqSj+xtsMtKAmx+VlH1IH8eA==
   dependencies:
     tslib "^2.1.0"
 
