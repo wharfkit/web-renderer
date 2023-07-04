@@ -25,16 +25,16 @@
     {#if checked}
         <path
             id="box-fill"
-            in:scale={{duration: 300, easing: quintOut}}
-            out:scale={{duration: 100, easing: quintOut}}
+            in:scale|global={{duration: 300, easing: quintOut}}
+            out:scale|global={{duration: 100, easing: quintOut}}
             stroke="none"
             d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"
         />
 
         <path
             id="check"
-            in:draw={{duration: 200, easing: quintOut}}
-            out:draw={{duration: 100, easing: quintOut}}
+            in:draw|global={{duration: 200, easing: quintOut}}
+            out:draw|global={{duration: 100, easing: quintOut}}
             fill="none"
             d="m9 11 3 3L22 4"
         />
