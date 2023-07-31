@@ -33,13 +33,13 @@
                     timeout: 5000,
                 },
             })
-            console.log(WebRenderer.TransactPluginFinalityCallback)
-            const finalityCallback = new WebRenderer.TransactPluginFinalityCallback({
-                onFinalityCallback: () => {
-                    alert('Transaction finalized!')
-                }
-            })
-            const finalityChecker = new WebRenderer.TransactPluginFinalityChecker()
+
+            // const finalityCallback = new WebRenderer.TransactPluginFinalityCallback({
+            //     onFinalityCallback: () => {
+            //         alert('Transaction finalized!')
+            //     }
+            // })
+            // const finalityChecker = new WebRenderer.TransactPluginFinalityChecker()
 
             const resourceProvider = new WebRenderer.TransactPluginResourceProvider()
 
@@ -492,9 +492,9 @@
                                         >
                                             transact with TransactPluginAutoCorrect
                                         </button>
-                                        <button class="btn btn-block" type="button" onclick="transfer({transactPlugins: [finalityCallback]})">
+                                        <!-- <button class="btn btn-block" type="button" onclick="transfer({transactPlugins: [finalityCallback]})">
                                             transact with TransactPluginFinalityCallback (will alert on finality)
-                                        </button>
+                                        </button> -->
                                     </div>
                                 </div>
                             </div>

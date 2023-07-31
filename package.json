@@ -66,8 +66,6 @@
         "@wharfkit/transact-plugin-autocorrect": "^1.0.0-beta1",
         "@wharfkit/transact-plugin-cosigner": "^0.3.4",
         "@wharfkit/transact-plugin-explorerlink": "^0.5.1",
-        "@wharfkit/transact-plugin-finality-callback": "0.1.1",
-        "@wharfkit/transact-plugin-finality-checker": "^0.1.0",
         "@wharfkit/transact-plugin-mock": "^0.3.0",
         "@wharfkit/transact-plugin-resource-provider": "0.4.0",
         "@wharfkit/wallet-plugin-anchor": "^0.5.0",
