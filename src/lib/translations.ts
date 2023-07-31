@@ -1,4 +1,4 @@
-import {NameType, PublicKeyType} from '@greymass/eosio'
+import {NameType, PublicKeyType} from '@wharfkit/antelope'
 import i18n, {Config, Parser} from 'sveltekit-i18n'
 
 import lang from './translations/lang.json'

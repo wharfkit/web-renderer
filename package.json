@@ -38,7 +38,7 @@
         "crypto": false
     },
     "peerDependencies": {
-        "@wharfkit/session": "^0.5.0"
+        "@wharfkit/session": "^1.0.0-beta8"
     },
     "devDependencies": {
         "@babel/core": "^7.20.12",
@@ -62,8 +62,8 @@
         "@tsconfig/svelte": "^3.0.0",
         "@typescript-eslint/eslint-plugin": "^5.49.0",
         "@typescript-eslint/parser": "^5.49.0",
-        "@wharfkit/session": "^0.5.0",
-        "@wharfkit/transact-plugin-autocorrect": "^0.3.4",
+        "@wharfkit/session": "^1.0.0-beta8",
+        "@wharfkit/transact-plugin-autocorrect": "^1.0.0-beta1",
         "@wharfkit/transact-plugin-cosigner": "^0.3.4",
         "@wharfkit/transact-plugin-explorerlink": "^0.5.1",
         "@wharfkit/transact-plugin-finality-callback": "0.1.1",
