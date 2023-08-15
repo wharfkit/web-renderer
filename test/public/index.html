@@ -34,6 +34,9 @@
                 },
             })
 
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+
             // const finalityCallback = new WebRenderer.TransactPluginFinalityCallback({
             //     onFinalityCallback: () => {
             //         alert('Transaction finalized!')
@@ -43,7 +46,9 @@
 
             const resourceProvider = new WebRenderer.TransactPluginResourceProvider()
 
-            const ui = new WebRenderer()
+            const ui = new WebRenderer({
+                minimal: urlParams.get('minimal')
+            })
 
             const sessionKit = new SessionKit({
                 appName: 'demo-app',
@@ -133,8 +138,10 @@
                     refreshAccount()
                 }
 
-                const queryString = window.location.search;
-                const urlParams = new URLSearchParams(queryString);
+                // Determine whether broadcast is enabled by default
+                if (urlParams.get('broadcast') !== null) {
+                    document.getElementById("broadcast").checked = (urlParams.get('broadcast') === 'true') ? true : false
+                }
 
                 // Automatically trigger a login if ?login exists on the URL
                 if (urlParams.get('login') !== null) {
@@ -149,7 +156,7 @@
                     setTimeout(() => {
                         console.log('triggering transfer automatically...')
                         transfer({ transactPlugins: [mockTransactPlugin]})
-                    }, 100)
+                    }, 500)
                 }
             }
 
@@ -300,6 +307,8 @@
                     }" target="_blank">View on Explorer</a>` : `Not broadcast`}
                 </div>`
                     document.getElementById('log').prepend(item)
+                }).catch(e => {
+                    console.log('caught', e)
                 })
             }
 

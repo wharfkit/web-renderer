@@ -31,11 +31,13 @@ import {get} from 'svelte/store'
 export interface WebRendererOptions {
     id?: string
     logging?: boolean
+    minimal?: boolean
     translations?: Record<string, Record<string, string>>
 }
 
 export const defaultWebRendererOptions = {
     id: 'wharfkit-web-ui',
+    minimal: false,
 }
 
 const getNavigatorLanguage = () =>
@@ -53,6 +55,7 @@ export class WebRenderer extends AbstractUserInterface implements UserInterface 
 
     public i18n
     public logging = false
+    public minimal = false
 
     constructor(options: WebRendererOptions = defaultWebRendererOptions) {
         super()
@@ -64,6 +67,7 @@ export class WebRenderer extends AbstractUserInterface implements UserInterface 
         // Load translations for the current locale
         this.i18n = makeLocalization()
         let lang = getNavigatorLanguage()
+        this.minimal = options.minimal || false
         const settingsLanguage = get(settings).language
         if (settingsLanguage) {
             lang = settingsLanguage
@@ -138,12 +142,16 @@ export class WebRenderer extends AbstractUserInterface implements UserInterface 
         if (isSilent) {
             return
         }
-        // Make sure the dialog is active
-        active.set(true)
-        // Set the error state
-        errorDetails.set(String(error))
-        // Push the new path to the router
-        router.push('error')
+        if (this.minimal) {
+            active.set(false)
+        } else {
+            // Make sure the dialog is active
+            active.set(true)
+            // Set the error state
+            errorDetails.set(String(error))
+            // Push the new path to the router
+            router.push('error')
+        }
     }
 
     async onLogin() {
@@ -233,7 +241,9 @@ export class WebRenderer extends AbstractUserInterface implements UserInterface 
 
     status(message: string) {
         // Make sure the dialog is active
-        active.set(true)
+        if (!this.minimal) {
+            active.set(true)
+        }
         // Update the subtitle to match the message
         props.update((current) => ({
             ...current,
