@@ -39,6 +39,7 @@ export default [
                 emitCss: false,
             }),
             resolve({
+                preferBuiltins: false,
                 browser: true,
                 dedupe: ['svelte'],
             }),

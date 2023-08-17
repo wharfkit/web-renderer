@@ -70,6 +70,7 @@ export default {
             },
         }),
         resolve({
+            preferBuiltins: false,
             browser: true,
             dedupe: ['svelte'],
         }),
