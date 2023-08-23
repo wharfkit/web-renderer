@@ -72,14 +72,14 @@ Globals and custom properties
 
 @mixin dark-theme {
     color-scheme: dark;
-    --body-background-color: var(--color-primary-700);
+    --body-background-color: var(--color-primary-990);
     --body-text-color: white;
     --body-text-color-variant: var(--color-neutral-300);
 
-    --header-background-color: white;
-    --header-text-color: var(--color-primary-700);
+    --header-background-color: var(--color-primary-700);
+    --header-text-color: var(--color-primary-50);
     --header-button-background: var(--header-background-color);
-    --header-button-outline: var(--seafoam-mint);
+    --header-button-outline: var(--color-primary-900);
 
     --button-text-color: var(--body-text-color);
     --button-text-color-active: var(--reef-turquoise);
@@ -123,8 +123,8 @@ Globals and custom properties
     --loading-circle-track-color: rgba(0 0 0 / 0.05);
 
     --wave-foreground-color: var(--body-background-color);
-    --wave-midground-color: var(--reef-turquoise);
-    --wave-background-color: var(--seafoam-mint);
+    --wave-midground-color: #2f3445;
+    --wave-background-color: #3e4356;
 }
 
 // Default theme, no user or system preference
@@ -174,6 +174,7 @@ Globals and custom properties
     --color-primary-700: #494e62; /* Wharf Blue */
     --color-primary-800: #3c4050;
     --color-primary-900: #363944;
+    --color-primary-990: #252835;
 
     /* Secondary */
     --color-secondary-50: #f1fcf9;
