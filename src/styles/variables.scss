@@ -1,8 +1,7 @@
 /**  
 Globals and custom properties
 
-:host selector for web component, 
-:root selector for storybook 
+:host selector for web component 
 */
 
 /****************** 
@@ -128,8 +127,7 @@ Globals and custom properties
 }
 
 // Default theme, no user or system preference
-:host dialog,
-:root {
+:host dialog {
     @include light-theme;
 }
 
@@ -140,8 +138,7 @@ Globals and custom properties
 
 // System dark mode enables dark theme
 @media (prefers-color-scheme: dark) {
-    :host dialog,
-    :root {
+    :host dialog {
         @include dark-theme;
     }
 
@@ -151,8 +148,7 @@ Globals and custom properties
     }
 }
 
-:host dialog,
-:root {
+:host dialog {
     /****************** 
           Colors 
     ******************/
