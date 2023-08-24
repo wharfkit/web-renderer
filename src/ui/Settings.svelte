@@ -1,12 +1,12 @@
 <script lang="ts">
     import {onMount, getContext} from 'svelte'
     import {backAction, props, router, transitionDirection, initRouter, settings} from './state'
-    import {i18nType} from 'src/lib/translations'
+    import {i18nType} from '../lib/translations'
     import List from './components/List.svelte'
     import ListItem from './components/ListItem.svelte'
     import Transition from './components/Transition.svelte'
     import About from './settings/About.svelte'
-    import languages from 'src/lib/translations/lang.json'
+    import languages from '../lib/translations/lang.json'
     import Selector from './settings/Selector.svelte'
     import {get} from 'svelte/store'
 

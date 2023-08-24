@@ -22,7 +22,7 @@
 </script>
 
 {#if animations}
-    <div class="transition" in:fly={{duration: 200, x, y}}>
+    <div class="transition" in:fly|global={{duration: 200, x, y}}>
         <slot />
     </div>
 {:else}
