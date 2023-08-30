@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {ComponentType, createEventDispatcher, SvelteComponentTyped} from 'svelte'
+    import {ComponentType, createEventDispatcher, SvelteComponent} from 'svelte'
     import {derived} from 'svelte/store'
 
     import Accept from './components/Accept.svelte'
@@ -17,7 +17,7 @@
     import Message from './components/Message.svelte'
 
     interface UIComponent {
-        component: ComponentType<SvelteComponentTyped>
+        component: ComponentType<SvelteComponent>
         props: Record<string, unknown>
     }
 

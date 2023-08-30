@@ -27,7 +27,7 @@ export default class QRCode {
         this.dataCache = null
     }
 
-    isDark(row: string | number, col: string | number) {
+    isDark(row: number, col: number) {
         if (row < 0 || this.moduleCount <= row || col < 0 || this.moduleCount <= col) {
             throw new Error(row + ',' + col)
         }
@@ -234,7 +234,7 @@ export default class QRCode {
         for (let col = this.moduleCount - 1; col > 0; col -= 2) {
             if (col == 6) col--
 
-            for (;;) {
+            for (; ;) {
                 for (let c = 0; c < 2; c++) {
                     if (this.modules[row][col - c] == null) {
                         let dark = false
@@ -294,10 +294,10 @@ export default class QRCode {
         if (buffer.getLengthInBits() > totalDataCount * 8) {
             throw new Error(
                 'code length overflow. (' +
-                    buffer.getLengthInBits() +
-                    '>' +
-                    totalDataCount * 8 +
-                    ')'
+                buffer.getLengthInBits() +
+                '>' +
+                totalDataCount * 8 +
+                ')'
             )
         }
 
@@ -312,7 +312,7 @@ export default class QRCode {
         }
 
         // padding
-        for (;;) {
+        for (; ;) {
             if (buffer.getLengthInBits() >= totalDataCount * 8) {
                 break
             }
@@ -327,7 +327,7 @@ export default class QRCode {
         return QRCode.createBytes(buffer, rsBlocks)
     }
 
-    static createBytes(buffer: {buffer: number[]}, rsBlocks: string | any[]) {
+    static createBytes(buffer: { buffer: number[] }, rsBlocks: string | any[]) {
         let offset = 0
 
         let maxDcCount = 0
