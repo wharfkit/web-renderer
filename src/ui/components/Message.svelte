@@ -23,9 +23,8 @@
 
 <style lang="scss">
     div {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        display: grid;
+        justify-items: center;
         gap: var(--space-s);
         text-align: center;
         color: var(--body-text-color);
