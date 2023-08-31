@@ -11,7 +11,7 @@
         "build": "rollup -c --bundleConfigAsCjs",
         "build-test": "rollup -c test/rollup.config.js --bundleConfigAsCjs",
         "dev": "rollup -c test/rollup.config.js --bundleConfigAsCjs -w",
-        "serve": "sirv test/public --no-clear --host"
+        "serve": "sirv test/public --no-clear --cors --host"
     },
     "directories": {
         "lib": "lib"
