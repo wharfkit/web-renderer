@@ -1,11 +1,14 @@
 <script lang="ts">
+    import {fade} from 'svelte/transition'
     import generateQr from '../../lib/qrcode'
     import Icon from './Icon.svelte'
+    import {cubicInOut} from 'svelte/easing'
     export let data = ''
 
     let dialog: HTMLDialogElement
     let width: number
     let expanded = false
+    let copied = false
 
     const toggleExpanded = () => {
         if (expanded) {
@@ -40,13 +43,21 @@
             collapse()
         }
     }
+
+    // Copy data to clipboard if supported. Requires a secure context e.g. https
+    function copyToClipboard(data: string) {
+        if (!navigator.clipboard) return
+        navigator.clipboard.writeText(data)
+        copied = true
+        setTimeout(() => (copied = false), 1200)
+    }
 </script>
 
 <svelte:window bind:innerWidth={width} />
 
 {#if data}
     <div class="wrapper">
-        <div class="qr">
+        <div class="main qr">
             {@html generateQr(data)}
         </div>
         <dialog
@@ -60,10 +71,28 @@
         </dialog>
 
         {#if width > 600}
-            <button class="expand" on:click={toggleExpanded}>
-                <span class="visually-hidden">Expand</span>
-                <Icon name="expand" size="var(--space-l)" />
-            </button>
+            <div class="button-group">
+                <button class="expand" on:click={toggleExpanded}>
+                    <Icon name="expand" size="var(--space-m)" />
+                    <span>Expand QR code</span>
+                </button>
+                <button class="copy" on:click={() => copyToClipboard(data)}>
+                    <div class="icon">
+                        <div>
+                            <Icon name="copy" size="var(--space-m)" />
+                        </div>
+                        {#if copied}
+                            <div
+                                class="check"
+                                transition:fade={{duration: 180, easing: cubicInOut}}
+                            >
+                                <Icon name="check" size="var(--space-m)" />
+                            </div>
+                        {/if}
+                    </div>
+                    <span>Copy request link</span>
+                </button>
+            </div>
         {/if}
     </div>
 {/if}
@@ -78,17 +107,18 @@
         box-shadow: var(--qr-border-color);
         aspect-ratio: 1;
         align-self: stretch;
+        margin-bottom: var(--space-xs);
     }
 
     .qr {
-        background: white;
-        padding: var(--space-xs);
-        border-radius: var(--space-2xs);
+        display: flex;
     }
 
     .qr :global(svg) {
-        width: 100%;
-        height: 100%;
+        border-radius: var(--space-2xs);
+        padding: var(--space-xs);
+        background: white;
+        flex: 1;
     }
 
     dialog {
@@ -100,34 +130,41 @@
     dialog .qr {
         background-color: white;
         width: min(800px, 80vmin);
+        border: none;
     }
 
-    button.expand {
-        position: absolute;
+    .button-group {
         display: grid;
-        place-items: center;
-        width: fit-content;
-        height: fit-content;
-        bottom: 0;
-        left: 50%;
-        right: 50%;
-        transform: translateX(-50%) translateY(50%) scale(0.8);
+        grid-template-columns: 1fr 1fr;
+        justify-items: center;
+        gap: var(--space-s);
+        position: absolute;
+        top: 100%;
+        width: 100%;
+        transform: translateY(-50%);
+    }
+
+    .button-group button {
+        display: flex;
+        align-items: center;
+        gap: var(--space-xs);
         border: none;
-        padding-inline: var(--space-s);
         cursor: pointer;
         background: var(--body-background-color);
         color: var(--body-text-color);
     }
 
-    .visually-hidden {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
-        white-space: nowrap;
-        border: 0;
+    .icon {
+        display: grid;
+        place-content: center;
+        grid-template-areas: 'stack';
+    }
+
+    .icon > * {
+        grid-area: stack;
+    }
+
+    .check {
+        background: var(--body-background-color);
     }
 </style>
