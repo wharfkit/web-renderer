@@ -1622,6 +1622,26 @@
   dependencies:
     tslib "^2.1.0"
 
+"@wharfkit/wallet-plugin-scatter@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@wharfkit/wallet-plugin-scatter/-/wallet-plugin-scatter-1.0.2.tgz#2824b6fd2f4261a31b1e256514cf4ee32b84ebc5"
+  integrity sha512-zKjVrU8IU+FNyp9F2rMke7Myf+qD8XpayQ2emU9Er6xPyVnSMU4YjIXub9e214uS9V2cMGgoiNFjkuNmH0A/1A==
+  dependencies:
+    "@scatterjs/core" "^2.7.48"
+    "@scatterjs/eosjs2" "^1.5.30"
+    eosjs "20.0.0"
+    tslib "^2.1.0"
+
+"@wharfkit/wallet-plugin-tokenpocket@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@wharfkit/wallet-plugin-tokenpocket/-/wallet-plugin-tokenpocket-1.0.2.tgz#c96c8a5210ad09a687b31caf88bb457490cf1929"
+  integrity sha512-ZvYhnn6PQMsGTVdhcH0AUyZwnHqnIHtE+FLe583U79rO6jEh0EVqwuBfSm3Tn4Gos3gJ4ympiWc2igQr417xwg==
+  dependencies:
+    "@scatterjs/core" "^2.7.48"
+    "@scatterjs/eosjs2" "^1.5.30"
+    eosjs "20.0.0"
+    tslib "^2.1.0"
+
 "@wharfkit/wallet-plugin-wombat@^1.0.0":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@wharfkit/wallet-plugin-wombat/-/wallet-plugin-wombat-1.0.1.tgz#f5a53c36a2f31e8e11bf49fe2bb6c312bcb5f418"
