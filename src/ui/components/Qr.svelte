@@ -1,11 +1,14 @@
 <script lang="ts">
+    import {fade} from 'svelte/transition'
     import generateQr from '../../lib/qrcode'
     import Icon from './Icon.svelte'
+    import {cubicInOut} from 'svelte/easing'
     export let data = ''
 
     let dialog: HTMLDialogElement
     let width: number
     let expanded = false
+    let copied = false
 
     const toggleExpanded = () => {
         if (expanded) {
@@ -45,6 +48,8 @@
     function copyToClipboard(data: string) {
         if (!navigator.clipboard) return
         navigator.clipboard.writeText(data)
+        copied = true
+        setTimeout(() => (copied = false), 1200)
     }
 </script>
 
@@ -72,7 +77,19 @@
                     <span>Expand QR code</span>
                 </button>
                 <button class="copy" on:click={() => copyToClipboard(data)}>
-                    <Icon name="copy" size="var(--space-m)" />
+                    <div class="icon">
+                        <div>
+                            <Icon name="copy" size="var(--space-m)" />
+                        </div>
+                        {#if copied}
+                            <div
+                                class="check"
+                                transition:fade={{duration: 180, easing: cubicInOut}}
+                            >
+                                <Icon name="check" size="var(--space-m)" />
+                            </div>
+                        {/if}
+                    </div>
                     <span>Copy request link</span>
                 </button>
             </div>
@@ -135,5 +152,19 @@
         cursor: pointer;
         background: var(--body-background-color);
         color: var(--body-text-color);
+    }
+
+    .icon {
+        display: grid;
+        place-content: center;
+        grid-template-areas: 'stack';
+    }
+
+    .icon > * {
+        grid-area: stack;
+    }
+
+    .check {
+        background: var(--body-background-color);
     }
 </style>
