@@ -105,8 +105,6 @@
         border-radius: var(--space-s);
         padding: var(--space-m);
         box-shadow: var(--qr-border-color);
-        aspect-ratio: 1;
-        align-self: stretch;
         margin-bottom: var(--space-xs);
     }
 
