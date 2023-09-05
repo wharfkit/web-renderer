@@ -40,6 +40,12 @@
             collapse()
         }
     }
+
+    // Copy data to clipboard if supported. Requires a secure context e.g. https
+    function copyToClipboard(data: string) {
+        if (!navigator.clipboard) return
+        navigator.clipboard.writeText(data)
+    }
 </script>
 
 <svelte:window bind:innerWidth={width} />
@@ -65,7 +71,7 @@
                     <Icon name="expand" size="var(--space-m)" />
                     <span>Expand QR code</span>
                 </button>
-                <button class="copy" on:click={toggleExpanded}>
+                <button class="copy" on:click={() => copyToClipboard(data)}>
                     <Icon name="copy" size="var(--space-m)" />
                     <span>Copy request link</span>
                 </button>
