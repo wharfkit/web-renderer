@@ -61,8 +61,8 @@
 
         {#if width > 600}
             <button class="expand" on:click={toggleExpanded}>
-                <span class="visually-hidden">Expand</span>
                 <Icon name="expand" size="var(--space-l)" />
+                <span>Expand QR Code</span>
             </button>
         {/if}
     </div>
@@ -81,14 +81,14 @@
     }
 
     .qr {
-        background: white;
-        padding: var(--space-xs);
-        border-radius: var(--space-2xs);
+        display: flex;
     }
 
     .qr :global(svg) {
-        width: 100%;
-        height: 100%;
+        border-radius: var(--space-2xs);
+        padding: var(--space-xs);
+        background: white;
+        flex: 1;
     }
 
     dialog {
