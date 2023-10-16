@@ -117,6 +117,7 @@
         padding: var(--space-xs);
         background: white;
         flex: 1;
+        width: auto;
     }
 
     dialog {
