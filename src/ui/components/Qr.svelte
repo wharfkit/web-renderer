@@ -6,7 +6,6 @@
     export let data = ''
 
     let dialog: HTMLDialogElement
-    let width: number
     let expanded = false
     let copied = false
 
@@ -53,8 +52,6 @@
     }
 </script>
 
-<svelte:window bind:innerWidth={width} />
-
 {#if data}
     <div class="wrapper">
         <div class="main qr">
@@ -70,30 +67,25 @@
             </button>
         </dialog>
 
-        {#if width > 600}
-            <div class="button-group">
-                <button class="expand" on:click={toggleExpanded}>
-                    <Icon name="expand" size="var(--space-m)" />
-                    <span>Expand QR code</span>
-                </button>
-                <button class="copy" on:click={() => copyToClipboard(data)}>
-                    <div class="icon">
-                        <div>
-                            <Icon name="copy" size="var(--space-m)" />
-                        </div>
-                        {#if copied}
-                            <div
-                                class="check"
-                                transition:fade={{duration: 180, easing: cubicInOut}}
-                            >
-                                <Icon name="check" size="var(--space-m)" />
-                            </div>
-                        {/if}
+        <div class="button-group">
+            <button class="expand" on:click={toggleExpanded}>
+                <Icon name="expand" size="var(--space-m)" />
+                <span>Expand QR code</span>
+            </button>
+            <button class="copy" on:click={() => copyToClipboard(data)}>
+                <div class="icon">
+                    <div>
+                        <Icon name="copy" size="var(--space-m)" />
                     </div>
-                    <span>Copy request link</span>
-                </button>
-            </div>
-        {/if}
+                    {#if copied}
+                        <div class="check" transition:fade={{duration: 180, easing: cubicInOut}}>
+                            <Icon name="check" size="var(--space-m)" />
+                        </div>
+                    {/if}
+                </div>
+                <span>Copy request link</span>
+            </button>
+        </div>
     </div>
 {/if}
 
@@ -117,6 +109,7 @@
         padding: var(--space-xs);
         background: white;
         flex: 1;
+        width: auto;
     }
 
     dialog {
