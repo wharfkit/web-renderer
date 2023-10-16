@@ -2,7 +2,7 @@
     import BodyTitle from './BodyTitle.svelte'
     import BodyText from './BodyText.svelte'
     import Icon from './Icon.svelte'
-    import type {Icon as IconType} from './icons'
+    import type {Icon as IconType} from './icons.ts'
     export let title: string | undefined = undefined
     export let details: string | undefined = undefined
     export let icon: IconType | undefined = undefined

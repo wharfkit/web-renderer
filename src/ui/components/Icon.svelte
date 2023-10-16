@@ -1,6 +1,6 @@
 <script lang="ts">
-    import icons from './icons'
-    import type {Icon} from './icons'
+    import icons from './icons.ts'
+    import type {Icon} from './icons.ts'
     import type {PercentageString, Space} from '../../types'
     export let name: Icon
     export let size: Space | PercentageString = 'var(--space-l)'
@@ -8,7 +8,7 @@
 </script>
 
 <div style="width: {size}; display: grid; place-content: center; color: {color}">
-    <svelte:component this={icons[name]} {...$$props} />
+    {@html icons[name]}
 </div>
 
 <style lang="scss">
