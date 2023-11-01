@@ -6,6 +6,8 @@ import {
     PromptArgs,
     TransactContext,
     UserInterfaceLoginResponse,
+    CreateAccountContext,
+    ChainDefinition
 } from '@wharfkit/session'
 import type {Theme, TransitionDirection} from '../types'
 import {get, writable, Writable} from 'svelte/store'
@@ -185,7 +187,26 @@ export const defaultLoginResponse = {
 
 export const loginContext = writable<LoginContext | undefined>(undefined)
 export const loginPromise = writable<LoginPromise | undefined>(undefined)
-export const loginResponse = writable<UserInterfaceLoginData>({...defaultLoginResponse})
+export const loginResponse = writable<UserInterfaceLoginData>({ ...defaultLoginResponse })
+
+
+// Account Creation
+
+export type UserInterfaceAccountCreationData = {
+    chain?: ChainDefinition // If account creation can only be done on one chain.
+    chains?: ChainDefinition[] // Used if the user should have the option to create his account on multiple chain (wouldn't be returned if requiresChainSelect was set to true).
+    pluginId?: string // The id of the plugin that was selected (if more than one plugin was available).
+}
+
+export const defaultAccountCreationResponse = {
+    chain: undefined,
+    chains: [],
+    pluginId: undefined,
+}
+
+
+export const accountCreationContext = writable<CreateAccountContext | undefined>(undefined)
+export const accountCreationResponse = writable<UserInterfaceAccountCreationData>({ ...defaultAccountCreationResponse })
 
 export const errorDetails = writable<string | undefined>(undefined)
 
