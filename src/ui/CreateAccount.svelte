@@ -47,6 +47,7 @@
     let chains: Readable<ChainDefinition[]> = derived(
         [accountCreationContext, accountPlugin],
         ([$currentContext, $currentAccountPlugin]) => {
+            console.log({ $currentContext, $currentAccountPlugin })
             if (!$currentContext || !$currentAccountPlugin) {
                 return []
             }
@@ -148,6 +149,8 @@
     const cancel = () => {
         dispatch('cancel')
     }
+
+    $: console.log({ step: $step, chains: $chains, accountCreationResponse: $accountCreationResponse })
 </script>
 
 {#if $props && $accountCreationContext}

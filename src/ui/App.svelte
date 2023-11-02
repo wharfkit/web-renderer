@@ -9,6 +9,7 @@
     import Prompt from './Prompt.svelte'
     import Settings from './Settings.svelte'
     import Transact from './Transact.svelte'
+    import CreateAccount from './CreateAccount.svelte'
 
     import Countdown from './components/Countdown.svelte'
     import Modal from './components/Modal.svelte'
@@ -53,6 +54,8 @@
     })
 
     onDestroy(unsubscribe)
+
+    $: console.log({ path: $router.path })
 </script>
 
 <Modal>
@@ -67,6 +70,8 @@
             <Transact on:cancel={cancel} on:complete={complete} />
         {:else if $router.path === 'settings'}
             <Settings on:cancel={cancel} on:complete={complete} />
+        {:else if $router.path === 'create-account'}
+            <CreateAccount on:cancel={cancel} on:complete={complete} />
         {:else}
             <Countdown />
         {/if}
