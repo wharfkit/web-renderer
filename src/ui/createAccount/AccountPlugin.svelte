@@ -1,12 +1,12 @@
 <script lang="ts">
     import {createEventDispatcher, setContext} from 'svelte'
-    import {AccountCreationPlugin, Checksum256} from '@wharfkit/session'
+    import {AbstractAccountCreationPlugin, Checksum256} from '@wharfkit/session'
     import List from '../components/List.svelte'
     import ListItem from '../components/ListItem.svelte'
     import BodyTitle from '../components/BodyTitle.svelte'
     import {getThemedLogo} from '../../lib/utils'
 
-    export let plugins: AccountCreationPlugin[]
+    export let plugins: AbstractAccountCreationPlugin[]
     export let title: string
 
     const dispatch = createEventDispatcher<{
