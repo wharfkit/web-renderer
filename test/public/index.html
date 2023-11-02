@@ -126,6 +126,10 @@
                     new WebRenderer.WalletPluginTokenPocket(),
                     new WebRenderer.WalletPluginWombat()
                 ],
+            }, {
+                accountCreationPlugins: [
+                    new WebRenderer.AccountCreationPluginWhalesplainer(),
+                ],
             })
 
             let session
@@ -200,6 +204,15 @@
                         didLogin()
                         await refreshAccount()
                     })
+            }
+
+            function createAccount(chain) {
+                let chainDefinition
+                if (chain) {
+                    chainDefinition = WebRenderer.Chains[chain]
+                }
+                console.log({ chainDefinition, chain })
+                return sessionKit.createAccount({ chain: chainDefinition })
             }
 
             function refreshAccount() {
@@ -375,6 +388,12 @@
                 walletPlugin: 'wallet-plugin-privatekey'
             })">
                 <span>Test Account (No RAM)</span>
+            </a>
+            <a class="subnav-item" href="#login-test" onclick="createAccount()">
+                <span>Create Any Account</span>
+            </a>
+            <a class="subnav-item" href="#logout" onclick="createAccount('EOS')">
+                <span>Create EOS Account</span>
             </a>
         </nav>
         <div class="Layout" id="">
