@@ -34,6 +34,7 @@
     }
 
     function complete({detail}) {
+        console.log('complete', detail)
         // Reject any promises that are waiting for a response
         if ($loginPromise) {
             $loginPromise.resolve(detail)

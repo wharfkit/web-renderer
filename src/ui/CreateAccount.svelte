@@ -94,6 +94,15 @@
 
     onDestroy(accountCreationContextUnsubscribe)
 
+    const complete = () => {
+        console.log({ completed })
+        if (!completed) {
+            completed = true
+            dispatch('complete', $accountCreationResponse)
+            backAction.set(undefined)
+        }
+    }
+
     const step = derived(
         [accountCreationResponse, accountPlugin],
         ([$currentResponse, $currentAccountPlugin]) => {
@@ -137,14 +146,7 @@
         $transitionDirection = 'ltr'
     }
 
-    const complete = () => {
-        console.log({completed})
-        if (!completed) {
-            completed = true
-            dispatch('complete', $accountCreationResponse)
-            backAction.set(undefined)
-        }
-    }
+   
 
     const cancel = () => {
         dispatch('cancel')

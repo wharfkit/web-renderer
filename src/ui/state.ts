@@ -27,9 +27,14 @@ export function resetState() {
     loginPromise.set(undefined)
     loginResponse.set({...defaultLoginResponse})
 
+    accountCreationContext.set(undefined)
+    accountCreationPromise.set(undefined)
+    accountCreationResponse.set({...defaultAccountCreationResponse})
+
     errorDetails.set(undefined)
     backAction.set(undefined)
     transitionDirection.set(undefined)
+    console.log('done resetting state')
 }
 
 /** Whether or not the interface is active in the browser */

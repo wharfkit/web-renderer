@@ -160,21 +160,24 @@ export class WebRenderer extends AbstractUserInterface implements UserInterface 
 
     async onAccountCreate(context: CreateAccountContext): Promise<UserInterfaceAccountCreationResponse> {
         this.log('onAccountCreate', context)
-        // Make sure the dialog is active
-        active.set(true)
         // Push the new path to the router
         router.push('create-account')
 
         const promise = cancelable(
-            new Promise<UserInterfaceAccountCreationResponse>((resolve, reject) =>
+            new Promise<UserInterfaceAccountCreationResponse>((resolve, reject) => {               
                 accountCreationPromise.set({
                     reject,
                     resolve,
                 })
-            )
+                console.log({accountCreationPromise})
+            })
         )
+        console.log({promise})
         this.addCancelablePromise(promise.cancel)
         accountCreationContext.set(context)
+        console.log({context})
+        // Make the dialog active at the end
+        active.set(true)
         return promise
     }
 
