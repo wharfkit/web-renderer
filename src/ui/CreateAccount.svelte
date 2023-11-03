@@ -98,8 +98,12 @@
         console.log({ completed })
         if (!completed) {
             completed = true
-            dispatch('complete', $accountCreationResponse)
-            backAction.set(undefined)
+
+            // For cases, where no UI interactions are needed,we are giving the UI a chance to set the state before completing
+            setTimeout(() => {
+                dispatch('complete', $accountCreationResponse)
+                backAction.set(undefined)
+            }, 100)
         }
     }
 
