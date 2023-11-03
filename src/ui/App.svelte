@@ -14,7 +14,7 @@
     import Countdown from './components/Countdown.svelte'
     import Modal from './components/Modal.svelte'
 
-    import {active, errorDetails, prompt, router, loginPromise, props, allowSettings} from './state'
+    import {active, errorDetails, prompt, router, loginPromise, accountCreationPromise, allowSettings} from './state'
     import {i18nType} from 'src/lib/translations'
 
     // Set the i18n context for all child components
@@ -38,6 +38,9 @@
         if ($loginPromise) {
             $loginPromise.resolve(detail)
         }
+        if ($accountCreationPromise) {
+            $accountCreationPromise.resolve(detail)
+        }
         if ($prompt) {
             $prompt.resolve(detail)
             prompt.reset()
@@ -54,8 +57,6 @@
     })
 
     onDestroy(unsubscribe)
-
-    $: console.log({ path: $router.path })
 </script>
 
 <Modal>

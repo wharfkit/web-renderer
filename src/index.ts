@@ -159,7 +159,6 @@ export class WebRenderer extends AbstractUserInterface implements UserInterface 
     }
 
     async onAccountCreate(context: CreateAccountContext): Promise<UserInterfaceAccountCreationResponse> {
-        console.log('onAccountCreate', context)
         this.log('onAccountCreate', context)
         // Make sure the dialog is active
         active.set(true)
@@ -177,6 +176,15 @@ export class WebRenderer extends AbstractUserInterface implements UserInterface 
         this.addCancelablePromise(promise.cancel)
         accountCreationContext.set(context)
         return promise
+    }
+
+    async onAccountCreateComplete(): Promise<void> {
+        this.log('onAccountCreateComplete')
+
+        // Close the dialog once the login completes
+        active.set(false)
+        // Reset all data in the state
+        resetState()
     }
 
     async onLogin() {

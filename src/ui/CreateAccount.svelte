@@ -1,13 +1,12 @@
 <script lang="ts">
     import {createEventDispatcher, getContext, onDestroy, onMount} from 'svelte'
-    import {ChainDefinition, AccountCreationPlugin} from '@wharfkit/session'
+    import {ChainDefinition, AccountCreationPlugin, type UserInterfaceAccountCreationResponse} from '@wharfkit/session'
     import {
         backAction,
         accountCreationContext,
         accountCreationResponse,
         props,
         transitionDirection,
-        UserInterfaceAccountCreationData,
     } from './state'
 
     import {i18nType} from 'src/lib/translations'
@@ -21,7 +20,7 @@
     let completed = false
 
     const dispatch = createEventDispatcher<{
-        complete: UserInterfaceAccountCreationData
+        complete: UserInterfaceAccountCreationResponse
         cancel: void
     }>()
 
@@ -57,7 +56,7 @@
                 return $currentContext.chains.filter((chain) => {
                     return (
                         // If the chain is in the list of supported chains
-                        $currentAccountPlugin.config.supportedChains?.includes(chain.id)
+                        $currentAccountPlugin.config.supportedChains?.find(c => c.equals(chain))
                     )
                 })
             }
@@ -139,6 +138,7 @@
     }
 
     const complete = () => {
+        console.log({completed})
         if (!completed) {
             completed = true
             dispatch('complete', $accountCreationResponse)
@@ -149,8 +149,6 @@
     const cancel = () => {
         dispatch('cancel')
     }
-
-    $: console.log({ step: $step, chains: $chains, accountCreationResponse: $accountCreationResponse })
 </script>
 
 {#if $props && $accountCreationContext}
