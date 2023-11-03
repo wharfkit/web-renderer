@@ -46,7 +46,6 @@
     let chains: Readable<ChainDefinition[]> = derived(
         [accountCreationContext, accountPlugin],
         ([$currentContext, $currentAccountPlugin]) => {
-            console.log({ $currentContext, $currentAccountPlugin })
             if (!$currentContext || !$currentAccountPlugin) {
                 return []
             }
@@ -95,7 +94,6 @@
     onDestroy(accountCreationContextUnsubscribe)
 
     const complete = () => {
-        console.log({ completed })
         if (!completed) {
             completed = true
 

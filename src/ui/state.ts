@@ -34,7 +34,6 @@ export function resetState() {
     errorDetails.set(undefined)
     backAction.set(undefined)
     transitionDirection.set(undefined)
-    console.log('done resetting state')
 }
 
 /** Whether or not the interface is active in the browser */
