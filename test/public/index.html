@@ -209,12 +209,12 @@
                 })
             }
 
-            function createAccount(chain) {
+            function createAccount(plugin, chain) {
                 let chainDefinition
                 if (chain) {
                     chainDefinition = WebRenderer.Chains[chain]
                 }
-                return sessionKit.createAccount({chain: chainDefinition})
+                return sessionKit.createAccount({chain: chainDefinition, pluginId: plugin})
             }
 
             function refreshAccount() {
@@ -409,11 +409,31 @@
             >
                 <span>Test Account (No RAM)</span>
             </a>
+        </nav>
+        <nav class="subnav" aria-label="Repository">
             <a class="subnav-item" href="#login-test" onclick="createAccount()">
-                <span>Create Any Account</span>
+                <span>Create Account</span>
             </a>
-            <a class="subnav-item" href="#logout" onclick="createAccount('EOS')">
-                <span>Create EOS Account</span>
+            <a
+                class="subnav-item"
+                href="#logout"
+                onclick="createAccount('account-creation-plugin-jungle4')"
+            >
+                <span>Create Jungle4 Account</span>
+            </a>
+            <a
+                class="subnav-item"
+                href="#logout"
+                onclick="createAccount('account-creation-plugin-greymass')"
+            >
+                <span>Create Account w/ Greymass</span>
+            </a>
+            <a
+                class="subnav-item"
+                href="#logout"
+                onclick="createAccount('account-creation-plugin-greymass', 'EOS')"
+            >
+                <span>Create EOS Account w/ Greymass</span>
             </a>
         </nav>
         <div class="Layout" id="">
