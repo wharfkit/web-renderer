@@ -200,9 +200,8 @@ export interface AccountCreationPromise {
     resolve: (response: UserInterfaceAccountCreationResponse) => void
 }
 
-export const defaultAccountCreationResponse = {
+export const defaultAccountCreationResponse: UserInterfaceAccountCreationResponse = {
     chain: undefined,
-    chains: [],
     pluginId: undefined,
 }
 
