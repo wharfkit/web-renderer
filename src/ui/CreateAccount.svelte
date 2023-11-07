@@ -1,6 +1,10 @@
 <script lang="ts">
     import {createEventDispatcher, getContext, onDestroy, onMount} from 'svelte'
-    import {ChainDefinition, AccountCreationPlugin, type UserInterfaceAccountCreationResponse} from '@wharfkit/session'
+    import {
+        ChainDefinition,
+        AccountCreationPlugin,
+        type UserInterfaceAccountCreationResponse,
+    } from '@wharfkit/session'
     import {
         backAction,
         accountCreationContext,
@@ -55,7 +59,7 @@
                 return $currentContext.chains.filter((chain) => {
                     return (
                         // If the chain is in the list of supported chains
-                        $currentAccountPlugin.config.supportedChains?.find(c => c.equals(chain))
+                        $currentAccountPlugin.config.supportedChains?.find((c) => c.equals(chain))
                     )
                 })
             }
@@ -80,7 +84,7 @@
             // If only one chain is available, set it on the response
             if (currentContext.chain) {
                 $accountCreationResponse.chain = currentContext.chain
-            } else if (currentContext.chains.length === 1) {
+            } else if (currentContext.chains && currentContext.chains.length === 1) {
                 $accountCreationResponse.chain = currentContext.chains[0]
             }
         }
@@ -147,8 +151,6 @@
         $backAction = unselectPlugin
         $transitionDirection = 'ltr'
     }
-
-   
 
     const cancel = () => {
         dispatch('cancel')
