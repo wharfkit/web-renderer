@@ -41,6 +41,10 @@
                 return undefined
             }
 
+            if ($currentContext.accountCreationPlugin) {
+                return $currentContext.accountCreationPlugin
+            }
+
             return $currentContext.accountCreationPlugins.find(
                 (plugin) => plugin.id === $currentResponse.pluginId
             )
