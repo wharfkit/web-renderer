@@ -123,12 +123,14 @@
                 return Steps.selectPlugin
             }
 
-            const requiresChainSelect =
-                $currentAccountPlugin?.config.requiresChainSelect ||
-                $context?.uiRequirements.requiresChainSelect
+            let requiresChainSelect = $currentAccountPlugin?.config.requiresChainSelect
+
+            // If requiresChainSelect is specified as false, never present the chain selection UI, in all other cases, use the context
+            if (requiresChainSelect !== false) {
+                requiresChainSelect = $context?.uiRequirements.requiresChainSelect
+            }
 
             if (
-                $currentAccountPlugin?.config.requiresChainSelect &&
                 !$currentResponse.chain &&
                 requiresChainSelect
             ) {
