@@ -40,31 +40,38 @@
             if (!$currentContext || !$currentResponse) {
                 return undefined
             }
-
-            return $currentContext.accountCreationPlugins.find(
+            const plugin = $currentContext.accountCreationPlugins.find(
                 (plugin) => plugin.id === $currentResponse.pluginId
             )
+            // If the new plugin only supports one chain, set it as the current
+            if (!$currentResponse.chain && plugin?.config.supportedChains?.length === 1) {
+                $currentResponse.chain = plugin.config.supportedChains[0].id
+            }
+            return plugin
         }
     )
 
     let chains: Readable<ChainDefinition[]> = derived(
         [accountCreationContext, accountPlugin],
         ([$currentContext, $currentAccountPlugin]) => {
-            if (!$currentContext || !$currentAccountPlugin) {
-                return []
+            if ($currentContext && $currentAccountPlugin) {
+                // If the selected plugin has an array of supported chains, filter the list of chains
+                if ($currentAccountPlugin.config.supportedChains) {
+                    if ($currentContext.chains) {
+                        return $currentContext.chains.filter((chain) => {
+                            return (
+                                // If the chain is in the list of supported chains
+                                $currentAccountPlugin.config.supportedChains?.find((c) =>
+                                    c.id.equals(chain.id)
+                                )
+                            )
+                        })
+                    }
+                }
+            } else if ($currentContext) {
+                return $currentContext.chains
             }
-
-            // If the selected plugin has an array of supported chains, filter the list of chains
-            if ($currentAccountPlugin.config.supportedChains) {
-                return $currentContext.chains.filter((chain) => {
-                    return (
-                        // If the chain is in the list of supported chains
-                        $currentAccountPlugin.config.supportedChains?.find((c) => c.equals(chain))
-                    )
-                })
-            }
-
-            return $currentContext.chains
+            return []
         }
     )
 
@@ -83,9 +90,9 @@
 
             // If only one chain is available, set it on the response
             if (currentContext.chain) {
-                $accountCreationResponse.chain = currentContext.chain
+                $accountCreationResponse.chain = currentContext.chain.id
             } else if (currentContext.chains && currentContext.chains.length === 1) {
-                $accountCreationResponse.chain = currentContext.chains[0]
+                $accountCreationResponse.chain = currentContext.chains[0].id
             }
         }
     })
@@ -110,15 +117,21 @@
     }
 
     const step = derived(
-        [accountCreationResponse, accountPlugin],
-        ([$currentResponse, $currentAccountPlugin]) => {
-            if (!$currentAccountPlugin) {
+        [accountCreationContext, accountCreationResponse, accountPlugin, chains],
+        ([$context, $currentResponse, $currentAccountPlugin, $chains]) => {
+            if (!$currentAccountPlugin && $context?.uiRequirements.requiresPluginSelect) {
                 return Steps.selectPlugin
             }
 
-            const {requiresChainSelect} = $currentAccountPlugin.config
+            const requiresChainSelect =
+                $currentAccountPlugin?.config.requiresChainSelect ||
+                $context?.uiRequirements.requiresChainSelect
 
-            if (!$currentResponse.chain && requiresChainSelect) {
+            if (
+                $currentAccountPlugin?.config.requiresChainSelect &&
+                !$currentResponse.chain &&
+                requiresChainSelect
+            ) {
                 return Steps.selectChain
             }
 
@@ -165,7 +178,7 @@
                 on:select={selectPlugin}
                 on:cancel={cancel}
                 plugins={$accountCreationContext.accountCreationPlugins}
-                title={$t('accountCreation.select.plugin', {default: 'Select a Plugin'})}
+                title={$t('accountCreation.select.plugin', {default: 'Select a Service Provider'})}
             />
         </Transition>
     {:else if $step === Steps.selectChain && $chains}
