@@ -1,13 +1,13 @@
 import {
     BrowserLocalStorage,
     Checksum256Type,
+    CreateAccountContext,
     LoginContext,
     PermissionLevelType,
     PromptArgs,
     TransactContext,
+    UserInterfaceAccountCreationResponse,
     UserInterfaceLoginResponse,
-    CreateAccountContext,
-    ChainDefinition
 } from '@wharfkit/session'
 import type {Theme, TransitionDirection} from '../types'
 import {get, writable, Writable} from 'svelte/store'
@@ -26,6 +26,10 @@ export function resetState() {
     loginContext.set(undefined)
     loginPromise.set(undefined)
     loginResponse.set({...defaultLoginResponse})
+
+    accountCreationContext.set(undefined)
+    accountCreationPromise.set(undefined)
+    accountCreationResponse.set({...defaultAccountCreationResponse})
 
     errorDetails.set(undefined)
     backAction.set(undefined)
@@ -187,26 +191,25 @@ export const defaultLoginResponse = {
 
 export const loginContext = writable<LoginContext | undefined>(undefined)
 export const loginPromise = writable<LoginPromise | undefined>(undefined)
-export const loginResponse = writable<UserInterfaceLoginData>({ ...defaultLoginResponse })
-
+export const loginResponse = writable<UserInterfaceLoginData>({...defaultLoginResponse})
 
 // Account Creation
 
-export type UserInterfaceAccountCreationData = {
-    chain?: ChainDefinition // If account creation can only be done on one chain.
-    chains?: ChainDefinition[] // Used if the user should have the option to create his account on multiple chain (wouldn't be returned if requiresChainSelect was set to true).
-    pluginId?: string // The id of the plugin that was selected (if more than one plugin was available).
+export interface AccountCreationPromise {
+    reject: (error: Error) => void
+    resolve: (response: UserInterfaceAccountCreationResponse) => void
 }
 
-export const defaultAccountCreationResponse = {
+export const defaultAccountCreationResponse: UserInterfaceAccountCreationResponse = {
     chain: undefined,
-    chains: [],
     pluginId: undefined,
 }
 
-
 export const accountCreationContext = writable<CreateAccountContext | undefined>(undefined)
-export const accountCreationResponse = writable<UserInterfaceAccountCreationData>({ ...defaultAccountCreationResponse })
+export const accountCreationResponse = writable<UserInterfaceAccountCreationResponse>({
+    ...defaultAccountCreationResponse,
+})
+export const accountCreationPromise = writable<AccountCreationPromise | undefined>(undefined)
 
 export const errorDetails = writable<string | undefined>(undefined)
 

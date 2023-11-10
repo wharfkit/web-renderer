@@ -83,7 +83,7 @@
                         </div>
                     {/if}
                 </div>
-                <span>Copy request link</span>
+                <span>Copy to clipboard</span>
             </button>
         </div>
     </div>

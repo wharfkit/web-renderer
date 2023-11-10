@@ -1,13 +1,16 @@
 <script lang="ts">
     import {createEventDispatcher, getContext, onDestroy, onMount} from 'svelte'
-    import {ChainDefinition, AccountCreationPlugin} from '@wharfkit/session'
+    import {
+        ChainDefinition,
+        AccountCreationPlugin,
+        type UserInterfaceAccountCreationResponse,
+    } from '@wharfkit/session'
     import {
         backAction,
         accountCreationContext,
         accountCreationResponse,
         props,
         transitionDirection,
-        UserInterfaceAccountCreationData,
     } from './state'
 
     import {i18nType} from 'src/lib/translations'
@@ -21,7 +24,7 @@
     let completed = false
 
     const dispatch = createEventDispatcher<{
-        complete: UserInterfaceAccountCreationData
+        complete: UserInterfaceAccountCreationResponse
         cancel: void
     }>()
 
@@ -37,31 +40,38 @@
             if (!$currentContext || !$currentResponse) {
                 return undefined
             }
-
-            return $currentContext.accountCreationPlugins.find(
+            const plugin = $currentContext.accountCreationPlugins.find(
                 (plugin) => plugin.id === $currentResponse.pluginId
             )
+            // If the new plugin only supports one chain, set it as the current
+            if (!$currentResponse.chain && plugin?.config.supportedChains?.length === 1) {
+                $currentResponse.chain = plugin.config.supportedChains[0].id
+            }
+            return plugin
         }
     )
 
     let chains: Readable<ChainDefinition[]> = derived(
         [accountCreationContext, accountPlugin],
         ([$currentContext, $currentAccountPlugin]) => {
-            if (!$currentContext || !$currentAccountPlugin) {
-                return []
+            if ($currentContext && $currentAccountPlugin) {
+                // If the selected plugin has an array of supported chains, filter the list of chains
+                if ($currentAccountPlugin.config.supportedChains) {
+                    if ($currentContext.chains) {
+                        return $currentContext.chains.filter((chain) => {
+                            return (
+                                // If the chain is in the list of supported chains
+                                $currentAccountPlugin.config.supportedChains?.find((c) =>
+                                    c.id.equals(chain.id)
+                                )
+                            )
+                        })
+                    }
+                }
+            } else if ($currentContext) {
+                return $currentContext.chains
             }
-
-            // If the selected plugin has an array of supported chains, filter the list of chains
-            if ($currentAccountPlugin.config.supportedChains) {
-                return $currentContext.chains.filter((chain) => {
-                    return (
-                        // If the chain is in the list of supported chains
-                        $currentAccountPlugin.config.supportedChains?.includes(chain.id)
-                    )
-                })
-            }
-
-            return $currentContext.chains
+            return []
         }
     )
 
@@ -80,9 +90,9 @@
 
             // If only one chain is available, set it on the response
             if (currentContext.chain) {
-                $accountCreationResponse.chain = currentContext.chain
-            } else if (currentContext.chains.length === 1) {
-                $accountCreationResponse.chain = currentContext.chains[0]
+                $accountCreationResponse.chain = currentContext.chain.id
+            } else if (currentContext.chains && currentContext.chains.length === 1) {
+                $accountCreationResponse.chain = currentContext.chains[0].id
             }
         }
     })
@@ -94,16 +104,36 @@
 
     onDestroy(accountCreationContextUnsubscribe)
 
+    const complete = () => {
+        if (!completed) {
+            completed = true
+
+            // For cases, where no UI interactions are needed,we are giving the UI a chance to set the state before completing
+            setTimeout(() => {
+                dispatch('complete', $accountCreationResponse)
+                backAction.set(undefined)
+            }, 100)
+        }
+    }
+
     const step = derived(
-        [accountCreationResponse, accountPlugin],
-        ([$currentResponse, $currentAccountPlugin]) => {
-            if (!$currentAccountPlugin) {
+        [accountCreationContext, accountCreationResponse, accountPlugin, chains],
+        ([$context, $currentResponse, $currentAccountPlugin, $chains]) => {
+            if (!$currentAccountPlugin && $context?.uiRequirements.requiresPluginSelect) {
                 return Steps.selectPlugin
             }
 
-            const {requiresChainSelect} = $currentAccountPlugin.config
+            let requiresChainSelect = $currentAccountPlugin?.config.requiresChainSelect
 
-            if (!$currentResponse.chain && requiresChainSelect) {
+            // If requiresChainSelect is specified as false, never present the chain selection UI, in all other cases, use the context
+            if (requiresChainSelect !== false) {
+                requiresChainSelect = $context?.uiRequirements.requiresChainSelect
+            }
+
+            if (
+                !$currentResponse.chain &&
+                requiresChainSelect
+            ) {
                 return Steps.selectChain
             }
 
@@ -137,14 +167,6 @@
         $transitionDirection = 'ltr'
     }
 
-    const complete = () => {
-        if (!completed) {
-            completed = true
-            dispatch('complete', $accountCreationResponse)
-            backAction.set(undefined)
-        }
-    }
-
     const cancel = () => {
         dispatch('cancel')
     }
@@ -158,7 +180,7 @@
                 on:select={selectPlugin}
                 on:cancel={cancel}
                 plugins={$accountCreationContext.accountCreationPlugins}
-                title={$t('accountCreation.select.plugin', {default: 'Select a Plugin'})}
+                title={$t('accountCreation.select.plugin', {default: 'Select a Service Provider'})}
             />
         </Transition>
     {:else if $step === Steps.selectChain && $chains}

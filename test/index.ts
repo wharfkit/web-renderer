@@ -7,6 +7,8 @@ export default WebRenderer
 
 // expose dependencies
 export * from '@wharfkit/session'
+export * from '@wharfkit/account-creation-plugin-greymass'
+export * from '@wharfkit/account-creation-plugin-jungle4'
 export * from '@wharfkit/transact-plugin-autocorrect'
 export * from '@wharfkit/transact-plugin-cosigner'
 export * from '@wharfkit/transact-plugin-explorerlink'
