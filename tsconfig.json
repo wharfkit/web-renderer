@@ -1,5 +1,7 @@
 {
     "compilerOptions": {
+        "noEmit": true,
+        "allowImportingTsExtensions": true,
         "downlevelIteration": true,
         "esModuleInterop": true,
         "experimentalDecorators": true,

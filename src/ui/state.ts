@@ -1,10 +1,12 @@
 import {
     BrowserLocalStorage,
     Checksum256Type,
+    CreateAccountContext,
     LoginContext,
     PermissionLevelType,
     PromptArgs,
     TransactContext,
+    UserInterfaceAccountCreationResponse,
     UserInterfaceLoginResponse,
 } from '@wharfkit/session'
 import type {Theme, TransitionDirection} from '../types'
@@ -24,6 +26,10 @@ export function resetState() {
     loginContext.set(undefined)
     loginPromise.set(undefined)
     loginResponse.set({...defaultLoginResponse})
+
+    accountCreationContext.set(undefined)
+    accountCreationPromise.set(undefined)
+    accountCreationResponse.set({...defaultAccountCreationResponse})
 
     errorDetails.set(undefined)
     backAction.set(undefined)
@@ -186,6 +192,24 @@ export const defaultLoginResponse = {
 export const loginContext = writable<LoginContext | undefined>(undefined)
 export const loginPromise = writable<LoginPromise | undefined>(undefined)
 export const loginResponse = writable<UserInterfaceLoginData>({...defaultLoginResponse})
+
+// Account Creation
+
+export interface AccountCreationPromise {
+    reject: (error: Error) => void
+    resolve: (response: UserInterfaceAccountCreationResponse) => void
+}
+
+export const defaultAccountCreationResponse: UserInterfaceAccountCreationResponse = {
+    chain: undefined,
+    pluginId: undefined,
+}
+
+export const accountCreationContext = writable<CreateAccountContext | undefined>(undefined)
+export const accountCreationResponse = writable<UserInterfaceAccountCreationResponse>({
+    ...defaultAccountCreationResponse,
+})
+export const accountCreationPromise = writable<AccountCreationPromise | undefined>(undefined)
 
 export const errorDetails = writable<string | undefined>(undefined)
 

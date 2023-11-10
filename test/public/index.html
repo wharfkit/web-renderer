@@ -34,8 +34,8 @@
                 },
             })
 
-            const queryString = window.location.search;
-            const urlParams = new URLSearchParams(queryString);
+            const queryString = window.location.search
+            const urlParams = new URLSearchParams(queryString)
 
             // const finalityCallback = new WebRenderer.TransactPluginFinalityCallback({
             //     onFinalityCallback: () => {
@@ -47,86 +47,94 @@
             const resourceProvider = new WebRenderer.TransactPluginResourceProvider()
 
             const ui = new WebRenderer({
-                minimal: urlParams.get('minimal')
+                minimal: urlParams.get('minimal'),
             })
 
-            const sessionKit = new SessionKit({
-                appName: 'demo-app',
-                // Various chain configurations, uncomment one or more to test
-                chains: [
-                    {
-                        id: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
-                        url: 'https://jungle4.greymass.com',
-                        explorer: {
-                            prefix: 'https://jungle4.eosq.eosnation.io/tx/',
-                            suffix: '',
+            const sessionKit = new SessionKit(
+                {
+                    appName: 'demo-app',
+                    // Various chain configurations, uncomment one or more to test
+                    chains: [
+                        {
+                            id: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
+                            url: 'https://jungle4.greymass.com',
+                            explorer: {
+                                prefix: 'https://jungle4.eosq.eosnation.io/tx/',
+                                suffix: '',
+                            },
                         },
-                    },
-                    {
-                        id: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
-                        url: 'https://eos.greymass.com',
-                        explorer: {
-                            prefix: 'https://bloks.io/transaction/',
-                            suffix: '',
+                        {
+                            id: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
+                            url: 'https://eos.greymass.com',
+                            explorer: {
+                                prefix: 'https://bloks.io/transaction/',
+                                suffix: '',
+                            },
                         },
-                    },
-                    {
-                        id: '4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11',
-                        url: 'https://telos.greymass.com',
-                        explorer: {
-                            prefix: 'https://explorer.telos.net/transaction/',
-                            suffix: '',
+                        {
+                            id: '4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11',
+                            url: 'https://telos.greymass.com',
+                            explorer: {
+                                prefix: 'https://explorer.telos.net/transaction/',
+                                suffix: '',
+                            },
                         },
-                    },
-                    {
-                        id: '1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f',
-                        url: 'https://telostestnet.greymass.com',
-                        explorer: {
-                            prefix: 'https://explorer.telos.net/transaction/',
-                            suffix: '',
+                        {
+                            id: '1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f',
+                            url: 'https://telostestnet.greymass.com',
+                            explorer: {
+                                prefix: 'https://explorer.telos.net/transaction/',
+                                suffix: '',
+                            },
                         },
-                    },
-                    {
-                        id: '8fc6dce7942189f842170de953932b1f66693ad3788f766e777b6f9d22335c02',
-                        url: 'https://api.uxnetwork.io',
-                        explorer: {
-                            prefix: 'https://explorer.uxnetwork.io/tx/',
-                            suffix: '',
+                        {
+                            id: '8fc6dce7942189f842170de953932b1f66693ad3788f766e777b6f9d22335c02',
+                            url: 'https://api.uxnetwork.io',
+                            explorer: {
+                                prefix: 'https://explorer.uxnetwork.io/tx/',
+                                suffix: '',
+                            },
                         },
-                    },
-                    {
-                        id: '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4',
-                        url: 'https://wax.greymass.com',
-                        explorer: {
-                            prefix: 'https://waxblock.io/transaction/',
-                            suffix: '',
+                        {
+                            id: '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4',
+                            url: 'https://wax.greymass.com',
+                            explorer: {
+                                prefix: 'https://waxblock.io/transaction/',
+                                suffix: '',
+                            },
                         },
-                    },
-                    {
-                        id: 'f16b1833c747c43682f4386fca9cbb327929334a762755ebec17f6f23c9b8a12',
-                        url: 'https://waxtestnet.greymass.com',
-                        explorer: {
-                            prefix: 'https://wax-test.bloks.io/transaction/',
-                            suffix: '',
+                        {
+                            id: 'f16b1833c747c43682f4386fca9cbb327929334a762755ebec17f6f23c9b8a12',
+                            url: 'https://waxtestnet.greymass.com',
+                            explorer: {
+                                prefix: 'https://wax-test.bloks.io/transaction/',
+                                suffix: '',
+                            },
                         },
-                    },
-                ],
-                ui,
-                transactPlugins: [],
-                // Various wallet configurations, uncomment one or more to test
-                walletPlugins: [
-                    new WebRenderer.WalletPluginAnchor(),
-                    new WebRenderer.WalletPluginCleos(),
-                    new WebRenderer.WalletPluginCloudWallet(),
-                    new WebRenderer.WalletPluginMock(),
-                    new WebRenderer.WalletPluginPrivateKey(
-                        '5Jtoxgny5tT7NiNFp1MLogviuPJ9NniWjnU4wKzaX4t7pL4kJ8s'
-                    ),
-                    new WebRenderer.WalletPluginScatter(),
-                    new WebRenderer.WalletPluginTokenPocket(),
-                    new WebRenderer.WalletPluginWombat()
-                ],
-            })
+                    ],
+                    ui,
+                    transactPlugins: [],
+                    // Various wallet configurations, uncomment one or more to test
+                    walletPlugins: [
+                        new WebRenderer.WalletPluginAnchor(),
+                        new WebRenderer.WalletPluginCleos(),
+                        new WebRenderer.WalletPluginCloudWallet(),
+                        new WebRenderer.WalletPluginMock(),
+                        new WebRenderer.WalletPluginPrivateKey(
+                            '5Jtoxgny5tT7NiNFp1MLogviuPJ9NniWjnU4wKzaX4t7pL4kJ8s'
+                        ),
+                        new WebRenderer.WalletPluginScatter(),
+                        new WebRenderer.WalletPluginTokenPocket(),
+                        new WebRenderer.WalletPluginWombat(),
+                    ],
+                },
+                {
+                    accountCreationPlugins: [
+                        new WebRenderer.AccountCreationPluginAnchor(),
+                        new WebRenderer.AccountCreationPluginJungle4(),
+                    ],
+                }
+            )
 
             let session
             let account
@@ -143,7 +151,8 @@
 
                 // Determine whether broadcast is enabled by default
                 if (urlParams.get('broadcast') !== null) {
-                    document.getElementById("broadcast").checked = (urlParams.get('broadcast') === 'true') ? true : false
+                    document.getElementById('broadcast').checked =
+                        urlParams.get('broadcast') === 'true' ? true : false
                 }
 
                 // Automatically trigger a login if ?login exists on the URL
@@ -158,7 +167,7 @@
                 if (urlParams.get('transact') !== null) {
                     setTimeout(() => {
                         console.log('triggering transfer automatically...')
-                        transfer({ transactPlugins: [mockTransactPlugin]})
+                        transfer({transactPlugins: [mockTransactPlugin]})
                     }, 500)
                 }
             }
@@ -193,13 +202,19 @@
 
             // login and store session if successful
             function login(options = {}) {
-                return sessionKit
-                    .login(options)
-                    .then(async (result) => {
-                        session = result.session
-                        didLogin()
-                        await refreshAccount()
-                    })
+                return sessionKit.login(options).then(async (result) => {
+                    session = result.session
+                    didLogin()
+                    await refreshAccount()
+                })
+            }
+
+            function createAccount(plugin, chain) {
+                let chainDefinition
+                if (chain) {
+                    chainDefinition = WebRenderer.Chains[chain]
+                }
+                return sessionKit.createAccount({chain: chainDefinition, pluginId: plugin})
             }
 
             function refreshAccount() {
@@ -213,9 +228,9 @@
                     document.getElementById(
                         'net'
                     ).textContent = `${account.net_limit.available} / ${account.net_limit.max}`
-                    document.getElementById(
-                        'ram'
-                    ).textContent = `${account.ram_quota - account.ram_usage} / ${account.ram_quota}`
+                    document.getElementById('ram').textContent = `${
+                        account.ram_quota - account.ram_usage
+                    } / ${account.ram_quota}`
                     document.getElementById(
                         'explorer'
                     ).href = `https://jungle4.eosq.eosnation.io/account/${session.actor}`
@@ -289,30 +304,36 @@
                     },
                 }
                 console.log(JSON.stringify(action))
-                const broadcast = options.broadcast || document.getElementById("broadcast").checked
-                session.transact({action}, {
-                    ...options,
-                    broadcast
-                }).then((result) => {
-                    const item = document.createElement('div')
-                    item.classList = 'TimelineItem TimelineItem--condensed'
-                    item.innerHTML = `
+                const broadcast = options.broadcast || document.getElementById('broadcast').checked
+                session
+                    .transact(
+                        {action},
+                        {
+                            ...options,
+                            broadcast,
+                        }
+                    )
+                    .then((result) => {
+                        const item = document.createElement('div')
+                        item.classList = 'TimelineItem TimelineItem--condensed'
+                        item.innerHTML = `
                 <div class="TimelineItem-badge">
                     <svg class="octicon octicon-git-commit" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true">
                         <path fill-rule="evenodd" d="M10.86 7c-.45-1.72-2-3-3.86-3-1.86 0-3.41 1.28-3.86 3H0v2h3.14c.45 1.72 2 3 3.86 3 1.86 0 3.41-1.28 3.86-3H14V7h-3.14zM7 10.2c-1.22 0-2.2-.98-2.2-2.2 0-1.22.98-2.2 2.2-2.2 1.22 0 2.2.98 2.2 2.2 0 1.22-.98 2.2-2.2 2.2z"></path>
                     </svg>
                 </div>
                 <div class="TimelineItem-body">
-                    ${new Date().toISOString()} ${
-                        session.actor
-                    } - ${(result.response) ? `<a href="https://jungle4.eosq.eosnation.io/tx/${
-                        result.resolved.transaction.id
-                    }" target="_blank">View on Explorer</a>` : `Not broadcast`}
+                    ${new Date().toISOString()} ${session.actor} - ${
+                            result.response
+                                ? `<a href="https://jungle4.eosq.eosnation.io/tx/${result.resolved.transaction.id}" target="_blank">View on Explorer</a>`
+                                : `Not broadcast`
+                        }
                 </div>`
-                    document.getElementById('log').prepend(item)
-                }).catch(e => {
-                    console.log('caught', e)
-                })
+                        document.getElementById('log').prepend(item)
+                    })
+                    .catch((e) => {
+                        console.log('caught', e)
+                    })
             }
 
             setInterval(() => {
@@ -335,7 +356,8 @@
             body.logged-in .Layout {
                 display: grid;
             }
-            .Box, .btn {
+            .Box,
+            .btn {
                 margin-bottom: 0.25em;
             }
         </style>
@@ -346,43 +368,78 @@
             <div class="Subhead-description">
                 A suite of testing tools for the
                 <a href="https://github.com/@wharfkit/web-renderer" target="_blank">
-                    @wharfkit/web-renderer
-                </a>.
+                    @wharfkit/web-renderer </a
+                >.
             </div>
-          </div>
-        </h2>
+        </div>
         <nav class="subnav" aria-label="Repository">
             <a class="subnav-item" aria-current="page" href="#login" onclick="login()">
                 <span>Login</span>
             </a>
-            <a class="subnav-item" href="#login-test" onclick="login({
+            <a
+                class="subnav-item"
+                href="#login-test"
+                onclick="login({
                 chain: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
                 permissionLevel: 'wharfkit1111@test',
                 walletPlugin: 'wallet-plugin-privatekey'
-            })">
+            })"
+            >
                 <span>Test Account (Resources)</span>
             </a>
-            <a class="subnav-item" href="#login-test" onclick="login({
+            <a
+                class="subnav-item"
+                href="#login-test"
+                onclick="login({
                 chain: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
                 permissionLevel: 'wharfkit1112@test',
                 walletPlugin: 'wallet-plugin-privatekey'
-            })">
+            })"
+            >
                 <span>Test Account (No CPU)</span>
             </a>
-            <a class="subnav-item" href="#login-test" onclick="login({
+            <a
+                class="subnav-item"
+                href="#login-test"
+                onclick="login({
                 chain: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
                 permissionLevel: 'wharfkit1115@test',
                 walletPlugin: 'wallet-plugin-privatekey'
-            })">
+            })"
+            >
                 <span>Test Account (No RAM)</span>
+            </a>
+        </nav>
+        <nav class="subnav" aria-label="Repository">
+            <a class="subnav-item" href="#login-test" onclick="createAccount()">
+                <span>Create Account</span>
+            </a>
+            <a
+                class="subnav-item"
+                href="#logout"
+                onclick="createAccount('account-creation-plugin-jungle4')"
+            >
+                <span>Create Jungle4 Account</span>
+            </a>
+            <a
+                class="subnav-item"
+                href="#logout"
+                onclick="createAccount('account-creation-plugin-anchor')"
+            >
+                <span>Create Account w/ Anchor</span>
+            </a>
+            <a
+                class="subnav-item"
+                href="#logout"
+                onclick="createAccount('account-creation-plugin-anchor', 'EOS')"
+            >
+                <span>Create EOS Account w/ Anchor</span>
             </a>
         </nav>
         <div class="Layout" id="">
             <div class="Layout-main">
                 <div class="Box">
-                    <div class="Box-header">
-                      Account Data
-                    </div>
+                    <div class="Box-header">Account Data</div>
                     <div class="Box-body">
                         <div class="d-flex">
                             <div class="p-3 flex-1">
@@ -399,7 +456,11 @@
                                 <p>RAM: <b id="ram">undefined</b></p>
                             </div>
                         </div>
-                        <button class="btn btn-block btn-primary btn-sm" type="button" onclick="refreshAccount()">
+                        <button
+                            class="btn btn-block btn-primary btn-sm"
+                            type="button"
+                            onclick="refreshAccount()"
+                        >
                             Refresh account
                         </button>
                     </div>
@@ -413,47 +474,62 @@
                             <div class="form-group">
                                 <div class="form-group-body">
                                     <div class="form-checkbox">
-                                        <button class="btn btn-block" type="button" onclick="loginTransfer(
+                                        <button
+                                            class="btn btn-block"
+                                            type="button"
+                                            onclick="loginTransfer(
                                             {
                                                 chain: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
                                                 permissionLevel: 'wharfkit1111@test',
                                                 walletPlugin: 'wallet-plugin-privatekey'
                                             },
                                             {broadcast: true}
-                                        )">
+                                        )"
+                                        >
                                             Token send 0.0001 from wharfkit111 to teamgreymass
                                         </button>
-                                        <button class="btn btn-block" type="button" onclick="loginTransfer(
+                                        <button
+                                            class="btn btn-block"
+                                            type="button"
+                                            onclick="loginTransfer(
                                             {
                                                 chain: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
                                                 permissionLevel: 'wharfkit1115@test',
                                                 walletPlugin: 'wallet-plugin-privatekey'
                                             },
                                             {broadcast: true}
-                                        )">
+                                        )"
+                                        >
                                             Token send that causes CPU/NET error
                                         </button>
-                                        <button class="btn btn-block" type="button" onclick="loginTransfer(
+                                        <button
+                                            class="btn btn-block"
+                                            type="button"
+                                            onclick="loginTransfer(
                                             {
                                                 chain: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
                                                 permissionLevel: 'wharfkit1114@test',
                                                 walletPlugin: 'wallet-plugin-privatekey'
                                             },
                                             {broadcast: true}
-                                        )">
+                                        )"
+                                        >
                                             Token send that causes RAM error
                                         </button>
-                                        <button class="btn btn-block" type="button" onclick="loginTransfer(
+                                        <button
+                                            class="btn btn-block"
+                                            type="button"
+                                            onclick="loginTransfer(
                                             {
                                                 chain: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
                                                 permissionLevel: 'wharfkit1114@test',
                                                 walletPlugin: 'wallet-plugin-privatekey'
                                             },
                                             {broadcast: true}
-                                        )">
+                                        )"
+                                        >
                                             Token send that causes RAM error
                                         </button>
-
                                     </div>
                                 </div>
                             </div>
@@ -461,7 +537,7 @@
                                 <div class="form-group-body">
                                     <div class="form-checkbox">
                                         <label>
-                                            <input type="checkbox" id="broadcast"/>
+                                            <input type="checkbox" id="broadcast" />
                                             <em class="highlight">Broadcast?</em>
                                         </label>
                                     </div>
@@ -470,10 +546,18 @@
                             <div class="form-group">
                                 <div class="form-group-body">
                                     <div class="form-checkbox">
-                                        <button class="btn btn-block" type="button" onclick="transfer()">
+                                        <button
+                                            class="btn btn-block"
+                                            type="button"
+                                            onclick="transfer()"
+                                        >
                                             transact with no plugins
                                         </button>
-                                        <button class="btn btn-block" type="button" onclick="transfer({transactPlugins: [mockTransactPlugin]})">
+                                        <button
+                                            class="btn btn-block"
+                                            type="button"
+                                            onclick="transfer({transactPlugins: [mockTransactPlugin]})"
+                                        >
                                             transact with TransactPluginMock
                                         </button>
                                         <button

@@ -3,10 +3,12 @@ import {
     Cancelable,
     cancelable,
     Canceled,
+    CreateAccountContext,
     LoginContext,
     PromptArgs,
     PromptResponse,
     UserInterface,
+    UserInterfaceAccountCreationResponse,
     UserInterfaceLoginResponse,
     UserInterfaceTranslateOptions,
 } from '@wharfkit/session'
@@ -15,6 +17,8 @@ import App from './ui/App.svelte'
 import {makeLocalization} from './lib/translations'
 
 import {
+    accountCreationContext,
+    accountCreationPromise,
     active,
     cancelablePromises,
     errorDetails,
@@ -152,6 +156,40 @@ export class WebRenderer extends AbstractUserInterface implements UserInterface 
             // Push the new path to the router
             router.push('error')
         }
+    }
+
+    async onAccountCreate(
+        context: CreateAccountContext
+    ): Promise<UserInterfaceAccountCreationResponse> {
+        this.log('onAccountCreate', context)
+
+        // Make sure the dialog is active
+        active.set(true)
+
+        // Push the new path to the router
+        router.push('create-account')
+
+        const promise = cancelable(
+            new Promise<UserInterfaceAccountCreationResponse>((resolve, reject) =>
+                accountCreationPromise.set({
+                    reject,
+                    resolve,
+                })
+            )
+        )
+        this.addCancelablePromise(promise.cancel)
+        accountCreationContext.set(context)
+
+        return promise
+    }
+
+    async onAccountCreateComplete(): Promise<void> {
+        this.log('onAccountCreateComplete')
+
+        // Close the dialog once the login completes
+        active.set(false)
+        // Reset all data in the state
+        resetState()
     }
 
     async onLogin() {

@@ -9,11 +9,12 @@
     import Prompt from './Prompt.svelte'
     import Settings from './Settings.svelte'
     import Transact from './Transact.svelte'
+    import CreateAccount from './CreateAccount.svelte'
 
     import Countdown from './components/Countdown.svelte'
     import Modal from './components/Modal.svelte'
 
-    import {active, errorDetails, prompt, router, loginPromise, props, allowSettings} from './state'
+    import {active, errorDetails, prompt, router, loginPromise, accountCreationPromise, allowSettings} from './state'
     import {i18nType} from 'src/lib/translations'
 
     // Set the i18n context for all child components
@@ -36,6 +37,9 @@
         // Reject any promises that are waiting for a response
         if ($loginPromise) {
             $loginPromise.resolve(detail)
+        }
+        if ($accountCreationPromise) {
+            $accountCreationPromise.resolve(detail)
         }
         if ($prompt) {
             $prompt.resolve(detail)
@@ -67,6 +71,8 @@
             <Transact on:cancel={cancel} on:complete={complete} />
         {:else if $router.path === 'settings'}
             <Settings on:cancel={cancel} on:complete={complete} />
+        {:else if $router.path === 'create-account'}
+            <CreateAccount on:cancel={cancel} on:complete={complete} />
         {:else}
             <Countdown />
         {/if}
