@@ -1,6 +1,6 @@
 {
     "name": "@wharfkit/web-renderer",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "description": "",
     "license": "BSD-3-Clause",
     "main": "lib/web-renderer.js",
@@ -36,7 +36,7 @@
         "crypto": false
     },
     "peerDependencies": {
-        "@wharfkit/session": "^1.0.0"
+        "@wharfkit/session": "^1.0.1"
     },
     "devDependencies": {
         "@babel/core": "^7.20.12",
@@ -54,7 +54,7 @@
         "@typescript-eslint/parser": "^5.61.0",
         "@wharfkit/account-creation-plugin-anchor": "^1.3.1",
         "@wharfkit/account-creation-plugin-jungle4": "^1.2.0",
-        "@wharfkit/session": "^1.1.0-rcfinal",
+        "@wharfkit/session": "^1.1.1",
         "@wharfkit/transact-plugin-autocorrect": "^1.1.0",
         "@wharfkit/transact-plugin-cosigner": "^1.1.0",
         "@wharfkit/transact-plugin-explorerlink": "^1.0.1",
@@ -89,7 +89,7 @@
         "tslib": "^2.6.0",
         "typescript": "^5.0.0",
         "vite": "^4.1.4",
-        "yarn-deduplicate": "^6.0.1"
+        "yarn-deduplicate": "^6.0.2"
     },
     "dependencies": {}
 }
