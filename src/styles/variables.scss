@@ -250,7 +250,7 @@ Globals and custom properties
     --space-2xs: calc(var(--space-xs) / var(--ratio)); /* 5px */
     --space-xs: calc(var(--space-s) / var(--ratio)); /* 7px */
     --space-s: calc(var(--space-m) / var(--ratio)); /* 11px */
-    --space-m: 1rem; /* 16px */
+    --space-m: var(--wharfkit-space-m, 1rem); /* 16px */
     --space-l: calc(var(--space-m) * var(--ratio)); /* 24px */
     --space-xl: calc(var(--space-l) * var(--ratio)); /* 36px */
     --space-2xl: calc(var(--space-xl) * var(--ratio)); /* 54px */
