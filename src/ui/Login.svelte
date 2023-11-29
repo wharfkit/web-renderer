@@ -112,6 +112,10 @@
             if (currentContext.walletPlugins.length === 1) {
                 $loginResponse.walletPluginIndex = 0
             }
+            // If the walletPluginIndex is defined, set it on the response
+            if (currentContext.walletPluginIndex !== undefined) {
+                $loginResponse.walletPluginIndex = currentContext.walletPluginIndex
+            }
         }
     })
 
