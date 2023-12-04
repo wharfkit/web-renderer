@@ -143,6 +143,7 @@
         cursor: pointer;
         background: var(--body-background-color);
         color: var(--body-text-color);
+        font-size: var(--fs-0);
     }
 
     .icon {

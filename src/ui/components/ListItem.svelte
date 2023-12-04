@@ -102,15 +102,21 @@
         text-decoration: none;
     }
 
-    .leading > * {
+    .leading {
+        inline-size: var(--space-xl);
+        block-size: var(--space-xl);
         display: grid;
         place-content: center;
-        inline-size: var(--space-xl);
+    }
+
+    .leading > * {
+        max-inline-size: 30px;
+        max-block-size: 30px;
     }
 
     .leading img {
-        max-inline-size: 30px;
-        max-block-size: 30px;
+        width: 100%;
+        height: 100%;
         object-fit: contain;
     }
 

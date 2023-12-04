@@ -1,11 +1,11 @@
-/**  
+/**
 Globals and custom properties
 
-:host selector for web component 
+:host selector for web component
 */
 
-/****************** 
-    Light Theme 
+/******************
+    Light Theme
 ******************/
 
 @mixin light-theme {
@@ -149,8 +149,8 @@ Globals and custom properties
 }
 
 :host dialog {
-    /****************** 
-          Colors 
+    /******************
+          Colors
     ******************/
 
     /* Brand */
@@ -222,8 +222,8 @@ Globals and custom properties
     --color-error-2: #ff5454;
     --color-error-3: #ffacac;
 
-    /****************** 
-        Typography 
+    /******************
+        Typography
     ******************/
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
         Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -231,16 +231,16 @@ Globals and custom properties
 
     /* Font Sizing - Fixed */
 
-    --fs-0: 12px;
-    --fs-1: 14px;
-    --fs-2: 16px;
-    --fs-3: 20px;
+    --fs-0: 0.75rem; /* 12px */
+    --fs-1: 0.875rem; /* 14px */
+    --fs-2: 1rem;  /* 16px */
+    --fs-3: 1.25rem; /* 20px */
 
     /* Font Sizing - Fluid */
     /* @link https://utopia.fyi/type/calculator?c=320,12,1.125,1240,16,1.25,3,0,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
 
-    /****************** 
-      Size and Spacing 
+    /******************
+      Size and Spacing
     ******************/
 
     /* Spacing Scale - Fixed */
@@ -266,8 +266,8 @@ Globals and custom properties
     /* @link https://utopia.fyi/space/calculator?c=320,12,1.2,1240,16,1.25,3,0,&s=0.75|0.5|0.25,1.5|2|3|4|6|10|16|25|30|40,s-l&g=s,l,xl,12 */
 
     /* Other sizes */
-    --border-radius-outer: 24px;
-    --border-radius-inner: 12px;
+    --border-radius-outer: 1.5rem; /* 24px */
+    --border-radius-inner: 0.75rem; /* 12px */
     --header-height: var(--space-3xl);
 }
 
