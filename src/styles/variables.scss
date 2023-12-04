@@ -1,7 +1,10 @@
 /**
 Globals and custom properties
 
-:host selector for web component
+To change font size and white space:
+--wharfkit-font-base
+--wharfkit-space-base
+
 */
 
 /******************
@@ -231,10 +234,10 @@ Globals and custom properties
 
     /* Font Sizing - Fixed */
 
-    --fs-0: 0.75rem; /* 12px */
-    --fs-1: 0.875rem; /* 14px */
-    --fs-2: 1rem;  /* 16px */
-    --fs-3: 1.25rem; /* 20px */
+    --fs-0: calc(var(--fs-2) * 0.75); /* 12px */
+    --fs-1: calc(var(--fs-2) * 0.875); /* 14px */
+    --fs-2: var(--wharfkit-font-base, 1rem);  /* 16px */
+    --fs-3: calc(var(--fs-2) * 1.25); /* 20px */
 
     /* Font Sizing - Fluid */
     /* @link https://utopia.fyi/type/calculator?c=320,12,1.125,1240,16,1.25,3,0,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
@@ -250,7 +253,7 @@ Globals and custom properties
     --space-2xs: calc(var(--space-xs) / var(--ratio)); /* 5px */
     --space-xs: calc(var(--space-s) / var(--ratio)); /* 7px */
     --space-s: calc(var(--space-m) / var(--ratio)); /* 11px */
-    --space-m: var(--wharfkit-space-m, 1rem); /* 16px */
+    --space-m: var(--wharfkit-space-base, 1rem); /* 16px */
     --space-l: calc(var(--space-m) * var(--ratio)); /* 24px */
     --space-xl: calc(var(--space-l) * var(--ratio)); /* 36px */
     --space-2xl: calc(var(--space-xl) * var(--ratio)); /* 54px */
