@@ -70,7 +70,9 @@
         <div class="button-group">
             <button class="expand" on:click={toggleExpanded}>
                 <Icon name="expand" size="var(--space-m)" />
-                <span>Expand QR code</span>
+                <div>
+                <span>Expand</span> <span>QR code</span>
+                </div>
             </button>
             <button class="copy" on:click={() => copyToClipboard(data)}>
                 <div class="icon">
@@ -83,7 +85,9 @@
                         </div>
                     {/if}
                 </div>
-                <span>Copy to clipboard</span>
+                <div>
+                <span>Copy</span> <span>to clipboard</span>
+                </div>
             </button>
         </div>
     </div>
@@ -109,7 +113,7 @@
         padding: var(--space-xs);
         background: white;
         flex: 1;
-        width: auto;
+        width: 100%;
     }
 
     dialog {
@@ -144,7 +148,14 @@
         background: var(--body-background-color);
         color: var(--body-text-color);
         font-size: var(--fs-0);
+
     }
+
+@media (max-width: 340px){
+    .button-group button span:last-of-type {
+display: none;
+    }
+}
 
     .icon {
         display: grid;
