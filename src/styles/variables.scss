@@ -236,7 +236,7 @@ To change font size and white space:
 
     --fs-0: calc(var(--fs-2) * 0.75); /* 12px */
     --fs-1: calc(var(--fs-2) * 0.875); /* 14px */
-    --fs-2: var(--wharfkit-font-base, 1rem);  /* 16px */
+    --fs-2: var(--wharfkit-font-base, 1rem); /* 16px */
     --fs-3: calc(var(--fs-2) * 1.25); /* 20px */
 
     /* Font Sizing - Fluid */
