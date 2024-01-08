@@ -18,15 +18,15 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/@wharfkit/web-renderer.git"
+        "url": "git+https://github.com/wharfkit/web-renderer.git"
     },
     "authors": [
         "Aaron Cox <aaron@greymass.com>"
     ],
     "bugs": {
-        "url": "https://github.com/@wharfkit/web-renderer/issues"
+        "url": "https://github.com/wharfkit/web-renderer/issues"
     },
-    "homepage": "https://github.com/@wharfkit/web-renderer",
+    "homepage": "https://github.com/wharfkit/web-renderer",
     "files": [
         "lib/*",
         "src/*"
