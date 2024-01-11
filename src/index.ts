@@ -217,7 +217,9 @@ export class WebRenderer extends AbstractUserInterface implements UserInterface 
     async onTransact() {
         this.log('onTransact')
         // Make sure the dialog is active
-        active.set(true)
+        if (!this.minimal) {
+            active.set(true)
+        }
         // Set the title/subtitle to match the transact state
         props.update((c) => ({
             ...c,
