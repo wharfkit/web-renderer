@@ -342,6 +342,56 @@
                 }
             }, 3000)
         </script>
+        <script>
+            async function testNodes() {
+                const nodes = [
+                    'https://eos.hyperion.eosrio.io/',
+                    'https://eos.dfuse.eosnation.io/',
+                    'https://eos.api.eosnation.io/',
+                    'https://api.eosflare.io/',
+                    'http://mainnet.genereos.io/',
+                    'http://api.waxsweden.org/',
+                    'http://eu.wax.eosrio.io/',
+                    'https://api.wax.bountyblok.io/',
+                    'http://waxapi.ledgerwise.io/',
+                    'http://api.wax.alohaeos.com/',
+                    'http://wax.eosphere.io/',
+                    'https://wax-public2.neftyblocks.com/',
+                    'https://wax.hivebp.io/',
+                    'https://wax-public2.neftyblocks.com/',
+                    'https://wax.eosphere.io/',
+                    'https://api.wax.alohaeos.com/',
+                    'https://waxapi.ledgerwise.io/',
+                    'https://wax.dfuse.eosnation.io/',
+                    'https://apiwax.3dkrender.com/',
+                    'https://api.wax.liquidstudios.io/',
+                    'https://api-wax.tacocrypto.io/hyperion/',
+                    'https://hyperion.waxdaobp.io/',
+                    'https://wax-api.alcor.exchange/',
+                    'https://wax-rpc.wombat.app/',
+                    'https://wax.eosusa.io/',
+                    'https://wax.cryptolions.io/',
+                ]
+                const failed = []
+                for (const node of nodes) {
+                    try {
+                        const resp = await fetch(node + 'v1/chain/get_account', {
+                            method: 'POST',
+                            body: '{"account_name":"gm"}',
+                            headers: {'Content-Type': 'application/json'},
+                        })
+                        if (resp.status !== 200) {
+                            failed.push(node)
+                        }
+                    } catch (error) {
+                        failed.push(node)
+                        console.error(error)
+                    }
+                }
+                console.log('failed: ' + JSON.stringify(failed))
+            }
+        </script>
+
         <link href="https://unpkg.com/@primer/css@^20.2.4/dist/primer.css" rel="stylesheet" />
         <link rel="shortcut icon" href="favicon.ico" />
         <style>
@@ -373,7 +423,7 @@
             </div>
         </div>
         <nav class="subnav" aria-label="Repository">
-            <a class="subnav-item" aria-current="page" href="#login" onclick="login()">
+            <a class="subnav-item" aria-current="page" href="#login" onclick="testNodes()">
                 <span>Login</span>
             </a>
             <a
