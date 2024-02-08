@@ -1,6 +1,6 @@
 {
     "name": "@wharfkit/web-renderer",
-    "version": "1.2.2",
+    "version": "1.2.3",
     "description": "",
     "license": "BSD-3-Clause",
     "main": "lib/web-renderer.js",
