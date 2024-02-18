@@ -7,6 +7,7 @@ import en from './translations/en/common.json'
 import ko from './translations/ko/common.json'
 import zh_hans from './translations/zh-hans/common.json'
 import zh_hant from './translations/zh-hant/common.json'
+import tr from './translations/tr/common.json'
 
 const translations = {
     en: {...lang, ...en},
@@ -14,6 +15,7 @@ const translations = {
     zh: {...lang, ...zh_hans},
     'zh-Hans': {...lang, ...zh_hans},
     'zh-Hant': {...lang, ...zh_hant},
+    tr: {...lang, ...tr},
 }
 
 interface Params {
