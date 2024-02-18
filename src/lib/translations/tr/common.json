@@ -1,0 +1,60 @@
+{
+    "accept": "Kabul Et",
+    "cancel": "İptal",
+    "close": "Kapat",
+    "decline": "Reddet",
+    "error": {
+        "title": "Hata",
+        "subtitle": "Bir Hata meydana geldi."
+    },
+    "loading": "Yükleniyor...",
+    "login": {
+        "complete": "Cüzdanınızdan yanıt bekleniyor.",
+        "enter": {
+            "account": "Hesap adını girin",
+            "lookup": "Hesap Ara",
+            "not_found": "Hesap bulunamadı"
+        },
+        "select": {
+            "account": "Mevcut bir hesap seçin",
+            "blockchain": "Hangi blockchain ile giriş yapılacağını seçin",
+            "wallet": "Cüzdanınızı bağlayarak giriş yapın",
+            "no_match": "{{publicKey}} ile eşleşen hesap bulunamadı"
+        },
+        "title": "Giriş",
+        "title-app": "{{appName}}"
+    },
+    "transact": {
+        "title": "İşlem",
+        "subtitle": " ",
+        "processing": "İşlem yapılıyor...",
+        "signing": "İşlem imzalanıyor",
+        "signed": "İşlem imzalandı",
+        "broadcasting": "İşlem yayınlanıyor",
+        "broadcasted": "İşlem gönderildi"
+    },
+    "settings": {
+        "title": "Ayarlar",
+        "language": {
+            "title": "Dil"
+        },
+        "theme": {
+            "title": "Tema",
+            "automatic": "Otomatik",
+            "light": "Açık",
+            "dark": "Koyu"
+        },
+        "animations": {
+            "title": "Animasyonlar",
+            "enabled": "Etkin",
+            "disabled": "Devre Dışı"
+        },
+        "github": "Github üzerinde bir sorun bildir",
+        "about": {
+            "title": "Hakkında",
+            "version": "Sürüm {{version}}",
+            "author": "Greymass tarafından oluşturulan ve Antelope tabanlı blockchain'ler için bir açık kaynak SDK olan Wharf'ı, Antelope Koalisyonu (EOS, Telos, UX ve WAX) tarafından finanse edilerek mümkün kılınmıştır.",
+            "link": "Wharf hakkında daha fazla bilgi edinin"
+        }
+    }
+}
