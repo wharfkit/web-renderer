@@ -54,7 +54,7 @@
         "@typescript-eslint/parser": "^5.61.0",
         "@wharfkit/account-creation-plugin-anchor": "^1.3.1",
         "@wharfkit/account-creation-plugin-jungle4": "^1.2.0",
-        "@wharfkit/session": "^1.2.8",
+        "@wharfkit/session": "^1.4.0-rc1",
         "@wharfkit/transact-plugin-autocorrect": "^1.1.0",
         "@wharfkit/transact-plugin-cosigner": "^1.1.0",
         "@wharfkit/transact-plugin-explorerlink": "^1.0.1",

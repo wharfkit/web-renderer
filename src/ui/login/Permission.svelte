@@ -33,10 +33,14 @@
 
     onMount(async () => {
         if (walletPlugin.config.requiresPermissionSelect) {
+            let publicKey = walletPlugin.metadata.publicKey
+            if (walletPlugin.retrievePublicKey) {
+                publicKey = await walletPlugin.retrievePublicKey()
+            }
             const response = await client.call<GetAccountsByAuthorizers>({
                 path: '/v1/chain/get_accounts_by_authorizers',
                 params: {
-                    keys: [walletPlugin.metadata.publicKey],
+                    keys: [publicKey],
                 },
             })
             busy.set(false)
