@@ -1,5 +1,11 @@
 <script lang="ts">
-    import {APIClient, Name, PermissionLevel, UserInterfaceWalletPlugin} from '@wharfkit/session'
+    import {
+        APIClient,
+        Checksum256Type,
+        Name,
+        PermissionLevel,
+        UserInterfaceWalletPlugin,
+    } from '@wharfkit/session'
     import {createEventDispatcher, getContext, onMount} from 'svelte'
     import {writable} from 'svelte/store'
 
@@ -15,6 +21,7 @@
 
     const {t} = getContext<i18nType>('i18n')
 
+    export let chainId: Checksum256Type
     export let client: APIClient
     export let walletPlugin: UserInterfaceWalletPlugin
     export let title: string
@@ -34,8 +41,8 @@
     onMount(async () => {
         if (walletPlugin.config.requiresPermissionSelect) {
             let publicKey = walletPlugin.metadata.publicKey
-            if (walletPlugin.retrievePublicKey) {
-                publicKey = await walletPlugin.retrievePublicKey()
+            if (chainId && walletPlugin.retrievePublicKey) {
+                publicKey = await walletPlugin.retrievePublicKey(chainId)
             }
             const response = await client.call<GetAccountsByAuthorizers>({
                 path: '/v1/chain/get_accounts_by_authorizers',

@@ -228,6 +228,7 @@
             <Permission
                 on:select={selectPermission}
                 on:cancel={unselectChain}
+                chainId={$loginContext.chain?.id}
                 client={$client}
                 walletPlugin={$walletPlugin}
                 title={$t('login.enter.account', {default: 'Enter account name'})}
@@ -238,6 +239,7 @@
             <Permission
                 on:select={selectPermission}
                 on:cancel={unselectChain}
+                chainId={$loginContext.chain?.id}
                 client={$client}
                 walletPlugin={$walletPlugin}
                 title={$t('login.select.account', {default: 'Select an Account'})}

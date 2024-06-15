@@ -1583,10 +1583,10 @@
     bn.js "^4.11.9"
     tslib "^2.1.0"
 
-"@wharfkit/session@^1.4.0-rc1":
-  version "1.4.0-rc1"
-  resolved "https://registry.yarnpkg.com/@wharfkit/session/-/session-1.4.0-rc1.tgz#8f24f19628a48fab75206508664b3835a8e5f355"
-  integrity sha512-0Aw4VgDqKNlUxAKDRkhOZlrQvzMQAhRN96zlrrQzlRxjFWqqOUecGFpe046vjujxdiQPxEslpqrQ99OwSuIZHw==
+"@wharfkit/session@^1.4.0-rc2":
+  version "1.4.0-rc2"
+  resolved "https://registry.yarnpkg.com/@wharfkit/session/-/session-1.4.0-rc2.tgz#66e83bc308805ecb598f1e933f224fe320b6213d"
+  integrity sha512-UAQqCDA/571RKgsLQkOi0c8Q8X1xPdCa5vXtPTRYQQZJ3M0bvr1WWDtSR4ftBMgQcwh8ScunArlqcFvlgAKtbw==
   dependencies:
     "@wharfkit/abicache" "^1.2.1"
     "@wharfkit/account" "^1.0.0"
