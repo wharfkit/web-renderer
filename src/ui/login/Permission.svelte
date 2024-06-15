@@ -42,7 +42,7 @@
         if (walletPlugin.config.requiresPermissionSelect) {
             let publicKey = walletPlugin.metadata.publicKey
             if (chainId && walletPlugin.retrievePublicKey) {
-                publicKey = await walletPlugin.retrievePublicKey(chainId)
+                publicKey = String(await walletPlugin.retrievePublicKey(chainId))
             }
             const response = await client.call<GetAccountsByAuthorizers>({
                 path: '/v1/chain/get_accounts_by_authorizers',
