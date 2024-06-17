@@ -18,10 +18,11 @@
     import TextInput from '../components/TextInput.svelte'
     import WarningMessage from '../components/WarningMessage.svelte'
     import BodyTitle from '../components/BodyTitle.svelte'
+    import {errorDetails} from '../state'
 
     const {t} = getContext<i18nType>('i18n')
 
-    export let chainId: Checksum256Type
+    export let chainId: Checksum256Type | undefined
     export let client: APIClient
     export let walletPlugin: UserInterfaceWalletPlugin
     export let title: string
@@ -42,7 +43,12 @@
         if (walletPlugin.config.requiresPermissionSelect) {
             let publicKey = walletPlugin.metadata.publicKey
             if (chainId && walletPlugin.retrievePublicKey) {
-                publicKey = String(await walletPlugin.retrievePublicKey(chainId))
+                try {
+                    publicKey = String(await walletPlugin.retrievePublicKey(chainId))
+                } catch (error) {
+                    errorDetails.set(String(error))
+                    throw error
+                }
             }
             const response = await client.call<GetAccountsByAuthorizers>({
                 path: '/v1/chain/get_accounts_by_authorizers',
