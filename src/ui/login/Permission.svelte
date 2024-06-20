@@ -38,8 +38,7 @@
     let accountName: Name | undefined
     let accountNotFound: boolean = false
     let permissions: PermissionLevel[] | undefined
-
-    $: publicKey = walletPlugin.metadata.publicKey
+    let publicKey: string | undefined = walletPlugin.metadata.publicKey
 
     onMount(async () => {
         if (walletPlugin.config.requiresPermissionSelect) {
@@ -108,7 +107,7 @@
                 />
             {/each}
         </List>
-    {:else if walletPlugin.metadata.publicKey || walletPlugin.retrievePublicKey}
+    {:else if publicKey}
         <BodyTitle>{$t('login.select.no_accounts')}</BodyTitle>
         <WarningMessage
             title=""
