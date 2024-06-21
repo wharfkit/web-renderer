@@ -38,10 +38,10 @@
     let accountName: Name | undefined
     let accountNotFound: boolean = false
     let permissions: PermissionLevel[] | undefined
+    let publicKey: string | undefined = walletPlugin.metadata.publicKey
 
     onMount(async () => {
         if (walletPlugin.config.requiresPermissionSelect) {
-            let publicKey = walletPlugin.metadata.publicKey
             if (chainId && walletPlugin.retrievePublicKey) {
                 try {
                     publicKey = String(await walletPlugin.retrievePublicKey(chainId))
@@ -85,7 +85,7 @@
         }
     }
 
-    function handleKeyup(event) {
+    function handleKeyup(event: KeyboardEvent) {
         if (event.code == 'Enter') {
             event.preventDefault()
             lookup()
@@ -107,15 +107,13 @@
                 />
             {/each}
         </List>
-    {:else if walletPlugin.metadata.publicKey}
-        <BodyTitle>{title}</BodyTitle>
+    {:else if publicKey}
+        <BodyTitle>{$t('login.select.no_accounts')}</BodyTitle>
         <WarningMessage
-            title={$t('login.select.no_accounts', {
-                default: 'No accounts found',
-            })}
+            title=""
             details={$t('login.select.no_match', {
                 default: 'No accounts found matching {{publicKey}}',
-                publicKey: walletPlugin.metadata.publicKey,
+                publicKey: publicKey,
             })}
         />
     {:else if !accountName}

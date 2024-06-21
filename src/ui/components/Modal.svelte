@@ -65,8 +65,18 @@
 
     dialog {
         --margin-top: var(--space-xl);
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-            Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-family:
+            system-ui,
+            -apple-system,
+            BlinkMacSystemFont,
+            'Segoe UI',
+            Roboto,
+            Oxygen,
+            Ubuntu,
+            Cantarell,
+            'Open Sans',
+            'Helvetica Neue',
+            sans-serif;
         margin-bottom: 0;
         margin-top: var(--margin-top);
         margin-inline: auto;
@@ -85,6 +95,7 @@
             100svh - var(--header-height) - var(--margin-top) - var(--margin-top)
         );
         padding: var(--space-m);
+        padding-bottom: var(--space-l);
         background-color: var(--body-background-color);
         overflow: hidden;
         overflow-y: scroll;
