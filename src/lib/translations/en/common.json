@@ -19,6 +19,7 @@
             "account": "Select an available account",
             "blockchain": "Select which blockchain to login with",
             "wallet": "Connect your wallet to login",
+            "no_accounts": "No accounts found",
             "no_match": "No accounts found matching {{publicKey}}"
         },
         "title": "Login",

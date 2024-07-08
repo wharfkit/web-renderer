@@ -3,11 +3,22 @@
     import generateQr from '../../lib/qrcode'
     import Icon from './Icon.svelte'
     import {cubicInOut} from 'svelte/easing'
+    import {onMount} from 'svelte'
+    import {writable} from 'svelte/store'
     export let data = ''
 
     let dialog: HTMLDialogElement
     let expanded = false
     let copied = false
+
+    const qrcode = writable()
+    onMount(() => {
+        try {
+            qrcode.set(generateQr(data))
+        } catch (e) {
+            console.error('Error rendering QR code', e)
+        }
+    })
 
     const toggleExpanded = () => {
         if (expanded) {
@@ -54,24 +65,30 @@
 
 {#if data}
     <div class="wrapper">
-        <div class="main qr">
-            {@html generateQr(data)}
-        </div>
-        <dialog
-            bind:this={dialog}
-            on:click|self={backgroundClose}
-            on:keydown|stopPropagation|preventDefault|capture={escapeClose}
-        >
-            <button class="qr" on:click={collapse}>
-                {@html generateQr(data)}
-            </button>
-        </dialog>
+        {#if $qrcode}
+            <div class="main qr">
+                {@html $qrcode}
+            </div>
+            <dialog
+                bind:this={dialog}
+                on:click|self={backgroundClose}
+                on:keydown|stopPropagation|preventDefault|capture={escapeClose}
+            >
+                <button class="qr" on:click={collapse}>
+                    {@html $qrcode}
+                </button>
+            </dialog>
+        {/if}
 
         <div class="button-group">
-            <button class="expand" on:click={toggleExpanded}>
-                <Icon name="expand" size="var(--space-m)" />
-                <span>Expand QR code</span>
-            </button>
+            {#if $qrcode}
+                <button class="expand" on:click={toggleExpanded}>
+                    <Icon name="expand" size="var(--space-m)" />
+                    <div>
+                        <span>Expand</span> <span>QR code</span>
+                    </div>
+                </button>
+            {/if}
             <button class="copy" on:click={() => copyToClipboard(data)}>
                 <div class="icon">
                     <div>
@@ -83,7 +100,9 @@
                         </div>
                     {/if}
                 </div>
-                <span>Copy to clipboard</span>
+                <div>
+                    <span>Copy</span> <span>to clipboard</span>
+                </div>
             </button>
         </div>
     </div>
@@ -109,7 +128,7 @@
         padding: var(--space-xs);
         background: white;
         flex: 1;
-        width: auto;
+        width: 100%;
     }
 
     dialog {
@@ -143,6 +162,13 @@
         cursor: pointer;
         background: var(--body-background-color);
         color: var(--body-text-color);
+        font-size: var(--fs-0);
+    }
+
+    @media (max-width: 340px) {
+        .button-group button span:last-of-type {
+            display: none;
+        }
     }
 
     .icon {

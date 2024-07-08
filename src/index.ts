@@ -116,9 +116,9 @@ export class WebRenderer extends AbstractUserInterface implements UserInterface 
         }
     }
 
-    login(context: LoginContext): Cancelable<UserInterfaceLoginResponse> {
+    async login(context: LoginContext): Promise<UserInterfaceLoginResponse> {
         this.log('login', context)
-        active.set(true)
+        prompt.set(undefined)
         router.push('login')
         const promise = cancelable(
             new Promise<UserInterfaceLoginResponse>((resolve, reject) =>
@@ -130,6 +130,10 @@ export class WebRenderer extends AbstractUserInterface implements UserInterface 
         )
         this.addCancelablePromise(promise.cancel)
         loginContext.set(context)
+        await promise
+        if (this.minimal) {
+            active.set(false)
+        }
         return promise
     }
 
@@ -217,7 +221,9 @@ export class WebRenderer extends AbstractUserInterface implements UserInterface 
     async onTransact() {
         this.log('onTransact')
         // Make sure the dialog is active
-        active.set(true)
+        if (!this.minimal) {
+            active.set(true)
+        }
         // Set the title/subtitle to match the transact state
         props.update((c) => ({
             ...c,
@@ -255,9 +261,11 @@ export class WebRenderer extends AbstractUserInterface implements UserInterface 
     prompt(args: PromptArgs): Cancelable<PromptResponse> {
         this.log('prompt', args)
         // Make sure the dialog is active
-        active.set(true)
-        // Push the new path to the router
-        router.push('prompt')
+        if (!this.minimal || (this.minimal && !args.optional)) {
+            active.set(true)
+            // Push the new path to the router
+            router.push('prompt')
+        }
         // Setup the promise to return to the session kit
         const promise = cancelable(
             new Promise<UserInterfaceLoginResponse>((resolve, reject) => {

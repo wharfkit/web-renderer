@@ -112,6 +112,10 @@
             if (currentContext.walletPlugins.length === 1) {
                 $loginResponse.walletPluginIndex = 0
             }
+            // If the walletPluginIndex is defined, set it on the response
+            if (currentContext.walletPluginIndex !== undefined) {
+                $loginResponse.walletPluginIndex = currentContext.walletPluginIndex
+            }
         }
     })
 
@@ -224,6 +228,7 @@
             <Permission
                 on:select={selectPermission}
                 on:cancel={unselectChain}
+                chainId={$loginResponse.chainId}
                 client={$client}
                 walletPlugin={$walletPlugin}
                 title={$t('login.enter.account', {default: 'Enter account name'})}
@@ -234,6 +239,7 @@
             <Permission
                 on:select={selectPermission}
                 on:cancel={unselectChain}
+                chainId={$loginResponse.chainId}
                 client={$client}
                 walletPlugin={$walletPlugin}
                 title={$t('login.select.account', {default: 'Select an Account'})}

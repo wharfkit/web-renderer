@@ -1,5 +1,11 @@
 <script lang="ts">
-    import {APIClient, Name, PermissionLevel, UserInterfaceWalletPlugin} from '@wharfkit/session'
+    import {
+        APIClient,
+        Checksum256Type,
+        Name,
+        PermissionLevel,
+        UserInterfaceWalletPlugin,
+    } from '@wharfkit/session'
     import {createEventDispatcher, getContext, onMount} from 'svelte'
     import {writable} from 'svelte/store'
 
@@ -12,9 +18,11 @@
     import TextInput from '../components/TextInput.svelte'
     import WarningMessage from '../components/WarningMessage.svelte'
     import BodyTitle from '../components/BodyTitle.svelte'
+    import {errorDetails} from '../state'
 
     const {t} = getContext<i18nType>('i18n')
 
+    export let chainId: Checksum256Type | undefined
     export let client: APIClient
     export let walletPlugin: UserInterfaceWalletPlugin
     export let title: string
@@ -30,13 +38,22 @@
     let accountName: Name | undefined
     let accountNotFound: boolean = false
     let permissions: PermissionLevel[] | undefined
+    let publicKey: string | undefined = walletPlugin.metadata.publicKey
 
     onMount(async () => {
         if (walletPlugin.config.requiresPermissionSelect) {
+            if (chainId && walletPlugin.retrievePublicKey) {
+                try {
+                    publicKey = String(await walletPlugin.retrievePublicKey(chainId))
+                } catch (error) {
+                    errorDetails.set(String(error))
+                    throw error
+                }
+            }
             const response = await client.call<GetAccountsByAuthorizers>({
                 path: '/v1/chain/get_accounts_by_authorizers',
                 params: {
-                    keys: [walletPlugin.metadata.publicKey],
+                    keys: [publicKey],
                 },
             })
             busy.set(false)
@@ -68,7 +85,7 @@
         }
     }
 
-    function handleKeyup(event) {
+    function handleKeyup(event: KeyboardEvent) {
         if (event.code == 'Enter') {
             event.preventDefault()
             lookup()
@@ -90,15 +107,13 @@
                 />
             {/each}
         </List>
-    {:else if walletPlugin.metadata.publicKey}
-        <BodyTitle>{title}</BodyTitle>
+    {:else if publicKey}
+        <BodyTitle>{$t('login.select.no_accounts')}</BodyTitle>
         <WarningMessage
-            title={$t('login.select.no_accounts', {
-                default: 'No accounts found',
-            })}
+            title=""
             details={$t('login.select.no_match', {
                 default: 'No accounts found matching {{publicKey}}',
-                publicKey: walletPlugin.metadata.publicKey,
+                publicKey: publicKey,
             })}
         />
     {:else if !accountName}

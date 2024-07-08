@@ -1,6 +1,6 @@
 {
     "name": "@wharfkit/web-renderer",
-    "version": "1.1.1",
+    "version": "1.4.0-rc4",
     "description": "",
     "license": "BSD-3-Clause",
     "main": "lib/web-renderer.js",
@@ -18,15 +18,15 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/@wharfkit/web-renderer.git"
+        "url": "git+https://github.com/wharfkit/web-renderer.git"
     },
     "authors": [
         "Aaron Cox <aaron@greymass.com>"
     ],
     "bugs": {
-        "url": "https://github.com/@wharfkit/web-renderer/issues"
+        "url": "https://github.com/wharfkit/web-renderer/issues"
     },
-    "homepage": "https://github.com/@wharfkit/web-renderer",
+    "homepage": "https://github.com/wharfkit/web-renderer",
     "files": [
         "lib/*",
         "src/*"
@@ -54,15 +54,16 @@
         "@typescript-eslint/parser": "^5.61.0",
         "@wharfkit/account-creation-plugin-anchor": "^1.3.1",
         "@wharfkit/account-creation-plugin-jungle4": "^1.2.0",
-        "@wharfkit/session": "^1.1.1",
+        "@wharfkit/session": "^1.4.0-rc3",
         "@wharfkit/transact-plugin-autocorrect": "^1.1.0",
         "@wharfkit/transact-plugin-cosigner": "^1.1.0",
         "@wharfkit/transact-plugin-explorerlink": "^1.0.1",
         "@wharfkit/transact-plugin-mock": "^1.1.0",
         "@wharfkit/transact-plugin-resource-provider": "^1.1.0",
-        "@wharfkit/wallet-plugin-anchor": "^1.1.0",
+        "@wharfkit/wallet-plugin-anchor": "^1.3.5",
         "@wharfkit/wallet-plugin-cleos": "^1.1.0",
-        "@wharfkit/wallet-plugin-cloudwallet": "^1.1.0",
+        "@wharfkit/wallet-plugin-cloudwallet": "^1.3.3",
+        "@wharfkit/wallet-plugin-metamask": "^1.0.0-rc3",
         "@wharfkit/wallet-plugin-mock": "^1.1.0",
         "@wharfkit/wallet-plugin-privatekey": "^1.1.0",
         "@wharfkit/wallet-plugin-scatter": "^1.1.0",
@@ -72,7 +73,6 @@
         "eslint": "^8.44.0",
         "eslint-config-prettier": "^8.8.0",
         "eslint-plugin-prettier": "^4.2.1",
-        "node-sass": "^8.0.0",
         "prettier": "^2.8.3",
         "rollup": "^2.70.2",
         "rollup-plugin-analyzer": "^4.0.0",

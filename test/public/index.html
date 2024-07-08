@@ -119,6 +119,7 @@
                         new WebRenderer.WalletPluginAnchor(),
                         new WebRenderer.WalletPluginCleos(),
                         new WebRenderer.WalletPluginCloudWallet(),
+                        new WebRenderer.WalletPluginMetaMask(),
                         new WebRenderer.WalletPluginMock(),
                         new WebRenderer.WalletPluginPrivateKey(
                             '5Jtoxgny5tT7NiNFp1MLogviuPJ9NniWjnU4wKzaX4t7pL4kJ8s'
@@ -345,6 +346,10 @@
         <link href="https://unpkg.com/@primer/css@^20.2.4/dist/primer.css" rel="stylesheet" />
         <link rel="shortcut icon" href="favicon.ico" />
         <style>
+            :root {
+                /* --wharfkit-space-base: 10px; */
+                /* --wharfkit-font-base: 5px; */
+            }
             body {
                 max-width: 1200px;
                 margin: 10px auto 0;
@@ -359,6 +364,8 @@
             .Box,
             .btn {
                 margin-bottom: 0.25em;
+                white-space: unset;
+                overflow-wrap: break-word;
             }
         </style>
     </head>
