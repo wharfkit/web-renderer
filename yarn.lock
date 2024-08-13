@@ -1668,6 +1668,18 @@
     pako "^2.1.0"
     tslib "^2.0.3"
 
+"@wharfkit/antelope@^1.0.11":
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/@wharfkit/antelope/-/antelope-1.0.11.tgz#a830b3726b33d4faf4867add244013bf5e51fea3"
+  integrity sha512-4oSM5b9IzQxP6hC5H6QGBCylTYKs+cZ8fg6piM8qjj/g4Ok3YmYwx6sbIQwwQmdCUK9sBweKXrOHjNwpyafPBQ==
+  dependencies:
+    bn.js "^4.11.9"
+    brorand "^1.1.0"
+    elliptic "^6.5.4"
+    hash.js "^1.0.0"
+    pako "^2.1.0"
+    tslib "^2.0.3"
+
 "@wharfkit/antelope@^1.0.2", "@wharfkit/antelope@^1.0.4":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@wharfkit/antelope/-/antelope-1.0.4.tgz#f88305957c82fac41862a973581797ed29b5c287"
@@ -1738,14 +1750,14 @@
     bn.js "^4.11.9"
     tslib "^2.1.0"
 
-"@wharfkit/session@^1.4.0-rc3":
-  version "1.4.0-rc3"
-  resolved "https://registry.yarnpkg.com/@wharfkit/session/-/session-1.4.0-rc3.tgz#1d1594c4ee3b81186773e996e24f41f4cc2821ff"
-  integrity sha512-3pWgNehl4auJz8MJ7NpdzndeTfZ95KLBngAMK2rwrFpaiiinywExiL6m+HTPEY95mXqNiWuMHyUW1Xrgn8/U9w==
+"@wharfkit/session@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@wharfkit/session/-/session-1.4.0.tgz#13a44a0d23d5ee689755985580f943f869352987"
+  integrity sha512-U+K9eWbYzFeDshYwgrhyNoF47kYToKFpTe6xFAwaJO+2w0kIkP0vtJFl7ygd06muh7Hu3K1BqrZ3j6+FyyuIyA==
   dependencies:
     "@wharfkit/abicache" "^1.2.1"
     "@wharfkit/account" "^1.0.0"
-    "@wharfkit/antelope" "^1.0.2"
+    "@wharfkit/antelope" "^1.0.11"
     "@wharfkit/common" "^1.2.0"
     "@wharfkit/signing-request" "^3.1.0"
     pako "^2.0.4"
