@@ -54,15 +54,29 @@ export class WebRenderer extends AbstractUserInterface implements UserInterface 
     static version = '__ver' // replaced by build script
 
     public elementId = 'wharfkit-web-ui'
-    public element: Element
-    public shadow: ShadowRoot
+    public element: Element | undefined
+    public shadow: ShadowRoot | undefined
+    public options: WebRendererOptions
 
     public i18n
+    public initialized = false
     public logging = false
     public minimal = false
 
     constructor(options: WebRendererOptions = defaultWebRendererOptions) {
         super()
+        this.options = options
+        if (typeof document !== 'undefined') {
+            this.initialize()
+        }
+    }
+
+    initialize() {
+        // Prevent multiple initializations
+        if (this.initialized) {
+            return
+        }
+        const {options} = this
         // Create the dialog element and its shadow root
         this.element = document.createElement('div')
         this.elementId = options.id || defaultWebRendererOptions.id
@@ -89,10 +103,14 @@ export class WebRenderer extends AbstractUserInterface implements UserInterface 
             // Add listener to append to body
             document.addEventListener('DOMContentLoaded', () => this.appendDialogElement())
         }
+        this.initialized = true
     }
 
     appendDialogElement() {
         const existing = document.getElementById(this.elementId)
+        if (!this.element || !this.shadow) {
+            throw new Error('The WebRenderer is not initialized. Call the initialize method first.')
+        }
         if (!existing) {
             document.body.append(this.element)
             document.removeEventListener('DOMContentLoaded', () => this.appendDialogElement())
