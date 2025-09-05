@@ -4,6 +4,7 @@ import {
     cancelable,
     Canceled,
     CreateAccountContext,
+    LocaleDefinitions,
     LoginContext,
     PromptArgs,
     PromptResponse,
@@ -14,7 +15,7 @@ import {
 } from '@wharfkit/session'
 
 import App from './ui/App.svelte'
-import {makeLocalization} from './lib/translations'
+import {makeLocalization, mapChineseLanguage} from './lib/translations'
 
 import {
     accountCreationContext,
@@ -44,11 +45,17 @@ export const defaultWebRendererOptions = {
     minimal: false,
 }
 
-const getNavigatorLanguage = () =>
-    (navigator.languages && navigator.languages.length
-        ? navigator.languages[0]
-        : navigator.language || 'en'
-    ).split('-')[0]
+const getNavigatorLanguage = () => {
+    const lang =
+        navigator.languages && navigator.languages.length
+            ? navigator.languages[0]
+            : navigator.language || 'en'
+    let mainLang = lang.split('-')[0]
+    if ('zh' === mainLang) {
+        mainLang = mapChineseLanguage(lang)
+    }
+    return mainLang
+}
 
 export class WebRenderer extends AbstractUserInterface implements UserInterface {
     static version = '__ver' // replaced by build script
@@ -323,8 +330,26 @@ export class WebRenderer extends AbstractUserInterface implements UserInterface 
         return this.i18n.t.get(key, options)
     }
 
-    addTranslations(translations) {
-        this.i18n.addTranslations(translations)
+    addTranslations(translations: LocaleDefinitions) {
+        const normalizedTranslations = {}
+        const seenLanguages = new Set<string>()
+        for (const [lang, data] of Object.entries(translations)) {
+            if (!lang) {
+                this.log(`Skipping invalid language: empty or null`)
+                continue
+            }
+            let normalizedLang = lang
+            if (lang.startsWith('zh')) {
+                normalizedLang = mapChineseLanguage(lang)
+            }
+            if (!seenLanguages.has(normalizedLang)) {
+                normalizedTranslations[normalizedLang] = data
+                seenLanguages.add(normalizedLang)
+            } else {
+                this.log(`Skipping duplicate language: ${lang} (normalized to ${normalizedLang})`)
+            }
+        }
+        this.i18n.addTranslations(normalizedTranslations)
     }
 }
 
