@@ -3,6 +3,12 @@ SRC_FILES := $(shell find src -name '*.ts')
 lib: ${SRC_FILES} package.json tsconfig.json node_modules rollup.config.js
 	@./node_modules/.bin/rollup -c && touch lib
 
+test/public/bundle.js: ${SRC_FILES} package.json tsconfig.json node_modules test/rollup.config.js test/index.ts test/public/index.html
+	@./node_modules/.bin/rollup -c test/rollup.config.js
+
+.PHONY: build-test
+build-test: test/public/bundle.js
+
 dev: ${SRC_FILES} package.json tsconfig.json node_modules rollup.config.js
 	@./node_modules/.bin/rollup -c test/rollup.config.js -w --host
 
@@ -55,7 +61,7 @@ publish: | distclean node_modules
 
 .PHONY: clean
 clean:
-	rm -rf lib/ coverage/ docs/
+	rm -rf lib/ coverage/ docs/ test/public/bundle.js test/public/bundle.js.map
 
 .PHONY: distclean
 distclean: clean

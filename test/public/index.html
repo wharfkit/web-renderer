@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-color-mode="dark" data-dark-theme="dark_dimmed" lang="en">
+<html data-color-mode="auto" lang="en">
     <head>
         <title>@wharfkit/web-renderer</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -46,20 +46,52 @@
 
             const resourceProvider = new WebRenderer.TransactPluginResourceProvider()
 
+            // Determine color mode: URL param overrides OS preference
+            let colorMode
+            const darkModeParam = urlParams.get('darkMode')
+            if (darkModeParam !== null) {
+                colorMode = darkModeParam === 'true' ? 'dark' : 'light'
+            } else {
+                // Use OS preference
+                colorMode =
+                    window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+                        ? 'dark'
+                        : 'light'
+            }
+
             const ui = new WebRenderer({
                 minimal: urlParams.get('minimal'),
+                colorMode: colorMode,
             })
+
+            const availableWalletPlugins = [
+                new WebRenderer.WalletPluginAnchor(),
+                new WebRenderer.WalletPluginCleos(),
+                new WebRenderer.WalletPluginCloudWallet(),
+                new WebRenderer.WalletPluginMetaMask(),
+                new WebRenderer.WalletPluginMock(),
+                new WebRenderer.WalletPluginPrivateKey(
+                    '5Jtoxgny5tT7NiNFp1MLogviuPJ9NniWjnU4wKzaX4t7pL4kJ8s'
+                ),
+                new WebRenderer.WalletPluginScatter(),
+                new WebRenderer.WalletPluginTokenPocket(),
+                new WebRenderer.WalletPluginWombat(),
+            ]
+
+            const sessionKeyWhitelist = [{contract: 'eosio.token', actions: ['transfer']}]
+
+            // Check if session key auto-login is enabled via URL parameter
+            const enableSessionKeyAutoLogin = urlParams.get('sessionKeyAutoLogin') === 'true'
 
             const sessionKit = new SessionKit(
                 {
                     appName: 'demo-app',
-                    // Various chain configurations, uncomment one or more to test
                     chains: [
                         {
                             id: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
                             url: 'https://jungle4.greymass.com',
                             explorer: {
-                                prefix: 'https://jungle4.eosq.eosnation.io/tx/',
+                                prefix: 'https://jungle4.unicove.com/en/jungle4/transaction/',
                                 suffix: '',
                             },
                         },
@@ -114,26 +146,19 @@
                     ],
                     ui,
                     transactPlugins: [],
-                    // Various wallet configurations, uncomment one or more to test
-                    walletPlugins: [
-                        new WebRenderer.WalletPluginAnchor(),
-                        new WebRenderer.WalletPluginCleos(),
-                        new WebRenderer.WalletPluginCloudWallet(),
-                        new WebRenderer.WalletPluginMetaMask(),
-                        new WebRenderer.WalletPluginMock(),
-                        new WebRenderer.WalletPluginPrivateKey(
-                            '5Jtoxgny5tT7NiNFp1MLogviuPJ9NniWjnU4wKzaX4t7pL4kJ8s'
-                        ),
-                        new WebRenderer.WalletPluginScatter(),
-                        new WebRenderer.WalletPluginTokenPocket(),
-                        new WebRenderer.WalletPluginWombat(),
-                    ],
+                    walletPlugins: availableWalletPlugins,
                 },
                 {
                     accountCreationPlugins: [
                         new WebRenderer.AccountCreationPluginAnchor(),
                         new WebRenderer.AccountCreationPluginJungle4(),
                     ],
+                    loginPlugins: enableSessionKeyAutoLogin
+                        ? [new WebRenderer.SessionKeyLoginPlugin()]
+                        : [],
+                    sessionKey: {
+                        whitelist: sessionKeyWhitelist,
+                    },
                 }
             )
 
@@ -142,11 +167,31 @@
 
             // tries to restore session, called when document is loaded
             async function restoreSession() {
+                // Load tab from URL if present
+                loadTabFromURL()
+
+                // Restore dark mode preference
+                restoreDarkMode()
+
+                // Update auto-login checkbox state
+                const autoLoginToggle = document.getElementById('sessionkey-autologin-toggle')
+                if (autoLoginToggle) {
+                    autoLoginToggle.checked = enableSessionKeyAutoLogin
+                }
+
                 session = await sessionKit.restore()
                 updateSessions()
                 // If the session was defined, set the UI to logged in
                 if (session) {
-                    didLogin()
+                    console.log('Restored session:', session)
+                    console.log('Wallet plugin id:', session.walletPlugin.id)
+                    console.log('Wallet plugin:', session.walletPlugin)
+                    if (session.walletPlugin.id === 'session-key-wallet') {
+                        console.log('Session key permission:', session.walletPlugin.getPermission())
+                        console.log('Session key whitelist:', session.walletPlugin.getWhitelist())
+                        console.log('Primary wallet:', session.walletPlugin.getPrimaryWallet())
+                    }
+                    await didLogin()
                     refreshAccount()
                 }
 
@@ -191,9 +236,9 @@
                         navItem.ariaCurrent = 'page'
                     }
                     navItem.onclick = () => {
-                        sessionKit.restore(s).then((result) => {
+                        sessionKit.restore(s).then(async (result) => {
                             session = result
-                            didLogin()
+                            await didLogin()
                             refreshAccount()
                         })
                     }
@@ -205,7 +250,7 @@
             function login(options = {}) {
                 return sessionKit.login(options).then(async (result) => {
                     session = result.session
-                    didLogin()
+                    await didLogin()
                     await refreshAccount()
                 })
             }
@@ -234,8 +279,205 @@
                     } / ${account.ram_quota}`
                     document.getElementById(
                         'explorer'
-                    ).href = `https://jungle4.eosq.eosnation.io/account/${session.actor}`
+                    ).href = `https://jungle4.unicove.com/en/jungle4/account/${session.actor}`
                 })
+            }
+
+            function toggleSessionKeyAutoLogin() {
+                const checkbox = document.getElementById('sessionkey-autologin-toggle')
+                const url = new URL(window.location.href)
+
+                if (checkbox.checked) {
+                    url.searchParams.set('sessionKeyAutoLogin', 'true')
+                } else {
+                    url.searchParams.delete('sessionKeyAutoLogin')
+                }
+
+                window.location.href = url.toString()
+            }
+
+            async function setupSessionKey() {
+                if (!session) {
+                    console.log('Please login first')
+                    return
+                }
+                try {
+                    const result = await session.setupSessionKey()
+                    await updateSessionKeyStatus()
+                    console.log('Session key created:', result.permission, result.publicKey)
+                } catch (error) {
+                    console.error('Session key setup failed:', error)
+                }
+            }
+
+            async function removeSessionKey() {
+                if (!session) {
+                    console.log('Please login first')
+                    return
+                }
+                if (!session.hasSessionKey()) {
+                    console.log('Session does not have a session key')
+                    return
+                }
+                try {
+                    await session.removeSessionKey()
+                    console.log(
+                        'Session key removed, wallet plugin is now:',
+                        session.walletPlugin.id
+                    )
+                    const status = await session.getSessionKeyStatus()
+                    console.log('Status after removal:', status)
+                    await updateSessionKeyStatus()
+                    console.log('Session key removed successfully')
+                } catch (error) {
+                    console.error('Session key removal failed:', error)
+                }
+            }
+
+            async function validateSessionKeyWhitelist() {
+                if (!session) {
+                    console.log('Please login first')
+                    return
+                }
+                if (!session.hasSessionKey()) {
+                    console.log('Session does not have a session key')
+                    return
+                }
+                try {
+                    const mismatch = await session.validateSessionKeyWhitelist()
+                    if (mismatch) {
+                        console.log('Whitelist mismatch:', mismatch)
+                        const response = await ui.onSessionKeyMismatch({
+                            appName: String(session.appName || 'demo-app'),
+                            added: mismatch.added.map((e) => ({
+                                contract: String(e.contract),
+                                actions: e.actions?.map((a) => String(a)),
+                            })),
+                            removed: mismatch.removed.map((e) => ({
+                                contract: String(e.contract),
+                                actions: e.actions?.map((a) => String(a)),
+                            })),
+                        })
+                        if (response === 'update') {
+                            await session.updateSessionKeyLinks()
+                            console.log('Whitelist updated')
+                        } else {
+                            console.log('Mismatch dismissed')
+                        }
+                    } else {
+                        console.log('Whitelist is in sync - no mismatch detected')
+                    }
+                } catch (error) {
+                    console.error('Whitelist validation failed:', error)
+                }
+            }
+
+            async function updateSessionKeyStatus() {
+                console.log('updateSessionKeyStatus called')
+                const statusEl = document.getElementById('sessionkey-status')
+                const permissionEl = document.getElementById('sessionkey-permission')
+                const publickeyEl = document.getElementById('sessionkey-publickey')
+                const setupBtn = document.getElementById('btn-setup-sessionkey')
+                const removeBtn = document.getElementById('btn-remove-sessionkey')
+                const validateBtn = document.getElementById('btn-validate-whitelist')
+
+                if (!session) {
+                    console.log('  No session')
+                    statusEl.innerHTML = '<span class="Label Label--secondary">Not Logged In</span>'
+                    permissionEl.textContent = '—'
+                    publickeyEl.textContent = '—'
+                    setupBtn.style.display = 'block'
+                    removeBtn.style.display = 'none'
+                    validateBtn.style.display = 'none'
+                    return
+                }
+
+                console.log('  session.walletPlugin.id:', session.walletPlugin.id)
+                const status = await session.getSessionKeyStatus()
+                console.log('  getSessionKeyStatus returned:', JSON.stringify(status))
+
+                permissionEl.textContent = status.permission || '—'
+                publickeyEl.textContent = status.publicKey || '—'
+
+                console.log('  status.state:', status.state)
+                setupBtn.style.display = status.state === 'active' ? 'none' : 'block'
+                removeBtn.style.display = status.state === 'active' ? 'block' : 'none'
+                validateBtn.style.display = status.state === 'active' ? 'block' : 'none'
+                console.log(
+                    '  Button visibility - setup:',
+                    setupBtn.style.display,
+                    'remove:',
+                    removeBtn.style.display
+                )
+
+                switch (status.state) {
+                    case 'active':
+                        statusEl.innerHTML = '<span class="Label Label--success">Active</span>'
+                        break
+                    case 'mismatch':
+                        statusEl.innerHTML = '<span class="Label Label--warning">Mismatch</span>'
+                        break
+                    case 'inactive':
+                        statusEl.innerHTML = '<span class="Label Label--accent">Inactive</span>'
+                        break
+                    case 'not-setup':
+                        statusEl.innerHTML =
+                            '<span class="Label Label--secondary">Not Set Up</span>'
+                        permissionEl.textContent = '—'
+                        publickeyEl.textContent = '—'
+                        break
+                }
+            }
+
+            async function testConsentUI() {
+                const result = await ui.onSessionKeyConsent({
+                    whitelist: sessionKeyWhitelist,
+                    appName: 'demo-app',
+                })
+                console.log('Consent result:', result ? 'Approved' : 'Denied')
+            }
+
+            async function testConflictUI() {
+                const result = await ui.onSessionKeyConflict({
+                    appName: 'demo-app',
+                    existingKeyCount: 2,
+                })
+                console.log('Conflict result:', result)
+            }
+
+            async function testMismatchUI() {
+                const result = await ui.onSessionKeyMismatch({
+                    appName: 'demo-app',
+                    added: [{contract: 'newcontract', actions: ['newaction']}],
+                    removed: [{contract: 'oldcontract', actions: ['oldaction']}],
+                })
+                console.log('Mismatch result:', result)
+            }
+
+            async function testRemoveUI() {
+                const result = await ui.onSessionKeyRemove({
+                    appName: 'demo-app',
+                })
+                console.log('Remove result:', result)
+            }
+
+            async function testLoginUI() {
+                await ui.onLogin()
+                console.log('Login UI displayed')
+            }
+
+            async function testTransactUI() {
+                await ui.onTransact()
+                setTimeout(() => {
+                    ui.onTransactComplete()
+                }, 3000)
+                console.log('Transaction UI displayed (auto-closing in 3s)')
+            }
+
+            async function testErrorUI() {
+                const error = new Error('This is a test error message for UI display')
+                await ui.onError(error)
+                console.log('Error UI displayed')
             }
 
             // logout and remove session from storage
@@ -248,16 +490,18 @@
                         document.body.classList.remove('logged-in')
                         session = undefined
                         account = undefined
+                        updateSessionKeyStatus()
                     } else {
                         session = await sessionKit.restore(sessions[0])
                         account = undefined
-                        didLogin()
+                        await didLogin()
                         refreshAccount()
                     }
                 } else {
                     document.body.classList.remove('logged-in')
                     session = undefined
                     account = undefined
+                    updateSessionKeyStatus()
                 }
             }
 
@@ -267,10 +511,11 @@
                 document.body.classList.remove('logged-in')
                 session = undefined
                 account = undefined
+                updateSessionKeyStatus()
             }
 
             // called when session was restored or created
-            function didLogin() {
+            async function didLogin() {
                 updateSessions()
                 document.getElementById('account-name').textContent = session.actor
                 document.getElementById('account-permission').textContent = session.permission
@@ -279,6 +524,7 @@
                     'account-name-logout'
                 ).textContent = `Logout ${session.actor}`
                 document.body.classList.add('logged-in')
+                await updateSessionKeyStatus()
             }
 
             async function loginTransfer(loginOptions, transferOptions) {
@@ -316,25 +562,209 @@
                     )
                     .then((result) => {
                         const item = document.createElement('div')
-                        item.classList = 'TimelineItem TimelineItem--condensed'
+                        item.className = 'tx-log-item'
+                        const timestamp = new Date().toLocaleString()
                         item.innerHTML = `
-                <div class="TimelineItem-badge">
-                    <svg class="octicon octicon-git-commit" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true">
-                        <path fill-rule="evenodd" d="M10.86 7c-.45-1.72-2-3-3.86-3-1.86 0-3.41 1.28-3.86 3H0v2h3.14c.45 1.72 2 3 3.86 3 1.86 0 3.41-1.28 3.86-3H14V7h-3.14zM7 10.2c-1.22 0-2.2-.98-2.2-2.2 0-1.22.98-2.2 2.2-2.2 1.22 0 2.2.98 2.2 2.2 0 1.22-.98 2.2-2.2 2.2z"></path>
+                <div class="tx-log-icon">
+                    <svg viewBox="0 0 16 16" aria-hidden="true">
+                        <path d="M8 4a4 4 0 1 1 0 8 4 4 0 0 1 0-8Z"></path>
                     </svg>
                 </div>
-                <div class="TimelineItem-body">
-                    ${new Date().toISOString()} ${session.actor} - ${
-                            result.response
-                                ? `<a href="https://jungle4.eosq.eosnation.io/tx/${result.resolved.transaction.id}" target="_blank">View on Explorer</a>`
-                                : `Not broadcast`
-                        }
+                <div class="tx-log-content">
+                    <div class="tx-log-time">${timestamp}</div>
+                    <div class="tx-log-title">${session.actor}</div>
+                    <div class="tx-log-link">${
+                        result.response
+                            ? `<a href="https://jungle4.unicove.com/en/jungle4/transaction/${result.resolved.transaction.id}" target="_blank">View on Explorer →</a>`
+                            : `<span class="color-fg-muted">Not broadcast</span>`
+                    }</div>
                 </div>`
                         document.getElementById('log').prepend(item)
                     })
                     .catch((e) => {
                         console.log('caught', e)
                     })
+            }
+
+            function transferEOS() {
+                if (!session) {
+                    console.log('Please login first')
+                    return
+                }
+                const action = {
+                    account: 'eosio.token',
+                    name: 'transfer',
+                    authorization: [session.permissionLevel],
+                    data: {
+                        from: session.actor,
+                        to: 'teamgreymass',
+                        quantity: '0.0001 EOS',
+                        memo: 'Session key test - whitelisted action',
+                    },
+                }
+                console.log('EOS Transfer (whitelisted):', JSON.stringify(action))
+                session
+                    .transact({action}, {broadcast: true})
+                    .then((result) => {
+                        const item = document.createElement('div')
+                        item.className = 'tx-log-item'
+                        const timestamp = new Date().toLocaleString()
+                        item.innerHTML = `
+                <div class="tx-log-icon success">
+                    <svg viewBox="0 0 16 16" aria-hidden="true">
+                        <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+                    </svg>
+                </div>
+                <div class="tx-log-content">
+                    <div class="tx-log-time">${timestamp}</div>
+                    <div class="tx-log-title">EOS Transfer (Session Key)</div>
+                    <div class="tx-log-link">${
+                        result.response
+                            ? `<a href="https://jungle4.unicove.com/en/jungle4/transaction/${result.resolved.transaction.id}" target="_blank">View on Explorer →</a>`
+                            : `<span class="color-fg-muted">Not broadcast</span>`
+                    }</div>
+                </div>`
+                        document.getElementById('log').prepend(item)
+                    })
+                    .catch((e) => {
+                        console.log('EOS transfer caught:', e)
+                    })
+            }
+
+            function transferVaulta() {
+                if (!session) {
+                    console.log('Please login first')
+                    return
+                }
+                const action = {
+                    account: 'core.vaulta',
+                    name: 'transfer',
+                    authorization: [session.permissionLevel],
+                    data: {
+                        from: session.actor,
+                        to: 'teamgreymass',
+                        quantity: '0.0001 A',
+                        memo: 'Session key test - NOT whitelisted action',
+                    },
+                }
+                console.log('Vaulta Transfer (not whitelisted):', JSON.stringify(action))
+                session
+                    .transact({action}, {broadcast: true})
+                    .then((result) => {
+                        const item = document.createElement('div')
+                        item.className = 'tx-log-item'
+                        const timestamp = new Date().toLocaleString()
+                        item.innerHTML = `
+                <div class="tx-log-icon primary">
+                    <svg viewBox="0 0 16 16" aria-hidden="true">
+                        <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+                    </svg>
+                </div>
+                <div class="tx-log-content">
+                    <div class="tx-log-time">${timestamp}</div>
+                    <div class="tx-log-title">Vaulta Transfer (Primary Wallet)</div>
+                    <div class="tx-log-link">${
+                        result.response
+                            ? `<a href="https://jungle4.unicove.com/en/jungle4/transaction/${result.resolved.transaction.id}" target="_blank">View on Explorer →</a>`
+                            : `<span class="color-fg-muted">Not broadcast</span>`
+                    }</div>
+                </div>`
+                        document.getElementById('log').prepend(item)
+                    })
+                    .catch((e) => {
+                        console.log('Vaulta transfer caught:', e)
+                    })
+            }
+
+            function switchTab(tabId) {
+                document.querySelectorAll('.tab-content').forEach((tab) => {
+                    tab.classList.remove('active')
+                })
+                document.querySelectorAll('.UnderlineNav-item').forEach((btn) => {
+                    btn.setAttribute('aria-selected', 'false')
+                })
+                document.getElementById('tab-' + tabId).classList.add('active')
+                event.target.setAttribute('aria-selected', 'true')
+
+                // Update URL with tab parameter
+                const url = new URL(window.location)
+                url.searchParams.set('tab', tabId)
+                window.history.pushState({}, '', url)
+            }
+
+            function loadTabFromURL() {
+                const urlParams = new URLSearchParams(window.location.search)
+                const tabId = urlParams.get('tab')
+                if (tabId && document.getElementById('tab-' + tabId)) {
+                    // Deactivate all tabs
+                    document.querySelectorAll('.tab-content').forEach((tab) => {
+                        tab.classList.remove('active')
+                    })
+                    document.querySelectorAll('.UnderlineNav-item').forEach((btn) => {
+                        btn.setAttribute('aria-selected', 'false')
+                    })
+                    // Activate selected tab
+                    document.getElementById('tab-' + tabId).classList.add('active')
+                    const tabButton = document.querySelector(`[onclick="switchTab('${tabId}')"]`)
+                    if (tabButton) {
+                        tabButton.setAttribute('aria-selected', 'true')
+                    }
+                }
+            }
+
+            function toggleDarkMode() {
+                const checkbox = document.getElementById('dark-mode-toggle')
+                const html = document.documentElement
+                const url = new URL(window.location)
+
+                const isDark = checkbox.checked
+                const theme = isDark ? 'dark' : 'light'
+
+                if (isDark) {
+                    html.setAttribute('data-color-mode', 'dark')
+                    html.setAttribute('data-dark-theme', 'dark_dimmed')
+                    url.searchParams.set('darkMode', 'true')
+                } else {
+                    html.setAttribute('data-color-mode', 'light')
+                    html.removeAttribute('data-dark-theme')
+                    url.searchParams.set('darkMode', 'false')
+                }
+
+                // Update WebRenderer UI theme dynamically
+                if (ui && ui.settings) {
+                    ui.settings.update((current) => ({...current, theme: theme}))
+                }
+
+                window.history.pushState({}, '', url)
+            }
+
+            // Restore dark mode preference on load
+            function restoreDarkMode() {
+                const urlParams = new URLSearchParams(window.location.search)
+                const darkModeParam = urlParams.get('darkMode')
+                const checkbox = document.getElementById('dark-mode-toggle')
+
+                // Determine dark mode: URL param overrides OS preference
+                let isDarkMode
+                if (darkModeParam !== null) {
+                    // URL parameter overrides
+                    isDarkMode = darkModeParam === 'true'
+                } else {
+                    // Use OS preference
+                    isDarkMode =
+                        window.matchMedia &&
+                        window.matchMedia('(prefers-color-scheme: dark)').matches
+                }
+
+                checkbox.checked = isDarkMode
+
+                if (isDarkMode) {
+                    document.documentElement.setAttribute('data-color-mode', 'dark')
+                    document.documentElement.setAttribute('data-dark-theme', 'dark_dimmed')
+                } else {
+                    document.documentElement.setAttribute('data-color-mode', 'light')
+                    document.documentElement.removeAttribute('data-dark-theme')
+                }
             }
 
             setInterval(() => {
@@ -367,241 +797,509 @@
                 white-space: unset;
                 overflow-wrap: break-word;
             }
+            .tab-content {
+                display: none;
+            }
+            .tab-content.active {
+                display: block;
+            }
+            .UnderlineNav-body {
+                margin: 0.5em 1em;
+            }
+            .UnderlineNav-item[aria-selected='true'] {
+                font-weight: normal;
+            }
+            .tx-log-item {
+                display: flex;
+                gap: 12px;
+                padding: 12px;
+                border-bottom: 1px solid var(--borderColor-default, #30363d);
+                align-items: flex-start;
+            }
+            .tx-log-item:last-child {
+                border-bottom: none;
+            }
+            .tx-log-icon {
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+                background: var(--bgColor-neutral-muted, #21262d);
+            }
+            .tx-log-icon.success {
+                background: var(--bgColor-success-emphasis, #238636);
+            }
+            .tx-log-icon.primary {
+                background: var(--bgColor-accent-emphasis, #1f6feb);
+            }
+            .tx-log-icon svg {
+                width: 16px;
+                height: 16px;
+                fill: currentColor;
+            }
+            .tx-log-content {
+                flex: 1;
+                min-width: 0;
+            }
+            .tx-log-time {
+                font-size: 12px;
+                color: var(--fgColor-muted, #7d8590);
+                margin-bottom: 4px;
+            }
+            .tx-log-title {
+                font-weight: 600;
+                margin-bottom: 4px;
+            }
+            .tx-log-link {
+                font-size: 14px;
+            }
         </style>
     </head>
     <body onload="restoreSession()">
-        <div class="Subhead">
-            <h2 class="Subhead-heading">Web Renderer Test</h2>
-            <div class="Subhead-description">
-                A suite of testing tools for the
-                <a href="https://github.com/@wharfkit/web-renderer" target="_blank">
-                    @wharfkit/web-renderer </a
-                >.
+        <div class="container-xl px-3 mt-3">
+            <div class="Subhead mb-3">
+                <h2 class="Subhead-heading">Web Renderer Test</h2>
+                <div class="Subhead-description">
+                    A suite of testing tools for the
+                    <a href="https://github.com/@wharfkit/web-renderer" target="_blank">
+                        @wharfkit/web-renderer </a
+                    >.
+                </div>
             </div>
-        </div>
-        <nav class="subnav" aria-label="Repository">
-            <a class="subnav-item" aria-current="page" href="#login" onclick="login()">
-                <span>Login</span>
-            </a>
-            <a
-                class="subnav-item"
-                href="#login-test"
-                onclick="login({
-                chain: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
-                permissionLevel: 'wharfkit1111@test',
-                walletPlugin: 'wallet-plugin-privatekey'
-            })"
-            >
-                <span>Test Account (Resources)</span>
-            </a>
-            <a
-                class="subnav-item"
-                href="#login-test"
-                onclick="login({
-                chain: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
-                permissionLevel: 'wharfkit1112@test',
-                walletPlugin: 'wallet-plugin-privatekey'
-            })"
-            >
-                <span>Test Account (No CPU)</span>
-            </a>
-            <a
-                class="subnav-item"
-                href="#login-test"
-                onclick="login({
-                chain: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
-                permissionLevel: 'wharfkit1115@test',
-                walletPlugin: 'wallet-plugin-privatekey'
-            })"
-            >
-                <span>Test Account (No RAM)</span>
-            </a>
-        </nav>
-        <nav class="subnav" aria-label="Repository">
-            <a class="subnav-item" href="#login-test" onclick="createAccount()">
-                <span>Create Account</span>
-            </a>
-            <a
-                class="subnav-item"
-                href="#logout"
-                onclick="createAccount('account-creation-plugin-jungle4')"
-            >
-                <span>Create Jungle4 Account</span>
-            </a>
-            <a
-                class="subnav-item"
-                href="#logout"
-                onclick="createAccount('account-creation-plugin-anchor')"
-            >
-                <span>Create Account w/ Anchor</span>
-            </a>
-            <a
-                class="subnav-item"
-                href="#logout"
-                onclick="createAccount('account-creation-plugin-anchor', 'EOS')"
-            >
-                <span>Create EOS Account w/ Anchor</span>
-            </a>
-        </nav>
-        <div class="Layout" id="">
-            <div class="Layout-main">
-                <div class="Box">
-                    <div class="Box-header">Account Data</div>
-                    <div class="Box-body">
-                        <div class="d-flex">
-                            <div class="p-3 flex-1">
-                                <code><pre id="session-dump"></pre></code>
-                                <p>Actor: <b id="account-name">undefined</b></p>
-                                <p>Permission: <b id="account-permission">undefined</b></p>
-                                <p>Chain: <b id="chain-id">undefined</b></p>
-                                <p>Balance: <b id="account-balance">undefined</b></p>
+
+            <div class="d-flex flex-wrap mb-3" style="gap: 1rem">
+                <div class="flex-1" style="min-width: 300px">
+                    <div class="Box">
+                        <div class="Box-header">
+                            <h3 class="Box-title">Quick Actions</h3>
+                        </div>
+                        <div class="Box-body">
+                            <div class="d-flex flex-wrap" style="gap: 0.5rem">
+                                <button class="btn btn-primary" onclick="login()">Login</button>
+                                <button
+                                    class="btn"
+                                    onclick="login({
+                                    chain: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
+                                    permissionLevel: 'wharfkit1111@test',
+                                    walletPlugin: 'wallet-plugin-privatekey'
+                                })"
+                                >
+                                    Test Account (Resources)
+                                </button>
+                                <button
+                                    class="btn"
+                                    onclick="login({
+                                    chain: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
+                                    permissionLevel: 'wharfkit1112@test',
+                                    walletPlugin: 'wallet-plugin-privatekey'
+                                })"
+                                >
+                                    Test Account (No CPU)
+                                </button>
+                                <button
+                                    class="btn"
+                                    onclick="login({
+                                    chain: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
+                                    permissionLevel: 'wharfkit1115@test',
+                                    walletPlugin: 'wallet-plugin-privatekey'
+                                })"
+                                >
+                                    Test Account (No RAM)
+                                </button>
                             </div>
-                            <div class="p-3 flex-1">
-                                <p><a id="explorer" target="_blank" href="">Explorer</a></p>
-                                <p>CPU: <b id="cpu">undefined</b></p>
-                                <p>NET: <b id="net">undefined</b></p>
-                                <p>RAM: <b id="ram">undefined</b></p>
+                            <div class="mt-2 pt-2 border-top">
+                                <span class="color-fg-muted f6 d-block mb-2">Account Creation</span>
+                                <div class="d-flex flex-wrap" style="gap: 0.5rem">
+                                    <button class="btn btn-sm" onclick="createAccount()">
+                                        Create Account
+                                    </button>
+                                    <button
+                                        class="btn btn-sm"
+                                        onclick="createAccount('account-creation-plugin-jungle4')"
+                                    >
+                                        Create Jungle4 Account
+                                    </button>
+                                    <button
+                                        class="btn btn-sm"
+                                        onclick="createAccount('account-creation-plugin-anchor')"
+                                    >
+                                        Create Account w/ Anchor
+                                    </button>
+                                    <button
+                                        class="btn btn-sm"
+                                        onclick="createAccount('account-creation-plugin-anchor', 'EOS')"
+                                    >
+                                        Create EOS Account w/ Anchor
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                        <button
-                            class="btn btn-block btn-primary btn-sm"
-                            type="button"
-                            onclick="refreshAccount()"
-                        >
-                            Refresh account
-                        </button>
                     </div>
                 </div>
+
+                <div style="min-width: 300px; max-width: 400px">
+                    <div class="Box color-bg-subtle">
+                        <div class="Box-header">
+                            <h3 class="Box-title">Session Key Configuration</h3>
+                        </div>
+                        <div class="Box-body">
+                            <div class="form-checkbox">
+                                <label class="d-flex flex-items-center" style="cursor: pointer">
+                                    <input
+                                        type="checkbox"
+                                        id="sessionkey-autologin-toggle"
+                                        onchange="toggleSessionKeyAutoLogin()"
+                                        class="mr-2"
+                                    />
+                                    <span class="f5"
+                                        >Prompt for session key setup during login</span
+                                    >
+                                </label>
+                            </div>
+                            <p class="note mt-2 mb-0">
+                                When enabled, automatically shows consent/conflict UI after login to
+                                set up session keys. Page will reload to apply changes.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="Layout container-xl" id="">
+            <div class="Layout-main">
                 <div class="Box">
-                    <div class="Box-header">
-                        <h4>Test by sending 0.0001 EOS to teamgreymass</h4>
+                    <div class="Box-header p-0">
+                        <nav class="UnderlineNav" aria-label="Testing">
+                            <div class="UnderlineNav-body" role="tablist">
+                                <button
+                                    class="UnderlineNav-item"
+                                    role="tab"
+                                    aria-selected="true"
+                                    onclick="switchTab('sessionkey')"
+                                >
+                                    Session Key
+                                </button>
+                                <button
+                                    class="UnderlineNav-item"
+                                    role="tab"
+                                    aria-selected="false"
+                                    onclick="switchTab('generic')"
+                                >
+                                    Generic Testing
+                                </button>
+                                <button
+                                    class="UnderlineNav-item"
+                                    role="tab"
+                                    aria-selected="false"
+                                    onclick="switchTab('uitests')"
+                                >
+                                    UI Tests
+                                </button>
+                                <button
+                                    class="UnderlineNav-item"
+                                    role="tab"
+                                    aria-selected="false"
+                                    onclick="switchTab('account')"
+                                >
+                                    Account Data
+                                </button>
+                            </div>
+                        </nav>
                     </div>
                     <div class="Box-body">
-                        <form>
-                            <div class="form-group">
-                                <div class="form-group-body">
-                                    <div class="form-checkbox">
-                                        <button
-                                            class="btn btn-block"
-                                            type="button"
-                                            onclick="loginTransfer(
-                                            {
-                                                chain: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
-                                                permissionLevel: 'wharfkit1111@test',
-                                                walletPlugin: 'wallet-plugin-privatekey'
-                                            },
-                                            {broadcast: true}
-                                        )"
-                                        >
-                                            Token send 0.0001 from wharfkit111 to teamgreymass
-                                        </button>
-                                        <button
-                                            class="btn btn-block"
-                                            type="button"
-                                            onclick="loginTransfer(
-                                            {
-                                                chain: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
-                                                permissionLevel: 'wharfkit1115@test',
-                                                walletPlugin: 'wallet-plugin-privatekey'
-                                            },
-                                            {broadcast: true}
-                                        )"
-                                        >
-                                            Token send that causes CPU/NET error
-                                        </button>
-                                        <button
-                                            class="btn btn-block"
-                                            type="button"
-                                            onclick="loginTransfer(
-                                            {
-                                                chain: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
-                                                permissionLevel: 'wharfkit1114@test',
-                                                walletPlugin: 'wallet-plugin-privatekey'
-                                            },
-                                            {broadcast: true}
-                                        )"
-                                        >
-                                            Token send that causes RAM error
-                                        </button>
-                                        <button
-                                            class="btn btn-block"
-                                            type="button"
-                                            onclick="loginTransfer(
-                                            {
-                                                chain: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
-                                                permissionLevel: 'wharfkit1114@test',
-                                                walletPlugin: 'wallet-plugin-privatekey'
-                                            },
-                                            {broadcast: true}
-                                        )"
-                                        >
-                                            Token send that causes RAM error
-                                        </button>
+                        <div id="tab-sessionkey" class="tab-content active">
+                            <div class="Box color-bg-subtle mb-3">
+                                <div class="Box-body">
+                                    <div class="d-flex flex-wrap">
+                                        <div class="col-3">
+                                            <span class="color-fg-muted f6">Status</span>
+                                            <div id="sessionkey-status" class="mt-1">
+                                                <span class="Label Label--secondary"
+                                                    >Not Set Up</span
+                                                >
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <span class="color-fg-muted f6">Permission</span>
+                                            <div id="sessionkey-permission" class="mt-1">—</div>
+                                        </div>
+                                        <div class="col-6">
+                                            <span class="color-fg-muted f6">Public Key</span>
+                                            <div
+                                                id="sessionkey-publickey"
+                                                class="mt-1 text-mono f6 text-truncate"
+                                            >
+                                                —
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-3 pt-3 border-top">
+                                        <span class="color-fg-muted f6">Whitelist</span>
+                                        <div class="mt-1 text-mono f6">eosio.token::transfer</div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="form-group-body">
-                                    <div class="form-checkbox">
-                                        <label>
-                                            <input type="checkbox" id="broadcast" />
-                                            <em class="highlight">Broadcast?</em>
-                                        </label>
+                            <div class="form-group-body">
+                                <h5 class="color-fg-muted mb-2">Setup &amp; Management</h5>
+                                <button
+                                    id="btn-setup-sessionkey"
+                                    class="btn btn-block btn-primary btn-sm"
+                                    type="button"
+                                    onclick="setupSessionKey()"
+                                >
+                                    Setup Session Key
+                                </button>
+                                <button
+                                    id="btn-remove-sessionkey"
+                                    class="btn btn-block btn-danger btn-sm"
+                                    type="button"
+                                    onclick="removeSessionKey()"
+                                    style="display: none"
+                                >
+                                    Remove Session Key
+                                </button>
+                                <button
+                                    id="btn-validate-whitelist"
+                                    class="btn btn-block btn-sm"
+                                    type="button"
+                                    onclick="validateSessionKeyWhitelist()"
+                                    style="display: none"
+                                >
+                                    Validate Whitelist
+                                </button>
+                                <h5 class="color-fg-muted mb-2 mt-3">Transaction Routing Tests</h5>
+                                <button
+                                    class="btn btn-block btn-sm btn-success"
+                                    type="button"
+                                    onclick="transferEOS()"
+                                >
+                                    Transfer 0.0001 EOS (Whitelisted - Session Key)
+                                </button>
+                                <button
+                                    class="btn btn-block btn-sm btn-warning"
+                                    type="button"
+                                    onclick="transferVaulta()"
+                                >
+                                    Transfer 0.0001 A (Not Whitelisted - Primary Wallet)
+                                </button>
+                            </div>
+                        </div>
+                        <div id="tab-generic" class="tab-content">
+                            <h4 class="mb-3">Test by sending 0.0001 EOS to teamgreymass</h4>
+                            <form>
+                                <div class="form-group">
+                                    <div class="form-group-body">
+                                        <div class="form-checkbox">
+                                            <button
+                                                class="btn btn-block"
+                                                type="button"
+                                                onclick="loginTransfer(
+                                                {
+                                                    chain: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
+                                                    permissionLevel: 'wharfkit1111@test',
+                                                    walletPlugin: 'wallet-plugin-privatekey'
+                                                },
+                                                {broadcast: true}
+                                            )"
+                                            >
+                                                Token send 0.0001 from wharfkit111 to teamgreymass
+                                            </button>
+                                            <button
+                                                class="btn btn-block"
+                                                type="button"
+                                                onclick="loginTransfer(
+                                                {
+                                                    chain: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
+                                                    permissionLevel: 'wharfkit1115@test',
+                                                    walletPlugin: 'wallet-plugin-privatekey'
+                                                },
+                                                {broadcast: true}
+                                            )"
+                                            >
+                                                Token send that causes CPU/NET error
+                                            </button>
+                                            <button
+                                                class="btn btn-block"
+                                                type="button"
+                                                onclick="loginTransfer(
+                                                {
+                                                    chain: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
+                                                    permissionLevel: 'wharfkit1114@test',
+                                                    walletPlugin: 'wallet-plugin-privatekey'
+                                                },
+                                                {broadcast: true}
+                                            )"
+                                            >
+                                                Token send that causes RAM error
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="form-group-body">
-                                    <div class="form-checkbox">
-                                        <button
-                                            class="btn btn-block"
-                                            type="button"
-                                            onclick="transfer()"
-                                        >
-                                            transact with no plugins
-                                        </button>
-                                        <button
-                                            class="btn btn-block"
-                                            type="button"
-                                            onclick="transfer({transactPlugins: [mockTransactPlugin]})"
-                                        >
-                                            transact with TransactPluginMock
-                                        </button>
-                                        <button
-                                            class="btn btn-block"
-                                            type="button"
-                                            onclick="transfer({transactPlugins: [explorerLink]})"
-                                        >
-                                            transact with TransactPluginExplorerLink
-                                        </button>
-                                        <button
-                                            class="btn btn-block"
-                                            type="button"
-                                            onclick="transfer({transactPlugins: [cosigner]})"
-                                        >
-                                            transact with TransactPluginCosigner
-                                        </button>
-                                        <button
-                                            class="btn btn-block"
-                                            type="button"
-                                            onclick="transfer({transactPlugins: [resourceProvider]})"
-                                        >
-                                            transact with TransactPluginResourceProvider
-                                        </button>
-                                        <button
-                                            class="btn btn-block"
-                                            type="button"
-                                            onclick="transfer({transactPlugins: [autoCorrect]})"
-                                        >
-                                            transact with TransactPluginAutoCorrect
-                                        </button>
-                                        <!-- <button class="btn btn-block" type="button" onclick="transfer({transactPlugins: [finalityCallback]})">
-                                            transact with TransactPluginFinalityCallback (will alert on finality)
-                                        </button> -->
+                                <div class="form-group">
+                                    <div class="form-group-body">
+                                        <div class="form-checkbox">
+                                            <label>
+                                                <input type="checkbox" id="broadcast" />
+                                                <em class="highlight">Broadcast?</em>
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <div class="form-group-body">
+                                        <div class="form-checkbox">
+                                            <button
+                                                class="btn btn-block"
+                                                type="button"
+                                                onclick="transfer()"
+                                            >
+                                                transact with no plugins
+                                            </button>
+                                            <button
+                                                class="btn btn-block"
+                                                type="button"
+                                                onclick="transfer({transactPlugins: [mockTransactPlugin]})"
+                                            >
+                                                transact with TransactPluginMock
+                                            </button>
+                                            <button
+                                                class="btn btn-block"
+                                                type="button"
+                                                onclick="transfer({transactPlugins: [explorerLink]})"
+                                            >
+                                                transact with TransactPluginExplorerLink
+                                            </button>
+                                            <button
+                                                class="btn btn-block"
+                                                type="button"
+                                                onclick="transfer({transactPlugins: [cosigner]})"
+                                            >
+                                                transact with TransactPluginCosigner
+                                            </button>
+                                            <button
+                                                class="btn btn-block"
+                                                type="button"
+                                                onclick="transfer({transactPlugins: [resourceProvider]})"
+                                            >
+                                                transact with TransactPluginResourceProvider
+                                            </button>
+                                            <button
+                                                class="btn btn-block"
+                                                type="button"
+                                                onclick="transfer({transactPlugins: [autoCorrect]})"
+                                            >
+                                                transact with TransactPluginAutoCorrect
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="tab-uitests" class="tab-content">
+                            <h4 class="mb-3">UI Component Testing</h4>
+                            <p class="color-fg-muted mb-3">
+                                These buttons trigger UI components directly for testing purposes.
+                            </p>
+
+                            <div
+                                class="form-checkbox mb-3 p-3"
+                                style="background: var(--bgColor-muted); border-radius: 6px"
+                            >
+                                <label class="d-flex flex-items-center" style="cursor: pointer">
+                                    <input
+                                        type="checkbox"
+                                        id="dark-mode-toggle"
+                                        onchange="toggleDarkMode()"
+                                        class="mr-2"
+                                    />
+                                    <span class="f5">Dark Mode</span>
+                                </label>
                             </div>
-                        </form>
+
+                            <h5 class="color-fg-muted mb-2">Session Key Components</h5>
+                            <button
+                                class="btn btn-block btn-sm"
+                                type="button"
+                                onclick="testConsentUI()"
+                            >
+                                Session Key Consent
+                            </button>
+                            <button
+                                class="btn btn-block btn-sm"
+                                type="button"
+                                onclick="testConflictUI()"
+                            >
+                                Session Key Conflict (Another Device)
+                            </button>
+                            <button
+                                class="btn btn-block btn-sm"
+                                type="button"
+                                onclick="testMismatchUI()"
+                            >
+                                Session Key Mismatch (Whitelist Changed)
+                            </button>
+                            <button
+                                class="btn btn-block btn-sm"
+                                type="button"
+                                onclick="testRemoveUI()"
+                            >
+                                Session Key Remove
+                            </button>
+
+                            <h5 class="color-fg-muted mb-2 mt-3">Login Components</h5>
+                            <button
+                                class="btn btn-block btn-sm"
+                                type="button"
+                                onclick="testLoginUI()"
+                            >
+                                Login Flow
+                            </button>
+
+                            <h5 class="color-fg-muted mb-2 mt-3">Transaction Components</h5>
+                            <button
+                                class="btn btn-block btn-sm"
+                                type="button"
+                                onclick="testTransactUI()"
+                            >
+                                Transaction Signing
+                            </button>
+
+                            <h5 class="color-fg-muted mb-2 mt-3">Error States</h5>
+                            <button
+                                class="btn btn-block btn-sm btn-danger"
+                                type="button"
+                                onclick="testErrorUI()"
+                            >
+                                Error Display
+                            </button>
+                        </div>
+                        <div id="tab-account" class="tab-content">
+                            <div class="d-flex">
+                                <div class="p-3 flex-1">
+                                    <code><pre id="session-dump"></pre></code>
+                                    <p>Actor: <b id="account-name">undefined</b></p>
+                                    <p>Permission: <b id="account-permission">undefined</b></p>
+                                    <p>Chain: <b id="chain-id">undefined</b></p>
+                                    <p>Balance: <b id="account-balance">undefined</b></p>
+                                </div>
+                                <div class="p-3 flex-1">
+                                    <p><a id="explorer" target="_blank" href="">Explorer</a></p>
+                                    <p>CPU: <b id="cpu">undefined</b></p>
+                                    <p>NET: <b id="net">undefined</b></p>
+                                    <p>RAM: <b id="ram">undefined</b></p>
+                                </div>
+                            </div>
+                            <button
+                                class="btn btn-block btn-primary btn-sm"
+                                type="button"
+                                onclick="refreshAccount()"
+                            >
+                                Refresh account
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <div class="Box">

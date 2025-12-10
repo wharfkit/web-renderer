@@ -34,6 +34,16 @@ export function resetState() {
     errorDetails.set(undefined)
     backAction.set(undefined)
     transitionDirection.set(undefined)
+
+    // Session Key
+    sessionKeyConsentData.set(undefined)
+    sessionKeyConsentPromise.set(undefined)
+    sessionKeyConflictData.set(undefined)
+    sessionKeyConflictPromise.set(undefined)
+    sessionKeyMismatchData.set(undefined)
+    sessionKeyMismatchPromise.set(undefined)
+    sessionKeyRemoveData.set(undefined)
+    sessionKeyRemovePromise.set(undefined)
 }
 
 /** Whether or not the interface is active in the browser */
@@ -213,6 +223,60 @@ export const accountCreationPromise = writable<AccountCreationPromise | undefine
 
 export const errorDetails = writable<string | undefined>(undefined)
 
-export const backAction = writable<Function | undefined>(undefined)
+export const backAction = writable<(() => void) | undefined>(undefined)
 
 export const transitionDirection = writable<TransitionDirection | undefined>(undefined)
+
+// Session Key
+
+export interface SessionKeyConsentData {
+    appName: string
+    whitelist: Array<{contract: string; actions?: string[]}>
+}
+
+export interface SessionKeyConflictData {
+    appName: string
+    existingKeyCount: number
+}
+
+export interface SessionKeyMismatchData {
+    appName: string
+    added: Array<{contract: string; actions?: string[]}>
+    removed: Array<{contract: string; actions?: string[]}>
+}
+
+export interface SessionKeyConsentPromise {
+    reject: (error: Error) => void
+    resolve: (approved: boolean) => void
+}
+
+export interface SessionKeyConflictPromise {
+    reject: (error: Error) => void
+    resolve: (choice: 'add' | 'replace' | 'cancel') => void
+}
+
+export interface SessionKeyMismatchPromise {
+    reject: (error: Error) => void
+    resolve: (choice: 'update' | 'dismiss') => void
+}
+
+export interface SessionKeyRemoveData {
+    appName: string
+}
+
+export interface SessionKeyRemovePromise {
+    reject: (error: Error) => void
+    resolve: (confirmed: boolean) => void
+}
+
+export const sessionKeyConsentData = writable<SessionKeyConsentData | undefined>(undefined)
+export const sessionKeyConsentPromise = writable<SessionKeyConsentPromise | undefined>(undefined)
+
+export const sessionKeyConflictData = writable<SessionKeyConflictData | undefined>(undefined)
+export const sessionKeyConflictPromise = writable<SessionKeyConflictPromise | undefined>(undefined)
+
+export const sessionKeyMismatchData = writable<SessionKeyMismatchData | undefined>(undefined)
+export const sessionKeyMismatchPromise = writable<SessionKeyMismatchPromise | undefined>(undefined)
+
+export const sessionKeyRemoveData = writable<SessionKeyRemoveData | undefined>(undefined)
+export const sessionKeyRemovePromise = writable<SessionKeyRemovePromise | undefined>(undefined)

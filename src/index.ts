@@ -8,6 +8,12 @@ import {
     LoginContext,
     PromptArgs,
     PromptResponse,
+    SessionKeyConflictArgs,
+    SessionKeyConflictResponse,
+    SessionKeyConsentArgs,
+    SessionKeyMismatchArgs,
+    SessionKeyMismatchResponse,
+    SessionKeyRemoveArgs,
     UserInterface,
     UserInterfaceAccountCreationResponse,
     UserInterfaceLoginResponse,
@@ -29,6 +35,14 @@ import {
     props,
     resetState,
     router,
+    sessionKeyConflictData,
+    sessionKeyConflictPromise,
+    sessionKeyConsentData,
+    sessionKeyConsentPromise,
+    sessionKeyMismatchData,
+    sessionKeyMismatchPromise,
+    sessionKeyRemoveData,
+    sessionKeyRemovePromise,
     settings,
 } from './ui/state'
 import {get} from 'svelte/store'
@@ -37,6 +51,7 @@ export interface WebRendererOptions {
     id?: string
     logging?: boolean
     minimal?: boolean
+    colorMode?: 'light' | 'dark'
     translations?: Record<string, Record<string, string>>
 }
 
@@ -69,6 +84,7 @@ export class WebRenderer extends AbstractUserInterface implements UserInterface 
     public initialized = false
     public logging = false
     public minimal = false
+    public settings = settings
 
     constructor(options: WebRendererOptions = defaultWebRendererOptions) {
         super()
@@ -93,6 +109,22 @@ export class WebRenderer extends AbstractUserInterface implements UserInterface 
         this.i18n = makeLocalization()
         let lang = getNavigatorLanguage()
         this.minimal = options.minimal || false
+
+        // Apply color mode if specified
+        if (options.colorMode) {
+            const html = document.documentElement
+            if (options.colorMode === 'dark') {
+                html.setAttribute('data-color-mode', 'dark')
+                html.setAttribute('data-dark-theme', 'dark_dimmed')
+            } else {
+                html.setAttribute('data-color-mode', 'light')
+                html.removeAttribute('data-dark-theme')
+            }
+
+            // Update settings store to apply theme to web-renderer UI
+            settings.update((current) => ({...current, theme: options.colorMode}))
+        }
+
         const settingsLanguage = get(settings).language
         if (settingsLanguage) {
             lang = settingsLanguage
@@ -143,7 +175,7 @@ export class WebRenderer extends AbstractUserInterface implements UserInterface 
 
     async login(context: LoginContext): Promise<UserInterfaceLoginResponse> {
         this.log('login', context)
-        prompt.set(undefined)
+        prompt.reset()
         router.push('login')
         const promise = cancelable(
             new Promise<UserInterfaceLoginResponse>((resolve, reject) =>
@@ -237,6 +269,15 @@ export class WebRenderer extends AbstractUserInterface implements UserInterface 
 
     async onLoginComplete() {
         this.log('onLoginResult')
+
+        // Check if modal is still active (e.g., for session key consent)
+        // If so, don't close it - let the active flow complete
+        const currentRouter = get(router)
+        if (currentRouter.path.startsWith('sessionkey-')) {
+            this.log('onLoginComplete - skipping close, session key flow active')
+            return
+        }
+
         // Close the dialog once the login completes
         active.set(false)
         // Reset all data in the state
@@ -350,6 +391,140 @@ export class WebRenderer extends AbstractUserInterface implements UserInterface 
             }
         }
         this.i18n.addTranslations(normalizedTranslations)
+    }
+
+    async onSessionKeyConsent(args: SessionKeyConsentArgs): Promise<boolean> {
+        this.log('onSessionKeyConsent', args)
+
+        // Clear any active prompt (e.g., from wallet QR code)
+        prompt.reset()
+
+        active.set(true)
+        props.set({title: 'Session Key', subtitle: 'Authorization Request'})
+        router.push('sessionkey-consent')
+
+        const promise = cancelable(
+            new Promise<boolean>((resolve, reject) =>
+                sessionKeyConsentPromise.set({
+                    reject,
+                    resolve,
+                })
+            )
+        )
+        this.addCancelablePromise(promise.cancel)
+        sessionKeyConsentData.set(args)
+
+        try {
+            const result = await promise
+            active.set(false)
+            resetState()
+            return result
+        } catch (error) {
+            active.set(false)
+            resetState()
+            return false
+        }
+    }
+
+    async onSessionKeyConflict(args: SessionKeyConflictArgs): Promise<SessionKeyConflictResponse> {
+        this.log('onSessionKeyConflict', args)
+        active.set(true)
+        props.set({title: 'Session Key', subtitle: 'Another Device Detected'})
+        router.push('sessionkey-conflict')
+
+        const promise = cancelable(
+            new Promise<SessionKeyConflictResponse>((resolve, reject) =>
+                sessionKeyConflictPromise.set({
+                    reject,
+                    resolve,
+                })
+            )
+        )
+        this.addCancelablePromise(promise.cancel)
+        sessionKeyConflictData.set(args)
+
+        try {
+            const result = await promise
+            active.set(false)
+            resetState()
+            return result
+        } catch (error) {
+            active.set(false)
+            resetState()
+            return 'cancel'
+        }
+    }
+
+    async onSessionKeyMismatch(args: SessionKeyMismatchArgs): Promise<SessionKeyMismatchResponse> {
+        this.log('onSessionKeyMismatch', args)
+        active.set(true)
+        props.set({title: 'Session Key', subtitle: 'Permissions Changed'})
+        router.push('sessionkey-mismatch')
+
+        const promise = cancelable(
+            new Promise<SessionKeyMismatchResponse>((resolve, reject) =>
+                sessionKeyMismatchPromise.set({
+                    reject,
+                    resolve,
+                })
+            )
+        )
+        this.addCancelablePromise(promise.cancel)
+        sessionKeyMismatchData.set(args)
+
+        try {
+            const result = await promise
+            active.set(false)
+            resetState()
+            return result
+        } catch (error) {
+            active.set(false)
+            resetState()
+            return 'dismiss'
+        }
+    }
+
+    getMinimal() {
+        return this.minimal
+    }
+
+    setMinimal(minimal: boolean) {
+        this.minimal = minimal
+    }
+
+    async onSessionKeyRemove(args: SessionKeyRemoveArgs): Promise<boolean> {
+        this.log('onSessionKeyRemove', args)
+        active.set(true)
+        props.set({title: 'Session Key', subtitle: 'Remove Access'})
+        router.push('sessionkey-remove')
+        sessionKeyRemoveData.set(args)
+
+        const promise = cancelable(
+            new Promise<boolean>((resolve, reject) =>
+                sessionKeyRemovePromise.set({
+                    reject,
+                    resolve,
+                })
+            )
+        )
+        this.addCancelablePromise(promise.cancel)
+
+        try {
+            const result = await promise
+            if (result) {
+                // User confirmed - don't close UI yet, transact will take over
+                sessionKeyRemovePromise.set(undefined)
+            } else {
+                // User cancelled - close UI
+                active.set(false)
+                resetState()
+            }
+            return result
+        } catch (error) {
+            active.set(false)
+            resetState()
+            return false
+        }
     }
 }
 
