@@ -44,7 +44,12 @@ const exportFix = `
 
 const replaceVersion = replace({
     preventAssignment: true,
+    delimiters: ['', ''],
     __ver: `${pkg.version}`,
+    'process.env.NODE_ENV': JSON.stringify('production'),
+    'typeof process': JSON.stringify('undefined'),
+    'typeof process.env': JSON.stringify('undefined'),
+    'process.env': JSON.stringify({}),
 })
 
 export default {
