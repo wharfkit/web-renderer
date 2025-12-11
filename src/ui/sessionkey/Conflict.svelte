@@ -99,8 +99,6 @@
 </ButtonGroup>
 
 <style>
-    @import '../../styles/sessionkey.css';
-
     .options {
         display: flex;
         flex-direction: column;
