@@ -3706,7 +3706,7 @@
     pako "^2.1.0"
     tslib "^2.0.3"
 
-"@wharfkit/common@^1.2.0":
+"@wharfkit/common@^1.2.0", "@wharfkit/common@^1.5.0":
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/@wharfkit/common/-/common-1.5.0.tgz#66023ade5acc7e768ec2cd1c040c3043ec5cc59d"
   integrity sha512-eqXkOy+vshcEzK8kED+EsoTPJjlBKHYglgV9CBnZQgIlGrWIRXWH4YaXH3W7EbI/nCRJCaNqxm5fC+pgpFcp8g==
