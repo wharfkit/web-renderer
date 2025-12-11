@@ -3760,23 +3760,23 @@
   dependencies:
     "@wharfkit/antelope" "^1.1.0"
 
-"@wharfkit/session@^2.0.0-rc2":
-  version "2.0.0-rc2"
-  resolved "https://registry.yarnpkg.com/@wharfkit/session/-/session-2.0.0-rc2.tgz#629cdbf598ba7b345ae0eb6d8a1b5be2e6ef49c8"
-  integrity sha512-HTpVGNwse5doh5OtSVpGeoXpsgU3vzGqdbAfSUdMcFor/IzLLKJZ6qsvIqNe60LYsv6E6EMnmUXxIgWa5YhnfQ==
+"@wharfkit/session@^2.0.0-rc3":
+  version "2.0.0-rc3"
+  resolved "https://registry.yarnpkg.com/@wharfkit/session/-/session-2.0.0-rc3.tgz#1afeb8eaa4ee3e08da16307a2e46df31a6c82a9e"
+  integrity sha512-I4+yimysXJNKWfNS5z7O0YyP1h80AqSCu7VpIZubR+LX18zXdzlA/x2Nk9t4ag6KwAg5ntglvbNU2bQ1b6ME4A==
   dependencies:
     "@wharfkit/abicache" "^1.2.1"
     "@wharfkit/antelope" "^1.1.1"
     "@wharfkit/common" "^1.2.0"
     "@wharfkit/contract" "^1.2.1"
-    "@wharfkit/signing-request" "^3.3.0"
+    "@wharfkit/signing-request" "^3.4.0"
     pako "^2.0.4"
     tslib "^2.1.0"
 
-"@wharfkit/signing-request@^3.1.0", "@wharfkit/signing-request@^3.2.0", "@wharfkit/signing-request@^3.3.0":
-  version "3.3.0"
-  resolved "https://registry.npmjs.org/@wharfkit/signing-request/-/signing-request-3.3.0.tgz"
-  integrity sha512-8RYnXjF14LRXB8Ajd1SL/pNFFVkYU1sm+cWTDkJnNr0p8dBiILGBcZuXOuVFWCN6+xngwioSHt02LEEWyELLvw==
+"@wharfkit/signing-request@^3.1.0", "@wharfkit/signing-request@^3.2.0", "@wharfkit/signing-request@^3.4.0":
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/@wharfkit/signing-request/-/signing-request-3.4.0.tgz#ac433e5c3af3a084643e6c8a32c5b9b15a6978dc"
+  integrity sha512-WstXfmR9i5pKaYXDUwNFNCgBIvN6u5IRGWSfj5O3XzthbtJUmRoJNtjGMaNnUqZ1MMx5YY4/JpY3b2e6LbpXLw==
   dependencies:
     "@wharfkit/antelope" "^1.1.1"
     tslib "^2.0.3"
