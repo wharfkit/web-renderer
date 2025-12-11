@@ -36,7 +36,7 @@
         "crypto": false
     },
     "peerDependencies": {
-        "@wharfkit/session": "^2.0.0-rc1"
+        "@wharfkit/session": "^2.0.0-rc2"
     },
     "devDependencies": {
         "@babel/core": "^7.20.12",
