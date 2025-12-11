@@ -56,6 +56,7 @@ export default {
         format: 'iife',
         sourcemap: true,
         exports: 'named',
+        inlineDynamicImports: true,
     },
     plugins: [
         replaceVersion,
@@ -80,6 +81,9 @@ export default {
             inlineSources: true,
             resolveJsonModule: true,
             rootDir: './src',
+            compilerOptions: {
+                module: 'ES2015',
+            },
         }),
         json(),
         !production && serve('test/public'),
