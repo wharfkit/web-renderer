@@ -9,7 +9,10 @@ test/public/bundle.js: ${SRC_FILES} package.json tsconfig.json node_modules test
 .PHONY: build-test
 build-test: test/public/bundle.js
 
-dev: ${SRC_FILES} package.json tsconfig.json node_modules rollup.config.js
+dev: node_modules
+	@./node_modules/.bin/vite
+
+dev-rollup: ${SRC_FILES} package.json tsconfig.json node_modules rollup.config.js
 	@./node_modules/.bin/rollup -c test/rollup.config.js -w --host
 
 .PHONY: test
