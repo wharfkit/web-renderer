@@ -428,6 +428,7 @@ export class WebRenderer extends AbstractUserInterface implements UserInterface 
 
     async onSessionKeyConflict(args: SessionKeyConflictArgs): Promise<SessionKeyConflictResponse> {
         this.log('onSessionKeyConflict', args)
+        prompt.reset()
         active.set(true)
         props.set({title: 'Session Key', subtitle: 'Another Device Detected'})
         router.push('sessionkey-conflict')
@@ -457,6 +458,7 @@ export class WebRenderer extends AbstractUserInterface implements UserInterface 
 
     async onSessionKeyMismatch(args: SessionKeyMismatchArgs): Promise<SessionKeyMismatchResponse> {
         this.log('onSessionKeyMismatch', args)
+        prompt.reset()
         active.set(true)
         props.set({title: 'Session Key', subtitle: 'Permissions Changed'})
         router.push('sessionkey-mismatch')
