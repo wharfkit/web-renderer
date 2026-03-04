@@ -400,7 +400,7 @@ export class WebRenderer extends AbstractUserInterface implements UserInterface 
         prompt.reset()
 
         active.set(true)
-        props.set({title: 'Session Key', subtitle: 'Authorization Request'})
+        props.set({title: 'Permission Request', subtitle: ''})
         router.push('sessionkey-consent')
 
         const promise = cancelable(
@@ -430,7 +430,7 @@ export class WebRenderer extends AbstractUserInterface implements UserInterface 
         this.log('onSessionKeyConflict', args)
         prompt.reset()
         active.set(true)
-        props.set({title: 'Session Key', subtitle: 'Another Device Detected'})
+        props.set({title: 'Permission Request', subtitle: ''})
         router.push('sessionkey-conflict')
 
         const promise = cancelable(
@@ -460,7 +460,7 @@ export class WebRenderer extends AbstractUserInterface implements UserInterface 
         this.log('onSessionKeyMismatch', args)
         prompt.reset()
         active.set(true)
-        props.set({title: 'Session Key', subtitle: 'Permissions Changed'})
+        props.set({title: 'Permission Request', subtitle: ''})
         router.push('sessionkey-mismatch')
 
         const promise = cancelable(
@@ -497,7 +497,7 @@ export class WebRenderer extends AbstractUserInterface implements UserInterface 
     async onSessionKeyRemove(args: SessionKeyRemoveArgs): Promise<boolean> {
         this.log('onSessionKeyRemove', args)
         active.set(true)
-        props.set({title: 'Session Key', subtitle: 'Remove Access'})
+        props.set({title: 'Permission Request', subtitle: ''})
         router.push('sessionkey-remove')
         sessionKeyRemoveData.set(args)
 

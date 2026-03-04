@@ -20,10 +20,10 @@
 
 <div class="sk-header">
     <div class="sk-title">
-        {$t('sessionkey.remove.title', {default: 'Also remove session key?'})}
+        {appName}
     </div>
     <div class="sk-description">
-        {$t('sessionkey.remove.description', {default: 'You have a session key that allows'})} <strong>{appName}</strong> {$t('sessionkey.remove.description-2', {default: 'to sign transactions automatically.'})}
+        {$t('sessionkey.remove.description', {default: 'has active permissions on this device.'})}
     </div>
 </div>
 
@@ -38,14 +38,14 @@
 <ButtonGroup>
     <Button
         data={{
-            label: $t('sessionkey.remove.force', {default: 'Force Logout'}),
+            label: $t('sessionkey.remove.force', {default: 'Log Out Only'}),
             onClick: handleCancel,
             variant: 'secondary',
         }}
     />
     <Button
         data={{
-            label: $t('sessionkey.remove.remove', {default: 'Remove'}),
+            label: $t('sessionkey.remove.remove', {default: 'Remove and Log Out'}),
             onClick: handleConfirm,
             variant: 'primary',
         }}

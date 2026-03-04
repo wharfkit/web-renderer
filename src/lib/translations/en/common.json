@@ -57,5 +57,47 @@
             "author": "An open source SDK for Antelope-based blockchains created by Greymass and made possible through funding by the Antelope Coalition (EOS, Telos, UX, and WAX).",
             "link": "Read more about Wharf"
         }
+    },
+    "sessionkey": {
+        "consent": {
+            "description": "wants to perform actions on your behalf, so you won't need wallet approval each time.",
+            "section-label": "If approved, {{appName}} can perform these actions without wallet approval:",
+            "approve": "Allow",
+            "deny": "Not Now",
+            "revoke-note": "You can turn this off anytime.",
+            "wallet-notice": "Your wallet will ask you to confirm this setup.",
+            "decline-explanation": "This is optional. {{appName}} works without it - you'll just approve each action individually.",
+            "summary": "{{count}} permission(s) on {{contracts}} contract(s)",
+            "view-details": "View details",
+            "hide-details": "Hide details",
+            "boundary": "Any other action will still require wallet approval.",
+            "all-actions": "Full access - includes future actions",
+            "all-actions-with-contract": "Full access to {{contract}} - includes future actions"
+        },
+        "conflict": {
+            "description": "already has permissions on",
+            "add": "Add this device",
+            "add-description": "All devices will continue to work",
+            "replace": "Only use this device",
+            "replace-description": "Other devices will stop working",
+            "note": "This only affects {{appName}}. Your wallet still works everywhere.",
+            "cancel": "Cancel",
+            "continue": "Continue"
+        },
+        "mismatch": {
+            "wants-updated-access": "needs updated permissions.",
+            "new-permissions": "New permissions:",
+            "removed-permissions": "Permissions no longer needed:",
+            "later": "Not Now",
+            "update": "Update",
+            "revoke-note": "You can turn this off anytime."
+        },
+        "remove": {
+            "title": "Also remove session key?",
+            "description": "has active permissions on this device.",
+            "remove": "Remove and Log Out",
+            "force": "Log Out Only",
+            "note": "Your wallet will ask you to sign a transaction to remove this permission."
+        }
     }
 }

@@ -88,7 +88,7 @@
 
     :global(.sk-section-label) {
         font-size: 0.9em;
-        color: var(--body-text-color, #333);
+        color: var(--body-text-color-variant, #888);
         margin-bottom: 12px;
         margin-top: 16px;
     }
@@ -131,11 +131,15 @@
         border-radius: 6px;
         margin-bottom: 8px;
         font-size: 0.9em;
-        color: var(--body-text-color);
+        color: var(--body-text-color-variant, #888);
     }
 
     :global(.sk-permission-item:last-child) {
         margin-bottom: 0;
+    }
+
+    :global(.sk-permission-item.neutral) {
+        border-left: 3px solid var(--body-text-color-variant, #888);
     }
 
     :global(.sk-permission-item.granted) {
@@ -150,9 +154,26 @@
         border-left: 3px solid var(--error-color, #ef4444);
     }
 
+    :global(.sk-permission-item.warning) {
+        border-left: 3px solid #f59e0b;
+        background: rgba(245, 158, 11, 0.05);
+    }
+
+    :global(.sk-bullet) {
+        color: var(--body-text-color-variant, #888);
+        font-weight: bold;
+        min-width: 16px;
+        text-align: center;
+    }
+
     :global(.sk-checkmark) {
         color: var(--success-color, #22c55e);
         font-weight: bold;
+    }
+
+    :global(.sk-warning-icon) {
+        color: #f59e0b;
+        min-width: 16px;
     }
 
     :global(.sk-indicator) {
@@ -168,6 +189,73 @@
 
     :global(.sk-permission-item.removed .sk-indicator) {
         color: var(--error-color, #ef4444);
+    }
+
+    :global(.sk-summary-badge) {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px;
+        background: rgba(var(--body-text-color-rgb, 51, 51, 51), 0.03);
+        border: 1px solid var(--borderColor-default, #d1d5da);
+        border-radius: 8px;
+        margin-bottom: 12px;
+        font-size: 0.9em;
+        color: var(--body-text-color);
+    }
+
+    :global(.sk-summary-left) {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    :global(.sk-toggle-btn) {
+        background: none;
+        border: none;
+        color: var(--body-text-color-variant, #888);
+        cursor: pointer;
+        font-size: 0.85em;
+        padding: 4px 8px;
+        border-radius: 4px;
+        transition: background 0.15s ease;
+    }
+
+    :global(.sk-toggle-btn:hover) {
+        background: rgba(var(--body-text-color-rgb, 51, 51, 51), 0.06);
+    }
+
+    :global(.sk-contract-group) {
+        margin-bottom: 12px;
+    }
+
+    :global(.sk-contract-group:last-child) {
+        margin-bottom: 0;
+    }
+
+    :global(.sk-contract-header) {
+        font-size: 0.8em;
+        font-weight: 600;
+        color: var(--body-text-color-variant, #888);
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+        margin-bottom: 6px;
+        padding-left: 4px;
+    }
+
+    :global(.sk-boundary) {
+        font-size: 0.8em;
+        color: var(--body-text-color-variant, #888);
+        text-align: center;
+        margin-top: 12px;
+        font-style: italic;
+    }
+
+    :global(.sk-decline-note) {
+        font-size: 0.75em;
+        color: var(--body-text-color-variant, #888);
+        text-align: center;
+        margin-top: 8px;
     }
 
     dialog {

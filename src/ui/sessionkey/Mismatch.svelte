@@ -47,7 +47,7 @@
     <div class="sk-title">{appName}</div>
     <div class="sk-description">
         {$t('sessionkey.mismatch.wants-updated-access', {
-            default: 'is requesting changes to your session key permissions.',
+            default: 'needs updated permissions.',
         })}
     </div>
 </div>
@@ -85,24 +85,19 @@
         </ul>
     {/if}
 
-    <div class="sk-info-note">
-        {$t('sessionkey.mismatch.revoke-note', {
-            default: 'You can revoke this access at any time from this app, your wallet, or a block explorer.',
-        })}
-    </div>
 </div>
 
 <ButtonGroup>
     <Button
         data={{
-            label: $t('sessionkey.mismatch.later', {default: 'Later'}),
+            label: $t('sessionkey.mismatch.later', {default: 'Not Now'}),
             onClick: handleDismiss,
             variant: 'secondary',
         }}
     />
     <Button
         data={{
-            label: $t('sessionkey.mismatch.update', {default: 'Update Permissions'}),
+            label: $t('sessionkey.mismatch.update', {default: 'Update'}),
             onClick: handleUpdate,
             variant: 'primary',
         }}

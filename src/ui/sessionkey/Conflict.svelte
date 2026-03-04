@@ -24,22 +24,16 @@
 
 <div class="sk-header">
     <div class="sk-title">
-        {$t('sessionkey.conflict.title', {default: 'Session key already exists'})}
+        {appName}
     </div>
     <div class="sk-description">
         {$t('sessionkey.conflict.description', {
-            default: `You have authorized`,
-        })} <strong>{deviceText}</strong> {$t('sessionkey.conflict.description-2', {
-            default: `to sign transactions for`,
-        })} <strong>{appName}</strong>.
+            default: `already has permissions on`,
+        })} <strong>{deviceText}</strong>.
     </div>
 </div>
 
 <div class="sk-body">
-    <div class="sk-section-label">
-        {$t('sessionkey.conflict.question', {default: 'How would you like to proceed?'})}
-    </div>
-
     <div class="options">
         <label class:selected={choice === 'add'}>
             <input type="radio" bind:group={choice} value="add" />
@@ -69,14 +63,10 @@
         </label>
     </div>
 
-    <div class="sk-info-note primary">
+    <div class="sk-info-note">
         {$t('sessionkey.conflict.note', {
-            default: 'Session keys are for this app only. Your primary wallet will continue to work on all devices.',
-        })}
-    </div>
-    <div class="sk-info-note secondary">
-        {$t('sessionkey.conflict.note-sign', {
-            default: 'Your wallet will ask you to sign a transaction to update your permissions.',
+            default: `This only affects ${appName}. Your wallet still works everywhere.`,
+            appName,
         })}
     </div>
 </div>
@@ -112,25 +102,37 @@
         gap: 12px;
         padding: 14px;
         background: transparent;
-        border: 2px solid var(--borderColor-default, #d1d5da);
+        border: 1px solid rgba(var(--body-text-color-rgb, 51, 51, 51), 0.15);
         border-radius: 8px;
         cursor: pointer;
         transition: all 0.2s ease;
     }
 
     label.selected {
-        border-color: var(--body-text-color);
-        background: rgba(var(--body-text-color-rgb, 51, 51, 51), 0.05);
+        border-color: var(--button-primary-background, #1cb095);
+        background: rgba(28, 176, 149, 0.06);
     }
 
-    label:hover {
-        border-color: var(--body-text-color-variant);
-        background: rgba(var(--body-text-color-rgb, 51, 51, 51), 0.03);
+    label.selected .option-title {
+        color: var(--body-text-color, #333);
+    }
+
+    label:not(.selected):hover {
+        border-color: rgba(var(--body-text-color-rgb, 51, 51, 51), 0.4);
+        background: rgba(var(--body-text-color-rgb, 51, 51, 51), 0.07);
+    }
+
+    label:not(.selected):hover .option-title {
+        color: var(--body-text-color, #333);
+    }
+
+    label.selected:hover {
+        background: rgba(28, 176, 149, 0.09);
     }
 
     input[type='radio'] {
         margin-top: 0.25em;
-        accent-color: var(--body-text-color);
+        accent-color: var(--button-primary-background, #1cb095);
     }
 
     .option-content {
@@ -142,11 +144,11 @@
     .option-title {
         font-weight: 500;
         font-size: 0.95em;
-        color: var(--body-text-color);
+        color: var(--body-text-color-variant, #888);
     }
 
     .option-subtitle {
         font-size: 0.85em;
-        color: var(--body-text-color-variant);
+        color: var(--body-text-color-variant, #888);
     }
 </style>
