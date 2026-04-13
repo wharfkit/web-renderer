@@ -44,7 +44,12 @@ const exportFix = `
 
 const replaceVersion = replace({
     preventAssignment: true,
+    delimiters: ['', ''],
     __ver: `${pkg.version}`,
+    'process.env.NODE_ENV': JSON.stringify('production'),
+    'typeof process': JSON.stringify('undefined'),
+    'typeof process.env': JSON.stringify('undefined'),
+    'process.env': JSON.stringify({}),
 })
 
 export default {
@@ -56,6 +61,7 @@ export default {
         format: 'iife',
         sourcemap: true,
         exports: 'named',
+        inlineDynamicImports: true,
     },
     plugins: [
         replaceVersion,
@@ -80,6 +86,9 @@ export default {
             inlineSources: true,
             resolveJsonModule: true,
             rootDir: './src',
+            compilerOptions: {
+                module: 'ES2015',
+            },
         }),
         json(),
         !production && serve('test/public'),
