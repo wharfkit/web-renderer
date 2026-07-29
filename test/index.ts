@@ -24,7 +24,6 @@ export * from '@wharfkit/wallet-plugin-mock'
 export * from '@wharfkit/wallet-plugin-privatekey'
 export * from '@wharfkit/wallet-plugin-scatter'
 export * from '@wharfkit/wallet-plugin-tokenpocket'
-export * from '@wharfkit/wallet-plugin-wombat'
 
 // Re-export SessionKey components explicitly for test page access
 export {SessionKeyLoginPlugin, SessionKeyManager, SessionKeyWalletPlugin} from '@wharfkit/session'

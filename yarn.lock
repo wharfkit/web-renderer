@@ -3901,13 +3901,6 @@
     "@wharfkit/protocol-scatter" "^1.4.2"
     tslib "^2.1.0"
 
-"@wharfkit/wallet-plugin-wombat@^1.1.0":
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/@wharfkit/wallet-plugin-wombat/-/wallet-plugin-wombat-1.5.1.tgz#e9f9d717495c508676473ce6f60860ea62eec3c8"
-  integrity sha512-zQFBv9Nc/+N2yWLNg35BByA+4mtuU/XcSbQ8UmDcPR8MUQmhn9cRCSUK8y0anDLgZniqIDcML+lgda3MXK+5/w==
-  dependencies:
-    tslib "^2.1.0"
-
 "@yarnpkg/lockfile@^1.1.0":
   version "1.1.0"
   resolved "https://registry.npmjs.org/@yarnpkg/lockfile/-/lockfile-1.1.0.tgz"

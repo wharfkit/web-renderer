@@ -69,7 +69,6 @@
         "@wharfkit/wallet-plugin-privatekey": "^1.1.0",
         "@wharfkit/wallet-plugin-scatter": "^1.1.0",
         "@wharfkit/wallet-plugin-tokenpocket": "^1.1.0",
-        "@wharfkit/wallet-plugin-wombat": "^1.1.0",
         "core-js": "^3.31.0",
         "eslint": "^8.44.0",
         "eslint-config-prettier": "^8.8.0",
